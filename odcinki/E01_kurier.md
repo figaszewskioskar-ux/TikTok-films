@@ -1,45 +1,39 @@
 # BLOK 94 · ODC. 1 — „NIE OTWIERAJ KURIEROWI!”
 
-**Długość:** ok. 1:50 · **Zasada:** nie wpuszczaj do klatki nikogo, kto dzwoni na domofon „do kogoś innego” · **Pytanie A/B:** „Otworzyłbyś? 🅰️ TAK / 🅱️ NIE”
+> ✅ **Wyrenderowany:** `film/BLOK94_ODC1.mp4` (1080×1920, 30 kl./s, 1:59). Ten scenariusz odpowiada dokładnie gotowemu filmowi. Kod animacji jest w `film/`.
 
-**Błędy (ukryte do końca):**
-1. 0:18 — Kuba otwiera drzwi do klatki „kurierowi”, który dzwoni pod **jego** numer, ale paczka jest „dla 71”.
-2. 0:39 — Kuba trzyma drzwi klatki, żeby kurier wszedł z kartonem (drzwi zamykają się dopiero po 30 s).
-3. 0:58 — Kuba mówi przez domofon „nie ma jej, wyjechała” o Pani Halinie.
-4. **Ukryty:** 0:07 — na kartonie nie ma etykiety przewozowej (tylko markerem „71”).
+**Zasada:** kurier dzwoni do adresata, nie do ciebie · **Pytanie A/B:** „Otworzyłbyś? A · TAK / B · NIE”
 
-| Czas | Obraz | Tekst na ekranie | Dźwięk |
+**Błędy (ukryte do końca, licznik tylko miga):**
+1. **0:19** — Kuba wpuszcza „kuriera” z paczką dla cudzego mieszkania (71).
+2. **0:40** — przytrzymuje drzwi klatki obcemu w kapturze, który nie ma kluczy.
+3. **0:59** — mówi głośno przy obcych, że sąsiadki z 71 nie ma do niedzieli.
+4. **Ukryty (0:01–0:20):** karton nie ma etykiety przewozowej, jest tylko „71” napisane markerem.
+
+**Trop dla uważnych:** w 1:25 wizjer drzwi 71 ciemnieje. Halina już patrzy.
+
+| Czas | Scena | Co się dzieje | Napisy / dymki |
 |---|---|---|---|
-| 0:00 | Zbliżenie: palec Kuby **już naciska** przycisk domofonu, iskierka | Tablica: **NIE OTWIERAJ KURIEROWI!** | brzęczyk domofonu i szum |
-| 0:02 | Szybki przejazd na licznik | **3 błędy. Znajdziesz je?** · BŁĘDY 0/3 | „tik” |
-| 0:05 | Blok nocą, 21:47, padający śnieg | „KASZTANOWA 12 · KLATKA II” · „21:47” | wiatr |
-| 0:07 | Na ekranie domofonu: mężczyzna w czapce kuriera, z kartonem | „KURIER?” | |
-| 0:10 | Głos z domofonu (dymek) | „Paczka do 71, nikt nie otwiera. Wpuści pan?” | zniekształcony głos |
-| 0:14 | Kuba waha się, patrzy na zegarek | „SPIESZY SIĘ NA MECZ” | tykanie |
-| 0:18 | Kuba wciska „klucz” | Licznik miga: **BŁĘDY 1/3** | pisk zamka |
-| 0:21 | Kuba schodzi zostawić śmieci; przy drzwiach spotyka „kuriera” | „TEN SAM” | |
-| 0:25 | Kurier: „Dzięki, szefie, ciężkie to” | | |
-| 0:28 | W tle szyby drzwi przez 2 klatki: sylwetka KAPTURA | (bez etykiety: easter egg) | |
-| 0:32 | Wchodzi Pan Zdzisiek z siatką | „PAN ZDZISIEK · 2 PIĘTRO” | |
-| 0:35 | Zdzisiek do kuriera: „Pan od Marka? Pan od Marka!” | Dymek, „ZDZISIEK ZNA WSZYSTKICH” | śmiech publiczności (cichy) |
-| 0:39 | Kuba przytrzymuje drzwi dla kuriera | Licznik miga: **BŁĘDY 2/3** | |
-| 0:43 | Kurier idzie schodami zamiast windą | „IDZIE SCHODAMI” | kroki |
-| 0:48 | Zdzisiek mruży oczy | „Kurier, co nie jeździ windą?” | |
-| 0:52 | Telefon Kuby: domofon dzwoni znowu, numer 94 | | brzęczyk |
-| 0:55 | Na domofonie inna osoba: „Pani Halina z 71? Bo nie odbiera” | | |
-| 0:58 | Kuba: „Nie ma jej, wyjechała do córki!” | Licznik: **BŁĘDY 3/3** | ostry akord |
-| 1:02 | Przekrój bloku: kropka „KURIER” na 7 piętrze, kropka „DRUGI” przed klatką | Schemat jak w szybie windy | puls basu |
-| 1:08 | U Zdziśka: wizjer, korytarz 7 piętra | „WIZJER” | |
-| 1:12 | Kurier odkłada karton pod 71, karton jest **pusty** | „PUSTY KARTON” | głuche stuknięcie |
-| 1:17 | Kurier wyjmuje telefon: „Pusta. Wchodź.” | | |
-| 1:22 | Zdzisiek dzwoni: „Administracja? Tu Zdzisław z dwójki…” | „1 MINUTA” | |
-| 1:28 | Drugi mężczyzna w kapturze wchodzi do klatki | „2 MINUTY” | |
-| 1:33 | **ZWROT:** drzwi 71 otwierają się **od środka**; w progu Pani Halina z wałkiem do ciasta | „HALINA NIE WYJECHAŁA” | dramatyczne uderzenie |
-| 1:37 | Halina: „Słyszę WSZYSTKO przez ten domofon, kawalerze” | | |
-| 1:40 | Obaj uciekają; Zdzisiek na półpiętrze: „Do widzenia panu od Marka!” | | |
-| 1:44 | Odsłonięcie, 3 karty po kolei | BŁĄD 1 · 0:18 wpuścił „kuriera” do innego mieszkania · BŁĄD 2 · 0:39 przytrzymał drzwi · BŁĄD 3 · 0:58 powiedział, że sąsiadki nie ma · BŁĄD 4 · ??? | 3× „tik” |
-| 1:49 | Karta ZASADA | **Kurier dzwoni do adresata. Nie do ciebie.** | |
-| 1:52 | KAPTUR na ulicy, podnosi wzrok na okno nr 94 i patrzy w kamerę | „ODC. 2 →” | cisza |
-| 1:55 | Płynne przejście do pierwszej klatki (palec przy domofonie) | | pętla |
+| 0:00 | Hak | Ręka Kuby wciska przycisk z kluczem na wideodomofonie | **NIE OTWIERAJ KURIEROWI!** · od 0:02 „Kuba zrobi 3 błędy. Znajdziesz wszystkie?” |
+| 0:05 | Blok nocą | Śnieg, mały kurier pod klatką, okno 94 w kółku | KASZTANOWA 12 · KLATKA II · 21:47 · MIESZKANIE KUBY · 9 PIĘTRO · KURIER? O TEJ GODZINIE? |
+| 0:11 | Mieszkanie | Kuba przy domofonie, obraz z kamery w powiększeniu, w tle grający telewizor | Kurier: „Paczka do 71. Nikt nie otwiera. Wpuści pan?” · KURIER DO SĄSIADKI? · MECZ ZA 2 MINUTY · Kuba: „Dobra, otwieram.” |
+| 0:19 | | **BŁĄD 1:** Kuba wciska przycisk | licznik BŁĘDY 1/3 |
+| 0:21 | Klatka | Kuba wysiada z windy ze śmieciami, przy schodach stoi kurier | TEN SAM · „Dzięki, szefie! Ciężkie to.” · IDZIE SCHODAMI. NIE WINDĄ? |
+| 0:34 | Wejście | Kuba wraca, za nim idzie KAPTUR | TUŻ ZA NIM · „Przytrzymasz?” · „Jasne!” |
+| 0:40 | | **BŁĄD 2:** Kuba trzyma drzwi | BŁĘDY 2/3 · OBCY NIE MA KLUCZY |
+| 0:45 | Klatka | Wchodzi Pan Zdzisiek, KAPTUR stoi na schodach | PAN ZDZISIEK · 2 PIĘTRO · „Kuba! A ten w kapturze to do kogo?” · „Ja tu znam wszystkich. Jego nie znam.” |
+| 0:56 | | Kurier schodzi już bez paczki | „Pani z 71 nie otwiera. Kiedy wraca?” |
+| 0:59 | | **BŁĄD 3** | Kuba: „Nie ma jej, wyjechała do córki! Do niedzieli.” · BŁĘDY 3/3 · SŁUCHA |
+| 1:03 | | Kurier i KAPTUR idą schodami na górę | Zdzisiek: „Kurier… bez paczki… i nie jeździ windą?” |
+| 1:06 | Przekrój bloku | Winda wiezie Kubę na 9, dwie kropki idą schodami na 7, Zdzisiek dzwoni | KTO GDZIE JEST? · MIESZKANIE 71 „PUSTE” · DZWONI DO KOGOŚ… |
+| 1:14 | 7 piętro | Kurier kopie karton, a ten jest pusty. KAPTUR otwiera zamek wytrychem | 7 PIĘTRO · 23:04 · PUSTY KARTON · „Pusto. Dawaj.” · WYTRYCH · 1 MINUTA · 2 MINUTY · telefon: „Zdzisiek dzwoni do… HALINKA” |
+| 1:28 | **ZWROT** | Drzwi 71 otwierają się od środka. W progu stoi Halina w wałkach, z wałkiem do ciasta | HALINA NIE WYJECHAŁA · „Kawalerze… ja słyszę WSZYSTKO przez domofon.” |
+| 1:33 | | Obaj uciekają | „I nie wracajcie! A ty, Kuba, też dostaniesz!” |
+| 1:38 | Klatka | Uciekinierzy przebiegają obok Zdziśka | „Do widzenia panom kurierom!” |
+| 1:42 | Odpowiedzi | Karty BŁĄD 1–4 | ODPOWIEDZI |
+| 1:49 | | Karta z zasadą i pytanie A/B | ZAPAMIĘTAJ · „Kurier dzwoni do adresata. Nie do ciebie.” · Otworzyłbyś? A · TAK / B · NIE |
+| 1:54 | Koniec | KAPTUR pod blokiem, okno 94 gaśnie, KAPTUR odwraca się ze świecącymi oczami | ODC. 2 → · ostatnia klatka płynnie przechodzi w pierwszą |
 
-**Opis:** Kurier o 21:47? 🤔 Znalazłeś wszystkie 3 błędy? Czwartego nikt nie widzi 👀 #blok94
+**Opis:** Kurier o 21:47? 🤔 Znalazłeś wszystkie 3 błędy? Czwartego prawie nikt nie widzi 👀 #blok94 #nierobcietego #bezpieczeństwo #animacja
+
+**Przypięty komentarz:** „Błąd 4 jest w pierwszych 20 sekundach. Kto pierwszy? 👇”
