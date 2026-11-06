@@ -1,6 +1,6 @@
 """Syntetyczna ścieżka dźwiękowa do BLOK 94 · ODC. 1.
 Czyta out/cues.json (eksport z film.js) i zapisuje out/audio.wav (48 kHz, stereo)."""
-import json, wave, os
+import json, wave, os, subprocess
 import numpy as np
 
 SR = 48000
@@ -26,7 +26,10 @@ def env(n, a=0.005, r=None):
 
 def lowpass(x, k):
     k = max(1, int(k))
-    return np.convolve(x, np.ones(k) / k, mode='same')
+    if k == 1:
+        return x
+    c = np.cumsum(np.concatenate([np.zeros(k // 2 + 1), x, np.full(k, x[-1])]))
+    return (c[k:k + len(x)] - c[:len(x)]) / k
 
 
 def add(sig, at, gain=1.0, pan=0.0):
@@ -163,31 +166,50 @@ def voice(who, dur):
 
 # ---------- tło: dron + wiatr, poziom wg sekcji ----------
 tt = np.arange(N) / SR
-lvl = np.interp(tt, [0, 5, 11, 21, 34, 45, 66, 74, 87.6, 88.0, 98, 102, 114, 119],
+lvl = np.interp(tt, [0, 5, 11, 21, 34, 45, 66, 74, 87.6, 88.0, 98, 102, 119, 124],
                 [.55, .6, .5, .5, .55, .5, .8, 1.0, 1.0, 0.0, .45, .2, .35, .7])
 drone = (np.sin(2 * np.pi * 55 * tt) + 0.6 * np.sin(2 * np.pi * 82.4 * tt + np.sin(tt * .3))
          + 0.3 * np.sin(2 * np.pi * 110.5 * tt)) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.11 * tt))
 wind = lowpass(rng.standard_normal(N), 60) * (0.6 + 0.4 * np.sin(tt * 0.7))
-outdoor = np.interp(tt, [0, 4.9, 5, 11, 11.1, 33.9, 34, 45, 45.1, 113.9, 114, 119], [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
+outdoor = np.interp(tt, [0, 4.9, 5, 11, 11.1, 33.9, 34, 45, 45.1, 118.9, 119, 124], [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
 bg = drone * 0.06 * lvl + wind * 0.5 * (0.15 + outdoor * 0.6) * np.maximum(lvl, .3)
-L += bg; R += bg * 0.97
+BG = bg
 # zegar w podsumowaniu
-for k in range(int((114 - 102) / 0.5)):
+for k in range(int((119 - 102) / 0.5)):
     add(tik() * 0.4, 102 + k * 0.5, pan=(-.3 if k % 2 else .3))
 
 FX = dict(tik=tik, stab=stab, error=error, hit=hit, whoosh=whoosh, doorbuzz=doorbuzz, intercom=intercom,
           press=press, ding=ding, lock=lock, thud=thud, heart=heart, vibrate=vibrate, pluck=pluck,
           switch=switch, motif=motif)
+# ---------- dubbing (jeśli jest) ----------
+DUB = os.path.join(HERE, 'out', 'voice', 'lines.json')
+dub = json.load(open(DUB)) if os.path.exists(DUB) else []
+duck = np.ones(N)
+VGAIN = {'kaptur': 1.5, 'kurier': 1.0}
+for ln in dub:
+    f = ln['file']
+    flt = 'highpass=f=350,lowpass=f=3400,acompressor' if ln['id'] == 'l03' else 'anull'  # l03 słychać przez domofon
+    raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', f, '-af', flt, '-f', 's16le', '-ac', '1', '-ar', str(SR), '-'])
+    v = np.frombuffer(raw, dtype='<i2').astype(float) / 32768
+    i0 = int(ln['t'] * SR)
+    add(v, ln['t'], 1.6 * VGAIN.get(ln['who'], 1.0))
+    a, b = max(0, i0 - int(.1 * SR)), min(N, i0 + len(v) + int(.15 * SR))
+    duck[a:b] = np.minimum(duck[a:b], 0.45)
+duck = lowpass(duck, int(0.08 * SR))
+
 GAIN = dict(tik=.5, whoosh=.6, voice=1.0, heart=1.0, error=1.0)
 for cue in info['cues']:
     ty = cue['type']
     if ty == 'voice':
+        if dub:
+            continue
         add(voice(cue['who'], cue['dur']), cue['t'], 1.0, pan=rng.uniform(-.2, .2))
     elif ty == 'step':
         add(step(cue.get('soft', 0)), cue['t'], 1.0, pan=rng.uniform(-.4, .4))
     else:
         add(FX[ty](), cue['t'], GAIN.get(ty, 0.9))
 
+L += BG * duck; R += BG * 0.97 * duck
 mix = np.stack([L, R], 1)
 mix = np.tanh(mix * 1.4) / np.tanh(1.4)
 mix /= max(1e-9, np.abs(mix).max()) / 0.89

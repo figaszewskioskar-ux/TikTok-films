@@ -1,8 +1,8 @@
 // BLOK 94 · ODC. 1 — "NIE OTWIERAJ KURIEROWI!"
 // Cała animacja rysowana na canvasie 1080×1920. renderFrame(t) rysuje klatkę dla czasu t (sekundy).
 'use strict';
-const W = 1080, H = 1920, FPS = 30, DUR = 119;
-const ERR = [19.0, 40.5, 59.5];          // momenty błędów (licznik BŁĘDY)
+const W = 1080, H = 1920, FPS = 30, DUR = 124;
+const ERR = [19.0, 40.5, 59.75];          // momenty błędów (licznik BŁĘDY)
 const FONT = 'Inter';
 
 // ---------- narzędzia ----------
@@ -667,9 +667,9 @@ scene({
     [3.2, 6.3, 'Kuba! A ten w kapturze\nto do kogo?', 560, 850, 860, 1090, 'zdzisiek'],
     [6.5, 9.0, 'Nie wiem…\nKurierowi otworzyłem.', 520, 850, 660, 1070, 'kuba'],
     [9.2, 11.6, 'Ja tu znam wszystkich.\nJego nie znam.', 560, 850, 860, 1090, 'zdzisiek'],
-    [12.6, 14.4, 'Pani z 71 nie otwiera.\nKiedy wraca?', 460, 850, 340, 1070, 'kurier'],
-    [14.5, 17.2, 'Nie ma jej, wyjechała\ndo córki! Do niedzieli.', 520, 850, 660, 1070, 'kuba'],
-    [18.4, 21, 'Kurier… bez paczki…\ni nie jeździ windą?', 560, 850, 860, 1090, 'zdzisiek'],
+    [12.3, 14.7, 'Pani z 71 nie otwiera.\nKiedy wraca?', 460, 850, 340, 1070, 'kurier'],
+    [14.75, 17.4, 'Nie ma jej, wyjechała\ndo córki! Do niedzieli.', 520, 850, 660, 1070, 'kuba'],
+    [18.4, 21, 'Kurier bez paczki?\nI schodami?', 560, 850, 860, 1090, 'zdzisiek'],
   ],
   draw(c, lt, sc) {
     lobbyBg(c, lt, { floor: '0', callLit: lt > 0.5 });
@@ -679,8 +679,8 @@ scene({
     person(c, 'kaptur', lerp(150, 20, kup), lerp(1260, 1110, kup), 1.75, { t: lt, look: lt < 18.8 ? 1 : -1, glow: lt > 15 && lt < 16 ? 1 : 0, alpha: ka, walk: kup > 0 && kup < 1 ? lt * 8 : null });
     c.fillStyle = 'rgba(0,0,20,.18)'; c.fillRect(0, 700, 300, 700);
     // kurier schodzi i wraca
-    const dn = prog(lt, 11.0, 12.5), up = prog(lt, 17.4, 19.2);
-    if (lt > 11) {
+    const dn = prog(lt, 10.6, 12.1), up = prog(lt, 17.4, 19.2);
+    if (lt > 10.6) {
       const cx = up > 0 ? lerp(330, 30, up) : lerp(40, 330, dn), cy = up > 0 ? lerp(1480, 1170, up) : lerp(1180, 1480, dn);
       const cs = up > 0 ? lerp(2, 1.75, up) : lerp(1.75, 2, dn);
       person(c, 'kurier', cx, cy, cs, { t: lt, walk: (dn > 0 && dn < 1) || (up > 0 && up < 1) ? lt * 8 : null, talk: talking(sc, 'kurier', lt), look: up > 0 ? -1 : 1, alpha: 1 - prog(lt, 18.6, 19.2) });
@@ -797,7 +797,7 @@ scene({
   cam: lt => { const sh = lt < .6 ? (1 - lt / .6) * 22 : 0; return { z: 1.04, x: Math.sin(lt * 80) * sh, y: Math.cos(lt * 67) * sh }; },
   labels: [[0.5, 3.6, 'HALINA NIE WYJECHAŁA', 540, 300, 'red', 56]],
   bubbles: [
-    [1.7, 5.0, 'Kawalerze… ja słyszę\nWSZYSTKO przez domofon.', 520, 830, 540, 920, 'halina'],
+    [1.7, 6.3, 'Kawalerze… ja słyszę\nWSZYSTKO przez domofon.', 520, 830, 540, 920, 'halina'],
     [6.6, 9.8, 'I nie wracajcie!\nA ty, Kuba, też dostaniesz!', 520, 830, 540, 920, 'halina'],
   ],
   draw(c, lt, sc) {
@@ -827,30 +827,30 @@ scene({
 });
 // 10. ODPOWIEDZI
 scene({
-  name: 'reveal', start: 102, end: 114,
+  name: 'reveal', start: 102, end: 119,
   cam: lt => ({ z: 1 }),
   draw(c, lt, sc) {
     quilted(c, 0, 0, W, H, '#2A1E15', '#231910', '#5A4630', 90);
     c.fillStyle = 'rgba(8,10,14,.72)'; c.fillRect(0, 0, W, H);
-    label(c, lt < 7 ? 'ODPOWIEDZI' : 'ZAPAMIĘTAJ', 540, 320, 'yellow', 52, lt < 7 ? lt : lt - 7, 9);
-    const out = prog(lt, 6.6, 7.0);
+    label(c, lt < 11.2 ? 'ODPOWIEDZI' : 'ZAPAMIĘTAJ', 540, 320, 'yellow', 52, lt < 11.2 ? lt : lt - 11.2, 9);
+    const out = prog(lt, 10.8, 11.2);
     if (out < 1) {
       c.save(); c.globalAlpha = 1 - out; c.translate(-out * 200, 0);
       let y = 420;
       const items = [
         [0.4, 'BŁĄD 1 · 0:19', 'wpuścił „kuriera” do cudzego\nmieszkania'],
-        [1.8, 'BŁĄD 2 · 0:40', 'przytrzymał drzwi obcemu'],
-        [3.2, 'BŁĄD 3 · 0:59', 'powiedział, że sąsiadki nie ma'],
-        [4.6, 'BŁĄD 4 · ???', 'jest w pierwszych 20 sekundach.\nZnalazłeś? Napisz w komentarzu ↓'],
+        [3.2, 'BŁĄD 2 · 0:40', 'przytrzymał drzwi obcemu'],
+        [5.35, 'BŁĄD 3 · 0:59', 'powiedział, że sąsiadki nie ma'],
+        [8.25, 'BŁĄD 4 · ???', 'jest w pierwszych 20 sekundach.\nZnalazłeś? Napisz w komentarzu ↓'],
       ];
-      for (const [a, t1, t2] of items) { if (lt > a) y += card(c, 70, y, 860, t1, t2, lt - a, a > 4 ? '#D7263D' : '#F39C12', 44) + 30; }
+      for (const [a, t1, t2] of items) { if (lt > a) y += card(c, 70, y, 860, t1, t2, lt - a, a > 8 ? '#D7263D' : '#F39C12', 44) + 30; }
       c.restore();
     }
-    if (lt > 7) {
-      const a = lt - 7;
+    if (lt > 11.2) {
+      const a = lt - 11.2;
       card(c, 80, 470, 840, 'ZASADA', 'Kurier dzwoni do adresata.\nNie do ciebie.', a, '#F39C12', 54);
-      if (lt > 8.6) {
-        const b = lt - 8.6, s = b < .3 ? back(b / .3) : 1;
+      if (lt > 14.5) {
+        const b = lt - 14.5, s = b < .3 ? back(b / .3) : 1;
         c.save(); c.translate(540, 960); c.scale(s, s);
         txt(c, 'Otworzyłbyś?', 0, 0, 64, '#FFFFFF', 900);
         fillRR(c, -330, 70, 300, 110, 24, '#D7263D'); txt(c, 'A · TAK', -180, 126, 50, '#FFFFFF', 900);
@@ -863,14 +863,14 @@ scene({
 });
 // 11. KONIEC — KAPTUR i pętla
 scene({
-  name: 'end', start: 114, end: 119,
+  name: 'end', start: 119, end: 124,
   cam: lt => ({ z: 1.35 + lt * .03, y: 120 }),
   labels: [[3.1, 5, 'ODC. 2 →', 540, 620, 'orange', 64]],
   draw(c, lt, sc) {
     blockBg(c, lt, { off94: lt > 1.6 });
     const front = lt > 2.6;
     person(c, 'kaptur', 540, 1640, 1.6, { t: lt, back: !front, glow: front ? clamp((lt - 2.6) * 2) : 0, look: 0 });
-    snow(c, lt + 114);
+    snow(c, lt + 119);
   },
 });
 const CHALLENGE_T = 2.0;
@@ -947,7 +947,7 @@ function buildCues() {
   for (const sc of S) {
     if (sc.start > 0) add(sc.start, 'whoosh');
     for (const L of sc.labels || []) add(sc.start + L[0], 'tik');
-    for (const B of sc.bubbles || []) add(sc.start + B[0], 'voice', { who: B[7], dur: Math.min(B[1] - B[0] - .2, .055 * B[2].length + .3) });
+    for (const B of sc.bubbles || []) add(sc.start + B[0], 'voice', { bubble: B[2], who: B[7], dur: Math.min(B[1] - B[0] - .2, .055 * B[2].length + .3) });
   }
   add(0.0, 'motif'); add(0.12, 'stab'); add(0.85, 'press'); add(1.0, 'doorbuzz'); add(2.0, 'tik');
   add(11.3, 'intercom'); add(19.0, 'press'); add(19.05, 'doorbuzz');
@@ -958,9 +958,9 @@ function buildCues() {
   for (let k = 0; k < 5; k++) add(80.2 + k * 1.0, 'vibrate');
   let hb = 78; let gap = 0.85; while (hb < 87.5) { add(hb, 'heart'); hb += gap; gap = Math.max(0.42, gap * 0.95); }
   add(88.0, 'hit'); add(93.0, 'whoosh'); add(99.2, 'pluck');
-  for (const a of [0.4, 1.8, 3.2, 4.6]) add(102 + a, 'tik');
-  add(109.0, 'stab'); add(110.6, 'tik');
-  add(115.6, 'switch'); add(116.6, 'whoosh'); add(117.1, 'motif');
+  for (const a of [0.4, 3.2, 5.35, 8.25]) add(102 + a, 'tik');
+  add(113.2, 'stab'); add(116.5, 'tik');
+  add(120.6, 'switch'); add(121.6, 'whoosh'); add(122.1, 'motif');
   for (const e of ERR) add(e, 'error');
   return q.sort((a, b) => a.t - b.t);
 }
