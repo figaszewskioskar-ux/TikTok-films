@@ -5,6 +5,6 @@ cd "$(dirname "$0")"
 node render.js cues
 node render.js video 4
 python3 audio.py
-ffmpeg -y -v error -i out/video_noaudio.mp4 -i out/audio.wav -map 0:v -map 1:a -c:v copy \
+ffmpeg -y -v error -i out/video_noaudio.mp4 -i out/audio.wav -map 0:v -map 1:a -c:v libx264 -preset slow -crf 21 -maxrate 8M -bufsize 16M -pix_fmt yuv420p \
   -af "loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -ar 48000 -shortest -movflags +faststart BLOK94_ODC1.mp4
 echo "Gotowe: $(pwd)/BLOK94_ODC1.mp4"
