@@ -8,6 +8,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 info = json.load(open(os.path.join(HERE, 'out', 'cues.json')))
 DUR = info['DUR']
 N = int(DUR * SR)
+TL = info.get('timeline') or []
+
+
+def G(old):
+    for sc in TL:
+        if sc['oStart'] <= old < sc['oEnd'] or sc is TL[-1]:
+            k = sc['knots']; x = old - sc['oStart']
+            return sc['start'] + float(np.interp(x, [p[0] for p in k], [p[1] for p in k]))
+    return old
+
+
+def Gs(lst):
+    return [G(v) for v in lst]
 L = np.zeros(N); R = np.zeros(N)
 rng = np.random.default_rng(94)
 
@@ -202,17 +215,17 @@ def env_db(times, dbs):
 
 if REAL:
     # podkład jak w oryginale: niski, ciemny, powoli narastający; cisza tuż przed zwrotem akcji
-    bed = loop_to(load('bed', rms_db=0), N) * env_db([0, 60, 74, 87.5, 87.85, 88.6, 98, 102, 119, 124],
+    bed = loop_to(load('bed', rms_db=0), N) * env_db(Gs([0, 60, 74, 87.5, 87.85, 88.6, 98, 102, 119, 123.99]),
                                                        [-31, -28, -26, -23.5, -60, -27, -32, -31, -29, -24])
-    outdoor = np.interp(tt, [0, 4.9, 5, 11, 11.1, 33.9, 34, 45, 45.1, 118.9, 119, 124], [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
+    outdoor = np.interp(tt, Gs([0, 4.9, 5, 10.99, 11.1, 33.9, 34, 44.99, 45.1, 118.9, 119, 123.99]), [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
     wind = loop_to(load('wind', rms_db=0), N) * db2a(-33) * lowpass(outdoor, int(.15 * SR))
-    tvmask = np.interp(tt, [0, 11, 11.3, 21.2, 21.5, 124], [0, 0, 1, 1, 0, 0])
+    tvmask = np.interp(tt, Gs([0, 11, 11.3, 21.2, 21.49, 123.99]), [0, 0, 1, 1, 0, 0])
     tv = loop_to(load('tv', rms_db=0, flt='lowpass=f=1800'), N) * db2a(-36) * tvmask
-    hb = loop_to(load('heartbeat', rms_db=0), N) * env_db([0, 77.5, 79, 87.4, 87.6, 124], [-90, -90, -27, -21, -90, -90])
+    hb = loop_to(load('heartbeat', rms_db=0), N) * env_db(Gs([0, 77.5, 79, 87.4, 87.6, 123.99]), [-90, -90, -27, -21, -90, -90])
     BG = bed + wind + tv
     L += hb; R += hb
-    for k in range(int((119 - 102) / 0.5)):
-        add(tik() * 0.25, 102 + k * 0.5, pan=(-.3 if k % 2 else .3))
+    for k in range(int((G(118.99) - G(102)) / 0.5)):
+        add(tik() * 0.25, G(102) + k * 0.5, pan=(-.3 if k % 2 else .3))
     REALMAP = {  # typ wskazówki -> (plik, szczyt dB)
         'hit': [('boom', -2), ('door_bang', -6)], 'stab': [('boom', -5)], 'whoosh': [('whoosh', -12)],
         'doorbuzz': [('buzz', -13)], 'intercom': [('ring', -10)], 'lock': [('door_lock', -9)],
@@ -225,7 +238,7 @@ if REAL:
         (93.0, 'run', -9), (98.1, 'run', -11), (121.6, 'sting', -5),
     ]
     for t0, name, pk in EXTRA:
-        add(load(name, peak_db=pk), t0, 1.0, pan=rng.uniform(-.25, .25))
+        add(load(name, peak_db=pk), G(t0), 1.0, pan=rng.uniform(-.25, .25))
 else:
     lvl = np.interp(tt, [0, 5, 11, 21, 34, 45, 66, 74, 87.6, 88.0, 98, 102, 119, 124],
                     [.55, .6, .5, .5, .55, .5, .8, 1.0, 1.0, 0.0, .45, .2, .35, .7])
@@ -242,19 +255,20 @@ FX = dict(tik=tik, stab=stab, error=error, hit=hit, whoosh=whoosh, doorbuzz=door
           press=press, ding=ding, lock=lock, thud=thud, heart=heart, vibrate=vibrate, pluck=pluck,
           switch=switch, motif=motif)
 # ---------- dubbing (jeśli jest) ----------
-DUB = os.path.join(HERE, 'out', 'voice', 'lines.json')
+NARR = os.path.join(HERE, 'out', 'narr', 'lines.json')
+DUB = NARR if os.path.exists(NARR) else os.path.join(HERE, 'out', 'voice', 'lines.json')
 dub = json.load(open(DUB)) if os.path.exists(DUB) else []
 duck = np.ones(N)
 VGAIN = {'kaptur': 1.5, 'kurier': 1.0}
 for ln in dub:
     f = ln['file']
-    flt = 'highpass=f=350,lowpass=f=3400,acompressor' if ln['id'] == 'l03' else 'anull'  # l03 słychać przez domofon
+    flt = 'highpass=f=350,lowpass=f=3400,acompressor' if ln.get('id') == 'l03' else 'acompressor=threshold=-20dB:ratio=3,highpass=f=70'  # l03 słychać przez domofon
     raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', f, '-af', flt, '-f', 's16le', '-ac', '1', '-ar', str(SR), '-'])
     v = np.frombuffer(raw, dtype='<i2').astype(float) / 32768
     loud = v[np.abs(v) > np.abs(v).max() * 0.05]
     v = v / (np.sqrt(np.mean(loud ** 2)) + 1e-9) * db2a(-17 if REAL else -12)
     i0 = int(ln['t'] * SR)
-    add(v, ln['t'], VGAIN.get(ln['who'], 1.0))
+    add(v, ln['t'], VGAIN.get(ln.get('who'), 1.0))
     a, b = max(0, i0 - int(.1 * SR)), min(N, i0 + len(v) + int(.15 * SR))
     duck[a:b] = np.minimum(duck[a:b], 0.5)
 duck = lowpass(duck, int(0.08 * SR))

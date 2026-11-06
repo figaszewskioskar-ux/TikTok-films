@@ -33,7 +33,7 @@ const grab = (page, t, type = 'jpeg') => page.evaluate(([t, type]) => {
     }
   } else if (mode === 'cues') {
     const page = await openPage(browser);
-    const info = await page.evaluate(() => ({ cues: FILM.cues, DUR: FILM.DUR, FPS: FILM.FPS }));
+    const info = await page.evaluate(() => ({ cues: FILM.cues, DUR: FILM.DUR, FPS: FILM.FPS, timeline: FILM.timeline }));
     fs.writeFileSync(path.join(OUT, 'cues.json'), JSON.stringify(info, null, 1));
   } else if (mode === 'video') {
     const N = parseInt(process.argv[3] || '4');

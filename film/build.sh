@@ -2,6 +2,7 @@
 # Pełny build odcinka: obraz -> dźwięk -> MP4 gotowy na TikToka
 set -e
 cd "$(dirname "$0")"
+[ -f timeline.js ] || python3 narr.py
 node render.js cues
 node render.js video 4
 python3 audio.py

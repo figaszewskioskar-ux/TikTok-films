@@ -1,7 +1,8 @@
 // BLOK 94 · ODC. 1 — "NIE OTWIERAJ KURIEROWI!"
 // Cała animacja rysowana na canvasie 1080×1920. renderFrame(t) rysuje klatkę dla czasu t (sekundy).
 'use strict';
-const W = 1080, H = 1920, FPS = 30, DUR = 124;
+const W = 1080, H = 1920, FPS = 30;
+let DUR = 124;
 const ERR = [19.0, 40.5, 59.75];          // momenty błędów (licznik BŁĘDY)
 const FONT = 'Inter';
 
@@ -838,10 +839,10 @@ scene({
       c.save(); c.globalAlpha = 1 - out; c.translate(-out * 200, 0);
       let y = 420;
       const items = [
-        [0.4, 'BŁĄD 1 · 0:19', 'wpuścił „kuriera” do cudzego\nmieszkania'],
-        [3.2, 'BŁĄD 2 · 0:40', 'przytrzymał drzwi obcemu'],
-        [5.35, 'BŁĄD 3 · 0:59', 'powiedział, że sąsiadki nie ma'],
-        [8.25, 'BŁĄD 4 · ???', 'jest w pierwszych 20 sekundach.\nZnalazłeś? Napisz w komentarzu ↓'],
+        [0.4, 'BŁĄD 1 · ' + fmt(ERRN[0]), 'wpuścił „kuriera” do cudzego\nmieszkania'],
+        [3.2, 'BŁĄD 2 · ' + fmt(ERRN[1]), 'przytrzymał drzwi obcemu'],
+        [5.35, 'BŁĄD 3 · ' + fmt(ERRN[2]), 'powiedział, że sąsiadki nie ma'],
+        [8.25, 'BŁĄD 4 · ???', 'był na samym początku.\nZnalazłeś? Napisz w komentarzu ↓'],
       ];
       for (const [a, t1, t2] of items) { if (lt > a) y += card(c, 70, y, 860, t1, t2, lt - a, a > 8 ? '#D7263D' : '#F39C12', 44) + 30; }
       c.restore();
@@ -873,7 +874,24 @@ scene({
     snow(c, lt + 119);
   },
 });
-const CHALLENGE_T = 2.0;
+// ---------- oś czasu dopasowana do lektora (timeline.js z narr.py) ----------
+function pw(knots, x, from, to) {
+  for (let i = 1; i < knots.length; i++) {
+    const a = knots[i - 1], b = knots[i];
+    if (x <= b[from] || i === knots.length - 1) return a[to] + (b[to] - a[to]) * clamp((x - a[from]) / ((b[from] - a[from]) || 1));
+  }
+  return x;
+}
+for (const sc of S) {
+  sc.oStart = sc.start; sc.oEnd = sc.end;
+  const m = window.TIMELINE && window.TIMELINE.find(x => x.name === sc.name);
+  if (m) { sc.start = m.start; sc.end = m.end; sc.knots = m.knots; } else sc.knots = [[0, 0], [sc.oEnd - sc.oStart, sc.oEnd - sc.oStart]];
+}
+DUR = S[S.length - 1].end;
+function G(old) { const sc = S.find(s => old >= s.oStart && old < s.oEnd) || S[S.length - 1]; return sc.start + pw(sc.knots, old - sc.oStart, 0, 1); }
+const ERRN = ERR.map(G);
+const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+const CHALLENGE_T = G(2.0);
 
 // ---------- nakładki ----------
 let grain = [];
@@ -899,9 +917,9 @@ function overlays(c, t, frame) {
   fillRR(c, 222, 150, 250, 52, 26, 'rgba(14,16,21,.85)');
   txt(c, 'BLOK 94 · ODC. 1', 347, 177, 26, '#FFFFFF', 800);
   // licznik błędów
-  if (t >= CHALLENGE_T && t < 102) {
-    const n = ERR.filter(e => t >= e).length;
-    const last = ERR.filter(e => t >= e).pop();
+  if (t >= CHALLENGE_T && t < G(102)) {
+    const n = ERRN.filter(e => t >= e).length;
+    const last = ERRN.filter(e => t >= e).pop();
     const fl = last != null ? clamp(1 - (t - last) / 1.2) : 0;
     const pop = Math.min(1, (t - CHALLENGE_T) / .3);
     c.save(); c.translate(860, 176); const s = back(pop) * (1 + 0.35 * fl * (0.5 + 0.5 * Math.sin((t - (last || 0)) * 25))); c.scale(s, s);
@@ -919,7 +937,7 @@ function drawAt(c, t, frame) {
   c.setTransform(1, 0, 0, 1, 0, 0);
   c.fillStyle = '#0E1015'; c.fillRect(0, 0, W, H);
   const sc = S.find(s => t >= s.start && t < s.end) || S[S.length - 1];
-  const lt = t - sc.start;
+  const lt = pw(sc.knots, t - sc.start, 1, 0);
   c.save();
   const cam = sc.cam ? sc.cam(lt) : { z: 1 };
   c.translate(W / 2 + (cam.x || 0), H / 2 + (cam.y || 0)); c.scale(cam.z, cam.z); c.translate(-W / 2, -H / 2);
@@ -943,11 +961,11 @@ function renderFrame(t) {
 // ---------- wskazówki dźwiękowe ----------
 function buildCues() {
   const q = [];
-  const add = (t, type, extra = {}) => q.push({ t: +t.toFixed(3), type, ...extra });
+  const add = (t, type, extra = {}) => q.push({ t: +G(t).toFixed(3), type, ...extra });
   for (const sc of S) {
-    if (sc.start > 0) add(sc.start, 'whoosh');
-    for (const L of sc.labels || []) add(sc.start + L[0], 'tik');
-    for (const B of sc.bubbles || []) add(sc.start + B[0], 'voice', { bubble: B[2], who: B[7], dur: Math.min(B[1] - B[0] - .2, .055 * B[2].length + .3) });
+    if (sc.oStart > 0) add(sc.oStart, 'whoosh');
+    for (const L of sc.labels || []) add(sc.oStart + L[0], 'tik');
+    for (const B of sc.bubbles || []) add(sc.oStart + B[0], 'voice', { bubble: B[2], who: B[7], dur: Math.min(B[1] - B[0] - .2, .055 * B[2].length + .3) });
   }
   add(0.0, 'motif'); add(0.12, 'stab'); add(0.85, 'press'); add(1.0, 'doorbuzz'); add(2.0, 'tik');
   add(11.3, 'intercom'); add(19.0, 'press'); add(19.05, 'doorbuzz');
@@ -965,7 +983,7 @@ function buildCues() {
   return q.sort((a, b) => a.t - b.t);
 }
 
-window.FILM = { W, H, FPS, DUR, renderFrame, cues: buildCues(), ready: (async () => {
+window.FILM = { W, H, FPS, DUR, renderFrame, timeline: S.map(({ name, oStart, oEnd, start, end, knots }) => ({ name, oStart, oEnd, start, end, knots })), cues: buildCues(), ready: (async () => {
   await document.fonts.load(`800 40px ${FONT}`); await document.fonts.load(`900 40px ${FONT}`); await document.fonts.load(`700 40px ${FONT}`); await document.fonts.load(`600 40px ${FONT}`);
   makeGrain();
   return true;
