@@ -87,8 +87,8 @@
   <div class="grid4">
     <article class="part"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka części 1: Nie pytaj kto tam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 1</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta, a piętro wyżej ktoś czeka.</p><div class="rule">Prośba o pomoc w nocy? Nie otwieraj, dzwoń na 112.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
     <article class="part"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka części 2: Nie otwieraj policji" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 2</span><span class="hot">{{ section.settings.views }} wyświetleń</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze cztery minuty dalej.</p><div class="rule">Zapytaj 112, czy patrol stoi pod twoimi drzwiami.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka części 3: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 3</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka części 4: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 4</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    {%- if section.settings.parts >= 3 -%}<article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka części 3: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 3</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
+    {%- if section.settings.parts >= 4 -%}<article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka części 4: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 4</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
   </div>
 </div></section>
 
@@ -96,9 +96,9 @@
   <span class="eyebrow">Bohaterowie</span><h2 style="margin-top:12px">Mieszkańcy bloku 94</h2>
   <div class="cast">
     <div class="who"><img src="{{ 'blok94-ola.png' | asset_url }}" alt="Ola" loading="lazy"><h3>Ola</h3><span class="tag" style="background:#b79bea">mieszkanie 94</span><p>Została sama na noc. Uczy się na błędach szybciej, niż by chciała.</p></div>
-    <div class="who"><img src="{{ 'blok94-kuba.png' | asset_url }}" alt="Kuba" loading="lazy"><h3>Kuba</h3><span class="tag" style="background:var(--hat)">brat Oli</span><p>Gra w słuchawkach, gubi klucze i zawsze chce „zaraz to włączyć”.</p></div>
+    <div class="who"><img src="{{ 'blok94-kuba.png' | asset_url }}" alt="Kuba" loading="lazy"><h3>Kuba</h3><span class="tag" style="background:var(--hat)">brat Oli</span><p>{%- if section.settings.parts >= 3 -%}Gra w słuchawkach, gubi klucze i zawsze chce „zaraz to włączyć”.{%- else -%}Brat Oli. Ufa ludziom bardziej, niż powinien.{%- endif -%}</p></div>
     <div class="who"><img src="{{ 'blok94-zdzisiek.png' | asset_url }}" alt="Pan Zdzisiek" loading="lazy"><h3>Pan Zdzisiek</h3><span class="tag" style="background:#e07a7a">2. piętro</span><p>„Ja tu znam wszystkich.” I naprawdę pilnuje klatki.</p></div>
-    <div class="who"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">mieszkanie 104?</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
+    <div class="who"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">{%- if section.settings.parts >= 4 -%}mieszkanie 104?{%- else -%}???{%- endif -%}</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
   </div>
 </div></section>
 
@@ -108,8 +108,8 @@
     <li><div class="peep" aria-hidden="true"></div><div><b>Ktoś puka w nocy, a wizjer jest czarny?</b><span>Nie pytaj „kto tam?”. Nie zdradzaj, że jesteś w domu. Dzwoń na <span class="n112">112</span>.</span></div></li>
     <li><div class="peep" aria-hidden="true"></div><div><b>Ktoś prosi o pomoc zza drzwi?</b><span>Nie otwieraj, nawet na łańcuch. Pomoc wezwiesz przez drzwi.</span></div></li>
     <li><div class="peep" aria-hidden="true"></div><div><b>Ktoś mówi, że jest z policji?</b><span>Zapytaj dyspozytora <span class="n112">112</span>, czy patrol jest pod twoim adresem.</span></div></li>
-    <li><div class="peep" aria-hidden="true"></div><div><b>Prąd zgasł tylko u ciebie?</b><span>Nie wychodź w nocy na korytarz do licznika.</span></div></li>
-    <li><div class="peep" aria-hidden="true"></div><div><b>Zgubione klucze z numerem mieszkania?</b><span>Zamek wymień tej samej nocy. Nie noś numeru na breloczku.</span></div></li>
+    {%- if section.settings.parts >= 3 -%}<li><div class="peep" aria-hidden="true"></div><div><b>Prąd zgasł tylko u ciebie?</b><span>Nie wychodź w nocy na korytarz do licznika.</span></div></li>{%- endif -%}
+    {%- if section.settings.parts >= 4 -%}<li><div class="peep" aria-hidden="true"></div><div><b>Zgubione klucze z numerem mieszkania?</b><span>Zamek wymień tej samej nocy. Nie noś numeru na breloczku.</span></div></li>{%- endif -%}
     <li><div class="peep" aria-hidden="true"></div><div><b>Jesteś sam w domu?</b><span>Nie pisz o tym w relacji i nie dodawaj lokalizacji.</span></div></li>
   </ul>
 </div></section>
@@ -167,7 +167,7 @@
 (function(){const Q=[
  {q:'2:47 w nocy. Ktoś puka, a wizjer jest czarny. Co robisz?',o:['Pytam „kto tam?”','Nie odzywam się i dzwonię na 112','Otwieram na łańcuch'],ok:1,w:'Cisza mówi, że nikogo nie ma. Pytanie zdradza, że jesteś w domu.'},
  {q:'Ktoś krzyczy zza drzwi: „Policja! Otwierać!”. Co robisz?',o:['Otwieram, to przecież policja','Pytam 112, czy patrol jest pod moim adresem','Krzyczę, żeby pokazali legitymację przez wizjer'],ok:1,w:'Dyspozytor wie, gdzie są radiowozy. Fałszywy policjant tego nie przewidzi.'},
- {q:'O północy prąd gaśnie tylko w twoim mieszkaniu. Co robisz?',o:['Idę do skrzynki na korytarzu','Zostaję w środku i dzwonię po pomoc','Wychodzę z latarką, żeby sprawdzić klatkę'],ok:1,w:'Wyłączony bezpiecznik może być pułapką na kogoś, kto wyjdzie sprawdzić.'}];
+ {q:'Nocą pisze do ciebie konto bez zdjęcia: „jesteś sama?”. Co robisz?',o:['Odpisuję: kim jesteś?','Robię zrzut ekranu, blokuję i zgłaszam','Wysyłam mu zdjęcie z okna'],ok:1,w:'Nie rozmawiaj z obcym. Zachowaj dowód, zablokuj i zgłoś.'}];
  let i=0;const qt=document.getElementById('q-text'),qo=document.getElementById('q-opts'),qw=document.getElementById('q-why'),qn=document.getElementById('q-no'),nx=document.getElementById('q-next');
  function show(){const c=Q[i];qt.textContent=c.q;qo.innerHTML='';qw.textContent='';nx.hidden=true;qn.textContent='Pytanie '+(i+1)+' z '+Q.length;
   c.o.forEach((t,k)=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{qo.querySelectorAll('button').forEach((x,j)=>{x.disabled=true;if(j===c.ok)x.classList.add('ok');});if(k!==c.ok)b.classList.add('bad');qw.textContent=(k===c.ok?'Dobrze. ':'Tak zrobiła Ola i to był błąd. ')+c.w;nx.hidden=false;nx.textContent=i<Q.length-1?'Następne pytanie':'Od początku';});qo.appendChild(b);});}
@@ -175,6 +175,7 @@
 </script>
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
+ {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":4,"step":1,"default":2},
  {"type":"text","id":"premiere","label":"Premiera kolejnej części (UTC, np. 2026-11-09T00:30:00Z)","default":"2026-11-09T00:30:00Z"},
  {"type":"text","id":"premiere_label","label":"Opis premiery","default":"pon. 9.11, 1:30 · TikTok"},
  {"type":"text","id":"tiktok","label":"Link do TikToka","default":"https://www.tiktok.com/@protokolocaleni"},
