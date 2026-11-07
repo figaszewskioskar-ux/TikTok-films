@@ -97,6 +97,7 @@ function buildCues() {
 
 window.FILM = { W, H, FPS, DUR, renderFrame, timeline: S.map(({ name, oStart, oEnd, start, end, knots }) => ({ name, oStart, oEnd, start, end, knots })), cues: buildCues(), ready: (async () => {
   await document.fonts.load(`800 40px ${FONT}`); await document.fonts.load(`900 40px ${FONT}`); await document.fonts.load(`700 40px ${FONT}`); await document.fonts.load(`600 40px ${FONT}`);
+  if (EPC.images) await Promise.all(Object.entries(EPC.images).map(([k, src]) => new Promise(r => { const i = new Image(); i.onload = i.onerror = () => r(); i.src = src; (window.IMGS = window.IMGS || {})[k] = i; })));
   makeGrain();
   return true;
 })() };

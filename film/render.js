@@ -25,7 +25,7 @@ const grab = (page, t, type = 'jpeg') => page.evaluate(([t, type]) => {
 
 (async () => {
   const mode = process.argv[2];
-  const browser = await chromium.launch({ args: ['--disable-gpu-vsync'] });
+  const browser = await chromium.launch({ args: ['--disable-gpu-vsync', '--allow-file-access-from-files', '--disable-web-security'] });
   if (mode === 'stills') {
     const page = await openPage(browser);
     const SD = path.join(OUT, 'stills'); fs.mkdirSync(SD, { recursive: true }); for (const f of fs.readdirSync(SD)) fs.unlinkSync(path.join(SD, f));
