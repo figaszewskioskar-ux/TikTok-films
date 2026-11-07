@@ -1,0 +1,82 @@
+{
+  "sections": {
+    "main": {
+      "type": "blok94-wspolpraca",
+      "blocks": {
+        "k0": {
+          "type": "pkg",
+          "settings": {
+            "product": "reklama-wzmianka",
+            "name": "Wzmianka",
+            "price": "99 zł",
+            "unit": "za odcinek",
+            "badge": "",
+            "highlight": false,
+            "desc": "Krótka wzmianka lektora i logo na końcu odcinka.",
+            "features": "5–7 sekund wzmianki lektora\nLogo na planszy końcowej\nLink w przypiętym komentarzu\nOznaczenie jako reklama",
+            "time": "Publikacja do 14 dni"
+          }
+        },
+        "k1": {
+          "type": "pkg",
+          "settings": {
+            "product": "reklama-lokowanie",
+            "name": "Lokowanie w scenie",
+            "price": "249 zł",
+            "unit": "za odcinek",
+            "badge": "Polecany",
+            "highlight": true,
+            "desc": "Twój produkt narysowany w stylu serii i użyty przez bohatera w kluczowej scenie.",
+            "features": "Produkt narysowany w stylu BLOK 94\nKuba albo Ola używa produktu w scenie\nWzmianka lektora i link w komentarzu\nPodgląd sceny przed publikacją",
+            "time": "Publikacja do 14 dni"
+          }
+        },
+        "k2": {
+          "type": "pkg",
+          "settings": {
+            "product": "reklama-odcinek",
+            "name": "Odcinek sponsorowany",
+            "price": "599 zł",
+            "unit": "za odcinek",
+            "badge": "",
+            "highlight": false,
+            "desc": "Cała część „Kto tam?” zbudowana wokół sytuacji związanej z twoją marką.",
+            "features": "Scenariusz uzgodniony z tobą\nProdukt w kilku scenach\nWzmianka na początku i na końcu\nLicencja na film na 30 dni",
+            "time": "Publikacja do 21 dni"
+          }
+        },
+        "k3": {
+          "type": "pkg",
+          "settings": {
+            "product": "reklama-miesieczny",
+            "name": "Pakiet miesięczny",
+            "price": "799 zł",
+            "unit": "za miesiąc",
+            "badge": "",
+            "highlight": false,
+            "desc": "Stała obecność marki w kolejnych częściach serii.",
+            "features": "4 wzmianki w kolejnych częściach\n1 lokowanie w scenie\nLink w każdym przypiętym komentarzu\nRaport zbiorczy na koniec miesiąca",
+            "time": "Start w ciągu 7 dni"
+          }
+        }
+      },
+      "block_order": [
+        "k0",
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "settings": {
+        "followers": "899",
+        "likes": "8 700",
+        "top": "160 000",
+        "length": "~2 min",
+        "stats_note": "Stan na 7.11.2026. Aktualne statystyki wysyłamy na prośbę.",
+        "email": "protokolocaleni@gmail.com"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

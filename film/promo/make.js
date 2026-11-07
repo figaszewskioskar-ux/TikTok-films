@@ -8,5 +8,6 @@ const { chromium } = require('playwright'); const fs = require('fs'), path = req
   const chars = { kuba: {}, ola: { phone: 1, aR: .9 }, kaptur: { glow: 1 }, zdzisiek: { net: true }, kurier: { box: true }, policjant: {}, kobieta: { mouth: 'o' }, halina: {} };
   for (const [k, o] of Object.entries(chars)) fs.writeFileSync(path.join(out, `blok94-${k}.png`), Buffer.from(await p.evaluate(([k, o]) => PROMO.char(k, o), [k, o]), 'base64'));
   fs.writeFileSync(path.join(out, 'blok94-hero.jpg'), Buffer.from(await p.evaluate(() => PROMO.hero()), 'base64'));
+  for (const k of [1, 2, 3]) fs.writeFileSync(path.join(out, `blok94-tapeta${k}.jpg`), Buffer.from(await p.evaluate(k => PROMO.wall(k), k), 'base64'));
   await b.close();
 })();

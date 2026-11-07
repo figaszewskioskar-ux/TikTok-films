@@ -1,0 +1,123 @@
+{%- comment -%} BLOK 94 – Współpraca (reklama na kanale). Zamówienia pakietów: /cart/ID:1 jak wcześniej. {%- endcomment -%}
+{{ 'blok94.css' | asset_url | stylesheet_tag }}
+<div class="b94p" id="b94w">
+  <section class="hero"><span class="lamp" aria-hidden="true"></span><div class="wrap">
+    <div class="rv">
+      <span class="eyebrow">Współpraca · @protokolocaleni</span>
+      <h1 style="margin-top:14px">Twoja marka<br>w <span class="sign">bloku 94</span></h1>
+      <p class="lead">„Kto tam?” to animowana seria o bezpieczeństwie w domu: domofon, wizjer, zamki, telefon i noc w bloku. Widzowie oglądają do końca, bo każda część kończy się cliffhangerem. To naturalne miejsce dla zamków, wideodomofonów, kamer, alarmów, ubezpieczeń mieszkań i aplikacji bezpieczeństwa.</p>
+      <div class="cta"><a class="btn red" href="#pakiety">Zobacz pakiety</a><a class="btn line" href="mailto:{{ section.settings.email | escape }}?subject=Reklama%20w%20serii%20BLOK%2094">Napisz e-mail</a></div>
+    </div>
+    <div class="scene rv" aria-label="Kuba i Ola przy drzwiach 94 z produktem partnera">
+      <div class="door94"></div>
+      <img class="who" src="{{ 'blok94-kuba.png' | asset_url }}" alt="" style="left:44%" loading="lazy">
+      <img class="who b" src="{{ 'blok94-ola.png' | asset_url }}" alt="" style="left:66%" loading="lazy">
+      <span class="tag" style="left:50%;top:10%;background:var(--hat);color:#14161b">TU JEST MIEJSCE<br>NA TWÓJ PRODUKT</span>
+      <span class="tag" style="left:6%;top:6%">np. wideodomofon w scenie z wizjerem</span>
+    </div>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div class="rv"><span class="eyebrow">Kanał w liczbach</span><h2 style="margin-top:12px">Zasięg, który rośnie z każdą częścią</h2></div>
+    <div class="stats rv">
+      <div class="stat"><b data-count>{{ section.settings.followers }}</b><span>obserwujących na TikToku</span></div>
+      <div class="stat"><b data-count>{{ section.settings.likes }}</b><span>polubień</span></div>
+      <div class="stat"><b data-count>{{ section.settings.top }}</b><span>wyświetleń najlepszej części</span></div>
+      <div class="stat"><b>{{ section.settings.length }}</b><span>średnia długość odcinka</span></div>
+    </div>
+    <p class="note">{{ section.settings.stats_note }}</p>
+    <div class="grid">
+      <div class="card rv"><h3>Kto ogląda</h3><p>Widzowie z Polski: młodzież, studenci i rodzice. Lubią napięcie, historie z cliffhangerem i praktyczne porady.</p></div>
+      <div class="card rv"><h3>Jak ogląda</h3><p>Seryjnie. Każda część kończy się zwrotem akcji, więc widzowie komentują teorie i wracają po kolejną.</p></div>
+      <div class="card rv"><h3>Gdzie pasujesz</h3><p>W scenie, która naprawdę potrzebuje twojego produktu: wideodomofon zamiast zaklejonego wizjera, alarm, gdy ktoś przekręca klucz w zamku.</p></div>
+    </div>
+  </div></section>
+
+  <section id="pakiety"><div class="wrap">
+    <div class="rv"><span class="eyebrow">Pakiety</span><h2 style="margin-top:12px">Wybierz formę współpracy</h2>
+    <p class="lead">Ceny dotyczą jednej publikacji na TikToku. Każda reklama jest oznaczona jako treść komercyjna, zgodnie z zasadami platformy i prawem.</p></div>
+    <div class="pkgs">
+      {%- for block in section.blocks -%}
+      <div class="pkg rv{% if block.settings.highlight %} hl{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.badge != blank -%}<span class="badge">{{ block.settings.badge | escape }}</span>{%- endif -%}
+        <h3>{{ block.settings.name | escape }}</h3>
+        {%- if block.settings.product != blank -%}{%- assign v = block.settings.product.selected_or_first_available_variant -%}
+          <div class="price">{{ v.price | money_without_trailing_zeros }}<small>{{ block.settings.unit | escape }}</small></div>
+        {%- else -%}<div class="price">{{ block.settings.price | escape }}<small>{{ block.settings.unit | escape }}</small></div>{%- endif -%}
+        <p style="margin:0;color:var(--muted);font-size:15px">{{ block.settings.desc | escape }}</p>
+        <ul>{%- assign fs = block.settings.features | newline_to_br | split: '<br />' -%}{%- for f in fs -%}{%- assign ft = f | strip -%}{%- if ft != '' -%}<li>{{ ft | escape }}</li>{%- endif -%}{%- endfor -%}</ul>
+        <span class="time">{{ block.settings.time | escape }}</span>
+        {%- if block.settings.product != blank -%}<a class="btn {% if block.settings.highlight %}red{% else %}gold{% endif %}" href="/cart/{{ v.id }}:1">Zamawiam</a>
+        {%- else -%}<a class="btn line" href="mailto:{{ section.settings.email }}?subject={{ block.settings.name | url_encode }}">Zapytaj o termin</a>{%- endif -%}
+      </div>
+      {%- endfor -%}
+    </div>
+    <p class="note">{{ section.settings.vat_note }}</p>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div class="rv"><span class="eyebrow">Jak to działa</span><h2 style="margin-top:12px">Od zamówienia do raportu w około dwa tygodnie</h2></div>
+    <div class="steps">
+      <div class="step rv"><h3>Zamówienie</h3><p>Wybierasz pakiet i płacisz online albo prosisz o fakturę lub rachunek do przelewu.</p></div>
+      <div class="step rv"><h3>Brief</h3><p>W ciągu 24 godzin piszemy do ciebie. Ustalamy produkt, przekaz i termin.</p></div>
+      <div class="step rv"><h3>Akceptacja</h3><p>Przed publikacją dostajesz scenariusz i podgląd sceny z produktem. Jedna runda poprawek w cenie.</p></div>
+      <div class="step rv"><h3>Publikacja i raport</h3><p>Po 7 dniach wysyłamy zrzuty statystyk: wyświetlenia, polubienia, komentarze i udostępnienia.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="grid" style="margin-top:0">
+      <div class="card rv"><span class="eyebrow">Płatności</span><h3 style="margin-top:12px">Płać tak, jak wygodnie twojej firmie</h3>
+        <p><b style="color:var(--ink)">Online:</b> BLIK i karta, natychmiast w kasie sklepu. Potwierdzenie przychodzi mailem.</p>
+        <p><b style="color:var(--ink)">Szybki przelew:</b> Przelewy24 lub PayU, bez przepisywania danych.</p>
+        <p><b style="color:var(--ink)">Przelew tradycyjny:</b> wybierz w kasie „Przelew bankowy”. Publikację planujemy po zaksięgowaniu.</p>
+        <p>{{ section.settings.invoice_note }}</p></div>
+      <div class="card rv"><span class="eyebrow">Zasady</span><h3 style="margin-top:12px">Co gwarantujemy</h3>
+        <p>Publikację w uzgodnionym terminie i utrzymanie filmu na kanale co najmniej 6 miesięcy.</p>
+        <p>Oznaczenie reklamy przełącznikiem treści komercyjnej na TikToku.</p>
+        <p>Akceptację przed publikacją. Nic nie wychodzi bez twojej zgody.</p>
+        <p>Raport po 7 dniach z prawdziwymi statystykami.</p>
+        <p><b style="color:var(--ink)">Nie gwarantujemy liczby wyświetleń.</b> Zasięg zależy od algorytmu, a podane liczby pochodzą z dotychczasowych części.</p></div>
+    </div>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div class="rv"><span class="eyebrow">Pytania firm</span><h2 style="margin-top:12px">Zanim zamówisz</h2></div>
+    <div style="max-width:780px;margin-top:20px">
+      <details class="rv"><summary>Jakich produktów nie reklamujemy?</summary><p>Hazardu, alkoholu, wyrobów tytoniowych, kryptowalut, suplementów z obietnicami zdrowotnymi i produktów, które mogłyby komuś zaszkodzić.</p></details>
+      <details class="rv"><summary>Czy mogę dostarczyć własny film?</summary><p>Nie. Reklama zawsze powstaje w stylu serii, z naszymi postaciami: Kubą, Olą i panem Zdziśkiem. Dzięki temu widzowie jej nie przewijają.</p></details>
+      <details class="rv"><summary>Czy mogę użyć filmu w swoich kanałach?</summary><p>Tak, w pakiecie z odcinkiem sponsorowanym dostajesz licencję na 30 dni. W innych pakietach licencja jest do dokupienia.</p></details>
+      <details class="rv"><summary>Co, jeśli termin mi nie pasuje?</summary><p>Termin ustalamy po opłaceniu zamówienia. Jeśli nie dojdziemy do porozumienia przed rozpoczęciem pracy, zwracamy całą kwotę.</p></details>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="card rv" style="display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:center;padding:28px">
+      <div><span class="eyebrow">Kontakt</span><h2 style="margin-top:12px">Masz inny pomysł albo większy budżet?</h2><p>Napisz, przygotujemy ofertę na serię odcinków, sezon sponsorowany albo współpracę długoterminową.</p>
+        <div class="cta"><a class="btn red" href="mailto:{{ section.settings.email | escape }}?subject=Wsp%C3%B3%C5%82praca%20BLOK%2094">Napisz e-mail</a></div>
+        <p style="user-select:all;color:var(--ink);font-weight:700">{{ section.settings.email | escape }}</p></div>
+      <div><h3>Co napisać w mailu</h3><p>Nazwa firmy i produktu, link do strony.</p><p>Wybrany pakiet albo budżet.</p><p>Preferowany termin publikacji.</p><p>Dane do faktury lub rachunku.</p></div>
+    </div>
+    <p class="note">Ceny brutto. Liczby na tej stronie pochodzą ze statystyk kanału @protokolocaleni z dnia podanego wyżej i nie stanowią gwarancji zasięgu.</p>
+  </div></section>
+</div>
+{%- render 'blok94-anim' -%}
+
+{% schema %}
+{"name":"BLOK 94 · Współpraca","settings":[
+ {"type":"header","content":"Statystyki kanału"},
+ {"type":"text","id":"followers","label":"Obserwujący","default":"899"},
+ {"type":"text","id":"likes","label":"Polubienia","default":"8 700"},
+ {"type":"text","id":"top","label":"Wyświetlenia najlepszej części","default":"160 000"},
+ {"type":"text","id":"length","label":"Długość odcinka","default":"~2 min"},
+ {"type":"text","id":"stats_note","label":"Opis statystyk","default":"Stan na 7.11.2026. Aktualne statystyki wysyłamy na prośbę."},
+ {"type":"text","id":"vat_note","label":"Informacja o cenach","default":"Podane ceny są cenami końcowymi do zapłaty."},
+ {"type":"textarea","id":"invoice_note","label":"Dokument sprzedaży","default":"Do każdego zamówienia wystawiamy dokument sprzedaży. Dane firmy wpisz w uwagach do zamówienia."},
+ {"type":"text","id":"email","label":"E-mail","default":"protokolocaleni@gmail.com"}
+],"blocks":[{"type":"pkg","name":"Pakiet","settings":[
+ {"type":"product","id":"product","label":"Produkt (zamówienie online)"},
+ {"type":"text","id":"name","label":"Nazwa"},{"type":"text","id":"price","label":"Cena (gdy brak produktu)"},{"type":"text","id":"unit","label":"Jednostka","default":"za odcinek"},
+ {"type":"text","id":"badge","label":"Plakietka"},{"type":"checkbox","id":"highlight","label":"Wyróżniony","default":false},
+ {"type":"textarea","id":"desc","label":"Opis"},{"type":"textarea","id":"features","label":"Co zawiera (jedna rzecz w linii)"},{"type":"text","id":"time","label":"Termin"}]}],
+"presets":[{"name":"BLOK 94 · Współpraca"}]}
+{% endschema %}

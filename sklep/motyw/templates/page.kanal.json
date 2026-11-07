@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "main": {
+      "type": "blok94-kanal",
+      "blocks": {
+        "m0": {
+          "type": "milestone",
+          "settings": {
+            "at": 100,
+            "label": "Pierwsza setka",
+            "reward": "podziękowania na story"
+          }
+        },
+        "m1": {
+          "type": "milestone",
+          "settings": {
+            "at": 200,
+            "label": "200 obserwujących",
+            "reward": "ruszyła nasza strona"
+          }
+        },
+        "m2": {
+          "type": "milestone",
+          "settings": {
+            "at": 500,
+            "label": "500 obserwujących",
+            "reward": "dłuższe odcinki"
+          }
+        },
+        "m3": {
+          "type": "milestone",
+          "settings": {
+            "at": 1000,
+            "label": "1000 obserwujących",
+            "reward": "LIVE z premierami odcinków"
+          }
+        }
+      },
+      "block_order": [
+        "m0",
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "followers": "899",
+        "likes": "8 700",
+        "top": "160 000",
+        "videos": "9",
+        "stats_date": "7.11.2026",
+        "parts": 2,
+        "show_archive": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
