@@ -1,0 +1,71 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Napiwki BLOK 94 – podgląd</title>
+<style>
+:root{--bg:#0b0d14;--ink:#f3efe6;--muted:#a9a6b5;--red:#d7263d;--gold:#c9a15a;--door:#5e4029;--door2:#4d3420;--led:#ff3b30;--card:#151826}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+.b94-sup{padding:56px 16px 64px;background:radial-gradient(1200px 600px at 50% -10%,#1b2340 0%,var(--bg) 60%)}
+.b94-sup .w{max-width:1080px;margin:0 auto;display:grid;gap:28px}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#14161b;background:#f39c12;padding:6px 12px;border-radius:999px}
+.b94-sup h1{font-size:clamp(30px,6vw,52px);line-height:1.05;margin:14px 0 10px;font-weight:900}
+.b94-sup h1 .sign{display:inline-block;background:var(--red);color:#fff;padding:2px 14px;border-radius:12px;transform:rotate(-1.5deg);box-shadow:0 8px 24px rgba(215,38,61,.35)}
+.b94-sup p.lead{color:var(--muted);font-size:17px;line-height:1.55;max-width:560px}
+/* karta = panel windy na tle pikowanych drzwi 94 */
+.tipcard{position:relative;border-radius:22px;padding:22px;overflow:hidden;
+ background:
+  radial-gradient(circle,var(--gold) 2.2px,transparent 2.6px) 0 0/44px 44px,
+  repeating-linear-gradient(45deg,transparent 0 30px,var(--door2) 30px 32px),
+  repeating-linear-gradient(-45deg,transparent 0 30px,var(--door2) 30px 32px),var(--door);
+ box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 0 0 10px #3c2a1c}
+.panel{background:linear-gradient(180deg,#a9b1ba,#8c939c);border-radius:16px;padding:18px;box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 10px 30px rgba(0,0,0,.4);max-width:420px;margin:0 auto}
+.plate{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;letter-spacing:.1em;color:#2b2f36;margin-bottom:10px}
+.plate b{background:#2f5da8;color:#fff;padding:4px 8px;border-radius:6px}
+.led{background:#0d0f13;border-radius:12px;padding:14px 16px;text-align:center;box-shadow:inset 0 0 0 3px #1c1f26}
+.led .amount{font-family:"Courier New",monospace;font-weight:900;font-size:58px;color:var(--led);text-shadow:0 0 18px rgba(255,59,48,.7);letter-spacing:2px}
+.led .buys{margin:4px 0 0;color:#ffb3ad;font-size:13px;min-height:18px}
+.floors{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 6px 8px}
+.floors button{aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;font-weight:900;font-size:16px;color:#2b2f36;
+ background:radial-gradient(circle at 35% 30%,#f4f6f8,#c9cdd2 60%,#9ea4ab);box-shadow:0 4px 0 #6e757c,0 6px 14px rgba(0,0,0,.35)}
+.floors button small{display:block;font-size:10px;font-weight:700;opacity:.7}
+.floors button[aria-pressed=true]{color:#fff;background:radial-gradient(circle at 35% 30%,#ffd27a,#f39c12 60%,#c97a0a);box-shadow:0 2px 0 #8a5306,0 0 22px rgba(243,156,18,.75);transform:translateY(2px)}
+.btn{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;margin-top:14px;padding:16px 18px;border-radius:14px;background:var(--red);color:#fff;font-weight:900;font-size:18px;text-decoration:none;text-transform:uppercase;letter-spacing:.02em;box-shadow:0 10px 26px rgba(215,38,61,.45)}
+.chars{display:flex;justify-content:space-between;align-items:flex-end;margin:-6px -6px -22px;pointer-events:none}
+.chars img{width:30%;max-width:150px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6))}
+.chars .bubble{background:#fff;color:#14161b;font-weight:700;font-size:13px;padding:8px 12px;border-radius:14px;border:2px dashed #2a2d35;margin-bottom:120px;max-width:44%}
+.payic{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;opacity:.85}.payic span{background:#fff;color:#111;font-size:10px;font-weight:800;padding:4px 7px;border-radius:5px}
+small.note{display:block;text-align:center;color:#e9dccb;opacity:.8;font-size:12px;margin-top:10px}
+/* skrzynki pocztowe */
+.uses{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.uses li{background:linear-gradient(180deg,#8e959c,#767d84);border-radius:8px;padding:14px 12px 12px;color:#14161b;font-weight:800;font-size:14px;position:relative;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
+.uses li:before{content:"";display:block;height:6px;width:60%;background:#5c6369;border-radius:3px;margin-bottom:10px}
+.uses li span{display:block;font-size:11px;font-weight:700;color:#1f2a3a;opacity:.75;margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+.uses li em{position:absolute;top:8px;right:10px;font-style:normal;font-size:11px;background:#2f5da8;color:#fff;padding:2px 6px;border-radius:4px}
+@media(min-width:900px){.b94-sup .w{grid-template-columns:1.1fr .9fr;align-items:start}.uses{grid-column:1/-1;grid-template-columns:repeat(4,1fr)}}
+</style></head><body>
+<section class="b94-sup"><div class="w">
+ <div class="txt">
+  <span class="eyebrow">Klatka II · mieszkanie 94</span>
+  <h1>Wpuść nas do <span class="sign">kolejnej części</span></h1>
+  <p class="lead">Serię „Kto tam?” robimy sami: scenariusze, animację Kuby, Oli i Kaptura, lektora i dźwięk. Jeśli historia z bloku 94 trzyma cię w napięciu, zostaw napiwek, już od 1 zł. Każdy grosz wraca do kanału.</p>
+ </div>
+ <div class="tipcard">
+  <div class="chars"><img src="blok94-kuba.png" alt="Kuba"><span class="bubble">„Kurier? Nie, to napiwek. Ten wpuszczamy.”</span><img src="blok94-ola.png" alt="Ola"></div>
+  <div class="panel">
+   <div class="plate"><span>WINDA · KLATKA II</span><b>WYBIERZ KWOTĘ</b></div>
+   <div class="led"><div class="amount">20 zł</div><p class="buys">= jedna scena z Kapturem</p></div>
+   <div class="floors" role="group" aria-label="Kwota napiwku">
+    <button>1<small>zł</small></button><button>2<small>zł</small></button><button>5<small>zł</small></button><button>10<small>zł</small></button>
+    <button aria-pressed="true">20<small>zł</small></button><button>50<small>zł</small></button><button>100<small>zł</small></button><button disabled style="opacity:.35">94<small>★</small></button>
+   </div>
+   <a class="btn" href="#">Daję napiwek · 20 zł</a>
+   <div class="payic"><span>BLIK</span><span>Apple Pay</span><span>Google Pay</span><span>Visa</span><span>Mastercard</span><span>PayPal</span><span>Klarna</span></div>
+  </div>
+  <small class="note">Napiwek to dobrowolne wsparcie. Nie dostajesz produktu, tylko nasze wielkie dzięki i kolejne części.</small>
+ </div>
+ <ul class="uses">
+  <li><em>91</em>Lektor i głosy postaci<span>każda część</span></li>
+  <li><em>92</em>Animacja Kuby, Oli i Kaptura<span>każda scena</span></li>
+  <li><em>93</em>Efekty i dźwięk bloku<span>każda noc</span></li>
+  <li><em>94</em>Kolejne części „Kto tam?”<span>cel</span></li>
+ </ul>
+</div></section>
+</body></html>
