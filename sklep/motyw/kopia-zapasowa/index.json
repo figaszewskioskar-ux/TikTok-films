@@ -1,0 +1,69 @@
+{
+  "sections": {
+    "main": {
+      "type": "protokol-72h",
+      "blocks": {
+        "p0": {
+          "type": "page",
+          "settings": {
+            "asset": "strona_plecak.jpg",
+            "label": "Rozdział 1 · s. 4–7",
+            "title": "Plecak ewakuacyjny",
+            "text": "48 rzeczy w 12 grupach, rysunek pakowania, waga i miejsce, gdzie trzymać plecak, żeby wyjść z domu w 10 minut."
+          }
+        },
+        "p1": {
+          "type": "page",
+          "settings": {
+            "asset": "strona_blackout.jpg",
+            "label": "Rozdział 2 · s. 8–11",
+            "title": "Blackout w domu",
+            "text": "Co zrobić w pierwszej godzinie, w pierwszej dobie i przez trzy doby. Lodówka, zamrażarka, skąd brać informacje."
+          }
+        },
+        "p2": {
+          "type": "page",
+          "settings": {
+            "asset": "strona_zapasy.jpg",
+            "label": "Rozdział 3 · s. 12–14",
+            "title": "Woda i jedzenie",
+            "text": "Ile wody i jedzenia kupić dla 1, 2 i 4 osób, jak uzdatnić wodę i gotowy jadłospis na trzy dni."
+          }
+        },
+        "p3": {
+          "type": "page",
+          "settings": {
+            "asset": "strona_czad.jpg",
+            "label": "Rozdział 4 · s. 15–17",
+            "title": "Ciepło i czad",
+            "text": "Jak ogrzać się bez prądu i czym nie wolno. Objawy zatrucia czadem i wychłodzenia, pierwsze kroki."
+          }
+        },
+        "p4": {
+          "type": "page",
+          "settings": {
+            "asset": "strona_plan.jpg",
+            "label": "Rozdział 6 · s. 22–23",
+            "title": "Plan rodzinny",
+            "text": "Karta do wypełnienia przy stole, karta do portfela i półgodzinne ćwiczenie dla domowników."
+          }
+        }
+      },
+      "block_order": [
+        "p0",
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "show_bar": false,
+        "product": "poradnik-72h",
+        "tip_product": "napiwek"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
