@@ -4,8 +4,12 @@ import json, wave, os, subprocess
 import numpy as np
 
 SR = 48000
+import sys, importlib.util
 HERE = os.path.dirname(os.path.abspath(__file__))
-info = json.load(open(os.path.join(HERE, 'out', 'cues.json')))
+EP = sys.argv[1] if len(sys.argv) > 1 else 'odc1'
+EPD = os.path.join(HERE, EP)
+spec = importlib.util.spec_from_file_location('cfg', os.path.join(EPD, 'config.py')); cfg = importlib.util.module_from_spec(spec); spec.loader.exec_module(cfg)
+info = json.load(open(os.path.join(EPD, 'out', 'cues.json')))
 DUR = info['DUR']
 N = int(DUR * SR)
 TL = info.get('timeline') or []
@@ -177,10 +181,10 @@ def voice(who, dur):
     return out
 
 
-# ---------- prawdziwe efekty (ElevenLabs) ----------
+# ---------- prawdziwe efekty (ElevenLabs, wspólna biblioteka cache/sfx) ----------
 tt = np.arange(N) / SR
-SFXD = os.path.join(HERE, 'out', 'sfx')
-REAL = os.path.exists(os.path.join(SFXD, 'bed.wav'))
+SFXD = os.path.join(HERE, 'cache', 'sfx')
+AU = cfg.AUDIO
 
 
 def db2a(d):
@@ -210,63 +214,47 @@ def loop_to(v, n, xf=int(0.5 * SR)):
 
 
 def env_db(times, dbs):
-    return db2a(np.interp(tt, times, dbs))
+    return db2a(np.interp(tt, Gs(times), dbs))
 
 
-if REAL:
-    # podkład jak w oryginale: niski, ciemny, powoli narastający; cisza tuż przed zwrotem akcji
-    bed = loop_to(load('bed', rms_db=0), N) * env_db(Gs([0, 60, 74, 87.5, 87.85, 88.6, 98, 102, 119, 123.99]),
-                                                       [-31, -28, -26, -23.5, -60, -27, -32, -31, -29, -24])
-    outdoor = np.interp(tt, Gs([0, 4.9, 5, 10.99, 11.1, 33.9, 34, 44.99, 45.1, 118.9, 119, 123.99]), [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
-    wind = loop_to(load('wind', rms_db=0), N) * db2a(-33) * lowpass(outdoor, int(.15 * SR))
-    tvmask = np.interp(tt, Gs([0, 11, 11.3, 21.2, 21.49, 123.99]), [0, 0, 1, 1, 0, 0])
-    tv = loop_to(load('tv', rms_db=0, flt='lowpass=f=1800'), N) * db2a(-36) * tvmask
-    hb = loop_to(load('heartbeat', rms_db=0), N) * env_db(Gs([0, 77.5, 79, 87.4, 87.6, 123.99]), [-90, -90, -27, -21, -90, -90])
-    BG = bed + wind + tv
+def mask(spec):
+    return np.interp(tt, Gs(spec[0]), spec[1])
+
+
+BG = loop_to(load(AU.get('bed_file', 'bed'), rms_db=0), N) * env_db(*AU['bed'])
+if 'outdoor' in AU:
+    BG += loop_to(load('wind', rms_db=0), N) * db2a(AU.get('wind_db', -33)) * lowpass(mask(AU['outdoor']), int(.15 * SR))
+if 'tv' in AU:
+    BG += loop_to(load('tv', rms_db=0, flt='lowpass=f=1800'), N) * db2a(-36) * mask(AU['tv'])
+for name, spec in AU.get('loops', {}).items():   # dodatkowe pętle tła: nazwa -> (czasy, dB)
+    BG += loop_to(load(name, rms_db=0), N) * env_db(*spec)
+if 'heartbeat' in AU:
+    hb = loop_to(load('heartbeat', rms_db=0), N) * env_db(*AU['heartbeat'])
     L += hb; R += hb
-    for k in range(int((G(118.99) - G(102)) / 0.5)):
-        add(tik() * 0.25, G(102) + k * 0.5, pan=(-.3 if k % 2 else .3))
-    REALMAP = {  # typ wskazówki -> (plik, szczyt dB)
-        'hit': [('boom', -2), ('door_bang', -6)], 'stab': [('boom', -5)], 'whoosh': [('whoosh', -12)],
-        'doorbuzz': [('buzz', -13)], 'intercom': [('ring', -10)], 'lock': [('door_lock', -9)],
-        'thud': [('box_kick', -7)], 'error': [('boom', -9)],
-    }
-    EXTRA = [  # dodatkowe odgłosy jak w oryginale (winda, klucze, schody, wytrych)
-        (21.2, 'elev_ding', -11), (21.6, 'elev_doors', -12), (34.0, 'keys', -13), (37.0, 'boom', -8),
-        (28.0, 'stairs', -16), (55.6, 'stairs', -17), (63.4, 'stairs', -19), (70.0, 'elev_ding', -14),
-        (78.4, 'lockpick', -15), (83.3, 'lockpick', -15), (80.2, 'vibrate', -16), (83.0, 'vibrate', -16),
-        (93.0, 'run', -9), (98.1, 'run', -11), (121.6, 'sting', -5),
-    ]
-    for t0, name, pk in EXTRA:
-        add(load(name, peak_db=pk), G(t0), 1.0, pan=rng.uniform(-.25, .25))
-else:
-    lvl = np.interp(tt, [0, 5, 11, 21, 34, 45, 66, 74, 87.6, 88.0, 98, 102, 119, 124],
-                    [.55, .6, .5, .5, .55, .5, .8, 1.0, 1.0, 0.0, .45, .2, .35, .7])
-    drone = (np.sin(2 * np.pi * 55 * tt) + 0.6 * np.sin(2 * np.pi * 82.4 * tt + np.sin(tt * .3))
-             + 0.3 * np.sin(2 * np.pi * 110.5 * tt)) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.11 * tt))
-    wind = lowpass(rng.standard_normal(N), 60) * (0.6 + 0.4 * np.sin(tt * 0.7))
-    outdoor = np.interp(tt, [0, 4.9, 5, 11, 11.1, 33.9, 34, 45, 45.1, 118.9, 119, 124], [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
-    BG = drone * 0.06 * lvl + wind * 0.5 * (0.15 + outdoor * 0.6) * np.maximum(lvl, .3)
-    for k in range(int((119 - 102) / 0.5)):
-        add(tik() * 0.4, 102 + k * 0.5, pan=(-.3 if k % 2 else .3))
-    REALMAP = {}
+if 'clock' in AU:
+    c0, c1 = G(AU['clock'][0]), G(AU['clock'][1])
+    for k in range(int((c1 - c0) / 0.5)):
+        add(tik() * 0.25, c0 + k * 0.5, pan=(-.3 if k % 2 else .3))
+REALMAP = getattr(cfg, 'REALMAP', {})
+for t0, name, pk in getattr(cfg, 'EXTRA', []):
+    add(load(name, peak_db=pk), G(t0), 1.0, pan=rng.uniform(-.25, .25))
 
 FX = dict(tik=tik, stab=stab, error=error, hit=hit, whoosh=whoosh, doorbuzz=doorbuzz, intercom=intercom,
           press=press, ding=ding, lock=lock, thud=thud, heart=heart, vibrate=vibrate, pluck=pluck,
           switch=switch, motif=motif)
 # ---------- dubbing (jeśli jest) ----------
-NARR = os.path.join(HERE, 'out', 'narr', 'lines.json')
-DUB = NARR if os.path.exists(NARR) else os.path.join(HERE, 'out', 'voice', 'lines.json')
+DUB = os.path.join(EPD, 'out', 'narr', 'lines.json')
 dub = json.load(open(DUB)) if os.path.exists(DUB) else []
 duck = np.ones(N)
-VGAIN = {'kaptur': 1.5, 'kurier': 1.0}
+VGAIN = getattr(cfg, 'VGAIN', {})
+VFILTER = getattr(cfg, 'VFILTER', {})
 for ln in dub:
     f = ln['file']
-    flt = 'highpass=f=350,lowpass=f=3400,acompressor' if ln.get('id') == 'l03' else 'acompressor=threshold=-20dB:ratio=3,highpass=f=70'  # l03 słychać przez domofon
+    flt = VFILTER.get(ln.get('who'), 'acompressor=threshold=-20dB:ratio=3,highpass=f=70')  # l03 słychać przez domofon
     raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', f, '-af', flt, '-f', 's16le', '-ac', '1', '-ar', str(SR), '-'])
     v = np.frombuffer(raw, dtype='<i2').astype(float) / 32768
     loud = v[np.abs(v) > np.abs(v).max() * 0.05]
-    v = v / (np.sqrt(np.mean(loud ** 2)) + 1e-9) * db2a(-17 if REAL else -12)
+    v = v / (np.sqrt(np.mean(loud ** 2)) + 1e-9) * db2a(-17)
     i0 = int(ln['t'] * SR)
     add(v, ln['t'], VGAIN.get(ln.get('who'), 1.0))
     a, b = max(0, i0 - int(.1 * SR)), min(N, i0 + len(v) + int(.15 * SR))
@@ -274,14 +262,14 @@ for ln in dub:
 duck = lowpass(duck, int(0.08 * SR))
 
 GAIN = dict(tik=.35, whoosh=.6, voice=1.0, heart=1.0, error=0.8)
-SKIP_REAL = {'heart', 'vibrate', 'step', 'ding'}
+SKIP_REAL = {'heart', 'vibrate', 'step', 'ding'} | set(getattr(cfg, 'SKIP', []))
 for cue in info['cues']:
     ty = cue['type']
     if ty == 'voice':
         if dub:
             continue
         add(voice(cue['who'], cue['dur']), cue['t'], 1.0, pan=rng.uniform(-.2, .2))
-    elif REAL and ty in SKIP_REAL:
+    elif ty in SKIP_REAL:
         continue
     elif ty in REALMAP:
         for name, pk in REALMAP[ty]:
@@ -299,7 +287,7 @@ pk = np.abs(mix).max()
 if pk > 0.95:
     mix = np.tanh(mix / pk * 1.2) / np.tanh(1.2) * 0.95
 fade = int(0.02 * SR); mix[:fade] *= np.linspace(0, 1, fade)[:, None]
-with wave.open(os.path.join(HERE, 'out', 'audio.wav'), 'wb') as w:
+with wave.open(os.path.join(EPD, 'out', 'audio.wav'), 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
     w.writeframes((mix * 32767).astype('<i2').tobytes())
 print('audio.wav OK', DUR, 's')

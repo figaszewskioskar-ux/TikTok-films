@@ -3,7 +3,7 @@ głuche uderzenia, realistyczne odgłosy windy, kluczy, domofonu). Wynik: out/sf
 import json, os, subprocess, urllib.request, urllib.error
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, 'out', 'sfx')
+OUT = os.path.join(HERE, 'cache', 'sfx')   # wspólna biblioteka efektów dla wszystkich odcinków
 os.makedirs(OUT, exist_ok=True)
 
 SFX = {
@@ -53,5 +53,9 @@ def gen_noloop(name, dur, prompt):
     return gen(name, dur, False, prompt)
 
 
+import sys, importlib.util
+for ep in sys.argv[1:]:  # efekty specyficzne dla odcinka: SFX w <odc>/config.py
+    spec = importlib.util.spec_from_file_location('cfg', os.path.join(HERE, ep, 'config.py')); cfg = importlib.util.module_from_spec(spec); spec.loader.exec_module(cfg)
+    SFX.update(getattr(cfg, 'SFX', {}))
 for n, (d, lp, pr) in SFX.items():
     gen(n, d, lp, pr)

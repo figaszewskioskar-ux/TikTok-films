@@ -1,18 +1,20 @@
 // Użycie:
-//   node render.js stills 0.5 12 30     -> PNG wybranych klatek do out/stills
-//   node render.js cues                  -> out/cues.json (wskazówki dźwiękowe)
-//   node render.js video [workers]       -> out/video_noaudio.mp4
+//   EP=odc2 node render.js stills 0.5 12 30  -> klatki do <odc>/out/stills
+//   EP=odc2 node render.js cues               -> <odc>/out/cues.json (wskazówki dźwiękowe)
+//   EP=odc2 node render.js video [workers]    -> <odc>/out/video_noaudio.mp4
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path');
-const OUT = path.join(__dirname, 'out');
+const EP = process.env.EP || 'odc1';
+const OUT = path.join(__dirname, EP, 'out');
 fs.mkdirSync(OUT, { recursive: true });
-const URL = 'file://' + path.join(__dirname, 'film.html');
+const URL = 'file://' + path.join(__dirname, 'film.html') + '?ep=' + EP;
 
 async function openPage(browser) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
   page.on('pageerror', e => console.error('PAGE ERROR', e.message));
   await page.goto(URL);
+  await page.waitForFunction(() => window.FILM);
   await page.evaluate(() => window.FILM.ready);
   return page;
 }
