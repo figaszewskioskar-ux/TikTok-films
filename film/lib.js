@@ -94,6 +94,7 @@ const KINDS = {
   zdzisiek: { jacket: '#A62B2E', dark: '#8A2326', pants: '#2B3550', skin: '#F0B08A', shoes: '#222428' },
   halina: { jacket: '#7D4DA3', dark: '#673E89', pants: '#7D4DA3', skin: '#F2BC98', shoes: '#E77FA8' },
   ola: { jacket: '#E9B52C', dark: '#C9971A', pants: '#5C7DB5', skin: '#F4C29C', shoes: '#E8E4DA' },
+  policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
 };
 function arm(c, sx, sy, a, side, k, len = 92) {
@@ -145,6 +146,7 @@ function person(c, kind, x, y, s, o = {}) {
       c.fillStyle = '#C9862A'; c.fillRect(-2, -186, 4, 104);
     }
     if (kind === 'zdzisiek') { c.fillStyle = k.dark; c.fillRect(-2, -180, 4, 104); fillRR(c, -36, -110, 20, 16, 4, k.dark); }
+    if (kind === 'policjant') { fillRR(c, -14, -190, 28, 40, 6, '#9DB8DA'); fillRR(c, -40, -160, 80, 12, 3, '#C9CDD2'); fillRR(c, 16, -176, 18, 22, 4, '#D9B84A'); c.fillStyle = '#0E1530'; c.fillRect(-45, -96, 90, 10); }
     if (kind === 'ola') { fillRR(c, -30, -118, 60, 30, 10, k.dark); c.strokeStyle = '#FFFFFF'; c.lineWidth = 3; c.beginPath(); c.moveTo(-10, -186); c.lineTo(-12, -150); c.moveTo(10, -186); c.lineTo(12, -150); c.stroke(); }
   }
   // pudełko (kurier)
@@ -253,6 +255,8 @@ function person(c, kind, x, y, s, o = {}) {
       fillRR(c, -54, hy - 26, back_ ? 108 : 124, 14, 7, '#22335A');
     } else if (kind === 'zdzisiek') {
       ell(c, 0, hy - 30, 54, 24, '#3B3B3B'); fillRR(c, -50, hy - 22, 116, 12, 6, '#2E2E2E');
+    } else if (kind === 'policjant') {
+      fillRR(c, -54, hy - 70, 108, 46, 10, '#1F2C4C'); fillRR(c, -56, hy - 30, 120, 12, 6, '#0E1530'); circ(c, 0, hy - 50, 10, '#D9B84A');
     } else if (kind === 'ola') {
       c.beginPath(); c.arc(0, hy - 26, 50, Math.PI, 0); c.fillStyle = '#7B4FC9'; c.fill();
       fillRR(c, -50, hy - 34, 64, 18, 9, '#7B4FC9');
@@ -317,7 +321,7 @@ function paddedDoor(c, x, y, w, h, num, o = {}) {
   fillRR(c, x + w / 2 - 44, y + h * 0.18 - 26, 88, 52, 26, '#C9A15A');
   txt(c, num, x + w / 2, y + h * 0.18, 34, '#3A2A1A', 900);
   // klamka + zamek
-  fillRR(c, x + w - 70, y + h * 0.52, 50, 14, 7, '#C9CDD2');
+  c.save(); c.translate(x + w - 60, y + h * 0.52 + 7); c.rotate(o.handle || 0); fillRR(c, -10, -7, 50, 14, 7, '#C9CDD2'); c.restore();
   circ(c, x + w - 46, y + h * 0.52 + 50, 9, '#C9CDD2');
 }
 function lobbyBg(c, t, o = {}) {
@@ -542,3 +546,78 @@ function hand(c, fx, fy, ang, k = KINDS.kuba) {
   c.restore();
 }
 
+
+// ---------- tła nocne (ODC. 2+) ----------
+function hallBg(c, t, o = {}) {
+  c.fillStyle = '#3B3A44'; c.fillRect(0, 0, W, 1420);
+  for (let i = 0; i < 20; i++) { c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(i * 60, 0, 22, 1420); }
+  c.fillStyle = '#2E241C'; c.fillRect(0, 1420, W, 500);
+  for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(0, 1440 + i * 44, W, 3); }
+  fillRR(c, 0, 1400, W, 24, 0, '#241B14');
+  // wieszak z kurtką Kuby
+  c.fillStyle = '#5A4632'; c.fillRect(840, 640, 160, 16);
+  fillRR(c, 860, 650, 60, 220, 20, '#6E7B3B'); fillRR(c, 930, 650, 50, 160, 20, '#E08A0B');
+  const dx = 330, dy = 520, dw = 420, dh = 900;
+  if (o.gap) { // drzwi uchylone na łańcuch
+    fillRR(c, dx - 16, dy - 16, dw + 32, dh + 16, 4, '#2A1E14');
+    const gx = dx + dw - o.gap;
+    c.fillStyle = '#07080B'; c.fillRect(gx, dy, o.gap, dh);
+    // słaba poświata klatki w szparze
+    const g = c.createLinearGradient(gx, 0, gx + o.gap, 0); g.addColorStop(0, 'rgba(255,230,170,.0)'); g.addColorStop(1, 'rgba(255,230,170,.18)');
+    c.fillStyle = g; c.fillRect(gx, dy, o.gap, dh);
+    quilted(c, dx, dy, dw - o.gap, dh, '#5E4029', '#4D3420', '#B8914E', 70);
+    // łańcuch
+    const cy = dy + dh * 0.42, x1 = gx - 40, x2 = dx + dw + 20;
+    fillRR(c, x2 - 6, cy - 22, 30, 44, 4, '#B9BDC2'); fillRR(c, x1 - 30, cy - 10, 40, 20, 4, '#B9BDC2');
+    c.strokeStyle = '#D6DADF'; c.lineWidth = 6;
+    for (let i = 0; i < 8; i++) { const xx = lerp(x1, x2, i / 8) + 10; c.beginPath(); c.ellipse(xx, cy + Math.sin(i + t * 20) * (o.rattle || 0), 12, 7, 0, 0, 7); c.stroke(); }
+  } else {
+    paddedDoor(c, dx, dy, dw, dh, '94', { peepDark: true, handle: o.handle });
+    // łańcuch zawieszony
+    c.strokeStyle = '#C9CDD2'; c.lineWidth = 5;
+    for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(dx + dw - 10, dy + dh * .42 + i * 18, 6, 10, 0, 0, 7); c.stroke(); }
+  }
+  // pasek światła pod drzwiami
+  const sy = dy + dh;
+  c.fillStyle = o.gap ? '#000' : '#FFE7A8'; c.fillRect(dx + 6, sy - 6, dw - 12, 8);
+  const lg = c.createLinearGradient(0, sy, 0, sy + 180); lg.addColorStop(0, 'rgba(255,225,160,.35)'); lg.addColorStop(1, 'rgba(255,225,160,0)');
+  if (!o.gap) { c.fillStyle = lg; c.beginPath(); c.moveTo(dx, sy); c.lineTo(dx + dw, sy); c.lineTo(dx + dw + 90, sy + 180); c.lineTo(dx - 90, sy + 180); c.fill(); }
+  if (o.feet) { // cienie stóp pod drzwiami
+    c.fillStyle = `rgba(0,0,0,${o.feet})`;
+    c.fillRect(dx + 120, sy - 6, 70, 8); c.fillRect(dx + 230, sy - 6, 70, 8);
+    c.beginPath(); c.moveTo(dx + 120, sy); c.lineTo(dx + 190, sy); c.lineTo(dx + 210, sy + 170); c.lineTo(dx + 90, sy + 170); c.fill();
+    c.beginPath(); c.moveTo(dx + 230, sy); c.lineTo(dx + 300, sy); c.lineTo(dx + 340, sy + 170); c.lineTo(dx + 220, sy + 170); c.fill();
+  }
+}
+function peepPOV(c, t, inner) {
+  c.fillStyle = '#050608'; c.fillRect(0, 0, W, H);
+  quilted(c, 0, 0, W, H, '#1E150E', '#160F09', '#3A2C1A', 90);
+  const cx = 540, cy = 900, r = 380;
+  c.save(); c.beginPath(); c.arc(cx, cy, r, 0, 7); c.clip();
+  c.fillStyle = '#000'; c.fillRect(cx - r, cy - r, r * 2, r * 2);
+  if (inner) inner(c, cx, cy, r);
+  const vg = c.createRadialGradient(cx, cy, r * .55, cx, cy, r); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.85)');
+  c.fillStyle = vg; c.fillRect(cx - r, cy - r, r * 2, r * 2);
+  c.restore();
+  c.strokeStyle = '#9C7B3E'; c.lineWidth = 26; c.beginPath(); c.arc(cx, cy, r + 10, 0, 7); c.stroke();
+  c.strokeStyle = '#5C4522'; c.lineWidth = 6; c.beginPath(); c.arc(cx, cy, r + 25, 0, 7); c.stroke();
+  txt(c, 'WIZJER', cx, cy + r + 70, 30, 'rgba(255,255,255,.55)', 800);
+}
+function tapeTexture(c, cx, cy, r, a = 1) {
+  c.save(); c.globalAlpha = a;
+  c.fillStyle = '#0B0A09'; c.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+  c.strokeStyle = 'rgba(255,255,255,.05)'; c.lineWidth = 2;
+  for (let i = 0; i < 40; i++) { c.beginPath(); c.moveTo(cx - r + hash(i) * 2 * r, cy - r); c.lineTo(cx - r + hash(i + 3) * 2 * r, cy + r); c.stroke(); }
+  c.restore();
+}
+
+const ROOM = (c) => {
+  c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H);
+  // okno z księżycem
+  fillRR(c, 620, 380, 320, 420, 8, '#0D1222'); circ(c, 860, 470, 40, '#E8E4CF'); circ(c, 878, 458, 36, '#0D1222');
+  c.fillStyle = '#3A4058'; c.fillRect(775, 380, 10, 420); c.fillRect(620, 585, 320, 10);
+  for (let i = 0; i < 6; i++) fillRR(c, 650 + i * 45, 640 + hash(i) * 120, 22, 160, 3, '#141A2C');
+  c.fillStyle = '#1F1A22'; c.fillRect(0, 1380, W, 540);
+  // łóżko
+  fillRR(c, 80, 1100, 760, 330, 30, '#3D4A73'); fillRR(c, 90, 1060, 220, 120, 40, '#D9DCE6');
+};
