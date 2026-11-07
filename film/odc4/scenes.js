@@ -187,7 +187,7 @@ scene({
 scene({
   name: 'corridor', start: 62, end: 72,
   cam: lt => ({ z: 1.0 + lt * 0.012 }),
-  labels: [[6.0, 10, 'DWA STOPNIE WYŻEJ', 260, 620, 'red', 38]],
+  labels: [[6.0, 10, 'DWA STOPNIE WYŻEJ', 330, 480, 'red', 38]],
   draw(c, lt) {
     const lamp = lt < 4.0;
     meterCorridor(c, lt, { doorOpen: clamp((lt - .5) / .6), off: lt < 2.6, lamp });
