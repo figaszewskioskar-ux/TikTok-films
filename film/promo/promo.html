@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#000">
+<canvas id="cv" width="1080" height="1920"></canvas>
+<script src="../lib.js"></script>
+<script>
+// Grafiki promocyjne (postacie na przezroczystym tle, nocny blok)
+const ctx = document.getElementById('cv').getContext('2d');
+window.PROMO = {
+  async ready() { await document.fonts.load('800 40px Inter'); await document.fonts.load('900 40px Inter'); },
+  char(kind, o) {
+    const c = document.createElement('canvas'); c.width = 700; c.height = 1000; const x = c.getContext('2d');
+    person(x, kind, 350, 960, 3.0, Object.assign({ t: 1.3 }, o));
+    return c.toDataURL('image/png').split(',')[1];
+  },
+  hero() {
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+    x.translate(0, -420); blockBg(x, 2, { night: true });
+    const wx = 110 + 5 * 107.5 + 53.75, wy = 400 + 40 + 89 + 27;
+    x.fillStyle = 'rgba(120,160,230,.35)'; x.beginPath(); x.arc(wx, wy, 40, 0, 7); x.fill();
+    person(x, 'kaptur', 760, 1760, 2.4, { t: 1, back: true });
+    snow(x, 3, 90, .6);
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    const g = x.createLinearGradient(0, 900, 0, 1350); g.addColorStop(0, 'rgba(7,9,16,0)'); g.addColorStop(1, 'rgba(7,9,16,1)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    return c.toDataURL('image/jpeg', .9).split(',')[1];
+  },
+};
+</script></body></html>
