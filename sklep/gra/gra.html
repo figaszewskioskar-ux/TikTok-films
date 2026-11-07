@@ -1,91 +1,125 @@
 <style>
-/* Gra BLOK 94: drzwi mieszkania 94 jako plansza; dwa tryby. Jeden, nocny wygląd. */
+/* Gra BLOK 94 v2: drzwi mieszkania 94 jako plansza; dwa tryby, poziomy trudności, trzy noce. Jeden, nocny wygląd. */
 #b94g{--night:#0a0c14;--stair:#131726;--wall:#1b2034;--ink:#f3efe6;--muted:#aeb0c2;--sign:#d7263d;--hat:#f39c12;--ok:#30a46c;--door:#5e4029;--door2:#4d3420;--gold:#c9a15a;--led:#ff3b30;
  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;--body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,"Courier New",monospace;
- background:var(--night);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));scroll-margin-top:110px}
+ background:radial-gradient(900px 500px at 50% -10%,#1b2340 0%,var(--night) 60%);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));scroll-margin-top:110px;overflow:hidden;position:relative}
 #b94g *{box-sizing:border-box}
 #b94g img{max-width:100%;display:block}
-#b94g .gw{max-width:520px;margin:0 auto}
+#b94g .gw{max-width:540px;margin:0 auto;position:relative}
 #b94g h2,#b94g h3{font-family:var(--display);font-weight:800;line-height:1.02;margin:0;text-wrap:balance}
-#b94g h2{font-size:clamp(38px,9vw,56px)}
+#b94g h2{font-size:clamp(40px,9vw,58px)}
 #b94g .eyebrow{display:inline-block;font:800 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#14161b;background:var(--hat);padding:7px 12px;border-radius:999px}
 #b94g .sign{display:inline-block;background:var(--sign);color:#fff;padding:.02em .25em .08em;border-radius:.16em;transform:rotate(-1.5deg)}
 #b94g button{font:inherit;cursor:pointer;border:0}
-#b94g button:focus-visible{outline:3px solid var(--hat);outline-offset:3px}
-#b94g .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;padding:14px 18px;border-radius:14px;font-weight:800;font-size:16px;text-decoration:none}
+#b94g button:focus-visible,#b94g a:focus-visible{outline:3px solid var(--hat);outline-offset:3px}
+#b94g .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;padding:14px 18px;border-radius:14px;font-weight:800;font-size:16px;text-decoration:none;transition:transform .15s}
+#b94g .btn:active{transform:scale(.98)}
 #b94g .btn.red{background:var(--sign);color:#fff;box-shadow:0 10px 24px rgba(215,38,61,.35)}
 #b94g .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px rgba(243,239,230,.3)}
-/* menu */
+#b94g .btn.gold{background:var(--hat);color:#14161b}
+#b94g .fadein{animation:gIn .45s ease both}
+@keyframes gIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 #b94g .modes{display:grid;gap:14px;margin-top:22px}
-#b94g .mode{all:unset;cursor:pointer;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;background:var(--wall);border-radius:20px;padding:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06)}
+#b94g .mode{all:unset;cursor:pointer;display:grid;grid-template-columns:100px 1fr;gap:14px;align-items:center;background:var(--wall);border-radius:20px;padding:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06);transition:transform .2s,box-shadow .2s}
+#b94g .mode:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 2px var(--hat)}
 #b94g .mode:focus-visible{outline:3px solid var(--hat);outline-offset:3px}
-#b94g .mode:hover{box-shadow:inset 0 0 0 2px var(--hat)}
-#b94g .mode .pic{width:96px;height:96px;border-radius:50%;background:#000;box-shadow:0 0 0 6px var(--gold);display:grid;place-items:center;overflow:hidden}
-#b94g .mode .pic img{width:120%;max-width:none;transform:translateY(22%)}
-#b94g .mode h3{font-size:28px}
+#b94g .mode .pic{width:100px;height:100px;border-radius:50%;background:#000;box-shadow:0 0 0 6px var(--gold);display:grid;place-items:center;overflow:hidden}
+#b94g .mode .pic img{width:120%;max-width:none;transform:translateY(22%);animation:gPeek 4s ease-in-out infinite}
+@keyframes gPeek{0%,100%{transform:translateY(22%)}50%{transform:translateY(16%)}}
+#b94g .mode h3{font-size:30px}
 #b94g .mode p{margin:4px 0 6px;color:var(--muted);font-size:14.5px}
 #b94g .mode small{font-weight:800;color:var(--hat);font-size:13px}
-/* wspólne */
+#b94g .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+#b94g .chip{background:var(--wall);color:var(--ink);border-radius:999px;padding:10px 14px;font-weight:800;font-size:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08)}
+#b94g .chip[aria-pressed=true]{background:var(--hat);color:#14161b}
+#b94g .chip:disabled{opacity:.45;cursor:not-allowed}
+#b94g .hint{color:var(--muted);font-size:13.5px;margin:0}
 #b94g .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
 #b94g .back{background:transparent;color:var(--muted);font-weight:700;font-size:14px;padding:8px 0}
-#b94g .lives{display:flex;gap:4px;font-size:18px}
-#b94g .lives span{width:22px;height:22px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 6px #6b5226}
-#b94g .lives span.off{background:#2a2d38;box-shadow:inset 0 0 0 6px #1b1d25}
+#b94g .lives{display:flex;gap:5px}
+#b94g .lives span{width:22px;height:22px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 6px #6b5226;transition:all .3s}
+#b94g .lives span.off{background:#2a2d38;box-shadow:inset 0 0 0 6px #1b1d25;transform:scale(.85)}
 #b94g .led{font-family:var(--mono);font-weight:700;color:var(--led);background:#0d0f13;border-radius:10px;padding:6px 12px;text-shadow:0 0 12px rgba(255,59,48,.6);font-variant-numeric:tabular-nums}
-/* drzwi */
+#b94g .prog{height:6px;border-radius:999px;background:#22263a;overflow:hidden;margin-bottom:8px}
+#b94g .prog i{display:block;height:100%;background:var(--hat);transition:width .4s}
+#b94g .streak{font-weight:800;font-size:13px;color:var(--ok);min-height:20px;text-align:center;margin-bottom:6px}
 #b94g .door{position:relative;border-radius:22px;padding:22px 18px 18px;overflow:hidden;
  background:radial-gradient(circle,var(--gold) 2.2px,transparent 2.6px) 0 0/44px 44px,repeating-linear-gradient(45deg,transparent 0 30px,var(--door2) 30px 32px),repeating-linear-gradient(-45deg,transparent 0 30px,var(--door2) 30px 32px),var(--door);
  box-shadow:inset 0 0 0 10px #3c2a1c,0 24px 50px rgba(0,0,0,.5)}
+#b94g .door.knock{animation:gKnock .55s ease}
+@keyframes gKnock{0%,100%{transform:none}10%,30%,50%{transform:translateX(-5px) rotate(-.4deg)}20%,40%{transform:translateX(5px) rotate(.4deg)}}
 #b94g .plate{position:absolute;top:16px;left:50%;transform:translateX(-50%);background:var(--gold);color:#3a2a1a;font:900 18px/1 var(--body);padding:8px 16px;border-radius:999px}
-#b94g .sfx{position:absolute;top:16px;right:16px;background:rgba(10,12,20,.85);font:800 13px/1 var(--body);padding:8px 10px;border-radius:8px;letter-spacing:.06em}
+#b94g .sfx{position:absolute;top:16px;right:16px;background:rgba(10,12,20,.85);font:800 13px/1 var(--body);padding:8px 10px;border-radius:8px;letter-spacing:.06em;animation:gPulse 1.2s ease-in-out infinite}
+@keyframes gPulse{50%{transform:scale(1.06)}}
 #b94g .time{position:absolute;top:14px;left:16px}
-#b94g .peep{width:min(62vw,250px);aspect-ratio:1;margin:46px auto 10px;border-radius:50%;position:relative;overflow:hidden;background:#000;box-shadow:0 0 0 12px var(--gold),0 0 0 18px #5c4522,inset 0 0 50px rgba(0,0,0,.9)}
+#b94g .peep{width:min(62vw,250px);aspect-ratio:1;margin:46px auto 10px;border-radius:50%;position:relative;overflow:hidden;background:#000;box-shadow:0 0 0 12px var(--gold),0 0 0 18px #5c4522,inset 0 0 50px rgba(0,0,0,.9);animation:gZoom .6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes gZoom{from{transform:scale(.6);opacity:.2}to{transform:none;opacity:1}}
 #b94g .peep .bg{position:absolute;inset:0;background:linear-gradient(180deg,#a9a595 0 58%,#3e5a47 58%)}
-#b94g .peep img{position:absolute;left:50%;bottom:-38%;width:92%;max-width:none;transform:translateX(-50%)}
+#b94g .peep img{position:absolute;left:50%;bottom:-38%;width:92%;max-width:none;transform:translateX(-50%);animation:gStep .7s .2s ease-out both}
+@keyframes gStep{from{transform:translate(30%,8%);opacity:0}to{transform:translateX(-50%);opacity:1}}
 #b94g .peep .tape{position:absolute;inset:0;background:repeating-linear-gradient(100deg,#0b0a09 0 6px,#121110 6px 9px)}
+#b94g .peep .eyes{position:absolute;left:50%;top:44%;transform:translateX(-50%);display:flex;gap:26px;opacity:0;animation:gEyes 5s 1.5s infinite}
+#b94g .peep .eyes i{width:22px;height:13px;border-radius:50%;background:#f4f1ea;box-shadow:0 0 14px #fff}
+@keyframes gEyes{0%,70%,100%{opacity:0}75%,90%{opacity:1}}
 #b94g .peep:after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,0,0,.85) 100%)}
-#b94g .say{background:#fff;color:#14161b;font-weight:700;border-radius:16px;padding:12px 14px;border:2px dashed #2a2d35;margin:12px auto 0;max-width:420px;text-align:center;min-height:48px}
+#b94g .say{background:#fff;color:#14161b;font-weight:700;border-radius:16px;padding:12px 14px;border:2px dashed #2a2d35;margin:12px auto 0;max-width:420px;text-align:center;min-height:48px;animation:gIn .4s .5s both}
 #b94g .say:empty{display:none}
 #b94g .note{display:block;margin:14px auto 0;max-width:420px;color:#e9dccb;font-size:14px;text-align:center}
+#b94g .tbar{height:8px;border-radius:999px;background:rgba(0,0,0,.35);overflow:hidden;margin-top:14px}
+#b94g .tbar i{display:block;height:100%;width:100%;background:var(--hat)}
 #b94g .opts{display:grid;gap:10px;margin-top:16px}
-#b94g .opt{background:var(--wall);color:var(--ink);text-align:left;border-radius:14px;padding:14px 16px;font-weight:700;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);min-height:52px}
-#b94g .opt:hover{box-shadow:inset 0 0 0 2px var(--hat)}
+#b94g .opt{background:var(--wall);color:var(--ink);text-align:left;border-radius:14px;padding:14px 16px;font-weight:700;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08);min-height:52px;transition:transform .15s,box-shadow .15s;animation:gIn .35s both}
+#b94g .opt:nth-child(2){animation-delay:.07s}#b94g .opt:nth-child(3){animation-delay:.14s}
+#b94g .opt:hover:not(:disabled){box-shadow:inset 0 0 0 2px var(--hat);transform:translateX(3px)}
 #b94g .opt.ok{box-shadow:inset 0 0 0 2px var(--ok);background:#10261a}
-#b94g .opt.bad{box-shadow:inset 0 0 0 2px var(--sign);background:#2a1016}
-#b94g .fb{margin-top:14px;border-radius:16px;padding:16px;background:var(--stair);border-left:6px solid var(--ok)}
+#b94g .opt.bad{box-shadow:inset 0 0 0 2px var(--sign);background:#2a1016;animation:gShake .4s}
+@keyframes gShake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#b94g .fb{margin-top:14px;border-radius:16px;padding:16px;background:var(--stair);border-left:6px solid var(--ok);animation:gIn .35s both}
 #b94g .fb.bad{border-left-color:var(--sign)}
-#b94g .fb b{display:block;font-family:var(--display);font-size:26px;font-weight:800}
+#b94g .fb b{display:block;font-family:var(--display);font-size:28px;font-weight:800}
 #b94g .fb p{margin:6px 0 12px;color:var(--muted)}
 #b94g .fb .rule{color:var(--ink);font-weight:700;background:rgba(243,156,18,.12);padding:8px 10px;border-radius:8px;margin-bottom:12px}
-/* noc */
-#b94g .room{position:relative;height:300px;border-radius:22px;overflow:hidden;background:#1a1d2b;box-shadow:inset 0 0 0 2px rgba(255,255,255,.05)}
-#b94g .room .rdoor{position:absolute;left:24px;bottom:38px;width:120px;height:210px;border-radius:4px;background:radial-gradient(circle,var(--gold) 1.6px,transparent 2px) 0 0/22px 22px,var(--door);box-shadow:inset 0 0 0 6px #3c2a1c}
-#b94g .room .handle{position:absolute;left:118px;bottom:140px;width:26px;height:8px;border-radius:4px;background:#c9cdd2;transform-origin:2px 4px;transition:transform .6s}
-#b94g .room .strip{position:absolute;left:30px;bottom:38px;width:108px;height:5px;background:#ffe7a8;box-shadow:0 0 18px 4px rgba(255,225,160,.45)}
-#b94g .room .shadow{position:absolute;bottom:38px;height:5px;width:26px;background:#000;opacity:0;transition:opacity .4s}
-#b94g .room .floor{position:absolute;left:0;right:0;bottom:0;height:40px;background:#241b14}
-#b94g .room .ola{position:absolute;right:16px;bottom:18px;height:220px;width:auto}
-#b94g .room .dark{position:absolute;inset:0;background:radial-gradient(circle at 78% 55%,rgba(0,0,0,0) 0 90px,rgba(3,5,14,.85) 200px);transition:background .3s}
+#b94g .room{position:relative;height:310px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#1a1d2b 0 86%,#241b14 86%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.05)}
+#b94g .room .win{position:absolute;right:18px;top:18px;width:96px;height:120px;border-radius:6px;background:#0d1222;box-shadow:inset 0 0 0 5px #3a4058}
+#b94g .room .win:before{content:"";position:absolute;right:16px;top:14px;width:22px;height:22px;border-radius:50%;box-shadow:-6px 4px 0 0 #e8e4cf}
+#b94g .room .win:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:5px;margin-left:-2px;background:#3a4058}
+#b94g .room .rdoor{position:absolute;left:24px;bottom:42px;width:120px;height:210px;border-radius:4px;background:radial-gradient(circle,var(--gold) 1.6px,transparent 2px) 0 0/22px 22px,var(--door);box-shadow:inset 0 0 0 6px #3c2a1c}
+#b94g .room .rdoor.knock{animation:gKnock .55s ease}
+#b94g .room .handle{position:absolute;left:118px;bottom:144px;width:26px;height:8px;border-radius:4px;background:#c9cdd2;transform-origin:2px 4px;transition:transform .6s}
+#b94g .room .strip{position:absolute;left:30px;bottom:42px;width:108px;height:5px;background:#ffe7a8;box-shadow:0 0 18px 4px rgba(255,225,160,.45);animation:gFlick 6s infinite}
+@keyframes gFlick{0%,100%{opacity:1}31%{opacity:1}32%{opacity:.2}33%{opacity:1}35%{opacity:.4}36%{opacity:1}}
+#b94g .room .shadow{position:absolute;bottom:42px;height:5px;width:26px;background:#000;opacity:0;transition:opacity .4s}
+#b94g .room .ola{position:absolute;right:20px;bottom:20px;height:220px;width:auto}
+#b94g .room.scared .ola{animation:gShiver .25s infinite}
+@keyframes gShiver{50%{transform:translateX(2px)}}
+#b94g .room .dark{position:absolute;inset:0;background:radial-gradient(circle at 78% 58%,rgba(0,0,0,0) 0 90px,rgba(3,5,14,var(--d,.8)) 210px);transition:background .3s}
 #b94g .room.off .dark{background:rgba(3,5,14,.93)}
-#b94g .room.off .strip{opacity:1}
-#b94g .room .phone{position:absolute;right:110px;top:26px;width:150px;background:#111317;border-radius:16px;padding:10px;font-size:12px;opacity:0;transform:translateY(-10px);transition:all .3s}
-#b94g .room .phone.on{opacity:1;transform:none}
+#b94g .room .phone{position:absolute;right:120px;top:22px;width:160px;background:#111317;border-radius:16px;padding:10px;font-size:12px;opacity:0;transform:translateY(-10px);transition:all .3s;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+#b94g .room .phone.on{opacity:1;transform:none;animation:gBuzz .3s 3}
+@keyframes gBuzz{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 #b94g .room .phone b{display:block;color:#aeb0c2;font-size:11px}
+#b94g .room .icon{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) scale(.6);font:900 28px/1 var(--display);color:#fff;background:var(--sign);padding:10px 14px;border-radius:12px;opacity:0;transition:all .25s;white-space:nowrap}
+#b94g .room .icon.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 #b94g .fear{height:14px;border-radius:999px;background:#22263a;overflow:hidden;flex:1}
 #b94g .fear i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--hat),var(--sign));transition:width .4s}
-#b94g .ev{margin-top:14px;background:var(--stair);border-radius:18px;padding:16px;min-height:220px}
-#b94g .ev h3{font-size:26px}
+#b94g .ev{margin-top:14px;background:var(--stair);border-radius:18px;padding:16px;min-height:230px}
+#b94g .ev h3{font-size:28px}
 #b94g .ev p{margin:6px 0 12px;color:var(--muted)}
 #b94g .timer{height:6px;border-radius:999px;background:#22263a;overflow:hidden;margin-bottom:12px}
 #b94g .timer i{display:block;height:100%;background:var(--hat);width:100%}
-#b94g .pulse{animation:b94beat 1s infinite}
-@keyframes b94beat{0%,100%{transform:scale(1)}15%{transform:scale(1.04)}30%{transform:scale(1)}45%{transform:scale(1.03)}}
-/* wynik */
+#b94g .pulse{animation:gBeat 1s infinite}
+@keyframes gBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.03)}30%{transform:scale(1)}45%{transform:scale(1.02)}}
 #b94g .end{text-align:center}
-#b94g .end .big{font-family:var(--display);font-weight:800;font-size:72px;line-height:1;color:var(--hat)}
+#b94g .end .big{font-family:var(--display);font-weight:800;font-size:80px;line-height:1;color:var(--hat);animation:gZoom .6s both}
+#b94g .medal{width:110px;height:110px;margin:10px auto 0;border-radius:50%;display:grid;place-items:center;font:900 15px/1.1 var(--body);color:#14161b;background:radial-gradient(circle at 35% 30%,#ffe9a8,var(--gold) 60%,#8a6a2c);box-shadow:0 0 0 6px #6b5226,0 12px 30px rgba(0,0,0,.5);animation:gZoom .6s .2s both}
+#b94g .medal.silver{background:radial-gradient(circle at 35% 30%,#fff,#c9cdd2 60%,#7d848c);box-shadow:0 0 0 6px #6e757c,0 12px 30px rgba(0,0,0,.5)}
+#b94g .medal.bronze{background:radial-gradient(circle at 35% 30%,#ffd2a8,#b8733a 60%,#6b3f1a);box-shadow:0 0 0 6px #5a3416,0 12px 30px rgba(0,0,0,.5)}
 #b94g .end ul{text-align:left;color:var(--muted);padding-left:20px}
 #b94g .end .acts{display:grid;gap:10px;margin-top:16px}
-@media (prefers-reduced-motion:reduce){#b94g .pulse{animation:none}#b94g *{transition:none!important}}
+#b94g .conf{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#b94g .conf i{position:absolute;top:-20px;width:10px;height:6px;border-radius:2px;animation:gFall 2.6s linear forwards}
+@keyframes gFall{to{transform:translateY(900px) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){#b94g *{animation:none!important;transition:none!important}}
 </style>
 
 <div id="b94g" data-kuba="blok94-kuba.png" data-ola="blok94-ola.png" data-kaptur="blok94-kaptur.png" data-zdzisiek="blok94-zdzisiek.png" data-kurier="blok94-kurier.png" data-policjant="blok94-policjant.png" data-kobieta="blok94-kobieta.png" data-halina="blok94-halina.png" data-tiktok="https://www.tiktok.com/@protokolocaleni">
@@ -97,30 +131,40 @@
   var R = document.getElementById('b94g'), box = document.getElementById('g-root');
   if (!R || !box) return;
   var IMG = function (k) { return R.getAttribute('data-' + k); };
-  var TT = R.getAttribute('data-tiktok');
+  var TT = R.getAttribute('data-tiktok'), URL_GRA = location.origin + '/pages/gra';
   function store(k, v) { try { if (v === undefined) return +localStorage.getItem('b94g-' + k) || 0; localStorage.setItem('b94g-' + k, v); } catch (e) { return 0; } }
-  function h(html) { box.innerHTML = html; }
+  function h(html) { box.innerHTML = '<div class="fadein">' + html + '</div>'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function top() { R.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  // dźwięk: krótkie tony generowane w przeglądarce (dopiero po kliknięciu)
-  var ac = null;
-  function beep(f, d, type, vol) { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); var o = ac.createOscillator(), g = ac.createGain(); o.type = type || 'sine'; o.frequency.value = f; g.gain.value = vol || .08; o.connect(g); g.connect(ac.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + (d || .2)); o.stop(ac.currentTime + (d || .2)); } catch (e) {} }
-  function knock() { beep(90, .12, 'square', .12); setTimeout(function () { beep(90, .12, 'square', .12); }, 260); setTimeout(function () { beep(90, .12, 'square', .12); }, 520); }
+  function $(id) { return document.getElementById(id); }
+  var muted = !!store('mute'), ac = null;
+  function beep(f, d, type, vol) { if (muted) return; try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); var o = ac.createOscillator(), g = ac.createGain(); o.type = type || 'sine'; o.frequency.value = f; g.gain.value = vol || .08; o.connect(g); g.connect(ac.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + (d || .2)); o.stop(ac.currentTime + (d || .2)); } catch (e) {} }
+  function knock() { [0, 260, 520].forEach(function (t) { setTimeout(function () { beep(90, .12, 'square', .12); }, t); }); }
+  function good() { beep(880, .12); setTimeout(function () { beep(1320, .15); }, 110); }
+  function bad() { beep(110, .5, 'sawtooth', .07); }
+  function confetti() { var c = document.createElement('div'); c.className = 'conf'; var cols = ['#f39c12', '#d7263d', '#7b4fc9', '#1bb0a3', '#f5c542', '#fff']; for (var i = 0; i < 60; i++) { var e = document.createElement('i'); e.style.left = (Math.random() * 100) + '%'; e.style.background = cols[i % cols.length]; e.style.animationDelay = (Math.random() * .8) + 's'; c.appendChild(e); } R.appendChild(c); setTimeout(function () { c.remove(); }, 3800); }
+  function share(text, btn) { var done = function () { btn.textContent = 'Skopiowano. Wklej w komentarzu!'; }; var fail = function () { btn.insertAdjacentHTML('afterend', '<p style="user-select:all;background:#0d0f13;padding:10px;border-radius:10px;font-size:14px">' + esc(text) + '</p>'); btn.textContent = 'Zaznacz i skopiuj tekst poniżej'; }; try { navigator.clipboard.writeText(text).then(done, fail); } catch (e) { fail(); } }
 
-  /* ---------- MENU ---------- */
+  var diff = store('diff') || 0, night = Math.max(1, Math.min(store('night') || 1, store('unlocked') || 1));
   function menu() {
+    var unlocked = store('unlocked') || 1;
     h('<span class="eyebrow">Gra · BLOK 94</span><h2 style="margin-top:12px">Co zrobisz, gdy <span class="sign">ktoś puka?</span></h2>' +
       '<p style="color:var(--muted);margin:10px 0 0">Wybierz tryb. Każda decyzja to prawdziwa zasada z serii „Kto tam?”.</p>' +
       '<div class="modes">' +
-      '<button class="mode" id="m1"><span class="pic"><img src="' + IMG('kaptur') + '" alt=""></span><span><h3>Kto tam?</h3><p>Dziesięć osób puka do drzwi. Patrzysz przez wizjer i decydujesz. Nie każdy gość to zagrożenie.</p><small>Rekord: ' + store('best1') + '/10</small></span></button>' +
-      '<button class="mode" id="m2"><span class="pic"><img src="' + IMG('ola') + '" alt=""></span><span><h3>Noc w bloku 94</h3><p>Przetrwaj od północy do szóstej. Szybkie decyzje na czas, a strach rośnie z każdym błędem.</p><small>Rekord: ' + (store('best2') ? fmtClock(store('best2')) : 'jeszcze brak') + '</small></span></button>' +
-      '</div>');
-    document.getElementById('m1').onclick = function () { game1(); top(); };
-    document.getElementById('m2').onclick = function () { game2(); top(); };
+      '<button class="mode" id="m1"><span class="pic"><img src="' + IMG('kaptur') + '" alt=""></span><span><h3>Kto tam?</h3><p>Dziesięć osób z dwudziestu puka do drzwi. Patrzysz przez wizjer i decydujesz. Nie każdy gość to zagrożenie.</p><small>Rekord: ' + store('best1') + '/10</small></span></button>' +
+      '<div class="chips" role="group" aria-label="Poziom trudności"><button class="chip" data-d="0" aria-pressed="' + (diff == 0) + '">Spokojnie: bez limitu czasu</button><button class="chip" data-d="1" aria-pressed="' + (diff == 1) + '">Trudny: 10 sekund</button></div>' +
+      '<button class="mode" id="m2" style="margin-top:8px"><span class="pic"><img src="' + IMG('ola') + '" alt=""></span><span><h3>Noc w bloku 94</h3><p>Przetrwaj od północy do szóstej. Szybkie decyzje na czas, a strach rośnie z każdym błędem.</p><small>Odblokowane noce: ' + unlocked + '/3</small></span></button>' +
+      '<div class="chips" role="group" aria-label="Wybór nocy">' + [1, 2, 3].map(function (n) { return '<button class="chip" data-n="' + n + '" aria-pressed="' + (night == n) + '"' + (n > unlocked ? ' disabled' : '') + '>Noc ' + n + (n > unlocked ? ' (zamknięta)' : '') + '</button>'; }).join('') + '</div>' +
+      '<p class="hint">Kolejną noc odblokujesz, gdy przetrwasz poprzednią do 6:00. Każda kolejna jest ciemniejsza i szybsza.</p>' +
+      '</div><button class="chip" id="g-mute" style="margin-top:18px">' + (muted ? 'Dźwięk: wyłączony' : 'Dźwięk: włączony') + '</button>');
+    $('m1').onclick = function () { game1(); top(); };
+    $('m2').onclick = function () { game2(night); top(); };
+    [].forEach.call(box.querySelectorAll('[data-d]'), function (b) { b.onclick = function () { diff = +b.getAttribute('data-d'); store('diff', diff); menu(); }; });
+    [].forEach.call(box.querySelectorAll('[data-n]'), function (b) { b.onclick = function () { night = +b.getAttribute('data-n'); store('night', night); menu(); }; });
+    $('g-mute').onclick = function () { muted = !muted; store('mute', muted ? 1 : 0); menu(); };
   }
 
-  /* ---------- TRYB 1: KTO TAM? ---------- */
   var V = [
     { t: '02:47', sfx: 'PUK. PUK. PUK.', view: 'tape', say: '', note: 'Wizjer jest czarny. Na klatce zawsze pali się światło.', o: [['Pytam: kto tam?', 0, 'Pytanie zdradza, że jesteś w domu.'], ['Nie odzywam się i dzwonię na 112', 1, 'Cisza mówi, że nikogo nie ma. Zaklejony wizjer to powód, by wezwać pomoc.'], ['Otwieram na łańcuch', 0, 'Łańcuch nie zatrzyma dorosłego.']], rule: 'Ktoś zakleił wizjer? Nie odzywaj się, dzwoń na 112.' },
     { t: '14:10', sfx: 'DZWONEK', view: 'halina', say: 'Olu, pożyczysz szklankę cukru? Ciasto mi się nie uda!', note: 'W wizjerze widzisz panią Halinę z siódmego piętra. Środek dnia.', o: [['Otwieram, to pani Halina', 1, 'Znasz ją, widzisz ją wyraźnie i jest dzień. Nie każdy gość to zagrożenie.'], ['Dzwonię na 112', 0, 'To przesada: widzisz znaną sąsiadkę w biały dzień.'], ['Udaję, że mnie nie ma', 0, 'Nie musisz. Widzisz, kto to jest.']], rule: 'Widzisz znajomą osobę w dzień? Możesz otworzyć.' },
@@ -131,54 +175,69 @@
     { t: '19:05', sfx: 'PUK. PUK.', view: 'kuba', say: 'Ola, to ja! Zapomniałem kluczy, otwórz.', note: 'W wizjerze wyraźnie widzisz Kubę. Jest wieczór, wraca z treningu.', o: [['Otwieram, to Kuba', 1, 'Widzisz brata wyraźnie i o normalnej porze. Wszystko w porządku.'], ['Dzwonię na 112', 0, 'To twój brat. Widzisz go.'], ['Nie otwieram do rana', 0, 'Przesadna ostrożność. Kuba stoi pod drzwiami.']], rule: 'Widzisz bliską osobę w wizjerze? Możesz otworzyć.' },
     { t: '03:12', sfx: 'SZEPT', view: 'tape', say: 'Ola… to ja, Kuba. Otwórz.', note: 'Wizjer jest czarny, a telefon Kuby leży na biurku w jego pokoju.', o: [['Otwieram, to przecież Kuba', 0, 'Nie widzisz go, a jego telefon jest w domu. To nie musi być Kuba.'], ['Sprawdzam, czy Kuba jest w swoim pokoju, i dzwonię na 112', 1, 'Sprawdź, zanim uwierzysz głosowi zza drzwi.'], ['Pytam o coś, co wie tylko Kuba', 0, 'Rozmowa zdradza, że jesteś w domu i się boisz.']], rule: 'Nie widzisz, kto mówi? Nie ufaj samemu głosowi.' },
     { t: '23:58', sfx: 'CIEMNOŚĆ', view: 'none', say: '', note: 'Prąd zgasł tylko u ciebie. Pod drzwiami wciąż świeci pasek światła z klatki.', o: [['Wychodzę do licznika na korytarz', 0, 'Ktoś mógł wyłączyć bezpiecznik, żeby ktoś wyszedł.'], ['Zostaję w środku i dzwonię po pomoc', 1, 'Prąd zgasł tylko u ciebie? To nie przypadek.'], ['Wysyłam brata, żeby włączył korki', 0, 'Brat też jest w niebezpieczeństwie.']], rule: 'Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.' },
-    { t: '20:30', sfx: 'DZWONEK', view: 'zdzisiek', say: 'Ola, widziałaś dziś kogoś obcego na klatce?', note: 'Pan Zdzisiek z drugiego piętra, dobrze widoczny w wizjerze.', o: [['Rozmawiam z nim przez drzwi albo otwieram', 1, 'Znany sąsiad pyta o bezpieczeństwo. Warto porozmawiać.'], ['Dzwonię na 112', 0, 'To pan Zdzisiek. Pilnuje klatki.'], ['Udaję, że nikogo nie ma', 0, 'Nie trzeba. Sąsiedzi, którzy uważają, to najlepsza ochrona.']], rule: 'Uważni sąsiedzi to najlepsza ochrona bloku.' },
+    { t: '20:30', sfx: 'DZWONEK', view: 'zdzisiek', say: 'Ola, widziałaś dziś kogoś obcego na klatce?', note: 'Pan Zdzisiek z drugiego piętra, dobrze widoczny w wizjerze.', o: [['Rozmawiam z nim przez drzwi albo otwieram', 1, 'Znany sąsiad pyta o bezpieczeństwo. Warto porozmawiać.'], ['Dzwonię na 112', 0, 'To pan Zdzisiek. Pilnuje klatki.'], ['Udaję, że nikogo nie ma', 0, 'Nie trzeba. Uważni sąsiedzi to najlepsza ochrona.']], rule: 'Uważni sąsiedzi to najlepsza ochrona bloku.' },
     { t: '22:10', sfx: 'DZWONEK', view: 'kobieta', say: 'Dobry wieczór! Zbieramy na schronisko, może coś pani wrzuci?', note: 'Nie znasz tej kobiety. Jest późno.', o: [['Otwieram i daję pieniądze', 0, 'Otwierasz obcej osobie późnym wieczorem.'], ['Rozmawiam przez drzwi i nie otwieram', 1, 'Na zbiórki możesz wpłacić przez internet, sprawdzając organizację.'], ['Wpuszczam ją, bo zimno', 0, 'Nie wpuszczaj obcych do domu.']], rule: 'Obcy wieczorem? Rozmawiaj przez drzwi.' },
-    { t: '02:05', sfx: 'WIADOMOŚĆ', view: 'phone', say: 'k4ptur_94: jesteś sama?', note: 'Konto bez zdjęcia. Nikt z twoich znajomych.', o: [['Odpisuję: zostaw mnie!', 0, 'Odpowiedź daje mu to, czego chce: wie, że czytasz i się boisz.'], ['Robię zrzut, blokuję, zgłaszam i mówię dorosłym', 1, 'Dowód, blokada, zgłoszenie. Bez rozmowy.'], ['Pytam, kim jest', 0, 'Każda odpowiedź to zaproszenie do rozmowy.']], rule: 'Obcy pisze nocą? Zrzut ekranu, zablokuj, zgłoś. Nie odpisuj.' }
+    { t: '02:05', sfx: 'WIADOMOŚĆ', view: 'phone', say: 'k4ptur_94: jesteś sama?', note: 'Konto bez zdjęcia. Nikt z twoich znajomych.', o: [['Odpisuję: zostaw mnie!', 0, 'Odpowiedź daje mu to, czego chce: wie, że czytasz i się boisz.'], ['Robię zrzut, blokuję, zgłaszam i mówię dorosłym', 1, 'Dowód, blokada, zgłoszenie. Bez rozmowy.'], ['Pytam, kim jest', 0, 'Każda odpowiedź to zaproszenie do rozmowy.']], rule: 'Obcy pisze nocą? Zrzut ekranu, zablokuj, zgłoś. Nie odpisuj.' },
+    { t: '10:30', sfx: 'DZWONEK', view: 'kurier', say: 'Polecony dla Oli, trzeba podpisać.', note: 'Listonosz w mundurze, przedpołudnie. Mama mówiła, że czeka na list.', o: [['Odbieram list przy drzwiach', 1, 'Dzień, spodziewana przesyłka, podpis przy progu. Wszystko w porządku.'], ['Wpuszczam go do środka, żeby usiadł', 0, 'Do podpisania listu nie trzeba nikogo wpuszczać.'], ['Dzwonię na 112', 0, 'To zwykła wizyta listonosza.']], rule: 'Spodziewana przesyłka w dzień? Odbierz ją przy drzwiach.' },
+    { t: '22:40', sfx: 'DZWONEK', view: 'policjant', say: 'Hydraulik ze spółdzielni. Zalewa pani sąsiada, muszę sprawdzić łazienkę.', note: 'Nie widzisz identyfikatora. Na tablicy nie było ogłoszenia.', o: [['Wpuszczam, to pilne', 0, 'Każdy może powiedzieć „ze spółdzielni”.'], ['Dzwonię na numer alarmowy administracji z tablicy', 1, 'Administracja potwierdzi, czy kogoś wysłała.'], ['Mówię, że rodziców nie ma, ale wpuszczam', 0, 'Zdradzasz, że jesteś sama, i wpuszczasz obcego.']], rule: 'Ktoś „ze spółdzielni”? Sprawdź w administracji na numer z tablicy.' },
+    { t: '16:00', sfx: 'DZWONEK', view: 'kobieta', say: 'Jestem z urzędu, sprawdzam warunki mieszkaniowe. Rodzice są?', note: 'Nikt nie zapowiadał takiej wizyty.', o: [['Mówię, że jestem sama, ale może wejść', 0, 'Zdradzasz, że jesteś sama, i wpuszczasz obcego.'], ['Nie otwieram i dzwonię do rodziców', 1, 'Prawdziwe wizyty są zapowiadane. Rodzice to sprawdzą.'], ['Podaję jej numer mamy przez drzwi', 0, 'Nie podawaj danych nieznajomym.']], rule: 'Niezapowiedziana „wizyta z urzędu”? Nie otwieraj, zadzwoń do rodziców.' },
+    { t: '03:30', sfx: 'DZWONEK', view: 'empty', say: '', note: 'Dzwonek, a potem szybkie kroki na schodach. W wizjerze pusto.', o: [['Otwieram i sprawdzam klatkę', 0, 'Ktoś może czekać, aż wyjdziesz.'], ['Nie otwieram i wracam do pokoju', 1, 'To mógł być żart albo sprawdzanie, czy ktoś jest w domu. Nie wychodź.'], ['Krzyczę przez drzwi', 0, 'Zdradzasz, że jesteś w domu.']], rule: 'Dzwonek w nocy i pusto? Nie otwieraj i nie wychodź.' },
+    { t: '21:05', sfx: 'WIADOMOŚĆ', view: 'phone', say: 'Nowy numer: „Hej, to ja Zuzia, zgubiłam telefon. Otworzysz mi domofon?”', note: 'Numer, którego nie znasz.', o: [['Otwieram domofon', 0, 'Nie wiesz, kto pisze z nowego numeru.'], ['Dzwonię do Zuzi na jej stary numer albo do jej mamy', 1, 'Sprawdź tożsamość innym kanałem.'], ['Odpisuję, w którym mieszkaniu jestem', 0, 'Podajesz adres komuś, kogo nie znasz.']], rule: 'Ktoś pisze z nowego numeru, że to przyjaciel? Sprawdź innym kanałem.' },
+    { t: '13:00', sfx: 'DZWONEK', view: 'kurier', say: 'Ankieta o internecie, tylko pięć minut, mogę wejść?', note: 'Nieznajomy z tabletem.', o: [['Wpuszczam na pięć minut', 0, 'Do ankiety nie trzeba nikogo wpuszczać.'], ['Grzecznie odmawiam przez drzwi', 1, 'Nie musisz nikomu otwierać ani się tłumaczyć.'], ['Podaję imię i numer telefonu', 0, 'Nie podawaj danych nieznajomym.']], rule: 'Ankieta, oferta, „tylko pięć minut”? Możesz odmówić przez drzwi.' },
+    { t: '18:30', sfx: 'DOMOFON', view: 'kurier', say: 'Kurier, paczka dla Oli, mieszkanie 94.', note: 'Czekasz na zamówienie. Dostałaś SMS, że kurier jest w drodze.', o: [['Odbieram paczkę przy drzwiach', 1, 'Spodziewana paczka, zgodna z SMS-em. Odbierz przy progu.'], ['Wpuszczam kuriera do mieszkania', 0, 'Paczkę odbiera się przy drzwiach.'], ['Nie otwieram nikomu nigdy', 0, 'Przesada. Ta paczka jest dla ciebie i ją zamawiałaś.']], rule: 'Spodziewana paczka? Odbierz ją przy drzwiach.' },
+    { t: '00:20', sfx: 'KARTKA', view: 'none', say: 'WIEMY, ŻE JESTEŚ SAMA.', note: 'Ktoś wsunął kartkę pod drzwi.', o: [['Wyrzucam kartkę i idę spać', 0, 'To ważny ślad. Ktoś cię obserwuje.'], ['Robię zdjęcie kartki, dzwonię na 112 i do rodziców', 1, 'Zachowaj dowód i powiedz dorosłym.'], ['Odpisuję na kartce i wsuwam ją z powrotem', 0, 'Każda odpowiedź to zaproszenie do kontaktu.']], rule: 'Groźba pod drzwiami? Zachowaj dowód, dzwoń na 112 i do rodziców.' }
   ];
   function viewHTML(v) {
-    if (v === 'tape') return '<div class="tape"></div>';
+    if (v === 'tape') return '<div class="tape"></div><div class="eyes"><i></i><i></i></div>';
     if (v === 'none') return '<div class="tape" style="background:#000"></div>';
-    if (v === 'phone') return '<div class="bg"></div><div style="position:absolute;inset:18% 22%;background:#111317;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;text-align:center;padding:8px">nowa wiadomość<br>k4ptur_94</div>';
+    if (v === 'phone') return '<div class="bg"></div><div style="position:absolute;inset:18% 22%;background:#111317;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;text-align:center;padding:8px">nowa wiadomość</div>';
     if (v === 'empty') return '<div class="bg"></div>';
     return '<div class="bg"></div><img src="' + IMG(v) + '" alt="">';
   }
   function game1() {
-    var list = shuffle(V).slice(0, 10), i = 0, score = 0, lives = 3, learned = [];
+    var list = shuffle(V).slice(0, 10), i = 0, score = 0, lives = 3, learned = [], streak = 0, bestStreak = 0, tm = null, tmi = null, LIMIT = 10;
     function round() {
       var c = list[i];
       h('<div class="bar"><button class="back" id="g-back">← Menu</button><div class="lives" aria-label="Zamki: ' + lives + ' z 3">' + [0, 1, 2].map(function (k) { return '<span class="' + (k < lives ? '' : 'off') + '"></span>'; }).join('') + '</div><span class="led">' + (i + 1) + '/10</span></div>' +
-        '<div class="door"><span class="led time">' + c.t + '</span><span class="plate">94</span><span class="sfx">' + esc(c.sfx) + '</span>' +
-        '<div class="peep">' + viewHTML(c.view) + '</div><div class="say">' + esc(c.say) + '</div><span class="note">' + esc(c.note) + '</span></div>' +
-        '<div class="opts">' + shuffle(c.o.map(function (o, k) { return k; })).map(function (k) { return '<button class="opt" data-k="' + k + '">' + esc(c.o[k][0]) + '</button>'; }).join('') + '</div><div id="g-fb"></div>');
-      document.getElementById('g-back').onclick = menu;
-      if (/PUK|BUM/.test(c.sfx)) knock(); else beep(660, .25, 'sine', .05);
-      [].forEach.call(box.querySelectorAll('.opt'), function (b) {
-        b.onclick = function () {
-          var k = +b.getAttribute('data-k'), good = c.o[k][1] === 1;
-          [].forEach.call(box.querySelectorAll('.opt'), function (x) { x.disabled = true; if (c.o[+x.getAttribute('data-k')][1]) x.classList.add('ok'); });
-          if (!good) { b.classList.add('bad'); lives--; beep(110, .5, 'sawtooth', .07); } else { score++; beep(880, .15); setTimeout(function () { beep(1320, .15); }, 120); }
-          learned.push(c.rule);
-          var last = i === list.length - 1 || lives <= 0;
-          document.getElementById('g-fb').innerHTML = '<div class="fb ' + (good ? '' : 'bad') + '"><b>' + (good ? 'Dobrze!' : 'Błąd') + '</b><p>' + esc(c.o[k][2]) + '</p><div class="rule">Zasada: ' + esc(c.rule) + '</div><button class="btn red" id="g-next">' + (last ? 'Zobacz wynik' : 'Następna osoba') + '</button></div>';
-          document.getElementById('g-next').onclick = function () { i++; if (last) end1(); else { round(); top(); } };
-          document.getElementById('g-fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        };
-      });
+        '<div class="prog"><i style="width:' + (i * 10) + '%"></i></div><div class="streak">' + (streak >= 2 ? 'Seria: ' + streak + ' dobre decyzje z rzędu' : '') + '</div>' +
+        '<div class="door" id="g-door"><span class="led time">' + c.t + '</span><span class="plate">94</span><span class="sfx">' + esc(c.sfx) + '</span>' +
+        '<div class="peep">' + viewHTML(c.view) + '</div><div class="say">' + esc(c.say) + '</div><span class="note">' + esc(c.note) + '</span>' + (diff ? '<div class="tbar"><i id="g-t"></i></div>' : '') + '</div>' +
+        '<div class="opts">' + shuffle([0, 1, 2]).map(function (k) { return '<button class="opt" data-k="' + k + '">' + esc(c.o[k][0]) + '</button>'; }).join('') + '</div><div id="g-fb"></div>');
+      $('g-back').onclick = function () { clearTimeout(tm); clearInterval(tmi); menu(); };
+      if (/PUK|BUM|DZWONEK/.test(c.sfx)) { $('g-door').classList.add('knock'); knock(); } else beep(660, .25, 'sine', .05);
+      [].forEach.call(box.querySelectorAll('.opt'), function (b) { b.onclick = function () { pick(+b.getAttribute('data-k'), b); }; });
+      if (diff) { var t0 = Date.now(); tmi = setInterval(function () { var l = 1 - (Date.now() - t0) / (LIMIT * 1000), bar = $('g-t'); if (bar) bar.style.width = Math.max(0, l * 100) + '%'; }, 60); tm = setTimeout(function () { pick(-1); }, LIMIT * 1000); }
+    }
+    function pick(k, btn) {
+      clearTimeout(tm); clearInterval(tmi);
+      var c = list[i], ok = k >= 0 && c.o[k][1] === 1;
+      [].forEach.call(box.querySelectorAll('.opt'), function (x) { x.disabled = true; if (c.o[+x.getAttribute('data-k')][1]) x.classList.add('ok'); });
+      if (!ok) { if (btn) btn.classList.add('bad'); lives--; streak = 0; bad(); } else { score++; streak++; bestStreak = Math.max(bestStreak, streak); good(); }
+      learned.push(c.rule);
+      var last = i === list.length - 1 || lives <= 0;
+      var why = k < 0 ? 'Czas minął. W prawdziwej sytuacji też trzeba zdecydować szybko.' : c.o[k][2];
+      $('g-fb').innerHTML = '<div class="fb ' + (ok ? '' : 'bad') + '"><b>' + (ok ? (streak >= 3 ? 'Świetnie! Seria ' + streak : 'Dobrze!') : 'Błąd') + '</b><p>' + esc(why) + '</p><div class="rule">Zasada: ' + esc(c.rule) + '</div><button class="btn red" id="g-next">' + (last ? 'Zobacz wynik' : 'Następna osoba') + '</button></div>';
+      $('g-next').onclick = function () { i++; if (last) end1(); else { round(); top(); } };
+      $('g-fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     function end1() {
       var best = Math.max(store('best1'), score); store('best1', best);
-      var title = lives <= 0 ? 'Kaptur wszedł do środka.' : score >= 9 ? 'Pan Zdzisiek byłby dumny.' : score >= 7 ? 'Prawie bez błędów.' : 'Kaptur jeszcze wróci.';
-      h('<div class="end"><span class="eyebrow">Koniec nocy</span><div class="big" style="margin-top:14px">' + score + '/10</div><h2 style="font-size:34px;margin-top:6px">' + title + '</h2><p style="color:var(--muted)">Rekord: ' + best + '/10</p>' +
+      var lost = lives <= 0, medal = lost ? null : score >= 9 ? ['', 'ZŁOTY<br>ZAMEK'] : score >= 7 ? ['silver', 'SREBRNY<br>ZAMEK'] : ['bronze', 'BRĄZOWY<br>ZAMEK'];
+      var title = lost ? 'Kaptur wszedł do środka.' : score >= 9 ? 'Pan Zdzisiek byłby dumny.' : score >= 7 ? 'Prawie bez błędów.' : 'Kaptur jeszcze wróci.';
+      var txt = 'Mój wynik w grze „Kto tam?”: ' + score + '/10' + (diff ? ' (tryb trudny)' : '') + '. Zagraj: ' + URL_GRA;
+      h('<div class="end"><span class="eyebrow">Koniec nocy</span><div class="big" style="margin-top:14px">' + score + '/10</div>' + (medal ? '<div class="medal ' + medal[0] + '">' + medal[1] + '</div>' : '') +
+        '<h2 style="font-size:36px;margin-top:12px">' + title + '</h2><p style="color:var(--muted)">Rekord: ' + best + '/10 · Najdłuższa seria: ' + bestStreak + '</p>' +
         '<ul>' + learned.filter(function (r, k, a) { return a.indexOf(r) === k; }).slice(0, 6).map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' +
-        '<div class="acts"><button class="btn red" id="g-again">Zagraj jeszcze raz</button><button class="btn line" id="g-other">Spróbuj „Noc w bloku 94”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
-      document.getElementById('g-again').onclick = function () { game1(); top(); };
-      document.getElementById('g-other').onclick = function () { game2(); top(); };
+        '<div class="acts"><button class="btn gold" id="g-share">Skopiuj wynik do komentarza</button><button class="btn red" id="g-again">Zagraj jeszcze raz</button><button class="btn line" id="g-other">Spróbuj „Noc w bloku 94”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
+      $('g-share').onclick = function () { share(txt, this); };
+      $('g-again').onclick = function () { game1(); top(); };
+      $('g-other').onclick = function () { game2(night); top(); };
+      if (score >= 9 && !lost) confetti();
       top();
     }
     round();
   }
 
-  /* ---------- TRYB 2: NOC W BLOKU 94 ---------- */
   function fmtClock(min) { var hh = Math.floor(min / 60), mm = Math.floor(min % 60); return String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0'); }
   var E = [
     { h: 'Prąd gaśnie', p: 'Tylko u ciebie. Na klatce jest jasno.', fx: 'off', o: [['Zostaję w środku', 1], ['Idę do licznika', 0], ['Otwieram drzwi, żeby sprawdzić klatkę', 0]] },
@@ -192,36 +251,43 @@
     { h: 'Metal w zamku', p: 'Ktoś przekręca klucz w twoich drzwiach.', fx: 'handle', o: [['Dociskam drzwi i dzwonię na 112', 1], ['Pytam, kto ma mój klucz', 0], ['Chowam się w szafie', 0]] },
     { h: 'Nieznany numer dzwoni', p: 'O 3:00. Trzeci raz z rzędu.', fx: 'phone', from: 'Nieznany numer', o: [['Nie odbieram i blokuję numer', 1], ['Odbieram i krzyczę', 0], ['Oddzwaniam', 0]] },
     { h: 'Płacz na klatce', p: '„Pomocy… otwórz…”', fx: 'knock', o: [['Dzwonię na 112 i mówię przez drzwi', 1], ['Otwieram', 0], ['Otwieram na łańcuch', 0]] },
-    { h: 'Kusi cię relacja', p: 'Chcesz wrzucić: „sama na chacie do rana”.', fx: 'phone', from: 'Twoja relacja', o: [['Nie wrzucam', 1], ['Wrzucam z lokalizacją', 0], ['Wrzucam tylko dla znajomych znajomych', 0]] }
+    { h: 'Kusi cię relacja', p: 'Chcesz wrzucić: „sama na chacie do rana”.', fx: 'phone', from: 'Twoja relacja', o: [['Nie wrzucam', 1], ['Wrzucam z lokalizacją', 0], ['Wrzucam tylko dla znajomych znajomych', 0]] },
+    { h: 'Mama pisze', p: '„Śpisz? Wszystko ok?”', fx: 'phone', from: 'Mama', o: [['Odpisuję mamie, co się dzieje', 1], ['Nie odpisuję, żeby jej nie martwić', 0], ['Piszę, że wszystko super, choć nie jest', 0]] },
+    { h: 'Bateria: 5%', p: 'Telefon zaraz się wyłączy.', fx: 'phone', from: 'Telefon', o: [['Podłączam ładowarkę i trzymam telefon przy sobie', 1], ['Gram dalej, jakoś to będzie', 0], ['Wyłączam telefon, żeby oszczędzać', 0]] },
+    { h: 'Winda staje na 9. piętrze', p: 'Drzwi windy się otwierają. Nikt nie wysiada.', fx: 'shadow', o: [['Nie wychodzę sprawdzać', 1], ['Wychodzę zobaczyć, kto przyjechał', 0], ['Wołam przez drzwi: kto tam?', 0]] },
+    { h: 'Domofon o 2:00', p: '„Kurier, otwórz, pilna paczka.”', fx: 'knock', o: [['Nie otwieram. Żaden kurier nie przychodzi o 2:00', 1], ['Otwieram domofon', 0], ['Schodzę na dół odebrać', 0]] }
   ];
-  function game2() {
-    var fear = 0, clock = 0, alive = true, good = 0, ev = null, tmr = null, tick = null, evTimeout = null, bag = shuffle(E), bi = 0;
-    var NIGHT = 360, SPEED = 4; // 360 min nocy, 4 min na sekundę ≈ 90 s gry
-    h('<div class="bar"><button class="back" id="g-back">← Menu</button><span class="led" id="n-clock">00:00</span></div>' +
+  var NIGHTS = { 1: { start: 6.5, min: 4.2, pen: 26, dark: .78, name: 'Noc 1' }, 2: { start: 5.5, min: 3.6, pen: 30, dark: .84, name: 'Noc 2' }, 3: { start: 4.6, min: 3.0, pen: 34, dark: .9, name: 'Noc 3' } };
+  function game2(nn) {
+    var N = NIGHTS[nn] || NIGHTS[1];
+    var fear = 0, clock = 0, alive = true, goodN = 0, combo = 0, ev = null, tmr = null, tick = null, evTimeout = null, bag = shuffle(E), bi = 0;
+    var NIGHT = 360, SPEED = 4;
+    h('<div class="bar"><button class="back" id="g-back">← Menu</button><span class="eyebrow" style="background:var(--sign);color:#fff">' + N.name + '</span><span class="led" id="n-clock">00:00</span></div>' +
       '<div class="bar"><span style="font-weight:800;font-size:13px">STRACH</span><div class="fear"><i id="n-fear"></i></div></div>' +
-      '<div class="room" id="n-room"><div class="rdoor"></div><div class="handle" id="n-handle"></div><div class="strip"></div><div class="shadow" id="n-s1" style="left:56px"></div><div class="shadow" id="n-s2" style="left:94px"></div><div class="floor"></div><img class="ola" src="' + IMG('ola') + '" alt="Ola"><div class="dark"></div><div class="phone" id="n-phone"><b>k4ptur_94</b><span id="n-ptxt">…</span></div></div>' +
-      '<div class="ev" id="n-ev"><h3>Północ.</h3><p>Ola jest sama. Przetrwaj do szóstej rano. Na każdą decyzję masz kilka sekund.</p><button class="btn red" id="n-start">Zaczynam noc</button></div>');
-    var room = document.getElementById('n-room'), fearEl = document.getElementById('n-fear'), clk = document.getElementById('n-clock'), evBox = document.getElementById('n-ev');
+      '<div class="room" id="n-room" style="--d:' + N.dark + '"><div class="win"></div><div class="rdoor" id="n-door"></div><div class="handle" id="n-handle"></div><div class="strip"></div><div class="shadow" id="n-s1" style="left:56px"></div><div class="shadow" id="n-s2" style="left:94px"></div><img class="ola" src="' + IMG('ola') + '" alt="Ola"><div class="dark"></div><div class="phone" id="n-phone"><b>k4ptur_94</b><span id="n-ptxt">…</span></div><span class="icon" id="n-icon"></span></div>' +
+      '<div class="ev" id="n-ev"><h3>Północ.</h3><p>Ola jest sama. Przetrwaj do szóstej rano. Na każdą decyzję masz kilka sekund. Dobre decyzje z rzędu zmniejszają strach.</p><button class="btn red" id="n-start">Zaczynam noc</button></div>');
+    var room = $('n-room'), fearEl = $('n-fear'), clk = $('n-clock'), evBox = $('n-ev');
     function stop() { alive = false; clearInterval(tick); clearInterval(tmr); clearTimeout(evTimeout); }
-    document.getElementById('g-back').onclick = function () { stop(); menu(); };
-    function setFear(v) { fear = Math.max(0, Math.min(100, v)); fearEl.style.width = fear + '%'; room.classList.toggle('pulse', fear >= 60); if (fear >= 100) lose(); }
+    $('g-back').onclick = function () { stop(); menu(); };
+    function setFear(v) { fear = Math.max(0, Math.min(100, v)); fearEl.style.width = fear + '%'; room.classList.toggle('pulse', fear >= 60); room.classList.toggle('scared', fear >= 80); if (fear >= 100) lose(); }
     function fx(kind, on) {
-      if (!document.getElementById('n-room')) return;
+      if (!$('n-room')) return;
       if (kind === 'off') room.classList.toggle('off', on);
-      if (kind === 'handle') document.getElementById('n-handle').style.transform = on ? 'rotate(35deg)' : 'rotate(0)';
-      if (kind === 'shadow') { document.getElementById('n-s1').style.opacity = on ? 1 : 0; document.getElementById('n-s2').style.opacity = on ? 1 : 0; }
-      if (kind === 'phone') { document.getElementById('n-phone').classList.toggle('on', on); document.getElementById('n-ptxt').textContent = ev ? ev.p : ''; document.querySelector('#n-phone b').textContent = (ev && ev.from) || 'k4ptur_94'; }
-      if (kind === 'knock' && on) knock();
+      if (kind === 'handle') $('n-handle').style.transform = on ? 'rotate(35deg)' : 'rotate(0)';
+      if (kind === 'shadow') { $('n-s1').style.opacity = on ? 1 : 0; $('n-s2').style.opacity = on ? 1 : 0; }
+      if (kind === 'phone') { $('n-phone').classList.toggle('on', on); $('n-ptxt').textContent = ev ? ev.p : ''; document.querySelector('#n-phone b').textContent = (ev && ev.from) || 'k4ptur_94'; }
+      if (kind === 'knock' && on) { var d = $('n-door'); d.classList.remove('knock'); void d.offsetWidth; d.classList.add('knock'); knock(); }
     }
+    function icon(t, col) { var i = $('n-icon'); if (!i) return; i.textContent = t; i.style.background = col; i.classList.add('on'); setTimeout(function () { if ($('n-icon')) i.classList.remove('on'); }, 700); }
     function next() {
       if (!alive) return;
       ev = bag[bi++ % bag.length]; if (bi % bag.length === 0) bag = shuffle(E);
       fx(ev.fx, true); beep(220, .3, 'triangle', .06);
-      var limit = Math.max(3.6, 6.5 - clock / 120); // im później, tym mniej czasu
+      var limit = Math.max(N.min, N.start - clock / 120);
       evBox.innerHTML = '<div class="timer"><i id="n-t"></i></div><h3>' + esc(ev.h) + '</h3><p>' + esc(ev.p) + '</p><div class="opts">' +
         shuffle([0, 1, 2]).map(function (k) { return '<button class="opt" data-k="' + k + '">' + esc(ev.o[k][0]) + '</button>'; }).join('') + '</div>';
-      var t0 = Date.now(), bar = document.getElementById('n-t');
-      clearInterval(tmr); tmr = setInterval(function () { var l = 1 - (Date.now() - t0) / (limit * 1000); bar.style.width = Math.max(0, l * 100) + '%'; }, 50);
+      var t0 = Date.now(), bar = $('n-t');
+      clearInterval(tmr); tmr = setInterval(function () { var l = 1 - (Date.now() - t0) / (limit * 1000); if (bar) bar.style.width = Math.max(0, l * 100) + '%'; }, 50);
       clearTimeout(evTimeout); evTimeout = setTimeout(function () { answer(-1); }, limit * 1000);
       [].forEach.call(evBox.querySelectorAll('.opt'), function (b) { b.onclick = function () { answer(+b.getAttribute('data-k'), b); }; });
     }
@@ -230,25 +296,32 @@
       var ok = k >= 0 && ev.o[k][1] === 1;
       [].forEach.call(evBox.querySelectorAll('.opt'), function (x) { x.disabled = true; if (ev.o[+x.getAttribute('data-k')][1]) x.classList.add('ok'); });
       if (btn && !ok) btn.classList.add('bad');
-      if (ok) { good++; setFear(fear - 10); beep(880, .12); } else { setFear(fear + (k < 0 ? 22 : 30)); beep(110, .45, 'sawtooth', .07); }
-      if (k < 0) evBox.insertAdjacentHTML('beforeend', '<p style="color:var(--sign);font-weight:800;margin-top:10px">Za późno. Strach rośnie.</p>');
-      var f = ev.fx; setTimeout(function () { if (!alive) return; fx(f, false); setTimeout(next, 900); }, 900);
+      if (ok) { goodN++; combo++; setFear(fear - (8 + Math.min(combo, 4) * 2)); good(); icon(combo >= 3 ? 'SERIA ' + combo : 'DOBRZE', '#30a46c'); }
+      else { combo = 0; setFear(fear + (k < 0 ? N.pen - 8 : N.pen)); bad(); icon(k < 0 ? 'ZA PÓŹNO' : 'BŁĄD', '#d7263d'); }
+      var f = ev.fx; setTimeout(function () { if (!alive) return; fx(f, false); setTimeout(next, 800); }, 900);
     }
     function lose() { var at = clock; stop(); end2(false, at); }
     function win() { stop(); end2(true, NIGHT); }
-    document.getElementById('n-start').onclick = function () {
+    $('n-start').onclick = function () {
       beep(440, .1);
       tick = setInterval(function () { clock += SPEED / 4; clk.textContent = fmtClock(clock); if (clock >= NIGHT) win(); }, 250);
       setTimeout(next, 600);
     };
     function end2(won, at) {
-      var best = Math.max(store('best2'), at); store('best2', best);
+      var key = 'best2n' + nn, best = Math.max(store(key), at); store(key, best);
+      if (won && nn < 3 && (store('unlocked') || 1) <= nn) store('unlocked', nn + 1);
+      var txt = 'Przetrwałem w grze „Noc w bloku 94” (' + N.name + ') do ' + fmtClock(at) + '. Zagraj: ' + URL_GRA;
       h('<div class="end"><span class="eyebrow">' + (won ? 'Świt' : 'Strach wygrał') + '</span><div class="big" style="margin-top:14px">' + fmtClock(at) + '</div>' +
-        '<h2 style="font-size:34px;margin-top:6px">' + (won ? 'Ola przetrwała noc.' : 'Ola nie wytrzymała do rana.') + '</h2>' +
-        '<p style="color:var(--muted)">Dobre decyzje: ' + good + ' · Rekord: ' + fmtClock(best) + '</p>' +
-        '<div class="acts"><button class="btn red" id="g-again">Jeszcze jedna noc</button><button class="btn line" id="g-other">Zagraj w „Kto tam?”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
-      document.getElementById('g-again').onclick = function () { game2(); top(); };
-      document.getElementById('g-other').onclick = function () { game1(); top(); };
+        (won ? '<div class="medal">' + N.name.toUpperCase() + '<br>PRZETRWANA</div>' : '') +
+        '<h2 style="font-size:36px;margin-top:12px">' + (won ? 'Ola przetrwała noc.' : 'Ola nie wytrzymała do rana.') + '</h2>' +
+        '<p style="color:var(--muted)">Dobre decyzje: ' + goodN + ' · Rekord tej nocy: ' + fmtClock(best) + (won && nn < 3 ? ' · Odblokowano: Noc ' + (nn + 1) : '') + '</p>' +
+        '<div class="acts"><button class="btn gold" id="g-share">Skopiuj wynik do komentarza</button>' + (won && nn < 3 ? '<button class="btn red" id="g-nextn">Graj: Noc ' + (nn + 1) + '</button>' : '<button class="btn red" id="g-again">Jeszcze jedna noc</button>') +
+        '<button class="btn line" id="g-other">Zagraj w „Kto tam?”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
+      $('g-share').onclick = function () { share(txt, this); };
+      if ($('g-nextn')) $('g-nextn').onclick = function () { night = nn + 1; store('night', night); game2(night); top(); };
+      if ($('g-again')) $('g-again').onclick = function () { game2(nn); top(); };
+      $('g-other').onclick = function () { game1(); top(); };
+      if (won) confetti();
       top();
     }
   }
