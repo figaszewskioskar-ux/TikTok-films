@@ -245,6 +245,11 @@ function person(c, kind, x, y, s, o = {}) {
       else { c.fillStyle = '#6B2B2B'; c.fillRect(-8, my - 2, 16, 4); }
       if (kind === 'zdzisiek') circ(c, 0, hy + 12, 10, '#E04848');
     }
+    if (o.headphones) {
+      c.strokeStyle = '#15161A'; c.lineWidth = 10; c.beginPath(); c.arc(0, hy - 6, 60, Math.PI * 1.08, Math.PI * 1.92); c.stroke();
+      fillRR(c, -66, hy - 18, 22, 44, 10, '#15161A'); fillRR(c, 44, hy - 18, 22, 44, 10, '#15161A');
+      fillRR(c, -63, hy - 10, 6, 26, 3, '#3FD0FF'); fillRR(c, 57, hy - 10, 6, 26, 3, '#3FD0FF');
+    }
     // nakrycia głowy
     if (kind === 'kuba') {
       c.beginPath(); c.arc(0, hy - 8, 53, Math.PI, 0); c.fillStyle = '#F39C12'; c.fill();
