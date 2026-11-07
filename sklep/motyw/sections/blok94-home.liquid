@@ -31,6 +31,38 @@
 #b94{background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
 #b94 *{box-sizing:border-box}#b94 a{color:inherit}#b94 img{max-width:100%;display:block}
 .po-nav a[href*="poradnik"],.po-nav a[href*="72h"]{display:none}
+
+#b94 .stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:26px;row-gap:6px}
+#b94 .stats small{grid-column:1/-1;color:var(--muted);font-size:12px;opacity:.75}
+#b94 .yt{margin:12px 0 0;color:var(--muted);font-size:15px}#b94 .yt a{color:var(--ink);font-weight:700}
+#b94 .swipe{display:none}
+@media(max-width:760px){
+ #b94 section{padding-block:48px}
+ #b94 .hero{padding-block:28px 40px}
+ #b94 .hero h1{margin:12px 0 12px}
+ #b94 .hero .cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ #b94 .hero .cta .btn{width:100%;padding-inline:12px}
+ #b94 .hero figure{max-height:340px;border-radius:18px}
+ #b94 .hero figure img{height:340px;width:100%;object-fit:cover;object-position:50% 30%}
+ #b94 .next{flex-direction:column;align-items:flex-start;width:100%}
+ #b94 .cd{width:100%;justify-content:space-between}#b94 .cd span{flex:1;min-width:0;font-size:20px}
+ #b94 .stats{grid-template-columns:repeat(2,1fr);column-gap:16px;row-gap:14px}
+ #b94 .stats b{font-size:26px}
+ #b94 .grid4{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));padding-bottom:8px;scrollbar-width:none}
+ #b94 .grid4::-webkit-scrollbar{display:none}
+ #b94 .part{flex:0 0 80%;scroll-snap-align:start}
+ #b94 .swipe{display:block;margin:6px 0 0;font-weight:700;font-size:14px;color:var(--hat)}
+ #b94 .cast{grid-template-columns:1fr 1fr;gap:12px}
+ #b94 .who{padding:14px 10px}#b94 .who img{height:130px}#b94 .who h3{font-size:20px}#b94 .who p{font-size:13.5px}
+ #b94 .rlist li{grid-template-columns:40px 1fr;gap:12px;padding:12px 14px}#b94 .peep{width:40px;height:40px;box-shadow:0 0 0 5px var(--gold)}
+ #b94 .rlist b{font-size:16px}
+ #b94 .qbox{padding:16px}
+ #b94 .tipcard{padding:16px}
+ #b94 .floors{gap:12px;margin:16px 4px 6px}
+ #b94 .led .amount{font-size:48px}
+ #b94 .uses{grid-template-columns:1fr 1fr}
+ #b94 h2{font-size:34px}
+}
 </style>
 <div id="b94">
 <section class="hero"><div class="wrap">
@@ -38,23 +70,23 @@
     <span class="eyebrow">Nowa seria · @protokolocaleni</span>
     <h1><span class="sign">Kto tam?</span></h1>
     <p class="story">Druga czterdzieści siedem. Ola jest sama w mieszkaniu 94. Ktoś puka, a wizjer jest czarny. Animowana historia z jednego bloku i prawdziwe zasady, które mogą uratować także ciebie.</p>
-    <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}">Oglądaj na TikToku</a><a class="btn line" href="#seria">Zobacz wszystkie części</a></div>
+    <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj na TikToku</a><a class="btn line" href="#seria">Wszystkie części</a></div><p class="yt">Całe filmy także na <a href="{{ section.settings.youtube }}" target="_blank" rel="noopener">YouTube</a></p>
     <div class="next" aria-label="Kolejna część">
       <div class="lbl">Nowa część<small>{{ section.settings.premiere_label }}</small></div>
       <div class="cd" id="cd" data-t="{{ section.settings.premiere }}"><span id="cd-d">0<i>dni</i></span><span id="cd-h">00<i>godz.</i></span><span id="cd-m">00<i>min</i></span><span id="cd-s">00<i>sek.</i></span></div>
     </div>
-    <div class="stats"><div><b>4</b>części serii</div><div><b>~50 tys.</b>wyświetleń części 2</div><div><b>112</b>numer, który warto pamiętać</div></div>
+    <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń najlepszej części</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
   </div>
   <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
-  <div class="head"><div><span class="eyebrow">Seria</span><h2 style="margin-top:12px">Oglądaj od początku</h2></div><p class="lead" style="margin:0">Każda część kończy się cliffhangerem. Zacznij od pierwszej.</p></div>
+  <div class="head"><div><span class="eyebrow">Seria</span><h2 style="margin-top:12px">Oglądaj od początku</h2></div><p class="lead" style="margin:0">Każda część kończy się cliffhangerem. Zacznij od pierwszej.</p><p class="swipe" aria-hidden="true">Przesuń, żeby zobaczyć kolejne →</p></div>
   <div class="grid4">
-    <article class="part"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka części 1: Nie pytaj kto tam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 1</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta, a piętro wyżej ktoś czeka.</p><div class="rule">Prośba o pomoc w nocy? Nie otwieraj, dzwoń na 112.</div><a href="{{ section.settings.tiktok }}">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka części 2: Nie otwieraj policji" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 2</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze cztery minuty dalej.</p><div class="rule">Zapytaj 112, czy patrol stoi pod twoimi drzwiami.</div><a href="{{ section.settings.tiktok }}">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka części 3: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 3</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka części 4: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 4</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}">Oglądaj →</a></div></article>
+    <article class="part"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka części 1: Nie pytaj kto tam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 1</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta, a piętro wyżej ktoś czeka.</p><div class="rule">Prośba o pomoc w nocy? Nie otwieraj, dzwoń na 112.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    <article class="part"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka części 2: Nie otwieraj policji" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 2</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze cztery minuty dalej.</p><div class="rule">Zapytaj 112, czy patrol stoi pod twoimi drzwiami.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    <article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka części 3: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 3</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    <article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka części 4: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 4</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
   </div>
 </div></section>
 
@@ -144,6 +176,12 @@
  {"type":"text","id":"premiere","label":"Premiera kolejnej części (UTC, np. 2026-11-09T00:30:00Z)","default":"2026-11-09T00:30:00Z"},
  {"type":"text","id":"premiere_label","label":"Opis premiery","default":"pon. 9.11, 1:30 · TikTok"},
  {"type":"text","id":"tiktok","label":"Link do TikToka","default":"https://www.tiktok.com/@protokolocaleni"},
- {"type":"product","id":"tip_product","label":"Produkt napiwku"}
+ {"type":"product","id":"tip_product","label":"Produkt napiwku"},
+ {"type":"text","id":"youtube","label":"Link do YouTube","default":"https://youtube.com/@protokolocaleni"},
+ {"type":"text","id":"followers","label":"Obserwujący","default":"899"},
+ {"type":"text","id":"likes","label":"Polubienia","default":"8,7 tys."},
+ {"type":"text","id":"views","label":"Wyświetlenia najlepszej części","default":"~50 tys."},
+ {"type":"text","id":"videos","label":"Liczba filmów","default":"9"},
+ {"type":"text","id":"stats_date","label":"Data statystyk","default":"7.11.2026"}
 ],"presets":[{"name":"BLOK 94 · strona główna"}]}
 {% endschema %}
