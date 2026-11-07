@@ -578,6 +578,11 @@ function hallBg(c, t, o = {}) {
     for (let i = 0; i < 8; i++) { const xx = lerp(x1, x2, i / 8) + 10; c.beginPath(); c.ellipse(xx, cy + Math.sin(i + t * 20) * (o.rattle || 0), 12, 7, 0, 0, 7); c.stroke(); }
   } else {
     paddedDoor(c, dx, dy, dw, dh, '94', { peepDark: true, handle: o.handle });
+    if (o.locks) o.locks.forEach((ang, i) => { // gałki zamków od środka
+      const lx = dx + dw - 60, ly = dy + dh * (0.4 + i * 0.2);
+      circ(c, lx, ly, 26, '#B9BDC2'); circ(c, lx, ly, 20, '#9CA1A7');
+      c.save(); c.translate(lx, ly); c.rotate(ang); fillRR(c, -6, -22, 12, 44, 5, '#E2E5E8'); c.restore();
+    });
     // łańcuch zawieszony
     c.strokeStyle = '#C9CDD2'; c.lineWidth = 5;
     for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(dx + dw - 10, dy + dh * .42 + i * 18, 6, 10, 0, 0, 7); c.stroke(); }
@@ -626,3 +631,51 @@ const ROOM = (c) => {
   // łóżko
   fillRR(c, 80, 1100, 760, 330, 30, '#3D4A73'); fillRR(c, 90, 1060, 220, 120, 40, '#D9DCE6');
 };
+
+// ---------- telefon i czat (CZĘŚĆ 3+) ----------
+function chat(c, lt, msgs) {
+  bigPhone(c, (cc, x, y, w, h) => {
+    cc.fillStyle = '#0F1014'; cc.fillRect(x, y, w, h);
+    fillRR(cc, x, y, w, 170, 0, '#17181E');
+    circ(cc, x + 90, y + 110, 40, '#2A2C33'); circ(cc, x + 90, y + 102, 14, '#55575F'); fillRR(cc, x + 68, y + 120, 44, 20, 10, '#55575F');
+    txt(cc, 'k4ptur_94', x + 150, y + 100, 36, '#FFFFFF', 900, 'left'); txt(cc, 'aktywny(-a) teraz', x + 150, y + 140, 24, 'rgba(255,255,255,.55)', 600, 'left');
+    let yy = y + 230;
+    for (const [t0, type, text, mine] of msgs) {
+      if (lt < t0) continue;
+      const p = back(clamp((lt - t0) / .3));
+      const bw = type === 'txt' ? Math.min(w - 120, 40 + text.length * 17) : 380, bh = type === 'txt' ? 96 : 420;
+      const bx = mine ? x + w - 30 - bw : x + 30;
+      cc.save(); cc.translate(bx + (mine ? bw : 0), yy); cc.scale(p, p); cc.translate(-(bx + (mine ? bw : 0)), -yy);
+      if (type === 'txt') { fillRR(cc, bx, yy, bw, bh, 40, mine ? '#3B6FE0' : '#2A2C33'); txt(cc, text, bx + 28, yy + bh / 2, 30, '#FFFFFF', 600, 'left'); }
+      else {
+        fillRR(cc, bx, yy, bw, bh, 30, '#2A2C33');
+        cc.save(); rr(cc, bx + 10, yy + 10, bw - 20, bh - 20, 24); cc.clip();
+        if (type === 'door') {
+          cc.fillStyle = '#8F8C80'; cc.fillRect(bx, yy, bw, bh);
+          paddedDoor(cc, bx + 90, yy + 50, 200, 380, '94');
+          fillRR(cc, bx + 250, yy + 230, 30, 40, 4, '#E8D27A'); // nowy zamek
+        } else {
+          cc.fillStyle = '#4A4844'; cc.fillRect(bx, yy, bw, bh);
+          for (let i = 0; i < 40; i++) circ(cc, bx + hash(i) * bw, yy + hash(i + 9) * bh, 2 + hash(i + 3) * 3, 'rgba(0,0,0,.25)');
+          cc.save(); cc.translate(bx + bw / 2, yy + bh / 2); cc.rotate(-.4);
+          cc.strokeStyle = '#D6DADF'; cc.lineWidth = 8; cc.beginPath(); cc.arc(-40, 0, 34, 0, 7); cc.stroke();
+          fillRR(cc, -6, -10, 130, 20, 6, '#CFD3D8'); fillRR(cc, 90, 10, 14, 20, 3, '#CFD3D8'); fillRR(cc, 60, 10, 14, 16, 3, '#CFD3D8');
+          cc.rotate(.9); fillRR(cc, -110, -40, 70, 90, 12, '#F39C12'); txt(cc, '94', -75, 5, 40, '#14161B', 900); cc.restore();
+        }
+        cc.restore();
+      }
+      cc.restore();
+      yy += bh + 26;
+      if (mine && lt > t0 + 1.2) { txt(cc, 'Wyświetlono', x + w - 40, yy - 8, 22, 'rgba(255,255,255,.45)', 600, 'right'); yy += 20; }
+    }
+    fillRR(cc, x + 30, y + h - 120, w - 60, 80, 40, '#1C1D23'); txt(cc, 'Wiadomość…', x + 80, y + h - 80, 28, 'rgba(255,255,255,.4)', 600, 'left');
+  });
+}
+function bigPhone(c, fn, a = 1, y = 300) {
+  c.save(); c.globalAlpha *= a;
+  const x = 230, w = 620, h = 1180;
+  c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 50; fillRR(c, x, y, w, h, 70, '#0E0F12'); c.shadowColor = 'transparent';
+  c.save(); rr(c, x + 22, y + 22, w - 44, h - 44, 52); c.clip(); fn(c, x + 22, y + 22, w - 44, h - 44); c.restore();
+  fillRR(c, x + w / 2 - 70, y + 36, 140, 30, 15, '#0E0F12');
+  c.restore();
+}
