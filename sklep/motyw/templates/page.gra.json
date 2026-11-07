@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "gra": {
+      "type": "blok94-gra",
+      "settings": {
+        "tiktok": "https://www.tiktok.com/@protokolocaleni"
+      }
+    }
+  },
+  "order": [
+    "gra"
+  ]
+}
