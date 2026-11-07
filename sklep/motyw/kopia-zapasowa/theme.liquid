@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}">{%- else -%}<link rel="icon" href="{{ 'logo_kwadrat.png' | asset_url }}">{%- endif -%}
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:image" content="https:{{ 'okladka_mockup.png' | asset_url }}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:wght@400;500;600;700&display=swap">
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'po-extra.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'po-extra.js' | asset_url }}" defer></script>
+  {{ content_for_header }}
+</head>
+<body>
+  <header class="po-head">
+    <div class="po-w">
+      <a class="po-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}<img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="160" height="64">
+        {%- else -%}<span class="po-lg">Protokół<b>Ocaleni</b></span>{%- endif -%}
+      </a>
+      <nav class="po-nav" aria-label="Menu">
+        {%- assign menu = linklists['main-menu'] -%}
+        {%- if menu and menu.links.size > 0 -%}
+          {%- for link in menu.links -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>{%- endfor -%}
+        {%- else -%}
+          <a href="{{ routes.root_url }}">Poradnik</a><a href="/pages/reklama-na-kanale">Reklama na kanale</a>
+        {%- endif -%}
+      </nav>
+      <div class="po-ico">
+        <a class="po-play" href="/pages/nasz-kanal#po-game" aria-label="Zagraj w grę Ucieczka z mostu" title="Zagraj w grę"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg><span class="pl-t">Graj</span></a>
+        <a class="po-cart" href="{{ routes.cart_url }}" aria-label="Koszyk{% if cart.item_count > 0 %}, produkty: {{ cart.item_count }}{% endif %}" title="Koszyk"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h3l2.6 12.2a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L21.5 7H6.3"/></svg>{% if cart.item_count > 0 %}<span>{{ cart.item_count }}</span>{% endif %}</a>
+      </div>
+    </div>
+  </header>
+  <main id="MainContent">{{ content_for_layout }}</main>
+  {%- render 'po-note' -%}
+  <footer class="po-foot">
+    <div class="po-w">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · <a href="https://www.tiktok.com/@protokolocaleni" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@protokolocaleni" target="_blank" rel="noopener">YouTube</a></span>
+      <span class="po-pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'po-pi' }}{%- endfor -%}</span><span class="po-pol">{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}</span>
+    </div>
+  </footer>
+  {{ 'po-design.css' | asset_url | stylesheet_tag }}
+</body>
+</html>
