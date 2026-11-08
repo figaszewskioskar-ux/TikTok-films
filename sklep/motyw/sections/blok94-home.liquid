@@ -98,7 +98,7 @@
     <div class="who"><img src="{{ 'blok94-ola.png' | asset_url }}" alt="Ola" loading="lazy"><h3>Ola</h3><span class="tag" style="background:#b79bea">mieszkanie 94</span><p>Została sama na noc. Uczy się na błędach szybciej, niż by chciała.</p></div>
     <div class="who"><img src="{{ 'blok94-kuba.png' | asset_url }}" alt="Kuba" loading="lazy"><h3>Kuba</h3><span class="tag" style="background:var(--hat)">brat Oli</span><p>{%- if section.settings.parts >= 3 -%}Gra w słuchawkach, gubi klucze i zawsze chce „zaraz to włączyć”.{%- else -%}Brat Oli. Ufa ludziom bardziej, niż powinien.{%- endif -%}</p></div>
     <div class="who"><img src="{{ 'blok94-zdzisiek.png' | asset_url }}" alt="Pan Zdzisiek" loading="lazy"><h3>Pan Zdzisiek</h3><span class="tag" style="background:#e07a7a">2. piętro</span><p>„Ja tu znam wszystkich.” I naprawdę pilnuje klatki.</p></div>
-    <div class="who"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">{%- if section.settings.parts >= 4 -%}mieszkanie 104?{%- else -%}???{%- endif -%}</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
+    <div class="who egg" id="b94-kaptur" tabindex="0" role="button" aria-label="Kaptur. Coś tu jest…"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">{%- if section.settings.parts >= 4 -%}mieszkanie 104?{%- else -%}???{%- endif -%}</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
   </div>
 </div></section>
 
@@ -173,6 +173,48 @@
   c.o.forEach((t,k)=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{qo.querySelectorAll('button').forEach((x,j)=>{x.disabled=true;if(j===c.ok)x.classList.add('ok');});if(k!==c.ok)b.classList.add('bad');qw.textContent=(k===c.ok?'Dobrze. ':'Tak zrobiła Ola i to był błąd. ')+c.w;nx.hidden=false;nx.textContent=i<Q.length-1?'Następne pytanie':'Od początku';});qo.appendChild(b);});}
  nx.addEventListener('click',()=>{i=(i+1)%Q.length;show();});show();})();
 </script>
+
+<dialog id="b94-akta" class="b94-akta" aria-labelledby="b94-akta-t">
+  <div class="akta-in">
+    <span class="akta-stamp">ŚCIŚLE TAJNE</span>
+    <h3 id="b94-akta-t">Znalazłeś Kaptura.</h3>
+    <p>Akta sprawy z bloku 94. Tak wyglądają kolejne części. Nikomu nie mów… albo pochwal się w komentarzu.</p>
+    <div class="akta-grid">
+      <figure><img src="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" alt="Zapowiedź części 5" loading="lazy" width="720" height="900"><figcaption>Część 5 · wkrótce</figcaption></figure>
+      <figure><img src="{{ 'blok94-zapowiedz6.jpg' | asset_url }}" alt="Zapowiedź części 6" loading="lazy" width="720" height="900"><figcaption>Część 6 · wkrótce</figcaption></figure>
+    </div>
+    <p class="akta-code">Hasło do komentarza: <b>WIDZĘ CIĘ, KAPTUR</b></p>
+    <button type="button" class="btn red" id="b94-akta-x" style="width:100%">Zamknij akta</button>
+  </div>
+</dialog>
+<style>
+#b94 .who.egg{cursor:pointer}
+#b94 .who.egg img{animation:b94peek 6s ease-in-out infinite}
+@keyframes b94peek{0%,88%,100%{filter:drop-shadow(0 10px 20px rgba(0,0,0,.6))}92%,96%{filter:drop-shadow(0 0 18px rgba(255,255,255,.55))}}
+#b94 .who.egg.shake{animation:b94shake .3s}
+@keyframes b94shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.b94-akta{border:0;padding:0;border-radius:22px;max-width:min(520px,calc(100vw - 32px));width:100%;background:#16120e;color:#f3efe6;font-family:"Public Sans",system-ui,sans-serif}
+.b94-akta::backdrop{background:rgba(3,5,14,.85)}
+.b94-akta .akta-in{padding:22px;background:repeating-linear-gradient(0deg,transparent 0 28px,rgba(255,255,255,.03) 28px 29px)}
+.b94-akta .akta-stamp{display:inline-block;border:3px solid #d7263d;color:#ff6b7a;font:900 14px/1 "Public Sans",sans-serif;letter-spacing:.2em;padding:8px 12px;transform:rotate(-4deg)}
+.b94-akta h3{font-family:"Big Shoulders Display",Impact,sans-serif;font-size:40px;margin:14px 0 6px}
+.b94-akta p{color:#c9c3b6;margin:0 0 14px}
+.b94-akta .akta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.b94-akta figure{margin:0;background:#0d0f13;border-radius:12px;overflow:hidden}
+.b94-akta figure img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.b94-akta figcaption{font:800 13px/1.2 "Public Sans",sans-serif;padding:8px;color:#f39c12;text-align:center}
+.b94-akta .akta-code b{color:#f5c542}
+.b94-akta .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-weight:800;border:0;cursor:pointer;background:#d7263d;color:#fff}
+</style>
+<script>
+(function(){var k=document.getElementById('b94-kaptur'),d=document.getElementById('b94-akta');if(!k||!d)return;var n=0,t=0;
+ function hit(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;k.classList.remove('shake');void k.offsetWidth;k.classList.add('shake');
+  if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}}
+ k.addEventListener('click',hit);k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hit();}});
+ document.getElementById('b94-akta-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
+ d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
+</script>
+
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
  {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":4,"step":1,"default":2},
