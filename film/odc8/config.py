@@ -45,3 +45,6 @@ AUDIO = dict(
 REALMAP = {'creak': [('creak', -10)], 'slam': [('slam', -4)], 'notif': [('notif', -8)], 'boom': [('boom', -6)], 'stab': [('boom', -5)],
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
 EXTRA = [(12.0, 'breath', -16)]
+
+TARGET = 118
+MAXK = 1.4

@@ -66,3 +66,6 @@ REALMAP = {
     'error': [('boom', -7)], 'hit': [('boom', -1)],
 }
 EXTRA = [(75.0, 'ceiling', -14), (43.0, 'breath', -16)]
+
+TARGET = 118
+MAXK = 1.4

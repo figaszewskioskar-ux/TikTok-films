@@ -71,6 +71,21 @@ for name, s0, s1 in SCENES:
     for j, x in enumerate(ss):
         x['t'] = round(t + news[j + 1], 3)
     t += news[-1]
+# wydłużenie do docelowej długości (TARGET w config.py): równe rozciągnięcie scen, max MAXK razy
+TARGET = getattr(cfg, 'TARGET', None)
+if TARGET and t < TARGET:
+    k = min(getattr(cfg, 'MAXK', 1.4), TARGET / t)
+    t2 = 0.0
+    for sc in timeline:
+        sc['knots'] = [[o, round(n * k, 4)] for o, n in sc['knots']]
+        L = sc['knots'][-1][1]
+        old = sc['start']; sc['start'] = round(t2, 3); sc['end'] = round(t2 + L, 3)
+        for x in segs:
+            if x['scene'] == sc['name']:
+                x['t'] = round(t2 + (x['t'] - old) * k, 3)
+        t2 += L
+    print(f'wydłużono x{k:.2f}: {t:.1f} s -> {t2:.1f} s')
+    t = t2
 for x in timeline:
     print(f"{x['name']:8s} {x['oEnd'] - x['oStart']:5.1f}s -> {x['end'] - x['start']:5.1f}s")
 print(f'RAZEM {t:.1f} s')
