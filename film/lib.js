@@ -94,6 +94,7 @@ const KINDS = {
   zdzisiek: { jacket: '#A62B2E', dark: '#8A2326', pants: '#2B3550', skin: '#F0B08A', shoes: '#222428' },
   halina: { jacket: '#7D4DA3', dark: '#673E89', pants: '#7D4DA3', skin: '#F2BC98', shoes: '#E77FA8' },
   ola: { jacket: '#E9B52C', dark: '#C9971A', pants: '#5C7DB5', skin: '#F4C29C', shoes: '#E8E4DA' },
+  sasiad: { jacket: '#2F343F', dark: '#22262F', pants: '#1A1D24', skin: '#E3AC88', shoes: '#0E0F12' },
   policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
 };
@@ -214,6 +215,7 @@ function person(c, kind, x, y, s, o = {}) {
     c.lineWidth = 5; c.strokeStyle = '#2B2E35'; c.beginPath(); c.arc(0, hy + 2, 64, Math.PI * 1.08, Math.PI * 1.92); c.stroke();
   } else {
     if (kind === 'halina') { circ(c, 0, hy - 6, 56, '#8C7B6B'); }
+    if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
     if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
     circ(c, 0, hy, 50, k.skin);
@@ -260,6 +262,8 @@ function person(c, kind, x, y, s, o = {}) {
       fillRR(c, -54, hy - 26, back_ ? 108 : 124, 14, 7, '#22335A');
     } else if (kind === 'zdzisiek') {
       ell(c, 0, hy - 30, 54, 24, '#3B3B3B'); fillRR(c, -50, hy - 22, 116, 12, 6, '#2E2E2E');
+    } else if (kind === 'sasiad') {
+      c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#231B17'; c.fill(); fillRR(c, -52, hy - 30, 40, 22, 8, '#231B17');
     } else if (kind === 'policjant') {
       fillRR(c, -54, hy - 70, 108, 46, 10, '#1F2C4C'); fillRR(c, -56, hy - 30, 120, 12, 6, '#0E1530'); circ(c, 0, hy - 50, 10, '#D9B84A');
     } else if (kind === 'ola') {
