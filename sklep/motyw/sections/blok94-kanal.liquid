@@ -1,7 +1,7 @@
 {%- comment -%} BLOK 94 – Nasz kanał: liczby, droga do 1000, części serii, gra, zapowiedzi, tapety. {%- endcomment -%}
 {{ 'blok94.css' | asset_url | stylesheet_tag }}
 {%- assign fol = section.settings.followers | remove: ' ' | plus: 0 -%}
-{%- assign pct = fol | times: 100 | divided_by: 1000 -%}{%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
+{%- assign goal = section.settings.goal | default: 1000 -%}{%- assign pct = fol | times: 100 | divided_by: goal -%}{%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
 <div class="b94p" id="b94k">
   <section class="hero"><span class="lamp" aria-hidden="true"></span><div class="wrap">
     <div class="rv">
@@ -28,7 +28,7 @@
     </div>
     <p class="note">Stan na {{ section.settings.stats_date }}.</p>
     <div class="road rv">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px"><h3>Droga do 1000</h3><b style="font-family:var(--mono);color:var(--hat)">{{ section.settings.followers }} / 1000</b></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px"><h3>Droga do {{ goal }}</h3><b style="font-family:var(--mono);color:var(--hat)">{{ section.settings.followers }} / {{ goal }}</b></div>
       <div class="bar"><i data-fill="{{ pct }}%"></i></div>
       <div class="ms">{%- for block in section.blocks -%}{%- if block.type == 'milestone' -%}<div class="m{% if fol >= block.settings.at %} done{% endif %}" {{ block.shopify_attributes }}><b>{{ block.settings.label | escape }}</b>{{ block.settings.reward | escape }}</div>{%- endif -%}{%- endfor -%}</div>
     </div>
@@ -81,8 +81,9 @@
  {"type":"text","id":"likes","label":"Polubienia","default":"8 700"},
  {"type":"text","id":"top","label":"Wyświetlenia części 2","default":"160 000"},
  {"type":"text","id":"videos","label":"Liczba filmów","default":"9"},
+ {"type":"number","id":"goal","label":"Cel obserwujących (pasek)","default":2000},
  {"type":"text","id":"stats_date","label":"Data statystyk","default":"7.11.2026"},
- {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":4,"step":1,"default":2},
+ {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":8,"step":1,"default":2},
  {"type":"text","id":"tiktok","label":"TikTok","default":"https://www.tiktok.com/@protokolocaleni"},
  {"type":"text","id":"youtube","label":"YouTube","default":"https://youtube.com/@protokolocaleni"},
  {"type":"checkbox","id":"show_archive","label":"Pokaż wzmiankę o serii Stadion","default":true}

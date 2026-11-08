@@ -34,22 +34,32 @@
             "label": "1000 obserwujących",
             "reward": "LIVE z premierami odcinków"
           }
+        },
+        "m4": {
+          "type": "milestone",
+          "settings": {
+            "at": 2000,
+            "label": "2000 obserwujących",
+            "reward": "nowe tapety z serii do pobrania"
+          }
         }
       },
       "block_order": [
         "m0",
         "m1",
         "m2",
-        "m3"
+        "m3",
+        "m4"
       ],
       "settings": {
-        "followers": "899",
-        "likes": "8 700",
+        "followers": "1 247",
+        "likes": "11 228",
         "top": "160 000",
         "videos": "9",
-        "stats_date": "7.11.2026",
+        "stats_date": "8.11.2026",
         "parts": 4,
-        "show_archive": false
+        "show_archive": false,
+        "goal": 2000
       }
     }
   },
