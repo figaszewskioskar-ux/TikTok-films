@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 2 — fałszywa policja, prawdziwy radiowóz, relacja „sama na chacie”.
 window.EP = {
-  badge: 'BLOK 94 · ODC. 3',
+  badge: 'BLOK 94 · ODCINEK 3',
   loop: true,
   vignette: .75,
   cues(add) {
@@ -38,7 +38,7 @@ function windowView(c, x, y, w, h) {
 scene({
   name: 'hook', start: 0, end: 6,
   cam: lt => ({ z: 1.04 + lt * 0.01 }),
-  labels: [[1.4, 6, 'ODC. 3', 540, 1480, 'yellow', 48]],
+  labels: [[1.4, 6, 'ODCINEK 3', 540, 1480, 'yellow', 48]],
   draw(c, lt) {
     peepPOV(c, lt, (cc, cx, cy, r) => { cc.fillStyle = '#A9A595'; cc.fillRect(cx - r, cy - r, 2 * r, 2 * r); cc.save(); cc.translate(cx, cy + 1080); person(cc, 'kaptur', 0, 0, 4.6, { t: lt, glow: 1 }); cc.restore(); });
     const sp = prog(lt, 0.15, 0.4), shake = lt < 1 ? (1 - lt) * 9 : 0;
@@ -230,7 +230,7 @@ scene({
 scene({
   name: 'end', start: 94, end: 101,
   cam: lt => ({ z: 1.0 + lt * 0.012 }),
-  labels: [[5.0, 7, 'ODC. 4 ↓', 540, 1650, 'red', 56]],
+  labels: [[5.0, 7, 'ODCINEK 4 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     bigPhone(c, (cc, x, y, w, h) => {

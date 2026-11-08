@@ -4,7 +4,7 @@ odc. 2 = „Nie pytaj »kto tam?«” (już wrzucony)
 odc. 3–8 = nowe pliki ODC_3 … ODC_8
 
 ==================================================
-ODC. 2 — „Nie pytaj »kto tam?«”   plik: ODC_2_... (już wrzucony)   (2:03)
+ODC. 2 — „Nie pytaj »kto tam?«”   plik: ODCINEK_2_... (już wrzucony)   (2:03)
 --------------------------------------------------
 Ktoś puka o 2:47. Wizjer jest czarny. Co robisz? 😨
 Nie pytaj „kto tam?”. Obejrzyj do końca 👁️
@@ -16,7 +16,7 @@ BLOK 94 · odc. 2
 Przypięty komentarz: Odcinek 3? Piszcie, co zrobilibyście na miejscu Oli 👇
 
 ==================================================
-ODC. 3 — „Nie otwieraj »policji«!”   plik: ODC_3_...   (1:45)
+ODC. 3 — „Nie otwieraj »policji«!”   plik: ODCINEK_3_...   (1:45)
 --------------------------------------------------
 Ktoś wali do drzwi: „POLICJA!” 🚨 Otworzyłbyś?
 Odcinek 3 historii Oli. Końcówka… 👁️
@@ -28,7 +28,7 @@ BLOK 94 · odc. 3
 Przypięty komentarz: Ktoś zauważył, czyj głos miał „policjant”? 👀 Odcinek 4 wkrótce
 
 ==================================================
-ODC. 4 — „Nie wychodź do licznika!”   plik: ODC_4_...   (1:50)
+ODC. 4 — „Nie wychodź do licznika!”   plik: ODCINEK_4_...   (1:50)
 --------------------------------------------------
 Prąd zgasł tylko u Ciebie. Na klatce jest jasno. Wychodzisz sprawdzić? 😨
 Odcinek 4 historii Oli i Kuby 🔑
@@ -40,7 +40,7 @@ BLOK 94 · odc. 4
 Przypięty komentarz: Klucze z numerem mieszkania… co teraz zrobiłbyś na miejscu Kuby? 👇 Odcinek 5 wkrótce
 
 ==================================================
-ODC. 5 — „Nie czekaj do rana!”   plik: ODC_5_...   (1:37)
+ODC. 5 — „Nie czekaj do rana!”   plik: ODCINEK_5_...   (1:37)
 --------------------------------------------------
 Ktoś ma klucze do Twojego mieszkania. Czekasz do rana? 🔑😨
 Odcinek 5 historii Oli i Kuby. Ostatnie 10 sekund… 👆
@@ -52,7 +52,7 @@ BLOK 94 · odc. 5
 Przypięty komentarz: Kto mieszka w 104? 👀 Wasze teorie 👇
 
 ==================================================
-ODC. 6 — „Nie mów, kiedy jesteś sam!”   plik: ODC_6_...   (1:37)
+ODC. 6 — „Nie mów, kiedy jesteś sam!”   plik: ODCINEK_6_...   (1:37)
 --------------------------------------------------
 „Cześć, jestem nowy sąsiad.” Odpowiedziałbyś mu, kiedy rodzice są w pracy? 🚪
 Odcinek 6. Ostatnie zdjęcie na ścianie… 😨
@@ -64,7 +64,7 @@ BLOK 94 · odc. 6
 Przypięty komentarz: Pan Zdzisiek otworzy? 👀 Odcinek 7 wkrótce
 
 ==================================================
-ODC. 7 — „Zamknij balkon na noc!”   plik: ODC_7_...   (1:28)
+ODC. 7 — „Zamknij balkon na noc!”   plik: ODCINEK_7_...   (1:28)
 --------------------------------------------------
 Ktoś pukał do pana Zdziśka. Ale to nie jego szukał… 😨
 Odcinek 7. Nie oglądaj w nocy 🚪👁️
@@ -76,7 +76,7 @@ BLOK 94 · odc. 7
 Przypięty komentarz: Kto jest w szafie? 👀 Teorie w komentarzach. Odcinek 8 wkrótce
 
 ==================================================
-ODC. 8 — „Coś nie tak? Wyjdź z domu!”   plik: ODC_8_...   (1:11)
+ODC. 8 — „Coś nie tak? Wyjdź z domu!”   plik: ODCINEK_8_...   (1:11)
 --------------------------------------------------
 To nie były oczy w szafie… 📷😨
 Odcinek 8. Masz jedno hasło do wszystkiego? Obejrzyj do końca.

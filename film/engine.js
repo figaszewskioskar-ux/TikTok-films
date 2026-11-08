@@ -37,8 +37,9 @@ function overlays(c, t, frame) {
   if (Math.floor(t * 1.5) % 2 === 0) circ(c, 70, 176, 9, '#FF3B30');
   const mm = Math.floor(t / 60), ss = Math.floor(t % 60);
   txt(c, `${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, 140, 177, 28, '#F39C12', 800);
-  fillRR(c, 222, 150, 250, 52, 26, 'rgba(14,16,21,.85)');
-  txt(c, EPC.badge || 'BLOK 94', 347, 177, 26, '#FFFFFF', 800);
+  const bdg = EPC.badge || 'BLOK 94'; c.save(); font(c, 26, 800); const bw = Math.max(250, c.measureText(bdg).width + 48); c.restore();
+  fillRR(c, 222, 150, bw, 52, 26, 'rgba(14,16,21,.85)');
+  txt(c, bdg, 222 + bw / 2, 177, 26, '#FFFFFF', 800);
   if (EPC.counter && t >= G(EPC.counter.from) && t < G(EPC.counter.to)) {
     const T0 = G(EPC.counter.from);
     const n = ERRN.filter(e => t >= e).length;

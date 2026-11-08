@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 6 — balkon u Zdziśka był przynętą. Prawdziwy cel: pusty pokój Oli.
 window.EP = {
-  badge: 'BLOK 94 · ODC. 7',
+  badge: 'BLOK 94 · ODCINEK 7',
   loop: true,
   vignette: .8,
   cues(add) {
@@ -71,7 +71,7 @@ scene({
 // 1. PRZYPOMNIENIE
 scene({
   name: 'recap', start: 6, end: 11,
-  labels: [[0.2, 5, 'ODC. 7', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 5, 'ODCINEK 7', 540, 1650, 'yellow', 48]],
   draw(c, lt) {
     c.fillStyle = '#6B6A60'; c.fillRect(0, 0, W, H);
     c.save(); c.translate(540, 860); c.rotate(-.03);
@@ -193,7 +193,7 @@ scene({
 scene({
   name: 'end', start: 76, end: 86,
   cam: lt => ({ z: 1.0 + lt * 0.035, x: -lt * 6 }),
-  labels: [[8.4, 10, 'ODC. 8 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.4, 10, 'ODCINEK 8 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H); c.fillStyle = '#1F1A22'; c.fillRect(0, 1420, W, 500);
     // szafa

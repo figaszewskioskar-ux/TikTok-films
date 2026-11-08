@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 3 — wyłączony bezpiecznik, ciemny korytarz, klucze z numerem mieszkania.
 window.EP = {
-  badge: 'BLOK 94 · ODC. 4',
+  badge: 'BLOK 94 · ODCINEK 4',
   loop: true,
   vignette: .78,
   cues(add) {
@@ -108,7 +108,7 @@ scene({
 // 1. PRZYPOMNIENIE
 scene({
   name: 'recap', start: 6, end: 12,
-  labels: [[0.2, 6, 'ODC. 4', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 6, 'ODCINEK 4', 540, 1650, 'yellow', 48]],
   draw(c, lt) { c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H); chat(c, lt + 10, [[0, 'txt', 'ładny widok z dziewiątego.'], [0, 'txt', 'dobranoc, Ola.']]); },
 });
 // 2. ZDJĘCIE DRZWI — Ola odpisuje
@@ -225,7 +225,7 @@ scene({
 // 10. KLUCZE
 scene({
   name: 'end', start: 79, end: 89,
-  labels: [[8.0, 10, 'ODC. 5 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.0, 10, 'ODCINEK 5 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     chat(c, lt, [[1.4, 'keys'], [5.0, 'txt', 'zgubiłeś coś, Kuba?']]);
