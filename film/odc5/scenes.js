@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 4 — klucz w zamku o 3:12, Zdzisiek z latarką, Kaptur ucieka w górę.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 4',
+  badge: 'BLOK 94 · ODC. 5',
   loop: true,
   vignette: .78,
   cues(add) {
@@ -55,7 +55,7 @@ scene({
 // 1. PRZYPOMNIENIE — klucze
 scene({
   name: 'recap', start: 6, end: 12,
-  labels: [[0.2, 6, 'CZĘŚĆ 4', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 6, 'ODC. 5', 540, 1650, 'yellow', 48]],
   draw(c, lt) { c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H); chat(c, lt + 10, [[0, 'keys'], [0, 'txt', 'zgubiłeś coś, Kuba?']]); },
 });
 // 2. DECYZJA — błąd 1
@@ -107,12 +107,12 @@ scene({
     const gap = lt < 4.4 ? mv(lt, 0.2, 0.7, 0, 110) : mv(lt, 4.4, 4.6, 110, 0);
     hallBg(c, lt, gap > 2 ? { gap, rattle: lt < 4.4 ? 4 : 0 } : {});
     if (lt > 1.4 && lt < 4.5) {
-      const p = eio(prog(lt, 1.4, 4.0)), gx = 330 + 420 - gap, cy = 520 + 900 * 0.42;
+      const p = eio(prog(lt, 1.4, 4.0)), gx = 180 + 420 - gap, cy = 520 + 900 * 0.42;
       c.save(); c.beginPath(); c.rect(0, 0, gx + gap, H); c.clip();
       c.translate(gx + gap + 40 - p * 180, cy - 70 + p * 40); c.rotate(-0.25);
       fillRR(c, 0, -26, 300, 52, 22, '#16171B'); fillRR(c, -70, -32, 90, 64, 26, '#0D0E10'); c.restore();
     }
-    const kx = lt < 3.8 ? 860 : mv(lt, 3.8, 4.4, 860, 640);
+    const kx = lt < 3.8 ? 860 : mv(lt, 3.8, 4.4, 860, 500);
     person(c, 'kuba', kx, 1500, 2.1, { t: lt, phone: 1, aR: 1.3, aL: lt > 3.8 ? 1.6 : .14, look: -1, wide: true, mouth: 'angry', rot: lt > 4 && lt < 4.8 ? -.12 : 0 });
     person(c, 'ola', 990, 1500, 2.1, { t: lt, phone: 2, aR: 2.5, look: -1, wide: true });
     night(c, .9, [{ x: kx + 60, y: 1000, r: 400, a: .9 }, { x: 990, y: 1000, r: 240, a: .7, tint: 'rgba(80,220,150,.08)' }]);
@@ -181,7 +181,7 @@ scene({
 scene({
   name: 'end', start: 74, end: 84,
   cam: lt => ({ z: 1.0 + lt * 0.012, y: lt * 6 }),
-  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.4, 10, 'CZĘŚĆ 5 ↓', 540, 1650, 'red', 56]],
+  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.4, 10, 'ODC. 6 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     ROOM(c);
     c.fillStyle = '#1D2130'; c.fillRect(0, 0, W, 260); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 250, W, 14);

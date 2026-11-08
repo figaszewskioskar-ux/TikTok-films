@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 6 — balkon u Zdziśka był przynętą. Prawdziwy cel: pusty pokój Oli.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 6',
+  badge: 'BLOK 94 · ODC. 7',
   loop: true,
   vignette: .8,
   cues(add) {
@@ -71,7 +71,7 @@ scene({
 // 1. PRZYPOMNIENIE
 scene({
   name: 'recap', start: 6, end: 11,
-  labels: [[0.2, 5, 'CZĘŚĆ 6', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 5, 'ODC. 7', 540, 1650, 'yellow', 48]],
   draw(c, lt) {
     c.fillStyle = '#6B6A60'; c.fillRect(0, 0, W, H);
     c.save(); c.translate(540, 860); c.rotate(-.03);
@@ -133,10 +133,10 @@ scene({
   name: 'run', start: 46, end: 54,
   draw(c, lt) {
     hallBg(c, lt, { gap: 150, nochain: true });
-    const k = mv(lt, 0.4, 2.2, 1100, 560), o = mv(lt, 0.8, 2.6, 1180, 640);
+    const k = mv(lt, 0.4, 2.2, 1100, 500), o = mv(lt, 0.8, 2.6, 1180, 540);
     person(c, 'kuba', k, 1500, 2.1, { t: lt, walk: lt > .4 && lt < 2.2 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.0, 2.4) });
     person(c, 'ola', o, 1500, 2.1, { t: lt, phone: 2, aR: .9, walk: lt > .8 && lt < 2.6 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.4, 2.8) });
-    night(c, .6, [{ x: 680, y: 1000, r: 600, a: .8 }]);
+    night(c, .6, [{ x: 560, y: 1000, r: 600, a: .8 }]);
     if (lt > 3.2) label(c, 'DRZWI ZOSTAJĄ OTWARTE', 540, 300, 'red', 44, lt - 3.2, 9);
   },
   post(c, lt) { if (lt > 4.6) card(c, 70, 1380, 860, 'BŁĄD 2', 'wybiegli w nocy na klatkę\ni nie zamknęli mieszkania', lt - 4.6, '#F39C12', 42); },
@@ -193,7 +193,7 @@ scene({
 scene({
   name: 'end', start: 76, end: 86,
   cam: lt => ({ z: 1.0 + lt * 0.035, x: -lt * 6 }),
-  labels: [[8.4, 10, 'CZĘŚĆ 7 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.4, 10, 'ODC. 8 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H); c.fillStyle = '#1F1A22'; c.fillRect(0, 1420, W, 500);
     // szafa

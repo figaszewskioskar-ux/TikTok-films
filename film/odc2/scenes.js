@@ -133,7 +133,7 @@ scene({
     // ręka w rękawiczce
     if (lt > 5.8 && lt < 9.25) {
       const p = eio(prog(lt, 5.8, 8.8));
-      const gx = 330 + 420 - gap, cy = 520 + 900 * 0.42;
+      const gx = 180 + 420 - gap, cy = 520 + 900 * 0.42;
       c.save(); c.beginPath(); c.rect(0, 0, gx + gap, H); c.clip();
       c.translate(gx + gap + 40 - p * 200, cy - 70 + p * 40); c.rotate(-0.25);
       fillRR(c, 0, -26, 300, 52, 22, '#16171B');

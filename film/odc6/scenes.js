@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 5 — „nowy sąsiad” z 104, ściana ze zdjęciami, następny cel: Zdzisiek.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 5',
+  badge: 'BLOK 94 · ODC. 6',
   loop: true,
   vignette: .72,
   cues(add) {
@@ -48,7 +48,7 @@ scene({
   cam: lt => ({ z: 1.03 + lt * 0.01 }),
   draw(c, lt) {
     openDoorHall(c, lt, 150);
-    person(c, 'sasiad', 640, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, aR: .4 });
+    person(c, 'sasiad', 520, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, aR: .4 });
     person(c, 'kuba', 900, 1500, 2.1, { t: lt, look: -1, talk: lt > 1 && lt < 4 });
     night(c, .35, [{ x: 640, y: 900, r: 700, a: .7 }]);
     bigSign(c, lt, 'NIE MÓW, KIEDY', 'JESTEŚ SAM!');
@@ -57,7 +57,7 @@ scene({
 // 1. PRZYPOMNIENIE — pukanie z sufitu
 scene({
   name: 'recap', start: 6, end: 11,
-  labels: [[0.2, 5, 'CZĘŚĆ 5', 540, 1650, 'yellow', 48], [0.6, 4, 'PUK. PUK. PUK.', 540, 420, 'dark', 48]],
+  labels: [[0.2, 5, 'ODC. 6', 540, 1650, 'yellow', 48], [0.6, 4, 'PUK. PUK. PUK.', 540, 420, 'dark', 48]],
   draw(c, lt) {
     ROOM(c); c.fillStyle = '#1D2130'; c.fillRect(0, 0, W, 260);
     person(c, 'ola', 450, 1300, 1.9, { t: lt, lookY: -1, wide: true, mouth: 'o' });
@@ -69,11 +69,11 @@ scene({
 scene({
   name: 'day', start: 11, end: 20,
   labels: [[0.3, 4, 'NASTĘPNY DZIEŃ · 16:20', 540, 300, 'dark', 40]],
-  bubbles: [[3.6, 8.6, 'Cześć! Jestem nowy, z 104.\nPożyczycie śrubokręt?', 520, 860, 600, 1000, 'sasiad']],
+  bubbles: [[3.6, 8.6, 'Cześć! Jestem nowy, z 104.\nPożyczycie śrubokręt?', 520, 860, 500, 1000, 'sasiad']],
   draw(c, lt, sc) {
     const gap = mv(lt, 2.4, 3.2, 0, 150);
     openDoorHall(c, lt, gap);
-    if (gap > 100) person(c, 'sasiad', 640, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt), alpha: clamp((gap - 100) / 50) });
+    if (gap > 100) person(c, 'sasiad', 520, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt), alpha: clamp((gap - 100) / 50) });
     person(c, 'kuba', mv(lt, 0.4, 2.2, 1100, 900), 1500, 2.1, { t: lt, look: -1, walk: lt > .4 && lt < 2.2 ? lt * 5 : null, aL: lt > 2 && lt < 3 ? 1.5 : .14 });
     night(c, .3, [{ x: 640, y: 900, r: 700, a: .7 }]);
   },
@@ -81,10 +81,10 @@ scene({
 // 3. ROZMOWA — błąd 1
 scene({
   name: 'talk', start: 20, end: 30,
-  bubbles: [[0.5, 4.0, 'Jasne! Rodzice i tak pracują\nna noce, od poniedziałku do czwartku.', 560, 860, 860, 1000, 'kuba'], [4.6, 7.8, 'Na noce? Super.\nTo cicho tu u was.', 480, 860, 600, 1000, 'sasiad']],
+  bubbles: [[0.5, 4.0, 'Jasne! Rodzice i tak pracują\nna noce, od poniedziałku do czwartku.', 560, 860, 860, 1000, 'kuba'], [4.6, 7.8, 'Na noce? Super.\nTo cicho tu u was.', 480, 860, 500, 1000, 'sasiad']],
   draw(c, lt, sc) {
     openDoorHall(c, lt, 150);
-    person(c, 'sasiad', 640, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt) });
+    person(c, 'sasiad', 520, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt) });
     person(c, 'kuba', 900, 1500, 2.1, { t: lt, look: -1, talk: talking(sc, 'kuba', lt) });
     night(c, .3, [{ x: 640, y: 900, r: 700, a: .7 }]);
   },
@@ -96,12 +96,12 @@ scene({
   labels: [[2.6, 9, 'ROZGLĄDA SIĘ', 540, 300, 'red', 44]],
   draw(c, lt) {
     hallBg(c, lt);
-    const sx = mv(lt, 0.3, 2.0, 560, 760);
+    const sx = mv(lt, 0.3, 2.0, 500, 760);
     const look = lt < 3 ? 1 : lt < 5 ? -1 : lt < 7 ? 1 : -1;
     person(c, 'sasiad', sx, 1500, 2.1, { t: lt, mouth: 'smile', look, walk: lt > .3 && lt < 2 ? lt * 5 : null });
     person(c, 'kuba', mv(lt, 1.0, 2.6, 900, 1180), 1500, 2.1, { t: lt, look: 1, walk: lt > 1 && lt < 2.6 ? lt * 5 : null });
     // „skan” wzroku: zamki, wieszak z kluczami, okno
-    const tags = [[3.0, 690, 900, 'ZAMKI'], [4.6, 930, 640, 'KLUCZE'], [6.2, 300, 520, 'DRZWI']];
+    const tags = [[3.0, 560, 930, 'ZAMKI'], [4.6, 930, 620, 'KLUCZE'], [6.2, 390, 520, 'DRZWI']];
     for (const [t0, x, y, s] of tags) if (lt > t0) { const a = clamp((lt - t0) / .3); c.save(); c.globalAlpha = a; c.strokeStyle = '#D7263D'; c.lineWidth = 6; c.beginPath(); c.arc(x, y, 60, 0, 7); c.stroke(); c.restore(); label(c, s, x, y - 90, 'red', 30, lt - t0, 9); }
     night(c, .3, [{ x: 640, y: 900, r: 700, a: .7 }]);
   },
@@ -111,11 +111,11 @@ scene({
 scene({
   name: 'leave', start: 40, end: 48,
   labels: [[2.4, 8, 'TEN GŁOS', 540, 300, 'red', 56]],
-  bubbles: [[0.6, 3.0, 'Dzięki. Dobranoc, sąsiadko.', 480, 860, 600, 1000, 'sasiad']],
+  bubbles: [[0.6, 3.0, 'Dzięki. Dobranoc, sąsiadko.', 480, 860, 500, 1000, 'sasiad']],
   draw(c, lt, sc) {
     openDoorHall(c, lt, lt < 3.2 ? 150 : mv(lt, 3.2, 3.5, 150, 0));
     const hood = lt > 5.0;
-    if (lt < 3.3) person(c, 'sasiad', 640, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt) });
+    if (lt < 3.3) person(c, 'sasiad', 520, 1500, 2.1, { t: lt, mouth: 'smile', look: 1, talk: talking(sc, 'sasiad', lt) });
     person(c, 'ola', 900, 1500, 2.15, { t: lt, phone: 1, aR: .9, look: -1, wide: lt > 1.2, mouth: lt > 1.4 ? 'o' : null });
     // wizjer w rogu: on na korytarzu zakłada kaptur
     if (lt > 3.8) {
@@ -137,7 +137,7 @@ scene({
   draw(c, lt) {
     hallBg(c, lt);
     person(c, 'ola', 760, 1500, 2.1, { t: lt, phone: 2, aR: 2.5, look: -1, talk: lt > .6 && lt < 4 && Math.sin(lt * 3) > -0.3 });
-    person(c, 'kuba', 420, 1500, 2.1, { t: lt, look: 1, mouth: 'o', wide: true });
+    person(c, 'kuba', 360, 1500, 2.1, { t: lt, look: 1, mouth: 'o', wide: true });
     night(c, .45, [{ x: 640, y: 900, r: 700, a: .75 }]);
   },
   post(c, lt) { if (lt > 3.0) card(c, 70, 1360, 860, 'ZASADA', 'Nowy sąsiad? Bądź miły przez drzwi. Nie mów,\nkiedy jesteś sam, i nie wpuszczaj do środka.', lt - 3.0, '#F39C12', 38); },
@@ -174,7 +174,7 @@ scene({
 scene({
   name: 'end', start: 76, end: 86,
   cam: lt => ({ z: 1.0 + lt * 0.03 }),
-  labels: [[8.2, 10, 'CZĘŚĆ 6 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.2, 10, 'ODC. 7 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     if (lt < 5.6) {
       c.fillStyle = '#6B6A60'; c.fillRect(0, 0, W, H);

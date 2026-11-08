@@ -564,9 +564,9 @@ function hallBg(c, t, o = {}) {
   for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(0, 1440 + i * 44, W, 3); }
   fillRR(c, 0, 1400, W, 24, 0, '#241B14');
   // wieszak z kurtką Kuby
-  c.fillStyle = '#5A4632'; c.fillRect(840, 640, 160, 16);
-  fillRR(c, 860, 650, 60, 220, 20, '#6E7B3B'); fillRR(c, 930, 650, 50, 160, 20, '#E08A0B');
-  const dx = 330, dy = 520, dw = 420, dh = 900;
+  c.fillStyle = '#5A4632'; c.fillRect(840, 540, 160, 16);
+  fillRR(c, 860, 550, 60, 200, 20, '#6E7B3B'); fillRR(c, 930, 550, 50, 150, 20, '#E08A0B');
+  const dx = 180, dy = 520, dw = 420, dh = 900;
   if (o.gap) { // drzwi uchylone na łańcuch
     fillRR(c, dx - 16, dy - 16, dw + 32, dh + 16, 4, '#2A1E14');
     const gx = dx + dw - o.gap;

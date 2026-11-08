@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 3 — wyłączony bezpiecznik, ciemny korytarz, klucze z numerem mieszkania.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 3',
+  badge: 'BLOK 94 · ODC. 4',
   loop: true,
   vignette: .78,
   cues(add) {
@@ -108,7 +108,7 @@ scene({
 // 1. PRZYPOMNIENIE
 scene({
   name: 'recap', start: 6, end: 12,
-  labels: [[0.2, 6, 'CZĘŚĆ 3', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 6, 'ODC. 4', 540, 1650, 'yellow', 48]],
   draw(c, lt) { c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H); chat(c, lt + 10, [[0, 'txt', 'ładny widok z dziewiątego.'], [0, 'txt', 'dobranoc, Ola.']]); },
 });
 // 2. ZDJĘCIE DRZWI — Ola odpisuje
@@ -176,10 +176,10 @@ scene({
   draw(c, lt, sc) {
     const open = lt > 4.6 ? clamp((lt - 4.6) / .6) * 150 : 0;
     hallBg(c, lt, open > 2 ? { gap: open } : {});
-    const kx = lt < 4.6 ? mv(lt, 0, 1.4, 1100, 560) : mv(lt, 5.0, 6.4, 560, 740);
+    const kx = lt < 4.6 ? mv(lt, 0, 1.4, 1100, 560) : mv(lt, 5.0, 6.4, 560, 560);
     person(c, 'kuba', kx, 1500, 2.1, { t: lt, phone: 1, aR: 1.2, look: -1, headphones: lt < .6, talk: talking(sc, 'kuba', lt), walk: (lt < 1.4) || (lt > 5 && lt < 6.4) ? lt * 5 : null, alpha: 1 - prog(lt, 6.2, 6.6) });
     person(c, 'ola', 900, 1500, 2.15, { t: lt, phone: 1, aR: 1.3, look: -1, wide: true, mouth: 'o' });
-    night(c, .93, [{ x: kx + 70, y: 1000, r: 360, a: .9 }, { x: 940, y: 1050, r: 240, a: .7 }, { x: 540, y: 1425, r: 260, a: .8 }, { x: 720, y: 950, r: open * 3, a: .7 }]);
+    night(c, .93, [{ x: kx + 70, y: 1000, r: 360, a: .9 }, { x: 940, y: 1050, r: 240, a: .7 }, { x: 540, y: 1425, r: 260, a: .8 }, { x: 570, y: 950, r: open * 3, a: .7 }]);
   },
   post(c, lt) { if (lt > 6.6) card(c, 70, 330, 860, 'BŁĄD 2', 'wyszedł w nocy na korytarz,\nbo „prąd zgasł”', lt - 6.6, '#F39C12', 44); },
 });
@@ -215,7 +215,7 @@ scene({
   draw(c, lt, sc) {
     const gap = lt < 1.6 ? 150 : mv(lt, 1.6, 1.8, 150, 0);
     hallBg(c, lt, gap > 2 ? { gap } : {});
-    const kx = mv(lt, .6, 1.6, 760, 520);
+    const kx = mv(lt, .6, 1.6, 600, 500);
     person(c, 'kuba', kx, 1500, 2.1, { t: lt, phone: 1, aR: 1.2, look: 1, walk: lt > .6 && lt < 1.6 ? lt * 14 : null, wide: true, mouth: 'o', alpha: clamp((lt - .5) / .3) });
     person(c, 'ola', 900, 1500, 2.15, { t: lt, phone: 1, aR: 1.3, look: -1, wide: true, talk: talking(sc, 'ola', lt) });
     night(c, .93, [{ x: kx + 70, y: 1000, r: 360, a: .9 }, { x: 940, y: 1050, r: 260, a: .7 }]);
@@ -225,7 +225,7 @@ scene({
 // 10. KLUCZE
 scene({
   name: 'end', start: 79, end: 89,
-  labels: [[8.0, 10, 'CZĘŚĆ 4 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.0, 10, 'ODC. 5 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     chat(c, lt, [[1.4, 'keys'], [5.0, 'txt', 'zgubiłeś coś, Kuba?']]);

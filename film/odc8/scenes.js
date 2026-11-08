@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 7 — oczy w szafie to kamera; konto Kuby z hasłem „kuba94”.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 7',
+  badge: 'BLOK 94 · ODC. 8',
   loop: true,
   vignette: .8,
   cues(add) {
@@ -55,7 +55,7 @@ scene({
 // 1. PRZYPOMNIENIE
 scene({
   name: 'recap', start: 6, end: 11,
-  labels: [[0.2, 5, 'CZĘŚĆ 7', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 5, 'ODC. 8', 540, 1650, 'yellow', 48]],
   draw(c, lt) {
     ROOM(c);
     c.save(); c.translate(780, 560); c.rotate(.06); fillRR(c, -86, -70, 172, 140, 4, '#F5E36A'); txt(c, 'DOBRANOC,', 0, -18, 28, '#222', 900); txt(c, 'SĄSIADKO', 0, 20, 28, '#222', 900); c.restore();
@@ -150,7 +150,7 @@ scene({
 scene({
   name: 'end', start: 66, end: 78,
   cam: lt => ({ z: 1.0 + lt * 0.03 }),
-  labels: [[10.2, 12, 'CZĘŚĆ 8 ↓', 540, 1650, 'red', 56]],
+  labels: [[10.2, 12, 'ODC. 9 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     roomBg(c);
     fillRR(c, 160, 900, 760, 30, 6, '#4A3A2C');

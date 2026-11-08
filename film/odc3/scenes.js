@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 2 — fałszywa policja, prawdziwy radiowóz, relacja „sama na chacie”.
 window.EP = {
-  badge: 'BLOK 94 · CZĘŚĆ 2',
+  badge: 'BLOK 94 · ODC. 3',
   loop: true,
   vignette: .75,
   cues(add) {
@@ -38,7 +38,7 @@ function windowView(c, x, y, w, h) {
 scene({
   name: 'hook', start: 0, end: 6,
   cam: lt => ({ z: 1.04 + lt * 0.01 }),
-  labels: [[1.4, 6, 'CZĘŚĆ 2', 540, 1480, 'yellow', 48]],
+  labels: [[1.4, 6, 'ODC. 3', 540, 1480, 'yellow', 48]],
   draw(c, lt) {
     peepPOV(c, lt, (cc, cx, cy, r) => { cc.fillStyle = '#A9A595'; cc.fillRect(cx - r, cy - r, 2 * r, 2 * r); cc.save(); cc.translate(cx, cy + 1080); person(cc, 'kaptur', 0, 0, 4.6, { t: lt, glow: 1 }); cc.restore(); });
     const sp = prog(lt, 0.15, 0.4), shake = lt < 1 ? (1 - lt) * 9 : 0;
@@ -94,7 +94,7 @@ scene({
   cam: lt => ({ z: 1.0 + lt * 0.015 }),
   draw(c, lt) {
     hallBg(c, lt);
-    const x = mv(lt, 0.4, 2.4, 820, 700);
+    const x = mv(lt, 0.4, 2.4, 820, 760);
     person(c, 'ola', x, 1500, 2.15, { t: lt, phone: 2, aR: 0.9, aL: mv(lt, 2.2, 2.9, .14, 1.55), walk: lt > .4 && lt < 2.4 ? lt * 5 : null, look: -1, mouth: 'smile' });
     if (lt > 3.0) { const p = prog(lt, 3.0, 3.3); c.save(); c.translate(705, 1000); c.rotate(p * 1.57); fillRR(c, -8, -30, 16, 60, 6, '#E2E5E8'); c.restore(); }
     night(c, .78, [{ x: x + 70, y: 1180, r: 480, a: .95, tint: 'rgba(80,220,150,.08)' }, { x: 540, y: 1425, r: 300, a: .7 }]);
@@ -132,7 +132,7 @@ scene({
     const hd = lt < 2.4 ? 0 : lt < 5.2 ? eio(prog(lt, 2.4, 4.6)) * .65 : mv(lt, 5.2, 5.5, .65, 0);
     hallBg(c, lt, { handle: hd });
     if (lt < 1.6) { const p = prog(lt, 0.5, 0.9); c.save(); c.translate(705, 1000); c.rotate((1 - p) * 1.57); fillRR(c, -8, -30, 16, 60, 6, '#E2E5E8'); c.restore(); }
-    const x = lt < 2.0 ? 700 : mv(lt, 2.6, 3.6, 700, 900);
+    const x = lt < 2.0 ? 760 : mv(lt, 2.6, 3.6, 760, 900);
     person(c, 'ola', x, 1500, 2.15, { t: lt, phone: 2, aR: 0.9, aL: lt < 1.4 ? 1.55 : .14, look: -1, wide: true, mouth: lt > 2.6 ? 'o' : null });
     night(c, .8, [{ x: x + 70, y: 1180, r: 460, a: .95, tint: 'rgba(80,220,150,.08)' }, { x: 610, y: 1000, r: 220, a: .6 }, { x: 540, y: 1425, r: 300, a: .7 }]);
   },
@@ -230,7 +230,7 @@ scene({
 scene({
   name: 'end', start: 94, end: 101,
   cam: lt => ({ z: 1.0 + lt * 0.012 }),
-  labels: [[5.0, 7, 'CZĘŚĆ 3 ↓', 540, 1650, 'red', 56]],
+  labels: [[5.0, 7, 'ODC. 4 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     bigPhone(c, (cc, x, y, w, h) => {
