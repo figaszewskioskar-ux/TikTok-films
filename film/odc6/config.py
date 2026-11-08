@@ -51,5 +51,4 @@ REALMAP = {'knock': [('knock', -4)], 'doorlock': [('doorlock', -9)], 'boom': [('
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
 EXTRA = [(44.2, 'breath', -17), (82.0, 'breath', -15)]
 
-TARGET = 118
-MAXK = 1.4
+TARGET = None   # gotowy film: zostaje w długości, w jakiej powstał

@@ -70,5 +70,4 @@ REALMAP = {
 }
 EXTRA = [(67.4, 'breath', -16)]
 
-TARGET = 118
-MAXK = 1.4
+TARGET = None   # gotowy film: zostaje w długości, w jakiej powstał

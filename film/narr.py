@@ -72,7 +72,7 @@ for name, s0, s1 in SCENES:
         x['t'] = round(t + news[j + 1], 3)
     t += news[-1]
 # wydłużenie do docelowej długości (TARGET w config.py): równe rozciągnięcie scen, max MAXK razy
-TARGET = getattr(cfg, 'TARGET', None)
+TARGET = getattr(cfg, 'TARGET', 118)   # domyślnie każda nowa część ma ok. 2 minut
 if TARGET and t < TARGET:
     k = min(getattr(cfg, 'MAXK', 1.4), TARGET / t)
     t2 = 0.0

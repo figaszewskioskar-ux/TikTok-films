@@ -46,5 +46,4 @@ REALMAP = {'creak': [('creak', -10)], 'slam': [('slam', -4)], 'notif': [('notif'
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
 EXTRA = [(12.0, 'breath', -16)]
 
-TARGET = 118
-MAXK = 1.4
+TARGET = None   # gotowy film: zostaje w długości, w jakiej powstał
