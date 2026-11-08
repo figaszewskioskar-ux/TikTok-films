@@ -65,6 +65,7 @@
 }
 #b94 .part{position:relative}#b94 .hot{position:absolute;top:12px;left:12px;background:var(--sign);color:#fff;font:800 13px/1 var(--body);padding:8px 10px;border-radius:999px;box-shadow:0 6px 18px rgba(215,38,61,.5)}
 #b94 section{scroll-margin-top:130px}
+#b94 .pdf{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:22px}#b94 .pdf p{margin:0;color:var(--muted);font-size:15px;max-width:40ch}
 </style>
 <div id="b94">
 <section class="hero"><div class="wrap">
@@ -77,6 +78,7 @@
       <div class="lbl">Nowa część<small>{{ section.settings.premiere_label }}</small></div>
       <div class="cd" id="cd" data-t="{{ section.settings.premiere }}"><span id="cd-d">0<i>dni</i></span><span id="cd-h">00<i>godz.</i></span><span id="cd-m">00<i>min</i></span><span id="cd-s">00<i>sek.</i></span></div>
     </div>
+    {% render 'blok94-powiadom', id: 'hero' %}
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń części 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
   </div>
   <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption></figure>
@@ -94,6 +96,7 @@
 
 <section id="bohaterowie"><div class="wrap">
   <span class="eyebrow">Bohaterowie</span><h2 style="margin-top:12px">Mieszkańcy bloku 94</h2>
+  <p class="lead" style="margin:10px 0 0">Kto jest Kapturem? Wszystkie poszlaki zebraliśmy w <a href="/pages/akta" style="color:var(--hat);font-weight:800">aktach sprawy →</a></p>
   <div class="cast">
     <div class="who"><img src="{{ 'blok94-ola.png' | asset_url }}" alt="Ola" loading="lazy"><h3>Ola</h3><span class="tag" style="background:#b79bea">mieszkanie 94</span><p>Została sama na noc. Uczy się na błędach szybciej, niż by chciała.</p></div>
     <div class="who"><img src="{{ 'blok94-kuba.png' | asset_url }}" alt="Kuba" loading="lazy"><h3>Kuba</h3><span class="tag" style="background:var(--hat)">brat Oli</span><p>{%- if section.settings.parts >= 3 -%}Gra w słuchawkach, gubi klucze i zawsze chce „zaraz to włączyć”.{%- else -%}Brat Oli. Ufa ludziom bardziej, niż powinien.{%- endif -%}</p></div>
@@ -112,6 +115,7 @@
     {%- if section.settings.parts >= 4 -%}<li><div class="peep" aria-hidden="true"></div><div><b>Zgubione klucze z numerem mieszkania?</b><span>Zamek wymień tej samej nocy. Nie noś numeru na breloczku.</span></div></li>{%- endif -%}
     <li><div class="peep" aria-hidden="true"></div><div><b>Jesteś sam w domu?</b><span>Nie pisz o tym w relacji i nie dodawaj lokalizacji.</span></div></li>
   </ul>
+  <div class="pdf"><a class="btn red" href="{{ 'blok94-zasady.pdf' | asset_url }}" download="Zasady-z-bloku-94.pdf" target="_blank" rel="noopener">⬇ Pobierz zasady (PDF)</a><p>Jedna strona do wydruku: na lodówkę, do klasy, na tablicę ogłoszeń w bloku. Za darmo.</p></div>
 </div></section>
 
 <section class="quiz" id="graj"><div class="wrap">
@@ -226,7 +230,7 @@
 
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
- {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":4,"step":1,"default":2},
+ {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":8,"step":1,"default":2},
  {"type":"text","id":"premiere","label":"Premiera kolejnej części (UTC, np. 2026-11-09T00:30:00Z)","default":"2026-11-09T00:30:00Z"},
  {"type":"text","id":"premiere_label","label":"Opis premiery","default":"pon. 9.11, 1:30 · TikTok"},
  {"type":"text","id":"tiktok","label":"Link do TikToka","default":"https://www.tiktok.com/@protokolocaleni"},

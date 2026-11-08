@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "akta": {
+      "type": "blok94-akta",
+      "settings": {
+        "parts": 4,
+        "tiktok": "https://www.tiktok.com/@protokolocaleni"
+      }
+    }
+  },
+  "order": [
+    "akta"
+  ]
+}

@@ -4,11 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
-  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {%- assign b94_desc = 'BLOK 94 · „Kto tam?” – animowana seria grozy z TikToka @protokolocaleni. Wszystkie części, gra i zasady bezpieczeństwa, które mogą uratować także ciebie.' -%}
+  {%- if page_description != blank and request.page_type != 'index' -%}{%- assign b94_desc = page_description -%}{%- endif -%}
+  <meta name="description" content="{{ b94_desc | escape }}">
   <link rel="canonical" href="{{ canonical_url }}">
   {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}">{%- else -%}<link rel="icon" href="{{ 'logo_kwadrat.png' | asset_url }}">{%- endif -%}
-  <meta property="og:title" content="{{ page_title | escape }}">
-  <meta property="og:image" content="https:{{ 'okladka_mockup.png' | asset_url }}">
+  {%- assign b94_title = page_title -%}{%- if request.page_type == 'index' -%}{%- assign b94_title = 'BLOK 94 · Kto tam? Nie otwieraj!' -%}{%- endif -%}
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ b94_title | escape }}">
+  <meta property="og:description" content="{{ b94_desc | escape }}">
+  <meta property="og:image" content="https:{{ 'blok94-og.jpg' | asset_url }}">
+  <meta property="og:image:secure_url" content="https:{{ 'blok94-og.jpg' | asset_url }}">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="BLOK 94 · Kto tam? Nie otwieraj! Ola i Kaptur pod blokiem nocą">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ b94_title | escape }}">
+  <meta name="twitter:description" content="{{ b94_desc | escape }}">
+  <meta name="twitter:image" content="https:{{ 'blok94-og.jpg' | asset_url }}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:wght@400;500;600;700&display=swap">
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'po-extra.css' | asset_url | stylesheet_tag }}
@@ -32,7 +46,7 @@
       <nav class="po-nav" aria-label="Menu">
         {%- assign menu = linklists['main-menu'] -%}
         {%- if menu and menu.links.size > 0 -%}
-          {%- for link in menu.links -%}{%- if link.url contains 'poradnik' or link.title contains 'Poradnik' -%}{%- continue -%}{%- endif -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{%- if link.url == routes.root_url -%}BLOK 94{%- else -%}{{ link.title | escape }}{%- endif -%}</a>{%- endfor -%}
+          {%- for link in menu.links -%}{%- if link.url contains 'poradnik' or link.title contains 'Poradnik' -%}{%- continue -%}{%- endif -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{%- if link.url == routes.root_url -%}BLOK 94{%- else -%}{{ link.title | escape }}{%- endif -%}</a>{%- endfor -%}<a href="/pages/akta"{% if page.handle == 'akta' %} aria-current="page"{% endif %}>Akta sprawy</a>
         {%- else -%}
           <a href="{{ routes.root_url }}">Poradnik</a><a href="/pages/reklama-na-kanale">Reklama na kanale</a>
         {%- endif -%}

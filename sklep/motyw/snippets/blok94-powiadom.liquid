@@ -1,0 +1,34 @@
+{%- comment -%}
+  „Powiadom mnie o nowej części” – zapis e-maila do listy mailowej Shopify (Klienci, tag „blok94”).
+  Użycie: {% render 'blok94-powiadom', id: 'hero' %}
+{%- endcomment -%}
+<div class="b94n" id="powiadom-{{ id }}">
+  {%- assign b94n_fid = 'b94n-form-' | append: id -%}
+  {%- form 'customer', id: b94n_fid, class: 'b94n-f' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter,blok94,nowa-czesc">
+    {%- if form.posted_successfully? -%}
+      <p class="b94n-ok" role="status"><b>Jesteś na liście.</b> Dam ci znać, zanim Kaptur znowu zapuka.</p>
+    {%- else -%}
+      <label class="b94n-l" for="b94n-mail-{{ id }}"><span class="b94n-bell" aria-hidden="true">🔔</span> Powiadom mnie o nowej części</label>
+      <div class="b94n-row">
+        <input id="b94n-mail-{{ id }}" type="email" name="contact[email]" required autocomplete="email" inputmode="email" placeholder="twój e-mail" aria-describedby="b94n-i-{{ id }}">
+        <button type="submit">Zapisz mnie</button>
+      </div>
+      {%- if form.errors -%}<p class="b94n-err" role="alert">{%- if form.errors.messages['email'] -%}Sprawdź adres e-mail.{%- else -%}{{ form.errors | default_errors }}{%- endif -%}</p>{%- endif -%}
+      <p class="b94n-i" id="b94n-i-{{ id }}">Jeden mail przed premierą każdej części. Bez spamu, wypiszesz się jednym kliknięciem.</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+<style>
+.b94n{margin-top:18px;max-width:520px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px 16px;font-family:"Public Sans",system-ui,sans-serif;color:#f3efe6}
+.b94n-l{display:block;font-weight:800;font-size:16px;margin-bottom:10px}
+.b94n-row{display:flex;gap:8px}
+.b94n input[type=email]{flex:1;min-width:0;min-height:48px;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:#0f1220;color:#f3efe6;font:500 16px "Public Sans",sans-serif;padding:0 14px}
+.b94n input[type=email]:focus{outline:none;border-color:#f39c12}
+.b94n button{min-height:48px;border:0;border-radius:12px;background:#f39c12;color:#14161b;font:800 15px "Public Sans",sans-serif;padding:0 16px;cursor:pointer;white-space:nowrap}
+.b94n button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.b94n-i{margin:8px 0 0;font-size:12.5px;color:#aeb0c2}
+.b94n-ok{margin:0;font-size:16px}.b94n-ok b{color:#f39c12}
+.b94n-err{margin:8px 0 0;color:#ff8b98;font-weight:700;font-size:14px}
+@media(max-width:420px){.b94n-row{flex-direction:column}.b94n button{width:100%}}
+</style>
