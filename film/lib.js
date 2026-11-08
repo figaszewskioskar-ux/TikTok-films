@@ -576,10 +576,12 @@ function hallBg(c, t, o = {}) {
     c.fillStyle = g; c.fillRect(gx, dy, o.gap, dh);
     quilted(c, dx, dy, dw - o.gap, dh, '#5E4029', '#4D3420', '#B8914E', 70);
     // łańcuch
+    if (!o.nochain) {
     const cy = dy + dh * 0.42, x1 = gx - 40, x2 = dx + dw + 20;
     fillRR(c, x2 - 6, cy - 22, 30, 44, 4, '#B9BDC2'); fillRR(c, x1 - 30, cy - 10, 40, 20, 4, '#B9BDC2');
     c.strokeStyle = '#D6DADF'; c.lineWidth = 6;
     for (let i = 0; i < 8; i++) { const xx = lerp(x1, x2, i / 8) + 10; c.beginPath(); c.ellipse(xx, cy + Math.sin(i + t * 20) * (o.rattle || 0), 12, 7, 0, 0, 7); c.stroke(); }
+    }
   } else {
     paddedDoor(c, dx, dy, dw, dh, '94', { peepDark: true, handle: o.handle });
     if (o.locks) o.locks.forEach((ang, i) => { // gałki zamków od środka
