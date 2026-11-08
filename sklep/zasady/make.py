@@ -19,7 +19,7 @@ R = [
  (7, 'Jedno hasło do wszystkiego?', 'Każde konto: inne hasło i weryfikacja dwuetapowa.'),
 ]
 rows = [r for r in R if r[0] <= N]
-li = ''.join(f'<li><span class="n">{i+1}</span><div><b>{html.escape(a)}</b><p>{html.escape(b)}</p><i>część {c}</i></div></li>' for i, (c, a, b) in enumerate(rows))
+li = ''.join(f'<li><span class="n">{i+1}</span><div><b>{html.escape(a)}</b><p>{html.escape(b)}</p><i>odc. {c + 1}</i></div></li>' for i, (c, a, b) in enumerate(rows))
 doc = f'''<!doctype html><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Public+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 <style>@page{{size:A4;margin:0}}*{{box-sizing:border-box}}body{{margin:0;font-family:'Public Sans';color:#14161b;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .p{{width:210mm;height:297mm;padding:13mm 14mm 10mm;position:relative;overflow:hidden;background:#fff}}
@@ -34,11 +34,11 @@ li{{display:flex;gap:3mm;background:#f4f1ea;border-radius:3.5mm;padding:3.2mm 3.
 li b{{font-size:10.5pt;display:block}}li p{{margin:1mm 0 0;font-size:9.6pt;line-height:1.35}}li i{{display:block;font-style:normal;font-size:7.5pt;color:#8a8577;margin-top:1mm;text-transform:uppercase;letter-spacing:.1em}}
 .f{{position:absolute;left:14mm;right:14mm;bottom:9mm;display:flex;justify-content:space-between;align-items:end;font-size:8.5pt;color:#6b675d;border-top:.3mm solid #ddd;padding-top:3mm}}.f b{{color:#14161b;font-size:10pt}}</style>
 <div class="p"><div class="top"><span class="e">BLOK 94 · „KTO TAM?”</span><h1>ZASADY Z <span>BLOKU 94</span></h1>
-<p>Z każdej części serii jedna lekcja. Wydrukuj, powieś na lodówce albo w klasie. Ola i Kuba nauczyli się tego na własnych błędach, ty nie musisz.</p>
+<p>Z każdego odcinka serii jedna lekcja. Wydrukuj, powieś na lodówce albo w klasie. Ola i Kuba nauczyli się tego na własnych błędach, ty nie musisz.</p>
 <img src="file://{IMG}/blok94-ola.png"></div>
 <div class="big"><div><b>112</b>Numer alarmowy. Bezpłatny, działa też bez środków na koncie i z zablokowanego ekranu telefonu.</div><div><b>NIE OTWIERAJ</b>W nocy, obcym, „policji” bez sprawdzenia w 112, „sąsiadom”.</div><div><b>NIE ZDRADZAJ</b>Że jesteś sam: przez drzwi, w relacji, w wiadomościach.</div></div>
 <ol>{li}</ol>
-<div class="f"><div><b>protokolocaleni.online</b><br>Seria na TikToku: @protokolocaleni · gra „Kto tam?” na stronie</div><div>Stan: części 1–{N}. Nowe zasady po każdej premierze.</div></div></div>'''
+<div class="f"><div><b>protokolocaleni.online</b><br>Seria na TikToku: @protokolocaleni · gra „Kto tam?” na stronie</div><div>Stan: odcinki 2–{N + 1}. Nowe zasady po każdym odcinku.</div></div></div>'''
 open(os.path.join(HERE, 'zasady.html'), 'w').write(doc)
 js = "const {chromium}=require('playwright');(async()=>{const b=await chromium.launch({args:['--allow-file-access-from-files']});const p=await b.newPage();await p.goto('file://%s/zasady.html',{waitUntil:'networkidle'});await p.waitForTimeout(500);await p.pdf({path:'%s/blok94-zasady.pdf',format:'A4',printBackground:true,pageRanges:'1'});await p.setViewportSize({width:794,height:1123});await p.screenshot({path:'%s/podglad.png'});await b.close();})();" % (HERE, HERE, HERE)
 subprocess.run(['node', '-e', js], check=True)

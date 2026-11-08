@@ -1,0 +1,1 @@
+window.TIMELINE = [{"name": "count", "oStart": 0, "oEnd": 6, "start": 0.0, "end": 5.481, "knots": [[0.0, 0.0], [0.3, 0.3], [6, 5.4807]]}, {"name": "cast", "oStart": 6, "oEnd": 11, "start": 5.481, "end": 11.05, "knots": [[0.0, 0.0], [0.6, 0.6], [5, 5.5693]]}, {"name": "site", "oStart": 11, "oEnd": 16, "start": 11.05, "end": 18.774, "knots": [[0.0, 0.0], [0.3, 0.3], [5, 7.7236]]}];

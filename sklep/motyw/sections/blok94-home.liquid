@@ -79,18 +79,18 @@
       <div class="cd" id="cd" data-t="{{ section.settings.premiere }}"><span id="cd-d">0<i>dni</i></span><span id="cd-h">00<i>godz.</i></span><span id="cd-m">00<i>min</i></span><span id="cd-s">00<i>sek.</i></span></div>
     </div>
     {% render 'blok94-powiadom', id: 'hero' %}
-    <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń części 1</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
+    <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odcinka 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
   </div>
   <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
-  <div class="head"><div><span class="eyebrow">Seria</span><h2 style="margin-top:12px">Oglądaj od początku</h2></div><p class="lead" style="margin:0">Każda część kończy się cliffhangerem. Zacznij od pierwszej.</p><p class="swipe" aria-hidden="true">Przesuń, żeby zobaczyć kolejne →</p></div>
+  <div class="head"><div><span class="eyebrow">Seria</span><h2 style="margin-top:12px">Oglądaj od początku</h2></div><p class="lead" style="margin:0">Historia Oli zaczyna się w odcinku 2 i każdy kończy się cliffhangerem. Odcinek 1 z kurierem to osobna historia.</p><p class="swipe" aria-hidden="true">Przesuń, żeby zobaczyć kolejne →</p></div>
   <div class="grid4">
-    <article class="part"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka części 1: Nie pytaj kto tam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 1</span><span class="hot">{{ section.settings.views }} wyświetleń</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta, a piętro wyżej ktoś czeka.</p><div class="rule">Prośba o pomoc w nocy? Nie otwieraj, dzwoń na 112.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
-    <article class="part"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka części 2: Nie otwieraj policji" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 2</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze cztery minuty dalej.</p><div class="rule">Zapytaj 112, czy patrol stoi pod twoimi drzwiami.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
-    {%- if section.settings.parts >= 3 -%}<article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka części 3: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 3</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
-    {%- if section.settings.parts >= 4 -%}<article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka części 4: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Część 4</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
+    <article class="part"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka odcinka 2: Nie pytaj kto tam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 2</span><span class="hot">{{ section.settings.views }} wyświetleń</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta, a piętro wyżej ktoś czeka.</p><div class="rule">Prośba o pomoc w nocy? Nie otwieraj, dzwoń na 112.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    <article class="part"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka odcinka 3: Nie otwieraj policji" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 3</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze cztery minuty dalej.</p><div class="rule">Zapytaj 112, czy patrol stoi pod twoimi drzwiami.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
+    {%- if section.settings.parts >= 3 -%}<article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka odcinka 4: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 4</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
+    {%- if section.settings.parts >= 4 -%}<article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka odcinka 5: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 5</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
   </div>
 </div></section>
 
@@ -182,14 +182,14 @@
   <div class="akta-in">
     <span class="akta-stamp">ŚCIŚLE TAJNE</span>
     <h3 id="b94-akta-t">Znalazłeś Kaptura.</h3>
-    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź części 5, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
+    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź odcinka 6, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
     <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · CZĘŚĆ 5</span>
+      <span class="akta-tag">● ZAPOWIEDŹ · ODCINEK 6</span>
       <video id="b94-akta-v" controls playsinline preload="none" poster="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" src="{{ 'blok94-zapowiedz5.mp4' | asset_url }}"></video>
     </div>
     <div class="akta-grid">
-      <figure><img src="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" alt="Zapowiedź części 5" loading="lazy" width="720" height="900"><figcaption>Część 5 · wkrótce</figcaption></figure>
-      <figure><img src="{{ 'blok94-zapowiedz6.jpg' | asset_url }}" alt="Zapowiedź części 6" loading="lazy" width="720" height="900"><figcaption>Część 6 · wkrótce</figcaption></figure>
+      <figure><img src="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" alt="Zapowiedź odcinka 6" loading="lazy" width="720" height="900"><figcaption>Odc. 6 · wkrótce</figcaption></figure>
+      <figure><img src="{{ 'blok94-zapowiedz6.jpg' | asset_url }}" alt="Zapowiedź odcinka 7" loading="lazy" width="720" height="900"><figcaption>Odc. 7 · wkrótce</figcaption></figure>
     </div>
     <p class="akta-code">Hasło do komentarza: <b>WIDZĘ CIĘ, KAPTUR</b></p>
     <button type="button" class="btn red" id="b94-akta-x" style="width:100%">Zamknij akta</button>
@@ -238,7 +238,7 @@
  {"type":"text","id":"youtube","label":"Link do YouTube","default":"https://youtube.com/@protokolocaleni"},
  {"type":"text","id":"followers","label":"Obserwujący","default":"899"},
  {"type":"text","id":"likes","label":"Polubienia","default":"8,7 tys."},
- {"type":"text","id":"views","label":"Wyświetlenia części 1","default":"160 tys."},
+ {"type":"text","id":"views","label":"Wyświetlenia odcinka 2","default":"160 tys."},
  {"type":"text","id":"videos","label":"Liczba filmów","default":"9"},
  {"type":"text","id":"stats_date","label":"Data statystyk","default":"7.11.2026"}
 ],"presets":[{"name":"BLOK 94 · strona główna"}]}
