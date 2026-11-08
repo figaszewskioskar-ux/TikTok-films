@@ -178,18 +178,19 @@
  nx.addEventListener('click',()=>{i=(i+1)%Q.length;show();});show();})();
 </script>
 
+{%- assign egg_a = section.settings.parts | plus: 2 -%}{%- assign egg_b = section.settings.parts | plus: 3 -%}
 <dialog id="b94-akta" class="b94-akta" aria-labelledby="b94-akta-t">
   <div class="akta-in">
     <span class="akta-stamp">ŚCIŚLE TAJNE</span>
     <h3 id="b94-akta-t">Znalazłeś Kaptura.</h3>
-    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź odcinka 6, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
+    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź odcinka {{ egg_a }}, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
     <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · ODCINEK 6</span>
-      <video id="b94-akta-v" controls playsinline preload="none" poster="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" src="{{ 'blok94-zapowiedz5.mp4' | asset_url }}"></video>
+      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ egg_a }}</span>
+      <video id="b94-akta-v" controls playsinline preload="none" poster="{{ 'blok94-egg-a.jpg' | asset_url }}" src="{{ 'blok94-egg-a.mp4' | asset_url }}"></video>
     </div>
     <div class="akta-grid">
-      <figure><img src="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" alt="Zapowiedź odcinka 6" loading="lazy" width="720" height="900"><figcaption>Odc. 6 · wkrótce</figcaption></figure>
-      <figure><img src="{{ 'blok94-zapowiedz6.jpg' | asset_url }}" alt="Zapowiedź odcinka 7" loading="lazy" width="720" height="900"><figcaption>Odc. 7 · wkrótce</figcaption></figure>
+      <figure><img src="{{ 'blok94-egg-a.jpg' | asset_url }}" alt="Zapowiedź odcinka {{ egg_a }}" loading="lazy" width="720" height="900"><figcaption>Odc. {{ egg_a }} · wkrótce</figcaption></figure>
+      <figure><img src="{{ 'blok94-egg-b.jpg' | asset_url }}" alt="Zapowiedź odcinka {{ egg_b }}" loading="lazy" width="720" height="900"><figcaption>Odc. {{ egg_b }} · wkrótce</figcaption></figure>
     </div>
     <p class="akta-code">Hasło do komentarza: <b>WIDZĘ CIĘ, KAPTUR</b></p>
     <button type="button" class="btn red" id="b94-akta-x" style="width:100%">Zamknij akta</button>

@@ -1,4 +1,4 @@
-// Relacja TikTok: nowa część + gra na stronie + easter egg (szukaj Kaptura)
+// Relacja TikTok: nowy odcinek + gra na stronie + easter egg (szukaj Kaptura)
 window.EP = {
   badge: 'BLOK 94',
   loop: false,
@@ -23,7 +23,7 @@ scene({
   name: 'nowa', start: 0, end: 4,
   draw(c, lt) {
     door(c);
-    sign(c, lt, 'NOWA CZĘŚĆ', 'JUŻ JEST!', 330);
+    sign(c, lt, 'NOWY ODCINEK', 'JUŻ JEST!', 330);
     const a = eout(prog(lt, 0.5, 1.2));
     c.save(); c.translate(-(1 - a) * 400, 0); c.rotate(-.05); img(c, 'c3', 110, 560, 430, 540); c.restore();
     c.save(); c.translate((1 - a) * 400, 0); c.rotate(.05); img(c, 'c4', 560, 600, 430, 540); c.restore();
@@ -49,7 +49,7 @@ scene({
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     peepPOV(c, lt, (cc, cx, cy, r) => { cc.fillStyle = '#A9A595'; cc.fillRect(cx - r, cy - r, 2 * r, 2 * r); const p = eio(prog(lt, .8, 2.0)); cc.save(); cc.translate(cx + lerp(420, 120, p), cy + 1080); person(cc, 'kaptur', 0, 0, 4.6, { t: lt, glow: 1 }); cc.restore(); });
     sign(c, lt, 'UKRYLIŚMY', 'EASTER EGG', 300);
-    if (lt > 1.2) label(c, 'z zapowiedzią nowych części', 540, 1450, 'dark', 42, lt - 1.2, 9);
+    if (lt > 1.2) label(c, 'z zapowiedzią kolejnych odcinków', 540, 1450, 'dark', 42, lt - 1.2, 9);
     if (lt > 2.2) label(c, 'Podpowiedź: szukaj Kaptura', 540, 1560, 'orange', 44, lt - 2.2, 9);
   },
 });
