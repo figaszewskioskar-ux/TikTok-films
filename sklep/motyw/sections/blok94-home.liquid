@@ -178,7 +178,11 @@
   <div class="akta-in">
     <span class="akta-stamp">ŚCIŚLE TAJNE</span>
     <h3 id="b94-akta-t">Znalazłeś Kaptura.</h3>
-    <p>Akta sprawy z bloku 94. Tak wyglądają kolejne części. Nikomu nie mów… albo pochwal się w komentarzu.</p>
+    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź części 5, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
+    <div class="akta-vid">
+      <span class="akta-tag">● ZAPOWIEDŹ · CZĘŚĆ 5</span>
+      <video id="b94-akta-v" controls playsinline preload="none" poster="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" src="{{ 'blok94-zapowiedz5.mp4' | asset_url }}"></video>
+    </div>
     <div class="akta-grid">
       <figure><img src="{{ 'blok94-zapowiedz5.jpg' | asset_url }}" alt="Zapowiedź części 5" loading="lazy" width="720" height="900"><figcaption>Część 5 · wkrótce</figcaption></figure>
       <figure><img src="{{ 'blok94-zapowiedz6.jpg' | asset_url }}" alt="Zapowiedź części 6" loading="lazy" width="720" height="900"><figcaption>Część 6 · wkrótce</figcaption></figure>
@@ -199,6 +203,10 @@
 .b94-akta .akta-stamp{display:inline-block;border:3px solid #d7263d;color:#ff6b7a;font:900 14px/1 "Public Sans",sans-serif;letter-spacing:.2em;padding:8px 12px;transform:rotate(-4deg)}
 .b94-akta h3{font-family:"Big Shoulders Display",Impact,sans-serif;font-size:40px;margin:14px 0 6px}
 .b94-akta p{color:#c9c3b6;margin:0 0 14px}
+.b94-akta .akta-vid{position:relative;margin-bottom:12px;border-radius:14px;overflow:hidden;background:#000;border:2px solid #d7263d}
+.b94-akta .akta-vid video{display:block;width:100%;aspect-ratio:9/16;max-height:62vh;object-fit:contain;background:#000}
+.b94-akta .akta-tag{position:absolute;z-index:2;top:10px;left:10px;background:#d7263d;color:#fff;font:900 12px/1 "Public Sans",sans-serif;letter-spacing:.12em;padding:7px 10px;border-radius:8px;pointer-events:none}
+.b94-akta{max-height:calc(100vh - 32px);overflow:auto}
 .b94-akta .akta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .b94-akta figure{margin:0;background:#0d0f13;border-radius:12px;overflow:hidden}
 .b94-akta figure img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
@@ -211,7 +219,8 @@
  function hit(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;k.classList.remove('shake');void k.offsetWidth;k.classList.add('shake');
   if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}}
  k.addEventListener('click',hit);k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hit();}});
- document.getElementById('b94-akta-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
+ var v=document.getElementById('b94-akta-v');document.getElementById('b94-akta-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
+ d.addEventListener('close',function(){if(v)v.pause();});
  d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
 </script>
 
