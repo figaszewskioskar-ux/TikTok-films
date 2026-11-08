@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 4 — klucz w zamku o 3:12, Zdzisiek z latarką, Kaptur ucieka w górę.
 window.EP = {
-  badge: 'BLOK 94 · ODCINEK 5',
+  badge: 'BLOK 94 · ODC. 5',
   loop: true,
   vignette: .78,
   cues(add) {
@@ -55,7 +55,7 @@ scene({
 // 1. PRZYPOMNIENIE — klucze
 scene({
   name: 'recap', start: 6, end: 12,
-  labels: [[0.2, 6, 'ODCINEK 5', 540, 1650, 'yellow', 48]],
+  labels: [[0.2, 6, 'ODC. 5', 540, 1650, 'yellow', 48]],
   draw(c, lt) { c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H); chat(c, lt + 10, [[0, 'keys'], [0, 'txt', 'zgubiłeś coś, Kuba?']]); },
 });
 // 2. DECYZJA — błąd 1
@@ -181,7 +181,7 @@ scene({
 scene({
   name: 'end', start: 74, end: 84,
   cam: lt => ({ z: 1.0 + lt * 0.012, y: lt * 6 }),
-  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.4, 10, 'ODCINEK 6 ↓', 540, 1650, 'red', 56]],
+  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.4, 10, 'ODC. 6 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     ROOM(c);
     c.fillStyle = '#1D2130'; c.fillRect(0, 0, W, 260); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 250, W, 14);

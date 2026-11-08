@@ -1,6 +1,6 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 5 — „nowy sąsiad” z 104, ściana ze zdjęciami, następny cel: Zdzisiek.
 window.EP = {
-  badge: 'BLOK 94 · ODCINEK 6',
+  badge: 'BLOK 94 · ODC. 6',
   loop: true,
   vignette: .72,
   cues(add) {
@@ -57,7 +57,7 @@ scene({
 // 1. PRZYPOMNIENIE — pukanie z sufitu
 scene({
   name: 'recap', start: 6, end: 11,
-  labels: [[0.2, 5, 'ODCINEK 6', 540, 1650, 'yellow', 48], [0.6, 4, 'PUK. PUK. PUK.', 540, 420, 'dark', 48]],
+  labels: [[0.2, 5, 'ODC. 6', 540, 1650, 'yellow', 48], [0.6, 4, 'PUK. PUK. PUK.', 540, 420, 'dark', 48]],
   draw(c, lt) {
     ROOM(c); c.fillStyle = '#1D2130'; c.fillRect(0, 0, W, 260);
     person(c, 'ola', 450, 1300, 1.9, { t: lt, lookY: -1, wide: true, mouth: 'o' });
@@ -174,7 +174,7 @@ scene({
 scene({
   name: 'end', start: 76, end: 86,
   cam: lt => ({ z: 1.0 + lt * 0.03 }),
-  labels: [[8.2, 10, 'ODCINEK 7 ↓', 540, 1650, 'red', 56]],
+  labels: [[8.2, 10, 'ODC. 7 ↓', 540, 1650, 'red', 56]],
   draw(c, lt) {
     if (lt < 5.6) {
       c.fillStyle = '#6B6A60'; c.fillRect(0, 0, W, H);
