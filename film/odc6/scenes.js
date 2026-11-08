@@ -27,7 +27,7 @@ function bigSign(c, lt, l1, l2, y = 390) {
 }
 // otwarte drzwi 94 widziane od środka (dzień)
 function openDoorHall(c, lt, gap) {
-  hallBg(c, lt, gap > 2 ? { gap } : {});
+  hallBg(c, lt, gap > 2 ? { gap, nochain: true } : {});
 }
 // zdjęcie przypięte do ściany
 function photo(c, x, y, w, h, rot, door, note, red) {
