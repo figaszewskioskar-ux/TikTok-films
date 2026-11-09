@@ -61,6 +61,7 @@
   <main id="MainContent">{{ content_for_layout }}</main>
   {%- render 'po-note' -%}
   <footer class="po-foot">
+    <div class="po-w" style="padding-bottom:18px">{% render 'blok94-social', title: 'Obserwuj BLOK 94' %}</div>
     <div class="po-w">
       <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · <a href="https://www.tiktok.com/@protokolocaleni" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@protokolocaleni" target="_blank" rel="noopener">YouTube</a></span>
       <span class="po-pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'po-pi' }}{%- endfor -%}</span><span class="po-pol">{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}</span>
