@@ -27,7 +27,7 @@ scene({
     const a = eout(prog(lt, 0.5, 1.2));
     c.save(); c.translate(-(1 - a) * 400, 0); c.rotate(-.05); img(c, 'c3', 110, 560, 430, 540); c.restore();
     c.save(); c.translate((1 - a) * 400, 0); c.rotate(.05); img(c, 'c4', 560, 600, 430, 540); c.restore();
-    if (lt > 1.4) label(c, '„KTO TAM?” · BLOK 94', 540, 1280, 'orange', 48, lt - 1.4, 9);
+    if (lt > 1.4) label(c, 'BLOK 94', 540, 1280, 'orange', 48, lt - 1.4, 9);
     if (lt > 2.0) label(c, 'OGLĄDAJ NA PROFILU ↓', 540, 1400, 'dark', 44, lt - 2.0, 9);
   },
 });
@@ -60,7 +60,7 @@ scene({
     door(c);
     txt(c, 'WEJDŹ NA STRONĘ', 540, 380, 92, '#FFFFFF', 900);
     const a = back(clamp((lt - .3) / .35)); c.save(); c.translate(540, 540); c.scale(a, a); fillRR(c, -420, -64, 840, 128, 64, '#FFFFFF'); txt(c, 'protokolocaleni.online', 0, 2, 54, '#14161B', 900); c.restore();
-    [['GRA „KTO TAM?”', 'orange'], ['AKTA SPRAWY KAPTURA', 'dark'], ['EASTER EGG', 'red']].forEach(([t, st], i) => { if (lt > .8 + i * .4) label(c, t, 540, 760 + i * 130, st, 46, lt - .8 - i * .4, 9); });
+    [['GRA', 'orange'], ['AKTA SPRAWY KAPTURA', 'dark'], ['EASTER EGG', 'red']].forEach(([t, st], i) => { if (lt > .8 + i * .4) label(c, t, 540, 760 + i * 130, st, 46, lt - .8 - i * .4, 9); });
     if (lt > 2.2) label(c, 'LINK W BIO', 540, 1240, 'red', 64, lt - 2.2, 9);
     person(c, 'ola', 860, 1640, 1.6, { t: lt, phone: 2, aR: 2.2, mouth: 'smile' });
     person(c, 'kuba', 220, 1640, 1.6, { t: lt, aR: 2.5 + Math.sin(lt * 9) * .2, mouth: 'smile' });
