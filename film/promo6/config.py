@@ -6,7 +6,7 @@ TARGET = None
 SQUEEZE = 0.85
 SCENES = [('nowa', 0, 4), ('gra', 4, 8.5), ('egg', 8.5, 13), ('cta', 13, 17)]
 SEG = [
-    ['nowa', 0.2, 'Nowy odcinek „Kto tam?” już jest. Oglądaj na profilu.'],
+    ['nowa', 0.2, 'Nowe odcinki już są! Oglądaj na profilu.'],
     ['gra', 0.3, 'A potem sprawdź się w naszej grze. Otworzysz czy nie?'],
     ['egg', 0.3, 'Na stronie ukryliśmy easter egg z zapowiedzią kolejnego odcinka. Szukaj Kaptura.'],
     ['cta', 0.3, 'Protokół ocaleni kropka online. Link w bio.'],

@@ -23,7 +23,7 @@ scene({
   name: 'nowa', start: 0, end: 4,
   draw(c, lt) {
     door(c);
-    sign(c, lt, 'NOWY ODCINEK', 'JUŻ JEST!', 330);
+    sign(c, lt, 'NOWE ODCINKI', 'JUŻ SĄ!', 330);
     const a = eout(prog(lt, 0.5, 1.2));
     c.save(); c.translate(-(1 - a) * 400, 0); c.rotate(-.05); img(c, 'c3', 110, 560, 430, 540); c.restore();
     c.save(); c.translate((1 - a) * 400, 0); c.rotate(.05); img(c, 'c4', 560, 600, 430, 540); c.restore();
