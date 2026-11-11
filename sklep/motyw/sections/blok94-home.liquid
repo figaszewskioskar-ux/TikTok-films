@@ -154,7 +154,7 @@
 </div>
 <script>
 // odliczanie do premiery: pon. 9.11.2026, 1:30 czasu polskiego (00:30 UTC)
-(function(){const T=Date.parse(document.getElementById('cd').dataset.t);const p=n=>String(n).padStart(2,'0');
+(function(){const cd=document.getElementById('cd');const T=Date.parse(cd.dataset.t);if(isNaN(T)||T<Date.now()){cd.innerHTML='<span style="flex:1;font-size:22px;letter-spacing:.14em">WKRÓTCE</span>';return;}const p=n=>String(n).padStart(2,'0');
  const set=(id,v,l)=>{const e=document.getElementById(id);if(e)e.innerHTML=v+'<i>'+l+'</i>';};
  function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));set('cd-d',Math.floor(s/86400),'dni');set('cd-h',p(Math.floor(s%86400/3600)),'godz.');set('cd-m',p(Math.floor(s%3600/60)),'min');set('cd-s',p(s%60),'sek.');}
  tick();setInterval(tick,1000);})();

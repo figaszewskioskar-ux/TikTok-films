@@ -3,17 +3,17 @@
     "blok94": {
       "type": "blok94-home",
       "settings": {
-        "premiere": "2026-11-11T00:30:00Z",
-        "premiere_label": "śr. 11.11, 1:30 · TikTok",
+        "premiere": "",
+        "premiere_label": "wkrótce · TikTok",
         "tiktok": "https://www.tiktok.com/@protokolocaleni",
         "tip_product": "napiwek",
         "youtube": "https://youtube.com/@protokolocaleni",
-        "followers": "1247",
-        "likes": "11,2 tys.",
-        "views": "288 tys.",
-        "videos": "9",
-        "stats_date": "8.11.2026",
-        "parts": 3
+        "followers": "2290",
+        "likes": "29,4 tys.",
+        "views": "577 tys.",
+        "videos": "10",
+        "stats_date": "11.11.2026",
+        "parts": 4
       }
     }
   },
