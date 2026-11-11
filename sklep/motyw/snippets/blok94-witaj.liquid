@@ -1,9 +1,9 @@
 {%- comment -%} Okienko po wejściu na stronę: media społecznościowe + gra + wsparcie. Raz na wizytę (sessionStorage). {%- endcomment -%}
 <dialog id="b94-witaj" class="b94w" aria-labelledby="b94w-t">
   <button type="button" class="b94w-x" id="b94w-x" aria-label="Zamknij">×</button>
-  <span class="b94w-e">BLOK 94 · „Kto tam?”</span>
-  <h2 id="b94w-t">Jest nas już ponad 2000!</h2>
-  <p>Dzięki, że jesteś. Obserwuj nas, żeby nie przegapić kolejnego odcinka.</p>
+  <span class="b94w-e">BLOK 94 · ŚCIŚLE TAJNE</span>
+  <h2 id="b94w-t">Znajdziesz 2 ukryte zapowiedzi?</h2>
+  <p>Na stronie głównej ukryliśmy dwa easter eggi z zapowiedziami kolejnych odcinków. Podpowiedź: ktoś tu puka… 👀</p><p class="b94w-n">Obserwuj nas, żeby nie przegapić premiery:</p>
   {% render 'blok94-social' %}
   <div class="b94w-go">
     <a class="b94w-b b94w-g" href="/pages/gra">🎮 Zagraj w grę</a>
@@ -17,7 +17,7 @@
 .b94w-x{position:absolute;top:10px;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#f3efe6;font-size:28px;line-height:1;cursor:pointer}
 .b94w-e{display:inline-block;background:#f39c12;color:#14161b;font:800 12px/1 "Public Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:999px}
 .b94w h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:40px;line-height:1;margin:14px 0 8px}
-.b94w p{color:#c9c6bb;margin:0 0 16px;font-size:16px}
+.b94w p{color:#c9c6bb;margin:0 0 12px;font-size:16px}.b94w .b94w-n{color:#f3efe6;font-weight:700;font-size:15px;margin-bottom:10px}
 .b94w .b94s-row{display:grid;grid-template-columns:1fr;gap:8px}
 .b94w .b94s-a{justify-content:center}
 .b94w-go{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
@@ -27,7 +27,7 @@
 .b94w-x:focus-visible,.b94w-b:focus-visible,.b94w-l:focus-visible{outline:3px solid #f39c12;outline-offset:2px}
 </style>
 <script>
-(function(){var d=document.getElementById('b94-witaj');if(!d)return;var K='b94-witaj-1';
+(function(){var d=document.getElementById('b94-witaj');if(!d)return;var K='b94-witaj-2';
  try{if(sessionStorage.getItem(K))return;}catch(e){}
  function close(){try{sessionStorage.setItem(K,'1');}catch(e){}if(d.close)d.close();else d.removeAttribute('open');}
  setTimeout(function(){if(document.querySelector('dialog[open]'))return;try{d.showModal();}catch(e){d.setAttribute('open','');}try{sessionStorage.setItem(K,'1');}catch(e){}},1200);

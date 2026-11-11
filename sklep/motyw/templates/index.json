@@ -3,8 +3,8 @@
     "blok94": {
       "type": "blok94-home",
       "settings": {
-        "premiere": "2026-11-13T00:30:00Z",
-        "premiere_label": "pt. 13.11, 1:30 · TikTok",
+        "premiere": "",
+        "premiere_label": "wkrótce · TikTok",
         "tiktok": "https://www.tiktok.com/@protokolocaleni",
         "tip_product": "napiwek",
         "youtube": "https://youtube.com/@protokolocaleni",
@@ -13,7 +13,7 @@
         "views": "577 tys.",
         "videos": "10",
         "stats_date": "11.11.2026",
-        "parts": 4
+        "parts": 5
       }
     }
   },
