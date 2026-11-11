@@ -43,6 +43,21 @@
 #b94a .file li.hit{animation:b94aHit 1.6s ease}
 @keyframes b94aHit{0%,100%{background:transparent}20%,60%{background:rgba(215,38,61,.18)}}
 #b94a .file .fl-ref{font:700 11px/1 var(--mono);color:#6b5f45;margin-top:4px;display:block}
+#b94a details.file{padding-top:14px}
+#b94a details.file summary{list-style:none;cursor:pointer;display:block;position:relative;padding-right:40px}
+#b94a details.file summary::-webkit-details-marker{display:none}
+#b94a details.file summary:after{content:"+";position:absolute;right:0;top:4px;width:30px;height:30px;border-radius:50%;background:#1d1a14;color:var(--hat);font:900 20px/30px var(--body);text-align:center}
+#b94a details.file[open] summary:after{content:"–"}
+#b94a details.file .cnt{display:block;font:700 13px/1 var(--body);color:#6b5f45;margin-top:6px}
+#b94a details.file[open] .cnt{display:none}
+#b94a details.file summary:focus-visible{outline:3px solid var(--hat);outline-offset:4px;border-radius:6px}
+#b94a .prof{background:#141018;border-radius:16px;padding:18px;box-shadow:inset 0 0 0 2px var(--sign)}
+#b94a .prof .pt{font:800 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#ff6b7a}
+#b94a .prof h3{font-size:34px;margin:6px 0 8px}
+#b94a .facts{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink);font-size:15.5px}
+#b94a .facts b{color:#f5c542}
+#b94a .pq{margin:12px 0 0;color:var(--muted);font-style:italic}
+@media(max-width:899px){#b94a .fl{min-height:36px;padding:4px 10px}#b94a .fl .win i{width:12px;height:15px}#b94a .fl .tag{font-size:11px;padding:5px 7px}}
 #b94a .locked{background:repeating-linear-gradient(45deg,#151a2e 0 14px,#11152a 14px 28px);border-radius:16px;padding:18px;text-align:center;color:var(--muted);font-weight:700}
 #b94a .locked b{display:block;font-family:var(--display);font-size:28px;color:var(--ink)}
 /* typowanie */
@@ -88,50 +103,61 @@
     </div>
 
     <div class="files">
-      <article class="file"><span class="pt">Odc. 2 · 2:47 · 9. piętro</span><h3>Zaklejony wizjer</h3><ul>
+      <section class="prof" aria-labelledby="b94a-prof"><span class="pt">Profil podejrzanego</span><h3 id="b94a-prof">Kaptur</h3>
+        <ul class="facts">
+          <li>Twarz zawsze w cieniu kaptura. Nikt jej nie widział.</li>
+          <li>Czarne rękawiczki. Pracuje z kobietą, która udaje płacz.</li>
+          {%- if P >= 2 -%}<li>Podszywa się pod policję. Zna każdą drogę ucieczki w bloku.</li>{%- endif -%}
+          {%- if P >= 3 -%}<li>Pisze z konta <b>k4ptur_94</b>. Wie, gdzie są liczniki.</li>{%- endif -%}
+          {%- if P >= 4 -%}<li>Ma klucze Kuby. Ukrywa się w mieszkaniu <b>104</b>, nad pokojem Oli.</li>{%- endif -%}
+          {%- if P >= 5 -%}<li>Przedstawił się jako <b>„nowy sąsiad”</b>. Zbiera godziny, kiedy ktoś zostaje sam.</li>{%- endif -%}
+        </ul>
+        <p class="pq">Głos: ten sam w każdym odcinku. Poznajesz go?</p>
+      </section>
+      <details class="file"{% if P == 1 %} open{% endif %}><summary><span class="pt">Odc. 2 · 2:47 · 9. piętro</span><h3>Zaklejony wizjer</h3><span class="cnt"></span></summary><ul>
         <li data-f="9">{{ ic_eye }}<div><b>Wizjer zaklejony od zewnątrz.</b> Światło na klatce paliło się całą noc, a w wizjerze było czarno.<span class="fl-ref">9 p. · drzwi 94</span></div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">😢</span><div><b>Płacz był przynętą.</b> Kobieta stała przy ścianie obok drzwi, tam, gdzie wizjer nie sięga. Kaptur czekał piętro wyżej.<span class="fl-ref">9 p. · klatka</span></div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">🧤</span><div><b>Ręka w czarnej rękawiczce</b> sięgała do łańcucha, gdy Ola uchyliła drzwi.</div></li>
         <li data-f="0"><span class="ic" aria-hidden="true">📺</span><div><b>Tydzień wcześniej, pod siódemką:</b> ten sam płacz. Rano sąsiadka z mieszkania 7 nie miała telewizora ani obrączki.<span class="fl-ref">parter · mieszkanie 7</span></div></li>
         <li data-f="2"><span class="ic" aria-hidden="true">🔦</span><div><b>Świadek: pan Zdzisiek.</b> On już kiedyś słyszał ten płacz.<span class="fl-ref">2 p.</span></div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">✉</span><div><b>Kartka pod drzwiami</b> i taśma odklejona z wizjera. „Wiem, że patrzysz.”</div></li>
-      </ul></article>
+      </ul></details>
 
-      {%- if P >= 2 -%}<article class="file"><span class="pt">Odc. 3 · ta sama noc</span><h3>Fałszywa policja</h3><ul>
+      {%- if P >= 2 -%}<details class="file"{% if P == 2 %} open{% endif %}><summary><span class="pt">Odc. 3 · ta sama noc</span><h3>Fałszywa policja</h3><span class="cnt"></span></summary><ul>
         <li data-f="9"><span class="ic" aria-hidden="true">🚨</span><div><b>„Policja! Otwierać!”</b> A prawdziwy patrol był jeszcze cztery minuty drogi od bloku. Klamka poszła w dół.</div></li>
         <li data-f="3"><span class="ic" aria-hidden="true">🚔</span><div><b>Kobietę złapano na 3. piętrze.</b> Kaptur zniknął, jakby znał ten blok lepiej niż ktokolwiek.<span class="fl-ref">3 p.</span></div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">📱</span><div><b>Relacja Oli o 22:13:</b> „Sama na chacie do rana”, widok z okna i lokalizacja. 40 wyświetleń, w tym jedno konto bez zdjęcia.</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
-      {%- if P >= 3 -%}<article class="file"><span class="pt">Odc. 4 · 23:58</span><h3>Prąd tylko w 94</h3><ul>
+      {%- if P >= 3 -%}<details class="file"{% if P == 3 %} open{% endif %}><summary><span class="pt">Odc. 4 · 23:58</span><h3>Prąd tylko w 94</h3><span class="cnt"></span></summary><ul>
         <li data-f="9"><span class="ic" aria-hidden="true">📷</span><div><b>Konto k4ptur_94</b> przysłało zdjęcie drzwi 94 z nowym zamkiem, zrobione z klatki tego samego dnia.</div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">⚡</span><div><b>Skrzynka z licznikami na korytarzu nie była zamknięta.</b> Bezpiecznik 94 ktoś wyłączył ręcznie.<span class="fl-ref">9 p. · korytarz</span></div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">🔑</span><div><b>Klucze Kuby z breloczkiem „94”</b> wypadły przy skrzynce. Teraz ma je Kaptur.</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
-      {%- if P >= 4 -%}<article class="file"><span class="pt">Odc. 5 · 3:12</span><h3>Klucz pasuje</h3><ul>
+      {%- if P >= 4 -%}<details class="file"{% if P == 4 %} open{% endif %}><summary><span class="pt">Odc. 5 · 3:12</span><h3>Klucz pasuje</h3><span class="cnt"></span></summary><ul>
         <li data-f="9"><span class="ic" aria-hidden="true">🔓</span><div><b>Oba zamki puściły.</b> Uratował ich łańcuch i Kuba dociskający drzwi barkiem.</div></li>
         <li data-f="2"><span class="ic" aria-hidden="true">🔦</span><div><b>Pan Zdzisiek od dwóch nocy pilnował klatki.</b> „Ja tu znam wszystkich. Ciebie też poznam!”<span class="fl-ref">2 p. → 9 p.</span></div></li>
         <li data-f="10"><span class="ic" aria-hidden="true">⬆</span><div><b>Kaptur nie uciekł na dół, tylko w górę.</b> Drzwi 104 zamknęły się cicho: mieszkanie dokładnie nad pokojem Oli.<span class="fl-ref">10 p. · mieszkanie 104</span></div></li>
         <li data-f="10"><span class="ic" aria-hidden="true">👊</span><div><b>W nocy pukanie z sufitu.</b> „Dobranoc, sąsiadko.”</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
-      {%- if P >= 5 -%}<article class="file"><span class="pt">Odc. 6 · następnego dnia</span><h3>Nowy sąsiad</h3><ul>
+      {%- if P >= 5 -%}<details class="file"{% if P == 5 %} open{% endif %}><summary><span class="pt">Odc. 6 · następnego dnia</span><h3>Nowy sąsiad</h3><span class="cnt"></span></summary><ul>
         <li data-f="9"><span class="ic" aria-hidden="true">🪛</span><div><b>„Nowy z 104”</b> pożyczył śrubokręt i dowiedział się, że rodzice pracują na noce, od poniedziałku do czwartku. Kuba wpuścił go do środka.</div></li>
         <li data-f="10"><span class="ic" aria-hidden="true">🏚</span><div><b>W 104 nikt nie mieszka od pół roku.</b> Właściciel jest w Norwegii.<span class="fl-ref">10 p.</span></div></li>
         <li data-f="10"><span class="ic" aria-hidden="true">🖼</span><div><b>Ściana zdjęć:</b> drzwi z całego bloku, pod każdym notatka. Ostatnie zdjęcie: drzwi 22. Podpis: „sam”.</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
-      {%- if P >= 6 -%}<article class="file"><span class="pt">Odc. 7 · 23:58 · 2. piętro</span><h3>Ktoś na balkonie</h3><ul>
+      {%- if P >= 6 -%}<details class="file"{% if P == 6 %} open{% endif %}><summary><span class="pt">Odc. 7 · 23:58 · 2. piętro</span><h3>Ktoś na balkonie</h3><span class="cnt"></span></summary><ul>
         <li data-f="2"><span class="ic" aria-hidden="true">🪟</span><div><b>Uchylony balkon u pana Zdziśka.</b> Ktoś stał tuż za szybą. Na parapecie kartka: „Nie ciebie szukałem.”</div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">🚪</span><div><b>Ola i Kuba wybiegli na pomoc i zostawili otwarte drzwi.</b> Po powrocie: karteczka na szybie od środka i uchylona szafa.</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
-      {%- if P >= 7 -%}<article class="file"><span class="pt">Odc. 8 · ta sama noc</span><h3>Kamera w szafie</h3><ul>
+      {%- if P >= 7 -%}<details class="file"{% if P == 7 %} open{% endif %}><summary><span class="pt">Odc. 8 · ta sama noc</span><h3>Kamera w szafie</h3><span class="cnt"></span></summary><ul>
         <li data-f="9"><span class="ic" aria-hidden="true">🎥</span><div><b>W szafie kamera skierowana na łóżko Oli,</b> połączona z kontem Kuby.</div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">🔐</span><div><b>Jedno hasło do wszystkiego: kuba94.</b> Stąd wiedział o kluczach, o relacji i o grafiku rodziców.</div></li>
         <li data-f="9"><span class="ic" aria-hidden="true">💻</span><div><b>Kamerka w laptopie zapaliła się sama.</b> „Za późno, Kuba.”</div></li>
-      </ul></article>{%- endif -%}
+      </ul></details>{%- endif -%}
 
       <div class="locked"><b>Odc. {{ P | plus: 2 }} · akta zamknięte</b>Nowe poszlaki pojawią się tu w dniu premiery.</div>
     </div>
@@ -140,8 +166,8 @@
   <section class="vote" aria-labelledby="b94a-v"><span class="eyebrow">Twoja teoria</span><h2 id="b94a-v" style="margin-top:12px">Kto jest Kapturem?</h2>
     <p class="lead" style="margin-top:8px">Wybierz typ. Zapisze się tylko w twoim telefonie. Potem wrzuć go do komentarza pod najnowszą częścią, a po finale sprawdzimy, kto miał rację.</p>
     <div class="opts" id="b94a-opts">
-      <button type="button" data-v="KTOŚ Z BLOKU" aria-pressed="false">Ktoś z bloku 94<small>Zna każde piętro, skrzynkę z licznikami i drogę ucieczki.</small></button>
-      <button type="button" data-v="KTOŚ Z RELACJI" aria-pressed="false">Ktoś, kto ogląda relacje Oli<small>Wiedział, że jest sama. 39 osób Ola zna…</small></button>
+      <button type="button" data-v="KTOŚ Z BLOKU" aria-pressed="false">Ktoś z bloku 94<small>Zna każde piętro, licznik i puste mieszkanie 104.</small></button>
+      <button type="button" data-v="KTOŚ Z RELACJI" aria-pressed="false">Ktoś, kto obserwuje Olę w sieci<small>Wiedział, że jest sama. 39 z 40 widzów relacji Ola zna…</small></button>
       <button type="button" data-v="WSPÓLNIK KOBIETY" aria-pressed="false">Wspólnik kobiety z płaczem<small>Ona została złapana. On zniknął.</small></button>
       <button type="button" data-v="KTOŚ NOWY" aria-pressed="false">Ktoś, kogo jeszcze nie poznaliśmy<small>Prawdziwy Kaptur jeszcze się nie pokazał.</small></button>
     </div>
@@ -159,10 +185,11 @@
 </div></div>
 <script>
 (function(){var r=document.getElementById('b94a');if(!r)return;
+ r.querySelectorAll('details.file').forEach(function(d){var n=d.querySelectorAll('li').length,c=d.querySelector('.cnt');if(c)c.textContent=n+(n===1?' poszlaka':n<5?' poszlaki':' poszlak')+' · rozwiń';});
  var fls=r.querySelectorAll('.fl[data-f]'),items=r.querySelectorAll('.file li[data-f]');
  fls.forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f'),first=null;
   fls.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
-  items.forEach(function(li){li.classList.remove('hit');if(li.getAttribute('data-f')===f){void li.offsetWidth;li.classList.add('hit');if(!first)first=li;}});
+  items.forEach(function(li){li.classList.remove('hit');if(li.getAttribute('data-f')===f){var dd=li.closest('details');if(dd)dd.open=true;void li.offsetWidth;li.classList.add('hit');if(!first)first=li;}});
   if(first)first.scrollIntoView({behavior:'smooth',block:'center'});});});
  var ob=r.querySelectorAll('#b94a-opts button'),res=document.getElementById('b94a-res'),code=document.getElementById('b94a-code'),K='b94-kaptur-typ';
  function pick(v,save){ob.forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-v')===v?'true':'false');});code.textContent='#AktaBlok94 TYPUJĘ: '+v;res.classList.add('on');if(save){try{localStorage.setItem(K,v);}catch(e){}}}
