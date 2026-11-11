@@ -98,10 +98,13 @@ const KINDS = {
   policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
 };
+function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return '#' + ((1 << 24) + (m(r) << 16) + (m(g) << 8) + m(b)).toString(16).slice(1); }
 function arm(c, sx, sy, a, side, k, len = 92) {
   c.save(); c.translate(sx, sy); c.rotate(-side * a);
   fillRR(c, -12, -8, 24, len + 8, 12, k.jacket);
-  circ(c, 0, len + 2, 13, k.skin);
+  fillRR(c, side > 0 ? 2 : -12, -4, 10, len, 6, 'rgba(0,0,0,.12)');
+  fillRR(c, -12, len - 14, 24, 10, 4, shade(k.jacket, -.25));
+  circ(c, 0, len + 2, 13, k.skin); circ(c, -3, len - 1, 5, 'rgba(255,255,255,.18)');
   c.restore();
   return [sx + side * Math.sin(a) * (len + 2), sy + Math.cos(a) * (len + 2)];
 }
@@ -124,7 +127,9 @@ function person(c, kind, x, y, s, o = {}) {
     for (const side of [-1, 1]) {
       const lift = Math.max(0, side * sw) * 14, dx = side * sw * 6;
       fillRR(c, side * 15 - 10 + dx, -86 - lift, 20, 82, 8, k.pants);
+      fillRR(c, side * 15 + (side > 0 ? 2 : -10) + dx, -84 - lift, 8, 78, 4, 'rgba(0,0,0,.14)');
       fillRR(c, side * 15 - 13 + dx + (side > 0 ? 2 : -6), -12 - lift, 30, 13, 6, k.shoes);
+      fillRR(c, side * 15 - 13 + dx + (side > 0 ? 2 : -6), -3 - lift, 30, 4, 2, 'rgba(255,255,255,.22)');
     }
   } else {
     fillRR(c, -26, -12, 22, 12, 6, k.shoes); fillRR(c, 4, -12, 22, 12, 6, k.shoes);
@@ -139,6 +144,12 @@ function person(c, kind, x, y, s, o = {}) {
     c.fillStyle = k.dark; c.beginPath(); c.moveTo(-20, -190); c.lineTo(0, -140); c.lineTo(20, -190); c.fill();
   } else {
     fillRR(c, -45, -192, 90, 122, 24, k.jacket);
+    c.save(); rr(c, -45, -192, 90, 122, 24); c.clip();
+    c.fillStyle = 'rgba(0,0,0,.13)'; c.fillRect(18, -192, 30, 122);
+    c.fillStyle = 'rgba(255,255,255,.07)'; c.fillRect(-45, -192, 22, 122);
+    c.fillStyle = shade(k.jacket, -.22); c.fillRect(-45, -82, 90, 12);
+    if (kind !== 'policjant' && kind !== 'kurier' && kind !== 'ola') { fillRR(c, -36, -112, 22, 4, 2, 'rgba(0,0,0,.2)'); fillRR(c, 14, -112, 22, 4, 2, 'rgba(0,0,0,.2)'); }
+    c.restore();
     if (kind === 'kuba') { c.fillStyle = k.dark; c.fillRect(-2, -180, 4, 104); }
     if (kind === 'kaptur' && !back_) { fillRR(c, -26, -128, 52, 30, 10, k.dark); }
     if (kind === 'kurier') {
@@ -147,7 +158,15 @@ function person(c, kind, x, y, s, o = {}) {
       c.fillStyle = '#C9862A'; c.fillRect(-2, -186, 4, 104);
     }
     if (kind === 'zdzisiek') { c.fillStyle = k.dark; c.fillRect(-2, -180, 4, 104); fillRR(c, -36, -110, 20, 16, 4, k.dark); }
-    if (kind === 'policjant') { fillRR(c, -14, -190, 28, 40, 6, '#9DB8DA'); fillRR(c, -40, -160, 80, 12, 3, '#C9CDD2'); fillRR(c, 16, -176, 18, 22, 4, '#D9B84A'); c.fillStyle = '#0E1530'; c.fillRect(-45, -96, 90, 10); }
+    if (kind === 'policjant') {
+      fillRR(c, -14, -190, 28, 40, 6, '#9DB8DA');
+      if (!back_) { fillRR(c, -42, -176, 32, 96, 10, '#D8E23A'); fillRR(c, 10, -176, 32, 96, 10, '#D8E23A'); }
+      else fillRR(c, -42, -176, 84, 96, 12, '#D8E23A');
+      fillRR(c, -44, -136, 88, 22, 3, '#1E3A8A'); txt(c, 'POLICJA', 0, -125, 15, '#FFFFFF', 900);
+      c.fillStyle = 'rgba(230,236,240,.9)'; c.fillRect(-44, -104, 88, 5); c.fillRect(-44, -96 + 2, 88, 0);
+      fillRR(c, 16, -172, 16, 18, 3, '#D9B84A');
+      c.fillStyle = '#0E1530'; c.fillRect(-45, -86, 90, 10);
+    }
     if (kind === 'ola') { fillRR(c, -30, -118, 60, 30, 10, k.dark); c.strokeStyle = '#FFFFFF'; c.lineWidth = 3; c.beginPath(); c.moveTo(-10, -186); c.lineTo(-12, -150); c.moveTo(10, -186); c.lineTo(12, -150); c.stroke(); }
   }
   // pudełko (kurier)
@@ -194,6 +213,8 @@ function person(c, kind, x, y, s, o = {}) {
   if (kind === 'kuba') { fillRR(c, -36, -202, 72, 24, 11, '#1BB0A3'); if (!back_) fillRR(c, 12, -192, 18, 52, 8, '#169A8F'); }
   // głowa
   const hy = -242;
+  if (kind !== 'kaptur') { fillRR(c, -14, hy + 34, 28, 28, 8, shade(k.skin, -.18)); }
+  c.save(); c.translate(0, hy + 40); c.scale(.93, .93); c.translate(0, -(hy + 40));
   if (kind === 'kaptur') {
     circ(c, 0, hy + 2, 66, '#1A1C21');
     if (back_) {
@@ -218,7 +239,9 @@ function person(c, kind, x, y, s, o = {}) {
     if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
     if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
+    if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
     circ(c, 0, hy, 50, k.skin);
+    c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(0,0,0,.08)'; c.beginPath(); c.arc(20, hy + 8, 50, 0, 7); c.fill(); c.restore();
     if (back_) { /* tył głowy */ }
     else {
       const lk = (o.look || 0) * 7, ly = (o.lookY || 0) * 5;
@@ -226,7 +249,10 @@ function person(c, kind, x, y, s, o = {}) {
       if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
       if (o.squint) { c.strokeStyle = '#1E1E24'; c.lineWidth = 5; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 9 + lk, hy - 2); c.lineTo(sx + 9 + lk, hy - 2); c.stroke(); } }
       else if (blink) { c.strokeStyle = '#1E1E24'; c.lineWidth = 4; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 6, hy - 2); c.lineTo(sx + 6, hy - 2); c.stroke(); } }
-      else for (const sx of [-17, 17]) circ(c, sx + lk, hy - 2 + ly, o.wide ? 8 : 6, '#1E1E24');
+      else for (const sx of [-17, 17]) { circ(c, sx + lk, hy - 2 + ly, o.wide ? 8 : 6, '#1E1E24'); circ(c, sx + lk + 2, hy - 4 + ly, 2, 'rgba(255,255,255,.85)'); }
+      if (kind !== 'zdzisiek' && kind !== 'halina') { c.strokeStyle = 'rgba(40,28,24,.75)'; c.lineWidth = 3.5; c.lineCap = 'round'; const br = o.mouth === 'angry' ? 6 : o.wide ? -5 : 0;
+        for (const sd of [-1, 1]) { c.beginPath(); c.moveTo(sd * 25, hy - 17 + (o.mouth === 'angry' ? -3 : 0)); c.lineTo(sd * 10, hy - 18 + br); c.stroke(); } }
+      if (kind !== 'zdzisiek') ell(c, 2, hy + 12, 5, 4, shade(k.skin, -.18));
       if (kind === 'zdzisiek') {
         c.strokeStyle = '#3A2A22'; c.lineWidth = 6;
         for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 12, hy - 18 + (o.squint ? 4 : 0)); c.lineTo(sx + 12, hy - 16); c.stroke(); }
@@ -254,9 +280,11 @@ function person(c, kind, x, y, s, o = {}) {
     }
     // nakrycia głowy
     if (kind === 'kuba') {
-      c.beginPath(); c.arc(0, hy - 8, 53, Math.PI, 0); c.fillStyle = '#F39C12'; c.fill();
-      fillRR(c, -56, hy - 18, 112, 22, 10, '#E08A0B');
-      circ(c, 0, hy - 64, 15, '#F7B23B');
+      c.beginPath(); c.arc(0, hy - 16, 53, Math.PI, 0); c.fillStyle = '#F39C12'; c.fill();
+      c.fillStyle = 'rgba(0,0,0,.1)'; c.beginPath(); c.arc(0, hy - 16, 53, Math.PI * 1.5, 0); c.lineTo(0, hy - 16); c.fill();
+      fillRR(c, -56, hy - 30, 112, 22, 10, '#E08A0B');
+      for (let i = 0; i < 7; i++) c.fillRect(-48 + i * 15, hy - 28, 3, 18);
+      circ(c, 0, hy - 72, 15, '#F7B23B');
     } else if (kind === 'kurier') {
       c.beginPath(); c.arc(0, hy - 18, 51, Math.PI, 0); c.fillStyle = '#2C3E66'; c.fill();
       fillRR(c, -54, hy - 26, back_ ? 108 : 124, 14, 7, '#22335A');
@@ -277,6 +305,7 @@ function person(c, kind, x, y, s, o = {}) {
       for (let i = 0; i < 4; i++) { c.save(); c.translate(-36 + i * 24, hy - 50 + Math.abs(i - 1.5) * 8); c.rotate(0.2 * (i - 1.5)); fillRR(c, -11, -9, 22, 18, 7, cols[i]); c.restore(); }
     }
   }
+  c.restore();
   c.restore();
 }
 
