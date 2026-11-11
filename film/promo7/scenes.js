@@ -39,7 +39,7 @@ scene({
 });
 scene({
   name: 'cast', start: 6, end: 11,
-  bubbles: [[0.6, 4.6, 'Ja tu znam wszystkich…\nwas też!', 540, 830, 760, 1020, 'zdzisiek']],
+  bubbles: [[0.6, 4.6, 'Ja tu znam wszystkich…\na was już ponad 2000!', 540, 830, 760, 1020, 'zdzisiek']],
   draw(c, lt, sc) {
     lobbyBg(c, lt, { floor: '9' });
     person(c, 'kuba', 230, 1500, 1.9, { t: lt, aR: 2.5 + Math.sin(lt * 9) * .25, mouth: 'smile' });
