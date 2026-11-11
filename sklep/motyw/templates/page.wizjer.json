@@ -1,0 +1,4 @@
+{
+  "sections": { "wizjer": { "type": "blok94-wizjer", "settings": {} } },
+  "order": ["wizjer"]
+}
