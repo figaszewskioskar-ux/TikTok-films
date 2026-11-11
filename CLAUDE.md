@@ -16,3 +16,11 @@
 - Nowa część: katalog `film/odcN/` z `scenes.js` i `config.py`, potem `./build.sh odcN`. Gotowy plik kopiujemy do `wideo/`.
 - Głosy i efekty: ElevenLabs (klucz w środowisku „Default”). Sklep Shopify: środowisko „TikTok-films sklep”.
 - Na stronie i w grze nie pokazujemy spoilerów części, które jeszcze nie wyszły (suwaki „Ile części”).
+
+## Reżyseria i jakość (uwagi użytkownika)
+- **Miejsce akcji pokazujemy wprost.** Jeśli coś dzieje się na klatce schodowej, pokazujemy widok z klatki (korytarz, schody, drzwi z zewnątrz).
+  Nie skracamy tego ujęciem uchylonych drzwi, po którym postacie są nagle w mieszkaniu Oli. Każde przejście między miejscami musi być widoczne lub jasno opisane.
+- **Szczegóły przed oddaniem.** Przed wysłaniem filmu sprawdzić klatki co 2–3 s (arkusz kadrów):
+  ciągłość miejsca i pozycji postaci między scenami, napisy niezasłaniające twarzy i rekwizytów,
+  rekwizyty w rękach i przy postaciach (klamki, łańcuch, wieszak nie nachodzą na głowy), zgodność tekstu lektora z obrazem,
+  numer odcinka w napisie u góry, poprawne nazwy i godziny. Dopiero potem wysyłać.
