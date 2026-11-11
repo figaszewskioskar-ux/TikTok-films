@@ -65,6 +65,12 @@
 }
 #b94 .part{position:relative}#b94 .hot{position:absolute;top:12px;left:12px;background:var(--sign);color:#fff;font:800 13px/1 var(--body);padding:8px 10px;border-radius:999px;box-shadow:0 6px 18px rgba(215,38,61,.5)}
 #b94 section{scroll-margin-top:130px}
+#b94 .rlist li:nth-child(n+5){display:none}#b94 .rlist.all li{display:grid}#b94 .more{margin-top:14px;width:100%;max-width:420px}
+#b94 .next .soon{flex:1;text-align:right;color:var(--hat);font-weight:800;text-decoration:none;font-size:15px}
+#b94 .playcard{padding-block:24px}#b94 .pc{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#2a1d14,#1b2034);border-radius:20px;padding:18px 20px;text-decoration:none;box-shadow:inset 0 0 0 2px rgba(245,197,66,.25)}
+#b94 .pc-ic{font-size:40px}#b94 .pc-tx{flex:1;color:var(--muted);font-size:15px}#b94 .pc-tx b{display:block;color:var(--ink);font-family:var(--display);font-size:28px;font-weight:800;margin-bottom:2px}
+#b94 .pc-go{background:#F5C542;color:#14161b;font-weight:900;padding:12px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:760px){#b94 .stats{grid-template-columns:repeat(4,1fr);column-gap:8px}#b94 .stats b{font-size:20px}#b94 .stats div{font-size:11px;line-height:1.25}#b94 .pc{flex-wrap:wrap}#b94 .pc-go{width:100%;text-align:center}}
 #b94 .pdf{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:22px}#b94 .pdf p{margin:0;color:var(--muted);font-size:15px;max-width:40ch}
 </style>
 <div id="b94">
@@ -73,15 +79,19 @@
     <span class="eyebrow">Nowa seria · @protokolocaleni</span>
     <h1><span class="sign">Kto tam?</span></h1>
     <p class="story">Druga czterdzieści siedem. Ola jest sama w mieszkaniu 94. Ktoś puka, a wizjer jest czarny. Animowana historia z jednego bloku i prawdziwe zasady, które mogą uratować także ciebie.</p>
-    <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj na TikToku</a><a class="btn line" href="#seria">Wszystkie części</a></div><div style="margin-top:18px">{% render 'blok94-social', title: 'Obserwuj nas' %}</div>
+    <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj na TikToku</a><a class="btn line" href="#seria">Wszystkie odcinki</a></div>
+    {%- assign next_ep = section.settings.parts | plus: 2 -%}
     <div class="next" aria-label="Kolejny odcinek">
-      <div class="lbl">Nowy odcinek<small>{{ section.settings.premiere_label }}</small></div>
+      <div class="lbl">Odc. {{ next_ep }}<small>{% if section.settings.premiere != blank %}{{ section.settings.premiere_label }}{% else %}już niedługo na TikToku{% endif %}</small></div>
+      {%- if section.settings.premiere != blank -%}
       <div class="cd" id="cd" data-t="{{ section.settings.premiere }}"><span id="cd-d">0<i>dni</i></span><span id="cd-h">00<i>godz.</i></span><span id="cd-m">00<i>min</i></span><span id="cd-s">00<i>sek.</i></span></div>
+      {%- else -%}
+      <a class="soon" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Obserwuj, żeby nie przegapić →</a>
+      {%- endif -%}
     </div>
-    {% render 'blok94-powiadom', id: 'hero' %}
-    <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odcinka 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
+    <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odc. 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>TikTok · {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Ktoś tam jest?" hidden></button></figure>
+  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
@@ -102,7 +112,7 @@
     <div class="who"><img src="{{ 'blok94-ola.png' | asset_url }}" alt="Ola" loading="lazy"><h3>Ola</h3><span class="tag" style="background:#b79bea">mieszkanie 94</span><p>Została sama na noc. Uczy się na błędach szybciej, niż by chciała.</p></div>
     <div class="who"><img src="{{ 'blok94-kuba.png' | asset_url }}" alt="Kuba" loading="lazy"><h3>Kuba</h3><span class="tag" style="background:var(--hat)">brat Oli</span><p>{%- if section.settings.parts >= 3 -%}Gra w słuchawkach, gubi klucze i zawsze chce „zaraz to włączyć”.{%- else -%}Brat Oli. Ufa ludziom bardziej, niż powinien.{%- endif -%}</p></div>
     <div class="who"><img src="{{ 'blok94-zdzisiek.png' | asset_url }}" alt="Pan Zdzisiek" loading="lazy"><h3>Pan Zdzisiek</h3><span class="tag" style="background:#e07a7a">2. piętro</span><p>„Ja tu znam wszystkich.” I naprawdę pilnuje klatki.</p></div>
-    <div class="who egg" id="b94-kaptur" tabindex="0" role="button" aria-label="Kaptur. Coś tu jest…"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">{%- if section.settings.parts >= 4 -%}mieszkanie 104?{%- else -%}???{%- endif -%}</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
+    <div class="who"><img src="{{ 'blok94-kaptur.png' | asset_url }}" alt="Kaptur" loading="lazy"><h3>Kaptur</h3><span class="tag" style="background:#c9cdd2">{%- if section.settings.parts >= 4 -%}mieszkanie 104?{%- else -%}???{%- endif -%}</span><p>Nikt nie widział jego twarzy. Zna ten blok lepiej niż ktokolwiek.</p></div>
   </div>
 </div></section>
 
@@ -117,16 +127,12 @@
     {%- if section.settings.parts >= 5 -%}<li><div class="peep" aria-hidden="true"></div><div><b>Nowy sąsiad pyta, kiedy jesteś sam?</b><span>Bądź miły przez drzwi, ale nie mów tego i nie wpuszczaj obcych do środka.</span></div></li>{%- endif -%}
     <li><div class="peep" aria-hidden="true"></div><div><b>Jesteś sam w domu?</b><span>Nie pisz o tym w relacji i nie dodawaj lokalizacji.</span></div></li>
   </ul>
+  <button type="button" class="btn line more" id="r-more" onclick="this.previousElementSibling.classList.add('all');this.remove()">Pokaż wszystkie zasady</button>
   <div class="pdf"><a class="btn red" href="{{ 'blok94-zasady.pdf' | asset_url }}" download="Zasady-z-bloku-94.pdf" target="_blank" rel="noopener">⬇ Pobierz zasady (PDF)</a><p>Jedna strona do wydruku: na lodówkę, do klasy, na tablicę ogłoszeń w bloku. Za darmo.</p></div>
 </div></section>
 
-<section class="quiz" id="graj"><div class="wrap">
-  <span class="eyebrow">Graj</span><h2 style="margin-top:12px">Co zrobiłbyś na miejscu Oli?</h2>
-  <div class="qbox" id="qbox" aria-live="polite">
-    <p class="q" id="q-text"></p><div class="opts" id="q-opts"></div><p class="why" id="q-why"></p>
-    <div class="foot"><span id="q-no"></span><button type="button" id="q-next" class="btn line" style="min-height:40px;padding:8px 14px" hidden>Następne pytanie</button></div>
-  </div>
-</div></section>
+<section class="playcard" id="graj"><div class="wrap"><a class="pc" href="/pages/gra">
+  <span class="pc-ic" aria-hidden="true">🎮</span><span class="pc-tx"><b>Otworzysz czy nie?</b>Zagraj w „Kto tam?” i „Noc w bloku 94”. Sprawdź, czy przetrwasz noc.</span><span class="pc-go">Graj →</span></a></div></section>
 
 <section class="sup" id="wesprzyj"><div class="wrap w">
   <div>
@@ -146,17 +152,12 @@
     </div>
     <small class="note">Napiwek to dobrowolne wsparcie. Nie dostajesz produktu, tylko nasze wielkie dzięki i kolejne części.</small>
   </div>
-  <ul class="uses">
-    <li><em>91</em>Lektor i głosy postaci<span>każda część</span></li>
-    <li><em>92</em>Animacja Kuby, Oli i Kaptura<span>każda scena</span></li>
-    <li><em>93</em>Efekty i dźwięk bloku<span>każda noc</span></li>
-    <li><em>94</em>Kolejne części „Kto tam?”<span>cel</span></li>
-  </ul>
+
 </div></section>
 </div>
 <script>
 // odliczanie do premiery: pon. 9.11.2026, 1:30 czasu polskiego (00:30 UTC)
-(function(){const cd=document.getElementById('cd');const T=Date.parse(cd.dataset.t);if(isNaN(T)||T<Date.now()){cd.innerHTML='<span style="flex:1;font-size:22px;letter-spacing:.14em">WKRÓTCE</span>';return;}const p=n=>String(n).padStart(2,'0');
+(function(){const cd=document.getElementById('cd');if(!cd)return;const T=Date.parse(cd.dataset.t);if(isNaN(T)||T<Date.now()){cd.innerHTML='<span style="flex:1;font-size:22px;letter-spacing:.14em">WKRÓTCE</span>';return;}const p=n=>String(n).padStart(2,'0');
  const set=(id,v,l)=>{const e=document.getElementById(id);if(e)e.innerHTML=v+'<i>'+l+'</i>';};
  function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));set('cd-d',Math.floor(s/86400),'dni');set('cd-h',p(Math.floor(s%86400/3600)),'godz.');set('cd-m',p(Math.floor(s%3600/60)),'min');set('cd-s',p(s%60),'sek.');}
  tick();setInterval(tick,1000);})();
@@ -169,40 +170,11 @@
  function pick(k){const v=vs[k];box.querySelectorAll('button').forEach((x,j)=>x.setAttribute('aria-pressed',j===k?'true':'false'));amt.textContent=fmt(v.p);buys.textContent=B[v.p]||'= kolejne sekundy animacji';btn.textContent='Daję napiwek · '+fmt(v.p);btn.href='/cart/'+v.id+':1';}
  vs.forEach((v,k)=>{const b=document.createElement('button');b.type='button';b.innerHTML=(v.p/100)+'<small>zł</small>';b.addEventListener('click',()=>pick(k));box.appendChild(b);});
  pick(start);})();
-// quiz
-(function(){const Q=[
- {q:'2:47 w nocy. Ktoś puka, a wizjer jest czarny. Co robisz?',o:['Pytam „kto tam?”','Nie odzywam się i dzwonię na 112','Otwieram na łańcuch'],ok:1,w:'Cisza mówi, że nikogo nie ma. Pytanie zdradza, że jesteś w domu.'},
- {q:'Ktoś krzyczy zza drzwi: „Policja! Otwierać!”. Co robisz?',o:['Otwieram, to przecież policja','Pytam 112, czy patrol jest pod moim adresem','Krzyczę, żeby pokazali legitymację przez wizjer'],ok:1,w:'Dyspozytor wie, gdzie są radiowozy. Fałszywy policjant tego nie przewidzi.'},
- {q:'Nocą pisze do ciebie konto bez zdjęcia: „jesteś sama?”. Co robisz?',o:['Odpisuję: kim jesteś?','Robię zrzut ekranu, blokuję i zgłaszam','Wysyłam mu zdjęcie z okna'],ok:1,w:'Nie rozmawiaj z obcym. Zachowaj dowód, zablokuj i zgłoś.'}];
- let i=0;const qt=document.getElementById('q-text'),qo=document.getElementById('q-opts'),qw=document.getElementById('q-why'),qn=document.getElementById('q-no'),nx=document.getElementById('q-next');
- function show(){const c=Q[i];qt.textContent=c.q;qo.innerHTML='';qw.textContent='';nx.hidden=true;qn.textContent='Pytanie '+(i+1)+' z '+Q.length;
-  c.o.forEach((t,k)=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{qo.querySelectorAll('button').forEach((x,j)=>{x.disabled=true;if(j===c.ok)x.classList.add('ok');});if(k!==c.ok)b.classList.add('bad');qw.textContent=(k===c.ok?'Dobrze. ':'Tak zrobiła Ola i to był błąd. ')+c.w;nx.hidden=false;nx.textContent=i<Q.length-1?'Następne pytanie':'Od początku';});qo.appendChild(b);});}
- nx.addEventListener('click',()=>{i=(i+1)%Q.length;show();});show();})();
+
 </script>
 
-{%- assign egg_a = section.settings.parts | plus: 2 -%}{%- assign egg_b = section.settings.parts | plus: 3 -%}
-<dialog id="b94-akta" class="b94-akta" aria-labelledby="b94-akta-t">
-  <div class="akta-in">
-    <span class="akta-stamp">ŚCIŚLE TAJNE</span>
-    <h3 id="b94-akta-t">Znalazłeś Kaptura.</h3>
-    <p>Akta sprawy z bloku 94. Obejrzyj zapowiedź odcinka {{ egg_a }}, zanim wyjdzie na TikToku. Nikomu nie mów… albo pochwal się w komentarzu.</p>
-    <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ egg_a }}</span>
-      <video id="b94-akta-v" controls playsinline preload="none" poster="{{ 'blok94-egg-a.jpg' | asset_url }}" src="{{ 'blok94-egg-a.mp4' | asset_url }}"></video>
-    </div>
-    <div class="akta-grid">
-      <figure><img src="{{ 'blok94-egg-a.jpg' | asset_url }}" alt="Zapowiedź odcinka {{ egg_a }}" loading="lazy" width="720" height="900"><figcaption>Odc. {{ egg_a }} · wkrótce</figcaption></figure>
-      <figure><img src="{{ 'blok94-egg-b.jpg' | asset_url }}" alt="Zapowiedź odcinka {{ egg_b }}" loading="lazy" width="720" height="900"><figcaption>Odc. {{ egg_b }} · wkrótce</figcaption></figure>
-    </div>
-    <p class="akta-code">Hasło do komentarza: <b>WIDZĘ CIĘ, KAPTUR</b></p>
-    <button type="button" class="btn red" id="b94-akta-x" style="width:100%">Zamknij akta</button>
-  </div>
-</dialog>
+
 <style>
-#b94 .who.egg{cursor:pointer}
-#b94 .who.egg img{animation:b94peek 6s ease-in-out infinite}
-@keyframes b94peek{0%,88%,100%{filter:drop-shadow(0 10px 20px rgba(0,0,0,.6))}92%,96%{filter:drop-shadow(0 0 18px rgba(255,255,255,.55))}}
-#b94 .who.egg.shake{animation:b94shake .3s}
 @keyframes b94shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .b94-akta{border:0;padding:0;border-radius:22px;max-width:min(520px,calc(100vw - 32px));width:100%;background:#16120e;color:#f3efe6;font-family:"Public Sans",system-ui,sans-serif}
 .b94-akta::backdrop{background:rgba(3,5,14,.85)}
@@ -221,25 +193,17 @@
 .b94-akta .akta-code b{color:#f5c542}
 .b94-akta .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-weight:800;border:0;cursor:pointer;background:#d7263d;color:#fff}
 </style>
-<script>
-(function(){var k=document.getElementById('b94-kaptur'),d=document.getElementById('b94-akta');if(!k||!d)return;var n=0,t=0;
- function hit(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;k.classList.remove('shake');void k.offsetWidth;k.classList.add('shake');
-  if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}}
- k.addEventListener('click',hit);k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hit();}});
- var v=document.getElementById('b94-akta-v');document.getElementById('b94-akta-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
- d.addEventListener('close',function(){if(v)v.pause();});
- d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
-</script>
+
 
 
 <dialog id="b94-okno-d" class="b94-akta" aria-labelledby="b94-okno-t">
   <div class="akta-in">
-    <span class="akta-stamp">ŚCIŚLE TAJNE · #2</span>
+    <span class="akta-stamp">ŚCIŚLE TAJNE</span>
     <h3 id="b94-okno-t">Zapukałeś w okno 94.</h3>
     <p>Ktoś odpukał. To zapowiedź, której jeszcze nikt nie widział. Pochwal się w komentarzu hasłem poniżej.</p>
     <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ section.settings.parts | plus: 3 }}</span>
-      <video id="b94-okno-v" controls playsinline preload="none" poster="{{ 'blok94-egg-b.jpg' | asset_url }}" src="{{ 'blok94-egg2.mp4' | asset_url }}"></video>
+      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ section.settings.parts | plus: 2 }}</span>
+      <video id="b94-okno-v" controls playsinline preload="none" poster="{{ 'blok94-egg-a.jpg' | asset_url }}" src="{{ 'blok94-egg-a.mp4' | asset_url }}"></video>
     </div>
     <p class="akta-code">Hasło do komentarza: <b>OKNO 94 ODPUKAŁO</b></p>
     <button type="button" class="btn red" id="b94-okno-x" style="width:100%">Zamknij okno</button>
@@ -251,14 +215,17 @@
 @keyframes b94okno{0%,80%,100%{box-shadow:0 0 0 0 rgba(140,180,255,0)}88%{box-shadow:0 0 18px 6px rgba(140,180,255,.55)}}
 #b94 .hero figure .okno:focus-visible{outline:3px solid #f39c12}
 #b94 .hero figure .okno.knock{animation:b94shake .3s}
+#b94 .hero figure .puk{position:absolute;transform:translate(-50%,-150%);background:#fff;color:#14161b;font:900 14px/1 var(--body);padding:6px 9px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+#b94 .hero figure .puk.on{opacity:1}
+#b94 .hero figure .okno:before{animation-duration:3.2s}
 </style>
 <script>
-(function(){var b=document.getElementById('b94-okno'),d=document.getElementById('b94-okno-d');if(!b||!d)return;var img=b.parentNode.querySelector('img');
+(function(){var b=document.getElementById('b94-okno'),d=document.getElementById('b94-okno-d'),pk=document.getElementById('b94-puk');if(!b||!d)return;var img=b.parentNode.querySelector('img'),ph;
  function place(){if(!img.naturalWidth)return;var w=img.clientWidth,h=img.clientHeight,nw=img.naturalWidth,nh=img.naturalHeight,cs=getComputedStyle(img),fit=cs.objectFit,
   pos=(cs.objectPosition||'50% 50%').split(' ').map(function(v){return parseFloat(v)/100;}),s=fit==='cover'?Math.max(w/nw,h/nh):w/nw,ox=(w-nw*s)*(fit==='cover'?pos[0]:0),oy=(h-nh*s)*(fit==='cover'?pos[1]:0);
-  b.style.left=(img.offsetLeft+ox+701/1080*nw*s)+'px';b.style.top=(img.offsetTop+oy+136/1350*nh*s)+'px';b.hidden=false;}
+  b.style.left=(img.offsetLeft+ox+701/1080*nw*s)+'px';b.style.top=(img.offsetTop+oy+136/1350*nh*s)+'px';b.hidden=false;pk.style.left=b.style.left;pk.style.top=b.style.top;}
  if(img.complete)place();img.addEventListener('load',place);addEventListener('resize',place);
- var n=0,t=0;b.addEventListener('click',function(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;b.classList.remove('knock');void b.offsetWidth;b.classList.add('knock');
+ var n=0,t=0;b.addEventListener('click',function(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;b.classList.remove('knock');void b.offsetWidth;b.classList.add('knock');pk.textContent=n<3?'PUK '+n+'/3':'PUK!';pk.classList.add('on');clearTimeout(ph);ph=setTimeout(function(){pk.classList.remove('on');},900);
   if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}});
  var v=document.getElementById('b94-okno-v');document.getElementById('b94-okno-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
  d.addEventListener('close',function(){if(v)v.pause();});d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
