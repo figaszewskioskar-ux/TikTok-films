@@ -1,4 +1,4 @@
-// Rolka: ponad 2000 obserwujących (2290) — dziękujemy, nowy easter egg (okno 94), zaproszenie na stronę
+// Rolka: ponad 2000 obserwujących (2301) — dziękujemy, nowy easter egg (okno 94), zaproszenie na stronę
 window.EP = {
   badge: 'BLOK 94',
   loop: false,
@@ -23,16 +23,16 @@ scene({
   draw(c, lt) {
     blockBg(c, lt, { night: true });
     c.fillStyle = 'rgba(7,9,16,.55)'; c.fillRect(0, 0, W, H);
-    const n = Math.round(lerp(0, 2290, eout(prog(lt, 0.3, 3.4))));
+    const n = Math.round(lerp(0, 2301, eout(prog(lt, 0.3, 3.4))));
     fillRR(c, 140, 560, 800, 300, 30, '#0D0F13');
     c.save(); c.shadowColor = 'rgba(255,59,48,.8)'; c.shadowBlur = 30; txt(c, String(n), 540, 710, 230, '#FF3B30', 900); c.restore();
     txt(c, 'OBSERWUJĄCYCH', 540, 920, 52, '#FFFFFF', 900);
     if (lt > 3.5) {
       const p = eout(prog(lt, 3.5, 4.4));
-      fillRR(c, 190, 1010, 700, 40, 20, '#22263a'); fillRR(c, 190, 1010, 700 * .458 * p, 40, 20, '#F39C12');
+      fillRR(c, 190, 1010, 700, 40, 20, '#22263a'); fillRR(c, 190, 1010, 700 * .4602 * p, 40, 20, '#F39C12');
       txt(c, 'NASTĘPNY CEL: 5000', 540, 1110, 46, '#F5C542', 900);
     }
-    if (lt > 4.6) { label(c, '29 TYS. POLUBIEŃ', 540, 1260, 'dark', 44, lt - 4.6, 9); if (lt > 5.0) label(c, '577 TYS. WYŚWIETLEŃ ODC. 2', 540, 1370, 'dark', 44, lt - 5.0, 9);
+    if (lt > 4.6) { label(c, '29,7 TYS. POLUBIEŃ', 540, 1260, 'dark', 44, lt - 4.6, 9); if (lt > 5.0) label(c, '581 TYS. WYŚWIETLEŃ ODC. 2', 540, 1370, 'dark', 44, lt - 5.0, 9);
     }
     if (lt > 4.3) { confetti(c, lt - 4.3); label(c, 'PONAD 2000! DZIĘKUJEMY', 540, 380, 'red', 58, lt - 4.3, 9); }
   },
@@ -90,7 +90,7 @@ scene({
     const items = [['GRA „KTO TAM?”', 'orange'], ['AKTA SPRAWY KAPTURA', 'dark'], ['NOWY EASTER EGG: OKNO 94', 'red']];
     items.forEach(([t, st], i) => { if (lt > 1.0 + i * .5) label(c, t, 540, 760 + i * 130, st, 46, lt - 1.0 - i * .5, 9); });
     if (lt > 2.8) label(c, 'LINK W BIO', 540, 1240, 'red', 64, lt - 2.8, 9);
-    person(c, 'ola', 860, 1640, 1.6, { t: lt, phone: 2, aR: 2.2, mouth: 'smile' });
-    person(c, 'kuba', 220, 1640, 1.6, { t: lt, aR: 2.5 + Math.sin(lt * 9) * .2, mouth: 'smile' });
+    person(c, 'ola', 860, 1800, 1.6, { t: lt, phone: 2, aR: 2.2, mouth: 'smile' });
+    person(c, 'kuba', 220, 1800, 1.6, { t: lt, aR: 2.5 + Math.sin(lt * 9) * .2, mouth: 'smile' });
   },
 });
