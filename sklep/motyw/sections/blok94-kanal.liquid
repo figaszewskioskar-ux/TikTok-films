@@ -1,13 +1,13 @@
-{%- comment -%} BLOK 94 – Nasz kanał: liczby, droga do 1000, części serii, gra, zapowiedzi, tapety. {%- endcomment -%}
+{%- comment -%} BLOK 94 – Za kulisami (dawniej Nasz kanał): liczby i cel, tapety, jak powstaje odcinek. {%- endcomment -%}
 {{ 'blok94.css' | asset_url | stylesheet_tag }}
 {%- assign fol = section.settings.followers | remove: ' ' | plus: 0 -%}
 {%- assign goal = section.settings.goal | default: 1000 -%}{%- assign pct = fol | times: 100 | divided_by: goal -%}{%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
 <div class="b94p" id="b94k">
   <section class="hero"><span class="lamp" aria-hidden="true"></span><div class="wrap">
     <div class="rv">
-      <span class="eyebrow">@protokolocaleni na TikToku</span>
-      <h1 style="margin-top:14px">Rośniemy <span class="sign">razem z wami</span></h1>
-      <p class="lead">Robimy animowaną serię „Kto tam?” o jednym bloku, nocy i prawdziwych zasadach bezpieczeństwa. Tu zobaczysz, ile nas już jest, co już wyszło i co szykujemy dalej.</p>
+      <span class="eyebrow">Za kulisami · @protokolocaleni</span>
+      <h1 style="margin-top:14px">Za kulisami <span class="sign">bloku 94</span></h1>
+      <p class="lead">Ile nas już jest, jak powstaje każdy odcinek i tapety z bloku 94 na twój telefon. Wszystkie odcinki znajdziesz na <a href="{{ routes.root_url }}#seria" style="color:var(--hat);font-weight:800">stronie głównej</a>.</p>
       <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Obserwuj na TikToku</a><a class="btn line" href="{{ section.settings.youtube }}" target="_blank" rel="noopener">Całe filmy na YouTube</a><a class="btn gold" href="{{ routes.root_url }}#wesprzyj">Wesprzyj kanał</a></div>
     </div>
     <div class="scene rv" aria-hidden="true">
@@ -34,25 +34,7 @@
     </div>
   </div></section>
 
-  <section id="seria"><div class="wrap">
-    <div class="rv"><span class="eyebrow">Seria</span><h2 style="margin-top:12px">„Kto tam?”: oglądaj od początku</h2><p class="lead">Ola zostaje sama na noc w mieszkaniu 94. Każda część to jedna zasada, która może uratować także ciebie.</p></div>
-    <div class="eps">
-      <article class="ep rv"><img src="{{ 'blok94-czesc1.jpg' | asset_url }}" alt="Okładka odcinka 2" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 2</span><h3>Nie pytaj „kto tam?”</h3><p>Ktoś zakleił wizjer. Za drzwiami płacze kobieta.</p><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
-      {%- if section.settings.parts >= 2 -%}<article class="ep rv"><img src="{{ 'blok94-czesc2.jpg' | asset_url }}" alt="Okładka odcinka 3" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 3</span><h3>Nie otwieraj „policji”!</h3><p>Ktoś wali do drzwi: „Policja!”. Prawdziwy patrol jest jeszcze daleko.</p><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
-      {%- if section.settings.parts >= 3 -%}<article class="ep rv"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka odcinka 4" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 4</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94.</p><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
-      {%- if section.settings.parts >= 4 -%}<article class="ep rv"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka odcinka 5" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 5</span><h3>Nie czekaj do rana!</h3><p>O 3:12 zamek przekręca się sam.</p><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
-      {%- if section.settings.parts >= 5 -%}<article class="ep rv"><img src="{{ 'blok94-czesc5.jpg' | asset_url }}" alt="Okładka odcinka 6" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 6</span><h3>Nie mów, kiedy jesteś sam!</h3><p>„Nowy sąsiad” z 104 pyta o grafik rodziców.</p><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
-      <article class="ep rv" style="background:linear-gradient(180deg,#2a1d14,#1b2034)"><div class="in" style="justify-content:center;min-height:260px"><span class="no">Gra</span><h3>Co zrobisz, gdy ktoś puka?</h3><p>Dwa tryby: „Kto tam?” i „Noc w bloku 94”. Zagraj w przeglądarce, bez instalowania.</p><a class="btn red" href="/pages/gra" style="margin-top:12px">Graj</a></div></article>
-    </div>
-  </div></section>
 
-  {%- assign nb = blogs.aktualnosci -%}
-  {%- if nb and nb.articles_count > 0 -%}
-  <section class="band"><div class="wrap">
-    <div class="rv"><span class="eyebrow">Zapowiedzi</span><h2 style="margin-top:12px">Co słychać na kanale</h2></div>
-    <div class="news">{%- for a in nb.articles limit: 6 -%}{%- if a.title contains 'Kto tam' or a.tags contains 'blok94' -%}<a class="rv" href="{{ a.url }}"><small>{{ a.published_at | date: '%d.%m.%Y' }}</small><b>{{ a.title | escape }}</b><p>{{ a.excerpt_or_content | strip_html | truncatewords: 22 }}</p></a>{%- endif -%}{%- endfor -%}</div>
-  </div></section>
-  {%- endif -%}
 
   <section><div class="wrap">
     <div class="rv"><span class="eyebrow">Za darmo</span><h2 style="margin-top:12px">Tapety na telefon</h2><p class="lead">Kliknij, zapisz i ustaw jako tło. Bez logowania.</p></div>
@@ -60,6 +42,8 @@
       <a href="{{ 'blok94-tapeta1.jpg' | asset_url }}" download target="_blank" rel="noopener"><img src="{{ 'blok94-tapeta1.jpg' | asset_url }}" alt="Tapeta: blok nocą i Kaptur" loading="lazy" width="1080" height="1920"><span>Blok nocą</span></a>
       <a href="{{ 'blok94-tapeta2.jpg' | asset_url }}" download target="_blank" rel="noopener"><img src="{{ 'blok94-tapeta2.jpg' | asset_url }}" alt="Tapeta: oczy w wizjerze" loading="lazy" width="1080" height="1920"><span>Oczy w wizjerze</span></a>
       <a href="{{ 'blok94-tapeta3.jpg' | asset_url }}" download target="_blank" rel="noopener"><img src="{{ 'blok94-tapeta3.jpg' | asset_url }}" alt="Tapeta: drzwi 94" loading="lazy" width="1080" height="1920"><span>Drzwi 94</span></a>
+      <a href="{{ 'blok94-tapeta4.jpg' | asset_url }}" download target="_blank" rel="noopener"><img src="{{ 'blok94-tapeta4.jpg' | asset_url }}" alt="Tapeta: okno 94 i Kaptur pod blokiem" loading="lazy" width="1080" height="1920"><span>Okno 94 · NOWA</span></a>
+      <a href="{{ 'blok94-tapeta5.jpg' | asset_url }}" download target="_blank" rel="noopener"><img src="{{ 'blok94-tapeta5.jpg' | asset_url }}" alt="Tapeta: Kaptur w wizjerze" loading="lazy" width="1080" height="1920"><span>Wizjer · NOWA</span></a>
     </div>
   </div></section>
 

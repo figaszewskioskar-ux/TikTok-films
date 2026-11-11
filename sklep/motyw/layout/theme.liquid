@@ -46,7 +46,7 @@
       <nav class="po-nav" aria-label="Menu">
         {%- assign menu = linklists['main-menu'] -%}
         {%- if menu and menu.links.size > 0 -%}
-          {%- for link in menu.links -%}{%- if link.url contains 'poradnik' or link.title contains 'Poradnik' -%}{%- continue -%}{%- endif -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{%- if link.url == routes.root_url -%}BLOK 94{%- else -%}{{ link.title | escape }}{%- endif -%}</a>{%- endfor -%}<a href="/pages/akta"{% if page.handle == 'akta' %} aria-current="page"{% endif %}>Akta sprawy</a>
+          {%- for link in menu.links -%}{%- if link.url contains 'poradnik' or link.title contains 'Poradnik' -%}{%- continue -%}{%- endif -%}<a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{%- if link.url == routes.root_url -%}BLOK 94{%- elsif link.url contains 'nasz-kanal' -%}Za kulisami{%- else -%}{{ link.title | escape }}{%- endif -%}</a>{%- endfor -%}<a href="/pages/akta"{% if page.handle == 'akta' %} aria-current="page"{% endif %}>Akta sprawy</a>
         {%- else -%}
           <a href="{{ routes.root_url }}">Poradnik</a><a href="/pages/reklama-na-kanale">Reklama na kanale</a>
         {%- endif -%}
