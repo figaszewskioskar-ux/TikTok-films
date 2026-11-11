@@ -65,6 +65,17 @@
 }
 #b94 .part{position:relative}#b94 .hot{position:absolute;top:12px;left:12px;background:var(--sign);color:#fff;font:800 13px/1 var(--body);padding:8px 10px;border-radius:999px;box-shadow:0 6px 18px rgba(215,38,61,.5)}
 #b94 section{scroll-margin-top:130px}
+/* blok 94: lepiej widoczny + animacje */
+#b94 .hero figure img{filter:brightness(1.35) saturate(1.12) contrast(1.05)}
+#b94 .hero figure .fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#b94 .hero figure figcaption{z-index:2}
+#b94 .hero h1 .sign{animation:b94neon 7s infinite}
+@keyframes b94neon{0%,92%,100%{opacity:1;box-shadow:0 10px 30px rgba(215,38,61,.35)}93%{opacity:.55}94%{opacity:1}95.5%{opacity:.7}96.5%{opacity:1;box-shadow:0 0 40px rgba(215,38,61,.8)}}
+#b94 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+#b94 .rv.in{opacity:1;transform:none}
+@media(max-width:760px){#b94 .hero figure{max-height:none}#b94 .hero figure img{height:440px;object-position:50% 18%}}
+@media(prefers-reduced-motion:reduce){#b94 .hero h1 .sign{animation:none}#b94 .rv{opacity:1;transform:none;transition:none}}
+
 #b94 .rlist li:nth-child(n+5){display:none}#b94 .rlist.all li{display:grid}#b94 .more{margin-top:14px;width:100%;max-width:420px}
 #b94 .next .soon{flex:1;text-align:right;color:var(--hat);font-weight:800;text-decoration:none;font-size:15px}
 #b94 .playcard{padding-block:24px}#b94 .pc{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#2a1d14,#1b2034);border-radius:20px;padding:18px 20px;text-decoration:none;box-shadow:inset 0 0 0 2px rgba(245,197,66,.25)}
@@ -91,7 +102,7 @@
     </div>
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odc. 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>TikTok · {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
+  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><canvas class="fx" id="b94-fx" aria-hidden="true"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
@@ -229,6 +240,44 @@
   if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}});
  var v=document.getElementById('b94-okno-v');document.getElementById('b94-okno-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
  d.addEventListener('close',function(){if(v)v.pause();});d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
+</script>
+
+<script>
+(function(){
+ var cv=document.getElementById('b94-fx');if(!cv)return;var img=cv.parentNode.querySelector('img'),ctx=cv.getContext('2d');
+ var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ // okna na zdjęciu (współrzędne w pikselach obrazka 1080x1350)
+ var COLS=[128,235,343,450,558,665,773,880],ROWS=[20,109,198,287,376,465,554,643,732,821],WW=72,WH=55;
+ var lit=[];for(var i=0;i<9;i++)lit.push({c:Math.floor(Math.random()*8),r:Math.floor(Math.random()*7),on:Math.random()<.5,t:Math.random()*6});
+ var snow=[];for(var k=0;k<70;k++)snow.push({x:Math.random(),y:Math.random(),v:.02+Math.random()*.05,s:1+Math.random()*2.2,d:Math.random()*6});
+ var M={s:1,ox:0,oy:0},dpr=Math.min(2,window.devicePixelRatio||1),vis=true,last=0;
+ function fit(){var w=img.clientWidth,h=img.clientHeight;if(!w||!img.naturalWidth)return;cv.width=w*dpr;cv.height=h*dpr;
+  var cs=getComputedStyle(img),pos=(cs.objectPosition||'50% 50%').split(' ').map(function(v){return parseFloat(v)/100;}),cover=cs.objectFit==='cover';
+  M.s=cover?Math.max(w/1080,h/1350):w/1080;M.ox=cover?(w-1080*M.s)*pos[0]:0;M.oy=cover?(h-1350*M.s)*pos[1]:0;M.w=w;M.h=h;}
+ function X(x){return(M.ox+x*M.s)*dpr}function Y(y){return(M.oy+y*M.s)*dpr}
+ function frame(ts){if(vis)draw(ts/1000);if(!RM)requestAnimationFrame(frame);}
+ function draw(t){var dt=Math.min(.05,t-last||0);last=t;ctx.clearRect(0,0,cv.width,cv.height);if(!M.w)return;
+  ctx.globalCompositeOperation='lighter';
+  // zapalające się okna
+  lit.forEach(function(L){L.t-=dt;if(L.t<0){L.on=!L.on;L.t=2+Math.random()*7;if(L.on){L.c=Math.floor(Math.random()*8);L.r=Math.floor(Math.random()*7);}}
+   if(!L.on||(L.c===5&&L.r===1))return;var a=Math.min(1,(L.on?1:0));var x=X(COLS[L.c]),y=Y(ROWS[L.r]),w=WW*M.s*dpr,h=WH*M.s*dpr;
+   ctx.fillStyle='rgba(255,200,110,'+(.5*a)+')';ctx.fillRect(x,y,w,h);var g=ctx.createRadialGradient(x+w/2,y+h/2,2,x+w/2,y+h/2,w*1.4);g.addColorStop(0,'rgba(255,190,90,.35)');g.addColorStop(1,'rgba(255,190,90,0)');ctx.fillStyle=g;ctx.fillRect(x-w,y-h,w*3,h*3);});
+  // okno 94: migotanie telewizora
+  var f=.55+.35*Math.sin(t*9)*Math.sin(t*2.3)+(Math.random()<.05?.3:0),x=X(COLS[5]),y=Y(ROWS[1]),w=WW*M.s*dpr,h=WH*M.s*dpr;
+  var g2=ctx.createRadialGradient(x+w/2,y+h/2,2,x+w/2,y+h/2,w*1.8);g2.addColorStop(0,'rgba(120,170,255,'+(.55*f)+')');g2.addColorStop(1,'rgba(120,170,255,0)');ctx.fillStyle=g2;ctx.fillRect(x-w*1.5,y-h*1.5,w*4,h*4);
+  // snop latarki co ok. 9 s
+  var p=(t%9)/9;if(p<.35){var q=p/.35,lx=X(80+q*900),ly=Y(980);ctx.save();ctx.translate(lx,ly);ctx.rotate(-1.2+q*.5);var lg=ctx.createLinearGradient(0,0,0,-M.h*dpr);lg.addColorStop(0,'rgba(255,240,200,.22)');lg.addColorStop(1,'rgba(255,240,200,0)');ctx.fillStyle=lg;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-60*dpr,-M.h*dpr);ctx.lineTo(60*dpr,-M.h*dpr);ctx.fill();ctx.restore();}
+  // śnieg
+  ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(235,240,255,.75)';
+  snow.forEach(function(sn){sn.y+=sn.v*dt*3;if(sn.y>1.02){sn.y=-.02;sn.x=Math.random();}var sx=(sn.x+Math.sin(t*.7+sn.d)*.01)*cv.width,sy=sn.y*cv.height;ctx.beginPath();ctx.arc(sx,sy,sn.s*dpr,0,6.3);ctx.fill();});}
+ function start(){fit();if(RM){draw(1);}else requestAnimationFrame(frame);}
+ if(img.complete)start();else img.addEventListener('load',start);addEventListener('resize',fit);
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting;}).observe(cv);
+})();
+// sekcje wjeżdżają przy przewijaniu
+(function(){var els=document.querySelectorAll('#b94 section .wrap > *, #b94 .part, #b94 .who, #b94 .rlist li');
+ if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+ els.forEach(function(el,i){if(el.closest('.hero'))return;el.classList.add('rv');el.style.transitionDelay=(i%4)*70+'ms';io.observe(el);});})();
 </script>
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
