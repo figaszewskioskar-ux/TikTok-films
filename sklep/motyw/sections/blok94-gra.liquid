@@ -121,6 +121,13 @@
 #b94g .conf i{position:absolute;top:-20px;width:10px;height:6px;border-radius:2px;animation:gFall 2.6s linear forwards}
 @keyframes gFall{to{transform:translateY(900px) rotate(720deg)}}
 @media (prefers-reduced-motion:reduce){#b94g *{animation:none!important;transition:none!important}}
+#b94g .gflash{position:absolute;inset:0;pointer-events:none;z-index:9;animation:gfl .7s forwards}
+#b94g .gflash.ok{background:radial-gradient(circle at 50% 35%,rgba(48,164,108,.5),transparent 70%)}
+#b94g .gflash.bad{background:radial-gradient(circle at 50% 35%,rgba(215,38,61,.55),transparent 70%)}
+@keyframes gfl{0%{opacity:1}100%{opacity:0}}
+#b94g.gshake{animation:gsh .45s}
+@keyframes gsh{15%{transform:translate(-8px,3px)}30%{transform:translate(7px,-4px)}45%{transform:translate(-5px,2px)}60%{transform:translate(4px,-2px)}80%{transform:translate(-2px,1px)}}
+@media(prefers-reduced-motion:reduce){#b94g.gshake{animation:none}}
 </style>
 
 <div id="b94g" data-kuba="{{ 'blok94-kuba.png' | asset_url }}" data-ola="{{ 'blok94-ola.png' | asset_url }}" data-kaptur="{{ 'blok94-kaptur.png' | asset_url }}" data-zdzisiek="{{ 'blok94-zdzisiek.png' | asset_url }}" data-kurier="{{ 'blok94-kurier.png' | asset_url }}" data-policjant="{{ 'blok94-policjant.png' | asset_url }}" data-kobieta="{{ 'blok94-kobieta.png' | asset_url }}" data-halina="{{ 'blok94-halina.png' | asset_url }}" data-tiktok="{{ section.settings.tiktok }}" data-parts="{{ section.settings.parts }}">
@@ -142,8 +149,11 @@
   var muted = !!store('mute'), ac = null;
   function beep(f, d, type, vol) { if (muted) return; try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); var o = ac.createOscillator(), g = ac.createGain(); o.type = type || 'sine'; o.frequency.value = f; g.gain.value = vol || .08; o.connect(g); g.connect(ac.destination); o.start(); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + (d || .2)); o.stop(ac.currentTime + (d || .2)); } catch (e) {} }
   function knock() { [0, 260, 520].forEach(function (t) { setTimeout(function () { beep(90, .12, 'square', .12); }, t); }); }
-  function good() { beep(880, .12); setTimeout(function () { beep(1320, .15); }, 110); }
-  function bad() { beep(110, .5, 'sawtooth', .07); }
+  var RMg = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function juice(kind) { var f = document.createElement('div'); f.className = 'gflash ' + kind; R.appendChild(f); setTimeout(function () { f.remove(); }, 800);
+    if (kind === 'bad') { try { if (navigator.vibrate) navigator.vibrate(160); } catch (e) {} if (!RMg) { R.classList.remove('gshake'); void R.offsetWidth; R.classList.add('gshake'); } } }
+  function good() { beep(880, .12); setTimeout(function () { beep(1320, .15); }, 110); juice('ok'); }
+  function bad() { beep(110, .5, 'sawtooth', .07); juice('bad'); }
   function confetti() { var c = document.createElement('div'); c.className = 'conf'; var cols = ['#f39c12', '#d7263d', '#7b4fc9', '#1bb0a3', '#f5c542', '#fff']; for (var i = 0; i < 60; i++) { var e = document.createElement('i'); e.style.left = (Math.random() * 100) + '%'; e.style.background = cols[i % cols.length]; e.style.animationDelay = (Math.random() * .8) + 's'; c.appendChild(e); } R.appendChild(c); setTimeout(function () { c.remove(); }, 3800); }
   function share(text, btn) { var done = function () { btn.textContent = 'Skopiowano. Wklej w komentarzu!'; }; var fail = function () { btn.insertAdjacentHTML('afterend', '<p style="user-select:all;background:#0d0f13;padding:10px;border-radius:10px;font-size:14px">' + esc(text) + '</p>'); btn.textContent = 'Zaznacz i skopiuj tekst poniżej'; }; try { navigator.clipboard.writeText(text).then(done, fail); } catch (e) { fail(); } }
 

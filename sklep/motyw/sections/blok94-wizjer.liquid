@@ -46,9 +46,50 @@
 #b94w2 .rank{display:inline-block;background:var(--sign);color:#fff;font-weight:900;padding:8px 14px;border-radius:12px}
 #b94w2 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 #b94w2 .ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px rgba(243,239,230,.35)}
-#b94w2 .knock{animation:w2k .35s}
-@keyframes w2k{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-@media(prefers-reduced-motion:reduce){#b94w2 .knock{animation:none}}
+#b94w2{position:relative;overflow:hidden;transition:filter .6s}
+#b94w2[data-lvl="1"]{filter:brightness(.93)}#b94w2[data-lvl="2"]{filter:brightness(.85) saturate(.9)}#b94w2[data-lvl="3"]{filter:brightness(.78) saturate(.85)}
+#b94w2 .door.in{animation:w2in .45s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes w2in{from{transform:translateY(30px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+#b94w2 .door.knock{animation:w2k .5s}
+@keyframes w2k{10%,50%,90%{transform:translateX(-7px) rotate(-.6deg)}30%,70%{transform:translateX(7px) rotate(.6deg)}100%{transform:none}}
+#b94w2 .puk{position:absolute;font:900 30px/1 var(--display);color:#fff;text-shadow:0 4px 0 #000,0 0 18px rgba(255,255,255,.4);pointer-events:none;animation:w2puk .7s ease-out forwards;z-index:3}
+@keyframes w2puk{0%{transform:scale(.4) rotate(-8deg);opacity:0}25%{transform:scale(1.25) rotate(4deg);opacity:1}100%{transform:scale(1) translateY(-30px);opacity:0}}
+#b94w2 .peep img{transition:filter .6s,transform .6s}
+#b94w2 .peep.blur img{filter:blur(10px) brightness(.6);transform:translateX(-50%) scale(1.6)}
+#b94w2 .peep .eyes{position:absolute;left:50%;top:44%;width:44%;transform:translateX(-50%);display:flex;justify-content:space-between;z-index:2}
+#b94w2 .peep .eyes i{width:16%;aspect-ratio:1.6;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px rgba(255,255,255,.8);animation:w2blink 3s infinite}
+@keyframes w2blink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+#b94w2 .peep.dark:before{content:"";position:absolute;inset:0;background:#000;z-index:3;animation:w2off .4s forwards}
+@keyframes w2off{from{opacity:0}to{opacity:.92}}
+#b94w2 .bar i{transition:background .3s}
+#b94w2 .flash{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:5}
+#b94w2 .flash.ok{background:radial-gradient(circle at 50% 40%,rgba(48,164,108,.55),transparent 70%);animation:w2fl .6s}
+#b94w2 .flash.bad{background:radial-gradient(circle at 50% 40%,rgba(215,38,61,.6),transparent 70%);animation:w2fl .7s}
+@keyframes w2fl{0%{opacity:1}100%{opacity:0}}
+#b94w2.shake{animation:w2sh .45s}
+@keyframes w2sh{15%{transform:translate(-9px,4px)}30%{transform:translate(8px,-5px)}45%{transform:translate(-6px,3px)}60%{transform:translate(5px,-2px)}80%{transform:translate(-2px,1px)}}
+#b94w2.panic:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:4;box-shadow:inset 0 0 120px 30px rgba(215,38,61,.55);animation:w2pan .55s infinite}
+@keyframes w2pan{50%{box-shadow:inset 0 0 160px 50px rgba(215,38,61,.75)}}
+#b94w2 .pop{position:absolute;left:50%;top:38%;transform:translateX(-50%);font:900 46px/1 var(--display);color:#7CF0A6;text-shadow:0 4px 0 #0b3a22;pointer-events:none;z-index:6;animation:w2pop 1s ease-out forwards;white-space:nowrap}
+#b94w2 .pop.combo{top:52%;font-size:30px;color:#f5c542;text-shadow:0 3px 0 #5a3d00}
+@keyframes w2pop{0%{transform:translateX(-50%) scale(.5);opacity:0}20%{transform:translateX(-50%) scale(1.15);opacity:1}100%{transform:translateX(-50%) translateY(-60px);opacity:0}}
+#b94w2 .chain{position:absolute;right:14%;top:42%;font-size:44px;z-index:4;animation:w2chain .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes w2chain{from{transform:translateX(60px) rotate(30deg);opacity:0}to{transform:none;opacity:1}}
+#b94w2 .hp .h{display:inline-block}
+#b94w2 .hp .h.brk{animation:w2brk .7s forwards}
+@keyframes w2brk{30%{transform:scale(1.6) rotate(-15deg)}100%{transform:scale(1) rotate(0)}}
+#b94w2 .hud .sc small{font:700 12px var(--body);color:var(--muted);margin-left:6px}
+#b94w2 .hud .snd{all:unset;cursor:pointer;font-size:20px;padding:4px 8px}
+#b94w2 .cmb{font:900 13px/1 var(--body);background:#f5c542;color:#14161b;padding:5px 8px;border-radius:8px;margin-left:8px;opacity:0;transition:opacity .2s}
+#b94w2 .cmb.on{opacity:1}
+#b94w2 .nite{position:fixed;inset:0;z-index:20;background:rgba(3,4,10,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:w2fade 1.6s forwards;pointer-events:none}
+#b94w2 .nite b{font:900 72px/1 var(--display);color:#ff5a4e;font-family:ui-monospace,Menlo,monospace}
+#b94w2 .nite span{font:800 22px var(--body);color:#fff;margin-top:12px}
+@keyframes w2fade{0%,70%{opacity:1}100%{opacity:0}}
+#b94w2 .stamp{display:inline-block;border:5px solid var(--sign);color:#ff6b7a;font:900 28px/1 var(--display);letter-spacing:.06em;padding:10px 16px;border-radius:10px;transform:rotate(-6deg);animation:w2st .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes w2st{from{transform:rotate(-6deg) scale(2.4);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+#b94w2 canvas.conf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:15}
+@media(prefers-reduced-motion:reduce){#b94w2 .door.knock,#b94w2.shake,#b94w2 .door.in,#b94w2 .pop,#b94w2 .puk{animation:none}#b94w2.panic:after{animation:none}#b94w2 .peep img{transition:none}}
 </style>
 <script>
 (function(){
@@ -70,40 +111,79 @@
   ['tape','Głos zza drzwi','„Kuba, to ja, otwórz szybko!”','Głos jak pana Zdziśka, ale wizjer jest zaklejony.','1:30','112','Zaklejony wizjer to sygnał alarmowy. Nie otwieraj, nie odzywaj się, dzwoń na 112.'],
  ];
  var LBL={open:'🚪 Otwieram',no:'🔒 Nie otwieram',112:'📞 Dzwonię na 112'};
- var deck=[],score=0,lives=3,limit=6,timer=null,t0=0,cur=null,best=0;
- try{best=+localStorage.getItem('b94-wizjer-best')||0;}catch(e){}
+ var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ var deck=[],score=0,pts=0,combo=0,lives=3,limit=6,raf=0,t0=0,cur=null,best=0,bestPts=0,lvl=0,locked=false,lastBeat=0,clockMin=0;
+ var muted=false;try{best=+localStorage.getItem('b94-wizjer-best')||0;bestPts=+localStorage.getItem('b94-wizjer-pts')||0;muted=localStorage.getItem('b94-wizjer-mute')==='1';}catch(e){}
+ // --- dźwięk (WebAudio, bez plików) ---
+ var AC=null;function ac(){if(muted)return null;if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(AC.state==='suspended')AC.resume();return AC;}
+ function noise(c,d){var b=c.createBuffer(1,c.sampleRate*d,c.sampleRate),x=b.getChannelData(0);for(var k=0;k<x.length;k++)x[k]=(Math.random()*2-1)*Math.pow(1-k/x.length,3);var s=c.createBufferSource();s.buffer=b;return s;}
+ function knock(){var c=ac();if(!c)return;var s=noise(c,.12),f=c.createBiquadFilter(),g=c.createGain();f.type='lowpass';f.frequency.value=380;g.gain.value=1.4;s.connect(f);f.connect(g);g.connect(c.destination);s.start();}
+ function tone(fr,d,type,v,slide){var c=ac();if(!c)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.setValueAtTime(fr,c.currentTime);if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+d);g.gain.setValueAtTime(v||.25,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d);}
+ function sOk(){tone(660,.12,'triangle',.22);setTimeout(function(){tone(990,.18,'triangle',.22);},90);var c=ac();if(c){var s=noise(c,.06),f=c.createBiquadFilter();f.type='highpass';f.frequency.value=2500;s.connect(f);f.connect(c.destination);setTimeout(function(){s.start();},40);}}
+ function sBad(){tone(140,.45,'sawtooth',.25,60);}
+ function sBeat(){tone(58,.16,'sine',.6);setTimeout(function(){tone(52,.14,'sine',.45);},140);}
+ function sStamp(){var c=ac();if(!c)return;var s=noise(c,.2),f=c.createBiquadFilter();f.type='lowpass';f.frequency.value=600;s.connect(f);f.connect(c.destination);s.start();}
+ function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
  function h(x){root.innerHTML=x;var hd=document.querySelector('header');var off=(hd&&getComputedStyle(hd).position.match(/sticky|fixed/)?hd.offsetHeight:0)+12;window.scrollTo({top:root.getBoundingClientRect().top+scrollY-off});}
- function intro(){h('<span class="eyebrow">Nowa gra · BLOK 94</span><h2>Wizjer: <span class="sign">3 sekundy</span></h2>'+
-  '<p>Ktoś puka. Patrzysz w wizjer i masz chwilę na decyzję: <b>otwierasz</b>, <b>nie otwierasz</b> czy <b>dzwonisz na 112</b>. Każda dobra odpowiedź skraca czas. Masz 3 szanse.</p>'+
-  '<p>Nie każdy gość to zagrożenie. Każda decyzja to prawdziwa zasada z serii „Kto tam?”.</p>'+
-  (best?'<p style="color:#f5c542;font-weight:800">Twój rekord: '+best+'</p>':'')+
+ function fx(cls){var f=document.createElement('div');f.className='flash '+cls;R.appendChild(f);setTimeout(function(){f.remove();},800);}
+ function pop(txt,cls){var d=root.querySelector('.door');if(!d)return;var p=document.createElement('div');p.className='pop'+(cls?' '+cls:'');p.textContent=txt;d.appendChild(p);setTimeout(function(){p.remove();},1000);}
+ function sndBtn(){return '<button class="snd" id="w-snd" aria-label="Dźwięk">'+(muted?'🔇':'🔊')+'</button>';}
+ function bindSnd(){var b=document.getElementById('w-snd');if(b)b.onclick=function(){muted=!muted;try{localStorage.setItem('b94-wizjer-mute',muted?'1':'0');}catch(e){}b.textContent=muted?'🔇':'🔊';if(!muted)knock();};}
+ function intro(){R.setAttribute('data-lvl','0');h('<span class="eyebrow">Nowa gra · BLOK 94</span><h2>Wizjer: <span class="sign">3 sekundy</span></h2>'+
+  '<p>Ktoś puka. Patrzysz w wizjer i masz chwilę na decyzję: <b>otwierasz</b>, <b>nie otwierasz</b> czy <b>dzwonisz na 112</b>. Każda dobra odpowiedź skraca czas, a seria dobrych odpowiedzi mnoży punkty. Masz 3 szanse.</p>'+
+  '<p>Nie każdy gość to zagrożenie. Każda decyzja to prawdziwa zasada z serii „Kto tam?”. Najlepiej grać z dźwiękiem.</p>'+
+  (best?'<p style="color:#f5c542;font-weight:800">Rekord: '+best+' dobrych odpowiedzi · '+bestPts+' pkt</p>':'')+
   '<button class="btn go" id="w-start">Zaczynamy</button><a class="btn ghost" style="margin-top:10px" href="/pages/gra">← Inne gry</a>');
-  document.getElementById('w-start').onclick=start;}
- function start(){score=0;lives=3;limit=6;deck=[];next();}
- function next(){if(!deck.length)deck=shuffle(S.slice());cur=deck.pop();
-  var hp='❤️'.repeat(lives)+'🖤'.repeat(3-lives);
-  h('<div class="hud"><span class="hp" aria-label="Szanse: '+lives+'">'+hp+'</span><span class="sc">'+score+'</span></div>'+
-   '<div class="door knock"><span class="clock">'+cur[4]+'</span><span class="num">94</span>'+
-   '<div class="peep'+(cur[0]==='tape'?' tape':'')+'">'+(cur[0]==='tape'?'':'<img src="'+IMG(cur[0])+'" alt="">')+'</div><div class="who">'+cur[1]+'</div>'+
+  document.getElementById('w-start').onclick=function(){ac();start();};}
+ function start(){score=0;pts=0;combo=0;lives=3;limit=6;lvl=0;deck=[];R.setAttribute('data-lvl','0');next();}
+ function hearts(brk){var s='';for(var k=0;k<3;k++)s+='<span class="h'+(brk&&k===lives?' brk':'')+'">'+(k<lives?'❤️':(brk&&k===lives?'💔':'🖤'))+'</span>';return s;}
+ function next(){if(!deck.length)deck=shuffle(S.slice());cur=deck.pop();locked=false;
+  var tape=cur[0]==='tape',eyes=cur[0]==='kaptur';
+  h('<div class="hud"><span class="hp" aria-label="Szanse: '+lives+'">'+hearts(false)+'</span><span><span class="cmb'+(combo>1?' on':'')+'" id="w-cmb">SERIA ×'+combo+'</span>'+sndBtn()+'</span><span class="sc" id="w-sc">'+pts+'<small>pkt</small></span></div>'+
+   '<div class="door in"><span class="clock">'+cur[4]+'</span><span class="num">94</span>'+
+   '<div class="peep blur'+(tape?' tape':'')+'">'+(tape?'':'<img src="'+IMG(cur[0])+'" alt="">')+(eyes?'<span class="eyes"><i></i><i></i></span>':'')+'</div><div class="who">'+cur[1]+'</div>'+
    '<div class="say">'+cur[2]+(cur[3]?'<small>'+cur[3]+'</small>':'')+'</div></div>'+
    '<div class="bar"><i id="w-bar"></i></div>'+
    '<div class="ch"><button class="btn bopen" data-a="open">'+LBL.open+'</button><button class="btn bno" data-a="no">'+LBL.no+'</button><button class="btn b112" data-a="112">'+LBL[112]+'</button></div>');
-  root.querySelectorAll('.ch .btn').forEach(function(b){b.onclick=function(){answer(b.getAttribute('data-a'));};});
-  t0=performance.now();var bar=document.getElementById('w-bar');clearInterval(timer);
-  timer=setInterval(function(){var l=1-(performance.now()-t0)/(limit*1000);bar.style.transform='scaleX('+Math.max(0,l)+')';if(l<=0)answer(null);},50);}
- function answer(a){clearInterval(timer);var ok=a===cur[5];if(ok){score++;limit=Math.max(2.6,limit-.25);}else lives--;
-  var title=ok?'Dobrze!':(a===null?'Za wolno!':'Błąd!');
+  bindSnd();
+  root.querySelectorAll('.ch .btn').forEach(function(b){b.onclick=function(){if(!locked)answer(b.getAttribute('data-a'));};});
+  var door=root.querySelector('.door'),peep=root.querySelector('.peep');
+  // pukanie: 3 uderzenia, potem gość wyłania się z rozmycia, potem startuje czas
+  [0,230,460].forEach(function(d,k){setTimeout(function(){if(!door.isConnected)return;knock();if(!RM){door.classList.remove('knock');void door.offsetWidth;door.classList.add('knock');}
+   var p=document.createElement('div');p.className='puk';p.textContent='PUK!';p.style.left=(18+k*26)+'%';p.style.top=(8+(k%2)*10)+'%';door.appendChild(p);setTimeout(function(){p.remove();},700);},d+150);});
+  setTimeout(function(){if(peep.isConnected)peep.classList.remove('blur');},650);
+  var bar=document.getElementById('w-bar');bar.style.transform='scaleX(1)';
+  setTimeout(function(){if(!door.isConnected||locked)return;t0=performance.now();lastBeat=0;cancelAnimationFrame(raf);
+   (function loop(now){var l=1-(now-t0)/(limit*1000);if(locked)return;bar.style.transform='scaleX('+Math.max(0,l)+')';bar.style.background=l>.5?'linear-gradient(90deg,#30a46c,#f5c542)':l>.25?'linear-gradient(90deg,#f39c12,#f39c12)':'#d7263d';
+    if(l<.35){R.classList.add('panic');if(now-lastBeat>520){lastBeat=now;sBeat();}}
+    if(l<=0){answer(null);return;}raf=requestAnimationFrame(loop);})(performance.now());},750);}
+ function answer(a){locked=true;cancelAnimationFrame(raf);R.classList.remove('panic');var ok=a===cur[5],left=Math.max(0,1-(performance.now()-t0)/(limit*1000));
+  if(ok){score++;combo++;var gain=100+Math.round(left*100)+(combo>1?(combo-1)*50:0);pts+=gain;limit=Math.max(2.4,limit-.25);
+   fx('ok');sOk();pop('+'+gain);if(combo>1)setTimeout(function(){pop('SERIA ×'+combo+'!','combo');},150);
+   var d=root.querySelector('.door');if(d&&cur[5]!=='open'){var ch=document.createElement('div');ch.className='chain';ch.textContent=cur[5]==='112'?'📞':'⛓️';d.appendChild(ch);}
+   var sc=document.getElementById('w-sc');if(sc)sc.innerHTML=pts+'<small>pkt</small>';var cm=document.getElementById('w-cmb');if(cm){cm.textContent='SERIA ×'+combo;cm.classList.toggle('on',combo>1);}}
+  else{lives--;combo=0;fx('bad');sBad();buzz(a===null?[60,40,60]:180);if(!RM){R.classList.remove('shake');void R.offsetWidth;R.classList.add('shake');}
+   var hp=root.querySelector('.hp');if(hp)hp.innerHTML=hearts(true);if(a===null){var pe=root.querySelector('.peep');if(pe)pe.classList.add('dark');}
+   var cm2=document.getElementById('w-cmb');if(cm2)cm2.classList.remove('on');}
+  var title=ok?(combo>2?'Świetnie!':'Dobrze!'):(a===null?'Za wolno!':'Błąd!');
   var fb='<div class="fb '+(ok?'ok':'bad')+'"><b>'+title+'</b>'+(ok?'':'Poprawnie: '+LBL[cur[5]]+'. ')+cur[6]+'</div>';
   root.querySelector('.ch').outerHTML=fb+'<button class="btn go" id="w-next">'+(lives>0?'Następne pukanie':'Zobacz wynik')+'</button>';
-  document.getElementById('w-next').onclick=lives>0?next:end;}
+  document.getElementById('w-next').onclick=lives>0?(ok&&score%4===0?deeper:next):end;}
+ function deeper(){lvl=Math.min(3,lvl+1);R.setAttribute('data-lvl',String(lvl));var hrs=['00:00','01:30','03:00','04:30'][lvl];
+  var n=document.createElement('div');n.className='nite';n.innerHTML='<b>'+hrs+'</b><span>Noc się pogłębia. Będzie szybciej.</span>';R.appendChild(n);tone(220,.6,'sine',.2,110);
+  limit=Math.max(2.4,limit-.3);setTimeout(function(){n.remove();next();},RM?400:1500);}
  function rank(s){return s>=15?'Strażnik bloku 94':s>=10?'Pan Zdzisiek':s>=5?'Czujny sąsiad':'Lokator na próbę';}
- function end(){var nb=score>best;if(nb){best=score;try{localStorage.setItem('b94-wizjer-best',best);}catch(e){}}
-  var txt='Mój wynik w grze „Wizjer” z bloku 94: '+score+' ('+rank(score)+'). Pobijesz? protokolocaleni.online/pages/wizjer #blok94';
-  h('<div class="end"><span class="eyebrow">Koniec nocy</span><div class="big">'+score+'</div><span class="rank">'+rank(score)+'</span>'+
-   (nb?'<p style="color:#f5c542;font-weight:800">Nowy rekord!</p>':'<p>Rekord: '+best+'</p>')+
+ function confetti(){if(RM)return;var c=document.createElement('canvas');c.className='conf';R.appendChild(c);var x=c.getContext('2d'),W=c.width=innerWidth,H=c.height=innerHeight,P=[];
+  for(var k=0;k<140;k++)P.push({x:W/2,y:H*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,c:['#d7263d','#f5c542','#fff','#30a46c','#7b4fc9'][k%5],r:Math.random()*6});
+  var t=0;(function f(){t++;x.clearRect(0,0,W,H);P.forEach(function(p){p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-5,-3,10,6);x.restore();});if(t<140)requestAnimationFrame(f);else c.remove();})();}
+ function end(){R.setAttribute('data-lvl','0');var nb=pts>bestPts;if(nb){bestPts=pts;try{localStorage.setItem('b94-wizjer-pts',pts);}catch(e){}}if(score>best){best=score;try{localStorage.setItem('b94-wizjer-best',best);}catch(e){}}
+  var txt='Mój wynik w grze „Wizjer” z bloku 94: '+pts+' pkt, '+score+' dobrych decyzji ('+rank(score)+'). Pobijesz? protokolocaleni.online/pages/wizjer #blok94';
+  h('<div class="end"><span class="eyebrow">Koniec nocy</span><div class="big">'+pts+'</div><p style="margin:-6px 0 14px">punktów · '+score+' dobrych decyzji</p><span class="stamp">'+rank(score).toUpperCase()+'</span>'+
+   (nb?'<p style="color:#f5c542;font-weight:800;font-size:20px">Nowy rekord!</p>':'<p>Rekord: '+bestPts+' pkt</p>')+
    '<div class="row"><button class="btn go" id="w-again" style="margin:0">Jeszcze raz</button><button class="btn ghost" id="w-share">Udostępnij wynik</button></div>'+
    '<a class="btn ghost" style="margin-top:10px" href="/pages/gra">Inne gry</a></div>');
+  setTimeout(sStamp,150);if(nb&&pts>0){setTimeout(confetti,300);tone(523,.15,'triangle',.2);setTimeout(function(){tone(659,.15,'triangle',.2);},140);setTimeout(function(){tone(784,.3,'triangle',.22);},280);}
   document.getElementById('w-again').onclick=start;
   document.getElementById('w-share').onclick=function(e){var b=e.currentTarget;if(navigator.share){navigator.share({text:txt}).catch(function(){});}else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){b.textContent='Skopiowano ✓';});}};}
  intro();
