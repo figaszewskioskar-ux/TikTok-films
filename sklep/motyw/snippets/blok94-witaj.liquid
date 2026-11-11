@@ -1,0 +1,37 @@
+{%- comment -%} Okienko po wejściu na stronę: media społecznościowe + gra + wsparcie. Raz na wizytę (sessionStorage). {%- endcomment -%}
+<dialog id="b94-witaj" class="b94w" aria-labelledby="b94w-t">
+  <button type="button" class="b94w-x" id="b94w-x" aria-label="Zamknij">×</button>
+  <span class="b94w-e">BLOK 94 · „Kto tam?”</span>
+  <h2 id="b94w-t">Jest nas już ponad 2000!</h2>
+  <p>Dzięki, że jesteś. Obserwuj nas, żeby nie przegapić kolejnego odcinka.</p>
+  {% render 'blok94-social' %}
+  <div class="b94w-go">
+    <a class="b94w-b b94w-g" href="/pages/gra">🎮 Zagraj w grę</a>
+    <a class="b94w-b b94w-s" href="{{ routes.root_url }}#wesprzyj" id="b94w-s">❤️ Wesprzyj nas</a>
+  </div>
+  <button type="button" class="b94w-l" id="b94w-l">Później</button>
+</dialog>
+<style>
+.b94w{border:0;padding:24px 20px 18px;border-radius:24px;max-width:min(440px,calc(100vw - 32px));width:100%;background:radial-gradient(500px 260px at 80% -10%,#26305a,#0f1220 70%);color:#f3efe6;font-family:"Public Sans",system-ui,sans-serif;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.b94w::backdrop{background:rgba(3,5,14,.7)}
+.b94w-x{position:absolute;top:10px;right:12px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#f3efe6;font-size:28px;line-height:1;cursor:pointer}
+.b94w-e{display:inline-block;background:#f39c12;color:#14161b;font:800 12px/1 "Public Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:999px}
+.b94w h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;font-size:40px;line-height:1;margin:14px 0 8px}
+.b94w p{color:#c9c6bb;margin:0 0 16px;font-size:16px}
+.b94w .b94s-row{display:grid;grid-template-columns:1fr;gap:8px}
+.b94w .b94s-a{justify-content:center}
+.b94w-go{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.b94w-b{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;font:800 16px/1.1 "Public Sans",sans-serif;text-decoration:none;text-align:center;padding:8px}
+.b94w-g{background:#F5C542;color:#14161b}.b94w-s{background:#d7263d;color:#fff}
+.b94w-l{display:block;margin:12px auto 0;border:0;background:none;color:#aeb0c2;font:600 15px "Public Sans",sans-serif;text-decoration:underline;cursor:pointer;min-height:44px}
+.b94w-x:focus-visible,.b94w-b:focus-visible,.b94w-l:focus-visible{outline:3px solid #f39c12;outline-offset:2px}
+</style>
+<script>
+(function(){var d=document.getElementById('b94-witaj');if(!d)return;var K='b94-witaj-1';
+ try{if(sessionStorage.getItem(K))return;}catch(e){}
+ function close(){try{sessionStorage.setItem(K,'1');}catch(e){}if(d.close)d.close();else d.removeAttribute('open');}
+ setTimeout(function(){if(document.querySelector('dialog[open]'))return;try{d.showModal();}catch(e){d.setAttribute('open','');}try{sessionStorage.setItem(K,'1');}catch(e){}},1200);
+ document.getElementById('b94w-x').addEventListener('click',close);document.getElementById('b94w-l').addEventListener('click',close);
+ document.getElementById('b94w-s').addEventListener('click',close);
+ d.addEventListener('click',function(e){if(e.target===d)close();});})();
+</script>

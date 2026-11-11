@@ -81,7 +81,7 @@
     {% render 'blok94-powiadom', id: 'hero' %}
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odcinka 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>Stan kanału: {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption></figure>
+  <figure><img src="{{ 'blok94-hero.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło, pod blokiem stoi postać w kapturze" width="1080" height="1350"><figcaption>Kasztanowa 12 · klatka II · 9. piętro</figcaption><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Ktoś tam jest?" hidden></button></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
@@ -229,6 +229,38 @@
  d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
 </script>
 
+
+<dialog id="b94-okno-d" class="b94-akta" aria-labelledby="b94-okno-t">
+  <div class="akta-in">
+    <span class="akta-stamp">ŚCIŚLE TAJNE · #2</span>
+    <h3 id="b94-okno-t">Zapukałeś w okno 94.</h3>
+    <p>Ktoś odpukał. To zapowiedź, której jeszcze nikt nie widział. Pochwal się w komentarzu hasłem poniżej.</p>
+    <div class="akta-vid">
+      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ section.settings.parts | plus: 3 }}</span>
+      <video id="b94-okno-v" controls playsinline preload="none" poster="{{ 'blok94-egg-b.jpg' | asset_url }}" src="{{ 'blok94-egg2.mp4' | asset_url }}"></video>
+    </div>
+    <p class="akta-code">Hasło do komentarza: <b>OKNO 94 ODPUKAŁO</b></p>
+    <button type="button" class="btn red" id="b94-okno-x" style="width:100%">Zamknij okno</button>
+  </div>
+</dialog>
+<style>
+#b94 .hero figure .okno{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border:0;border-radius:50%;background:transparent;cursor:pointer;padding:0}
+#b94 .hero figure .okno:before{content:"";position:absolute;inset:14px;border-radius:6px;box-shadow:0 0 0 0 rgba(140,180,255,.0);animation:b94okno 5s ease-in-out infinite}
+@keyframes b94okno{0%,80%,100%{box-shadow:0 0 0 0 rgba(140,180,255,0)}88%{box-shadow:0 0 18px 6px rgba(140,180,255,.55)}}
+#b94 .hero figure .okno:focus-visible{outline:3px solid #f39c12}
+#b94 .hero figure .okno.knock{animation:b94shake .3s}
+</style>
+<script>
+(function(){var b=document.getElementById('b94-okno'),d=document.getElementById('b94-okno-d');if(!b||!d)return;var img=b.parentNode.querySelector('img');
+ function place(){if(!img.naturalWidth)return;var w=img.clientWidth,h=img.clientHeight,nw=img.naturalWidth,nh=img.naturalHeight,cs=getComputedStyle(img),fit=cs.objectFit,
+  pos=(cs.objectPosition||'50% 50%').split(' ').map(function(v){return parseFloat(v)/100;}),s=fit==='cover'?Math.max(w/nw,h/nh):w/nw,ox=(w-nw*s)*(fit==='cover'?pos[0]:0),oy=(h-nh*s)*(fit==='cover'?pos[1]:0);
+  b.style.left=(img.offsetLeft+ox+701/1080*nw*s)+'px';b.style.top=(img.offsetTop+oy+136/1350*nh*s)+'px';b.hidden=false;}
+ if(img.complete)place();img.addEventListener('load',place);addEventListener('resize',place);
+ var n=0,t=0;b.addEventListener('click',function(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;b.classList.remove('knock');void b.offsetWidth;b.classList.add('knock');
+  if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}});
+ var v=document.getElementById('b94-okno-v');document.getElementById('b94-okno-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
+ d.addEventListener('close',function(){if(v)v.pause();});d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
+</script>
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
  {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":8,"step":1,"default":2},
