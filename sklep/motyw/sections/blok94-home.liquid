@@ -187,7 +187,7 @@
 // odliczanie do premiery: pon. 9.11.2026, 1:30 czasu polskiego (00:30 UTC)
 (function(){const cd=document.getElementById('cd');if(!cd)return;const T=Date.parse(cd.dataset.t);if(isNaN(T)||T<Date.now()){cd.innerHTML='<span style="flex:1;font-size:22px;letter-spacing:.14em">WKRÓTCE</span>';return;}const p=n=>String(n).padStart(2,'0');
  const set=(id,v,l)=>{const e=document.getElementById(id);if(e)e.innerHTML=v+'<i>'+l+'</i>';};
- function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));set('cd-d',Math.floor(s/86400),'dni');set('cd-h',p(Math.floor(s%86400/3600)),'godz.');set('cd-m',p(Math.floor(s%3600/60)),'min');set('cd-s',p(s%60),'sek.');}
+ function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));const dd=document.getElementById('cd-d');if(dd)dd.style.display='none';set('cd-h',p(Math.floor(s/3600)),'godz.');set('cd-m',p(Math.floor(s%3600/60)),'min');set('cd-s',p(s%60),'sek.');}
  tick();setInterval(tick,1000);})();
 // napiwki: przyciski windy = warianty produktu „napiwek” (te same co wcześniej), link /cart/ID:1 jak dotąd
 (function(){const box=document.getElementById('floors');if(!box)return;let vs=[];try{vs=JSON.parse(box.dataset.tips).filter(v=>v.id&&v.p>=200).sort((a,b)=>a.p-b.p);}catch(e){}if(!vs.length)return;
@@ -301,7 +301,7 @@
   ctx.fillStyle='rgba(60,62,70,.9)';ctx.fillRect(x0+w*.2,y0+h,5*k,40*k);ctx.fillRect(x0+w*.8-5*k,y0+h,5*k,40*k);
   var s1,s2,blink=1,left=CT-Date.now();
   if(!isNaN(CT)&&left>0){var z=Math.floor(left/1000),d=Math.floor(z/86400),hh=Math.floor(z%86400/3600),mm=Math.floor(z%3600/60),ss=z%60,P=function(n){return(n<10?'0':'')+n;};
-   s1='NASTĘPNY ODCINEK ZA';s2=(d>0?d+'D ':'')+P(hh)+':'+P(mm)+':'+P(ss);}
+   s1='NASTĘPNY ODCINEK ZA';s2=P(d*24+hh)+':'+P(mm)+':'+P(ss);}
   else{s1='NASTĘPNY ODCINEK';s2='WKRÓTCE';blink=(Math.floor(t*1.6)%2)?1:.35;}
   ctx.save();ctx.globalAlpha=fl;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='rgba(255,40,30,.9)';ctx.shadowBlur=14*k;ctx.fillStyle='#ff3b30';
   ctx.font='700 '+Math.round(30*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s1,x0+w/2,y0+h*.24);
