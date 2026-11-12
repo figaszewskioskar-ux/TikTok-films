@@ -39,6 +39,7 @@
 - **Każdy przedmiot z fabuły pokazany wyraźnie** (zegar z godziną, ślady butów, telefon, klucze).
 
 ## Oszczędzanie kredytów ElevenLabs
+- **Kolejność pracy: najpierw film bez lektora (sam obraz + efekty) do akceptacji użytkownika. Lektor i głosy nagrywamy dopiero po jego akceptacji.**
 - Nowe kwestie dopisuj **na końcu listy `SEG`** (kolejność w liście nie zmienia czasu sceny). Wstawienie w środek przesuwa numery plików i wymusza ponowne nagranie wszystkich dalszych kwestii.
 - Nie zmieniaj tekstu nagranych kwestii, jeśli nie trzeba: każda zmiana to nowe nagranie. Przesunięcie czasu (`a`) jest darmowe.
 - Rozpoznawanie mowy (sprawdzanie) tylko dla nowych nagrań i raz na gotowy film, nie wielokrotnie.
