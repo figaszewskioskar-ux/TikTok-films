@@ -3,7 +3,7 @@ window.EP = {
   badge: 'BLOK 94 · ODC. 9',
   loop: false,
   vignette: .78,
-  PREVIEW: false, // true = napisy z planowanym tekstem lektora
+  PREVIEW: false, // true = napisy z planowanym tekstem lektora (wersja 2: więcej dialogów)
   cues(add) {
     add(0.2, 'stab'); add(6.2, 'whoosh'); add(13.6, 'creak'); add(17.4, 'hit');
     add(24.6, 'notif'); add(29.4, 'error'); add(35.0, 'click'); add(38.6, 'error');
@@ -23,6 +23,9 @@ function bigSign(c, lt, l1, l2, y = 390) {
   txt(c, l1, 0, -44, 86, '#FFFFFF', 900); txt(c, l2, 0, 54, 86, '#FFFFFF', 900);
   c.restore();
 }
+// dymek nad głową mówiącej postaci: ogonek wskazuje jej głowę (px, py = stopy, s = skala)
+function say(a, b, text, who, px, py, s, dx = 0, lift = 0) { const top = py - 312 * s; return [a, b, text, clamp(px + dx, 200, 880), top - 18 - lift, px, top + 12, who]; }
+function sayPhone(a, b, text, who, px, py, dx = 0, up = 60) { return [a, b, text, clamp(px + dx, 200, 880), py - up, px, py, who]; }
 function talking(sc, who, lt) { return (sc.bubbles || []).some(b => b[7] === who && lt >= b[0] && lt < b[0] + Math.min(b[1] - b[0] - .2, .055 * b[2].length + .3)); }
 function laptop(c, x, y, fn) {
   fillRR(c, x, y, 560, 360, 18, '#1B1D22'); c.save(); rr(c, x + 18, y + 18, 524, 300, 8); c.clip(); fn(c, x + 18, y + 18, 524, 300); c.restore();
@@ -79,7 +82,6 @@ function drawSubs(c, name, lt) {
 // 0. HAK: link na ekranie
 scene({
   name: 'hook', start: 0, end: 6,
-  cam: lt => ({ z: 1.05 + lt * .02 }),
   draw(c, lt) {
     c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H);
     laptop(c, 260, 760, (cc, x, y, w, h) => {
@@ -111,30 +113,37 @@ sub('recap', .2, 6, 'Poprzednio: kamerka w laptopie zapaliła się sama. Na podg
 // 2. ZWROT: nikogo za nim — to nagranie z wczoraj
 scene({
   name: 'turn', start: 12, end: 24,
-  cam: lt => { const sh = lt > 5.4 && lt < 5.9 ? (5.9 - lt) * 24 : 0; return { z: lt > 7.5 ? 1 + clamp((lt - 7.5) / 1.5) * .5 : 1, x: Math.sin(lt * 80) * sh, y: lt > 7.5 ? clamp((lt - 7.5) / 1.5) * 300 : 0 }; },
-  bubbles: [[3.6, 5.4, 'Kuba?! Co się stało?', 300, 820, 160, 1000, 'ola']],
+  cam: lt => { const sh = lt > 9.0 && lt < 9.5 ? (9.5 - lt) * 24 : 0; return { z: 1, x: Math.sin(lt * 80) * sh, y: 0 }; },
+  bubbles: [
+    say(0.3, 1.4, 'Ola! Chodź tu! Szybko!', 'kuba', 250, 1640, 2.0, 60, 340),
+    say(3.6, 5.4, 'Kuba?! Co się stało?', 'ola', 900, 1600, 1.9, -60, 340),
+    say(5.6, 7.4, 'Na kamerce…\nktoś stoi za mną.', 'kuba', 250, 1640, 2.0, 60, 340),
+    say(7.6, 9.0, 'Kuba… tam nikogo nie ma.', 'ola', 900, 1600, 1.9, -80, 340),
+    say(9.4, 10.8, 'To nagranie… z wczoraj.\nTrzecia dwanaście.', 'kuba', 250, 1640, 2.0, 80, 340),
+    say(11.0, 12.0, 'On był… w naszym domu?', 'ola', 900, 1600, 1.9, -80, 340),
+  ],
   draw(c, lt, sc) {
     kubaRoom(c, lt, { door: lt > 3.4 ? clamp((lt - 3.4) / .4) * .85 : 0 });
     fillRR(c, 160, 1080, 760, 26, 6, '#4A3A2C');
-    const live = lt < 7.5;
+    const live = lt < 9.0;
     laptop(c, 260, 700, (cc, x, y, w, h) => {
-      cc.fillStyle = '#1A1D28'; cc.fillRect(x, y, w, h); fillRR(cc, x + w * .62, y + 20, 110, h - 20, 4, '#0A0B10');
+      cc.fillStyle = '#3A4260'; cc.fillRect(x, y, w, h); fillRR(cc, x + w * .62, y + 20, 110, h - 20, 4, '#0A0B10');
       person(cc, 'kaptur', x + w * .62 + 55, y + h + (live ? 70 : 150), live ? .7 : 1.05, { t: lt, glow: 1 });
       if (live) person(cc, 'kuba', x + w * .36, y + h + 190, 1.1, { t: lt, wide: true, mouth: 'o' });
       cc.fillStyle = 'rgba(255,255,255,.05)'; for (let r = 0; r < h; r += 4) cc.fillRect(x, y + r, w, 1);
-      if (lt > 7.5) { fillRR(cc, x + 16, y + 14, 290, 40, 8, 'rgba(215,38,61,.95)'); txt(cc, '▶ NAGRANIE · WCZORAJ 03:12', x + 26, y + 35, 18, '#fff', 900, 'left'); }
+      if (lt > 9.0) { fillRR(cc, x + 16, y + 14, 290, 40, 8, 'rgba(215,38,61,.95)'); txt(cc, '▶ NAGRANIE · WCZORAJ 03:12', x + 26, y + 35, 18, '#fff', 900, 'left'); }
     });
     // Kuba odwraca się w stronę drzwi; Ola wpada
-    const turned = lt > 1.4, fg = 1 - clamp((lt - 7.0) / .5);
+    const turned = lt > 1.4, fg = 1;
     c.save(); c.globalAlpha = fg;
-    person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: !turned, look: 1, wide: turned, mouth: turned ? 'o' : null, rot: lt > 1.0 && lt < 1.6 ? .05 : 0 });
-    if (lt > 3.4) person(c, 'ola', mv(lt, 3.4, 4.4, 1180, 940), 1600, 1.9, { t: lt, look: -1, wide: true, talk: talking(sc, 'ola', lt), walk: lt < 4.4 ? lt * 12 : null });
+    person(c, 'kuba', 250, 1640, 2.0, { t: lt, back: !turned, look: 1, wide: turned, mouth: turned && !talking(sc, 'kuba', lt) ? 'o' : null, talk: talking(sc, 'kuba', lt), rot: lt > 1.0 && lt < 1.6 ? .05 : 0 });
+    if (lt > 2.6) person(c, 'ola', mv(lt, 2.6, 3.5, 1180, 900), 1600, 1.9, { t: lt, look: -1, wide: true, talk: talking(sc, 'ola', lt), walk: lt < 3.5 ? lt * 12 : null });
     c.restore();
-    night(c, lt > 7.5 ? .6 : .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, { x: 950, y: 1000, r: lt > 3.4 ? 300 : 0, a: .6 }]);
+    night(c, lt > 9.0 ? .7 : .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, { x: 950, y: 1000, r: lt > 3.4 ? 300 : 0, a: .6 }]);
   },
   post(c, lt) {
     if (lt > 1.6 && lt < 3.4) label(c, 'NIKOGO', 950, 420, 'dark', 48, lt - 1.6, 3.4 - lt);
-    if (lt > 8.6) label(c, 'BYŁ TU WCZORAJ W NOCY', 540, 300, 'red', 46, lt - 8.6, 9);
+    if (lt > 9.2) label(c, '▶ NAGRANIE · WCZORAJ 03:12', 540, 300, 'red', 44, lt - 9.2, 9);
     drawSubs(c, 'turn', lt);
   },
 });
@@ -161,8 +170,12 @@ sub('reply', 6.0, 10, 'Błąd pierwszy. Teraz on wie, że Kuba czyta. I że się
 // 4. KLIKA — błąd 2
 scene({
   name: 'click', start: 34, end: 44,
-  cam: lt => ({ z: 1 + lt * .02 }),
-  draw(c, lt) {
+  bubbles: [
+    say(0.3, 1.6, 'Ochrona konta…\nto może pomóc.', 'kuba', 420, 1640, 2.0, 60),
+    say(1.7, 2.6, 'Kuba, to pułapka!', 'ola', 900, 1620, 1.9, -60),
+    say(5.0, 7.6, 'Ja tego nie robię!\nKursor rusza się sam!', 'kuba', 420, 1640, 2.0, 60),
+  ],
+  draw(c, lt, sc) {
     kubaRoom(c, lt); fillRR(c, 160, 1080, 760, 26, 6, '#4A3A2C');
     laptop(c, 260, 700, (cc, x, y, w, h) => {
       if (lt < 2.6) { cc.fillStyle = '#E9ECF2'; cc.fillRect(x, y, w, h); txt(cc, 'Ochrona konta', x + 30, y + 50, 30, '#14161B', 900, 'left'); txt(cc, 'Sprawdź, kto cię nagrywa', x + 30, y + 92, 22, '#4A4D57', 600, 'left'); fillRR(cc, x + 30, y + 140, 220, 56, 12, '#1E7A46'); txt(cc, 'POBIERZ', x + 140, y + 168, 24, '#fff', 900); return; }
@@ -174,12 +187,13 @@ scene({
       cc.strokeStyle = '#fff'; cc.lineWidth = 4; cc.strokeRect(px - 110, py - 70, 150, 110);
       cc.fillStyle = '#fff'; cc.beginPath(); cc.moveTo(px, py); cc.lineTo(px, py + 30); cc.lineTo(px + 8, py + 22); cc.lineTo(px + 16, py + 38); cc.lineTo(px + 22, py + 35); cc.lineTo(px + 14, py + 19); cc.lineTo(px + 24, py + 19); cc.closePath(); cc.fill();
     });
-    person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: lt < 4.6, look: 1, wide: lt > 4.6, mouth: lt > 4.6 ? 'o' : null, aR: lt < 2.6 ? 1.2 : .14 });
+    person(c, 'kuba', 420, 1640, 2.0, { t: lt, back: lt < 4.6, look: 1, wide: lt > 4.6, mouth: lt > 4.6 && !talking(sc, 'kuba', lt) ? 'o' : null, talk: talking(sc, 'kuba', lt), aR: lt < 2.6 ? 1.2 : .14 });
+    person(c, 'ola', 900, 1620, 1.9, { t: lt, look: -1, wide: true, talk: talking(sc, 'ola', lt), aL: lt > 1.7 && lt < 3 ? 1.2 : .14 });
     night(c, .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }]);
   },
   post(c, lt) {
     if (lt > 2.6 && lt < 7.8) card(c, 70, 300, 860, 'BŁĄD 2', 'kliknął w link od obcego\ni pobrał „program”', lt - 2.6, '#F39C12', 40);
-    if (lt > 5.2) label(c, 'KURSOR RUSZA SIĘ SAM', 540, 600, 'red', 40, lt - 5.2, 9);
+    if (lt > 7.8) label(c, 'KURSOR RUSZA SIĘ SAM', 540, 600, 'red', 40, lt - 7.8, 9);
     drawSubs(c, 'click', lt);
   },
 });
@@ -189,13 +203,17 @@ sub('click', 4.6, 10, 'Kursor zaczyna ruszać się sam. Zdjęcia. Klucze. Grafik
 // 5. OLA ODCINA INTERNET
 scene({
   name: 'ola', start: 44, end: 54,
-  bubbles: [[2.8, 5.6, 'Mamo, ktoś jest w naszym\nlaptopie. Wróć, proszę.', 540, 820, 700, 1000, 'ola']],
+  bubbles: [
+    say(0.5, 2.3, 'Kuba, zostaw to!\nNie klikaj!', 'ola', 820, 1640, 2.0, -80),
+    say(2.8, 5.6, 'Mamo, ktoś jest w naszym\nlaptopie. Wróć, proszę.', 'ola', 760, 1600, 2.0, -60),
+    sayPhone(6.0, 8.4, 'Nic nie ruszajcie.\nJuż jadę.', 'mama', 950, 1110, -260, 70),
+  ],
   draw(c, lt, sc) {
     if (lt < 2.4) { // Ola zatrzaskuje laptop
       kubaRoom(c, lt); fillRR(c, 160, 1080, 760, 26, 6, '#4A3A2C');
       const cl = clamp((lt - .4) / .4);
       fillRR(c, 200, 1060 - 360 * (1 - cl), 680, 360 * (1 - cl) + 10, 14, '#1B1D22'); fillRR(c, 200, 1070, 680, 30, 12, '#2B2E35');
-      person(c, 'ola', 820, 1640, 2.0, { t: lt, look: -1, aL: lt < 1 ? 1.4 : .14, mouth: 'angry' });
+      person(c, 'ola', 820, 1640, 2.0, { t: lt, look: -1, aL: lt < 1 ? 1.4 : .14, mouth: talking(sc, 'ola', lt) ? null : 'angry', talk: talking(sc, 'ola', lt) });
       person(c, 'kuba', 300, 1640, 1.95, { t: lt, look: 1, wide: true, mouth: 'o' });
       night(c, .72, [{ x: 540, y: 1000, r: 600, a: .85 }]);
       return;
@@ -204,9 +222,10 @@ scene({
     hallBg(c, lt);
     fillRR(c, 700, 1240, 120, 40, 8, '#E8E4DA'); for (let i = 0; i < 4; i++) circ(c, 718 + i * 26, 1260, 5, lt < 3.0 ? (Math.floor(lt * 6 + i) % 2 ? '#30A46C' : '#1E4D30') : '#2A2D36');
     c.strokeStyle = '#2A2D36'; c.lineWidth = 6; c.beginPath(); c.moveTo(760, 1280); c.quadraticCurveTo(760, 1360, lt < 3.0 ? 900 : 860, lt < 3.0 ? 1380 : 1340); c.stroke();
-    person(c, 'ola', 900, 1600, 2.0, { t: lt, look: -1, phone: lt > 3 ? 2 : 0, aR: lt > 3 ? 2.4 : .14, aL: lt < 3 ? 1.0 : .14, talk: talking(sc, 'ola', lt) });
-    person(c, 'kuba', 420, 1600, 1.95, { t: lt, look: 1, wide: true, mouth: 'o' });
-    night(c, .6, [{ x: 92, y: 620, r: 320, a: .7 }, { x: 760, y: 1200, r: 360, a: .8 }]);
+    person(c, 'ola', 760, 1600, 2.0, { t: lt, look: -1, phone: lt > 3 ? 2 : 0, aR: lt > 3 ? 2.4 : .14, aL: lt < 3 ? 1.0 : .14, talk: talking(sc, 'ola', lt) });
+    person(c, 'kuba', 360, 1600, 1.95, { t: lt, look: 1, wide: true, mouth: 'o' });
+    if (talking(sc, 'mama', lt)) for (let k = 1; k <= 3; k++) { c.strokeStyle = `rgba(190,217,255,${.5 - k * .12})`; c.lineWidth = 4; c.beginPath(); c.arc(950, 1110, 20 + k * 18 + (lt * 40) % 18, -.9, .9); c.stroke(); }
+    night(c, .6, [{ x: 92, y: 620, r: 320, a: .7 }, { x: 760, y: 1200, r: 420, a: .8 }]);
   },
   post(c, lt) { if (lt > 2.4 && lt < 3.4) label(c, 'INTERNET: WYŁĄCZONY', 540, 300, 'red', 44, lt - 2.4, 3.4 - lt); drawSubs(c, 'ola', lt); },
 });
@@ -216,19 +235,24 @@ sub('ola', 5.8, 10, 'Dobrze. Najpierw odłączyć. Potem wezwać dorosłych.');
 // 6. RANO: DZIELNICOWY + ZASADA
 scene({
   name: 'police', start: 54, end: 68,
-  bubbles: [[1.0, 4.6, 'Nie usuwajcie niczego.\nTo są dowody.', 520, 820, 380, 1000, 'policjant']],
+  bubbles: [
+    say(1.0, 4.4, 'Nie usuwajcie niczego.\nTo są dowody.', 'policjant', 380, 1600, 2.0, 80),
+    say(4.6, 6.2, 'Co mamy teraz zrobić?', 'mama', 640, 1600, 1.95, 0),
+    say(6.4, 10.2, 'Hasła zmieńcie na innym\nurządzeniu. I włączcie\nweryfikację dwuetapową.', 'policjant', 380, 1600, 2.0, 100),
+    say(10.4, 13.4, 'To przeze mnie…\nkliknąłem.', 'kuba', 980, 1620, 1.8, -120),
+  ],
   draw(c, lt, sc) {
     hallBg(c, lt);
     person(c, 'policjant', 380, 1600, 2.0, { t: lt, look: 1, aR: 1.2, talk: talking(sc, 'policjant', lt) });
-    person(c, 'kobieta', 640, 1600, 1.95, { t: lt, look: -1 });
+    person(c, 'kobieta', 640, 1600, 1.95, { t: lt, look: -1, talk: talking(sc, 'mama', lt) });
     person(c, 'ola', 820, 1610, 1.85, { t: lt, look: -1 });
-    person(c, 'kuba', 980, 1620, 1.8, { t: lt, look: -1, mouth: 'o' });
+    person(c, 'kuba', 980, 1620, 1.8, { t: lt, look: -1, mouth: talking(sc, 'kuba', lt) ? null : 'o', talk: talking(sc, 'kuba', lt) });
     // poranne światło z kuchni
     c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(1080, 0, 600, 0); g.addColorStop(0, 'rgba(255,230,180,.18)'); g.addColorStop(1, 'rgba(255,230,180,0)'); c.fillStyle = g; c.fillRect(600, 0, 480, 1420); c.restore();
   },
   post(c, lt) {
     if (lt < 3) label(c, 'RANO', 540, 300, 'dark', 44, lt, 3 - lt);
-    if (lt > 5.0) card(c, 60, 300, 880, 'ZASADA', 'Ktoś przejął konto? Odłącz urządzenie\nod internetu, zmień hasła na innym\nurządzeniu, włącz weryfikację dwuetapową.\nZgłoś: policja i incydent.cert.pl', lt - 5.0, '#F39C12', 34);
+    if (lt > 10.4) card(c, 60, 300, 880, 'ZASADA', 'Ktoś przejął konto? Odłącz urządzenie\nod internetu, zmień hasła na innym\nurządzeniu, włącz weryfikację dwuetapową.\nZgłoś: policja i incydent.cert.pl', lt - 10.4, '#F39C12', 34);
     drawSubs(c, 'police', lt);
   },
 });
@@ -237,13 +261,17 @@ sub('police', 5.0, 14, 'Ktoś przejął konto? Odłącz urządzenie od internetu
 // 7. KLATKA: Zdzisiek, schody na 10. piętro, drzwi 104 z taśmą
 scene({
   name: 'stairs', start: 68, end: 82,
-  bubbles: [[1.6, 5.4, 'W nocy ktoś chodził\npo dachu. Słyszałem.', 760, 820, 820, 1000, 'zdzisiek']],
+  bubbles: [
+    say(1.6, 3.8, 'W nocy ktoś chodził\npo dachu. Słyszałem.', 'zdzisiek', 820, 1580, 1.95, -40),
+    say(4.0, 5.2, 'Po dachu? Przecież\nwyjście jest zamknięte.', 'ola', 540, 1590, 1.85, 0),
+    say(5.3, 6.3, 'Na kłódkę. Od lat.', 'zdzisiek', 820, 1580, 1.95, -40),
+  ],
   draw(c, lt, sc) {
     if (lt < 6.4) { // widok z klatki na 9. piętrze: wynoszą laptop
       corridorBg(c, lt, { num: '94', num2: '93', floor: '9' });
       person(c, 'kobieta', mv(lt, 0, 1.4, 520, 360), 1580, 1.95, { t: lt, look: 1, walk: lt < 1.4 ? lt * 10 : null, aR: .9 });
       fillRR(c, mv(lt, 0, 1.4, 520, 360) + 30, 1360, 120, 80, 8, '#1B1D22');
-      person(c, 'ola', mv(lt, .3, 1.7, 600, 540), 1590, 1.85, { t: lt, look: 1, walk: lt > .3 && lt < 1.7 ? lt * 10 : null });
+      person(c, 'ola', mv(lt, .3, 1.7, 600, 540), 1590, 1.85, { t: lt, look: 1, talk: talking(sc, 'ola', lt), walk: lt > .3 && lt < 1.7 ? lt * 10 : null });
       person(c, 'zdzisiek', mv(lt, .4, 1.4, 1200, 820), 1580, 1.95, { t: lt, look: -1, walk: lt > .4 && lt < 1.4 ? lt * 10 : null, talk: talking(sc, 'zdzisiek', lt), net: true });
       night(c, .45, [{ x: 540, y: 250, r: 700, a: .8 }]);
       return;
@@ -304,7 +332,7 @@ sub('notif', 10.2, 16, 'Ola nie powinna tego otwierać. Ale palec sam dotyka ekr
 // 9. ZAKOŃCZENIE: zdjęcie z perspektywy drzwi — „TERAZ”, drzwi się uchylają
 scene({
   name: 'end', start: 98, end: 118,
-  cam: lt => { const sh = lt > 13.4 && lt < 13.9 ? (13.9 - lt) * 30 : 0; return { z: lt < 5 ? 1 + lt * .03 : lt > 13.4 ? 1.06 + (lt - 13.4) * .03 : 1.0 + (lt - 5) * .007, x: Math.sin(lt * 90) * sh - (lt > 13.4 ? 60 : 0) }; },
+  cam: lt => { const sh = lt > 13.4 && lt < 13.9 ? (13.9 - lt) * 30 : 0; return { z: 1, x: Math.sin(lt * 90) * sh }; },
   labels: [[16.0, 20, 'ODC. 10 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
     if (lt < 5.0) { // zdjęcie na ekranie: łóżko Oli z perspektywy drzwi

@@ -61,7 +61,7 @@ function bubble(c, s, cx, by, tx, ty, age = 9, left = 9, size = 42) {
   const below = ty > y + h;
   const bx = clamp(tx, x + 50, x + w - 50);
   c.beginPath();
-  if (below) { c.moveTo(bx - 22, y + h - 2); c.lineTo(bx + 22, y + h - 2); c.lineTo(lerp(bx, tx, .55), Math.min(ty - 20, y + h + 70)); }
+  if (below) { c.moveTo(bx - 22, y + h - 2); c.lineTo(bx + 22, y + h - 2); c.lineTo(lerp(bx, tx, .55), ty - 20); } // ogonek sięga głowy mówiącego
   else { c.moveTo(bx - 22, y + 2); c.lineTo(bx + 22, y + 2); c.lineTo(lerp(bx, tx, .55), Math.max(ty + 20, y - 70)); }
   c.closePath(); c.fillStyle = '#FFFFFF'; c.fill();
   fillRR(c, x, y, w, h, 22, '#FFFFFF');

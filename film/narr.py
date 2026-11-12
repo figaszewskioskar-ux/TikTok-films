@@ -38,8 +38,14 @@ for i, seg in enumerate(SEG):
     sc, a, text = seg[:3]
     who = seg[3] if len(seg) > 3 else 'lektor'
     v, m, st = VOICES.get(who, (VOICE, MODEL, SETTINGS))
-    mp3 = os.path.join(OUT, f'n{i:02d}.mp3'); meta = mp3 + '.txt'; wav = mp3[:-4] + '.wav'
     key = text + v + m + json.dumps(st)
+    # nagrania zapisywane po treści (hash), nie po numerze: zmiana kolejności SEG nie wymusza ponownego nagrania
+    import hashlib, glob, shutil
+    mp3 = os.path.join(OUT, 'h_' + hashlib.md5(key.encode()).hexdigest()[:12] + '.mp3'); meta = mp3 + '.txt'; wav = mp3[:-4] + '.wav'
+    if not os.path.exists(mp3):
+        for mt in glob.glob(os.path.join(OUT, 'n*.mp3.txt')):
+            if open(mt).read() == key and os.path.exists(mt[:-4]):
+                shutil.copy(mt[:-4], mp3); open(meta, 'w').write(key); break
     nb = lambda j: SEG[j][2] if 0 <= j < len(SEG) and (len(SEG[j]) < 4 or SEG[j][3] == who) else None
     if not (os.path.exists(mp3) and os.path.exists(meta) and open(meta).read() == key):
         tts(text, nb(i - 1), nb(i + 1), mp3, v, m, st)
