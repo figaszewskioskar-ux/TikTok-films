@@ -15,14 +15,15 @@
   // ciemność z latarką
   var cv = document.createElement('canvas'); cv.className = 'pl-dark'; cv.setAttribute('aria-hidden', 'true'); fig.appendChild(cv);
   var hint = document.createElement('div'); hint.className = 'pl-hint'; hint.textContent = 'Przesuń palcem · latarka'; fig.appendChild(hint);
-  var ctx = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), lx = .6, ly = .45, touched = 0;
+  var ctx = cv.getContext('2d'), dpr = 1, lx = .6, ly = .45, touched = 0;
   function size() { cv.width = fig.clientWidth * dpr; cv.height = fig.clientHeight * dpr; }
   size(); addEventListener('resize', size); if ('ResizeObserver' in window) new ResizeObserver(size).observe(fig);
   function move(e) { var r = fig.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; lx = (p.clientX - r.left) / r.width; ly = (p.clientY - r.top) / r.height; touched = performance.now(); hint.style.opacity = 0; }
   fig.addEventListener('pointermove', move); fig.addEventListener('pointerdown', move); fig.addEventListener('touchmove', move, { passive: true });
   var vis = true; if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; }).observe(fig);
+  var lastF = 0;
   function frame(t) {
-    if (vis) {
+    if (vis && t - lastF > 33) { lastF = t;
       if (performance.now() - touched > 3000) { lx = .5 + Math.sin(t / 1700) * .3; ly = .42 + Math.sin(t / 950) * .14; }
       var w = cv.width, h = cv.height, cx = lx * w, cy = ly * h, R = Math.min(w, h) * .5, fl = Math.random() < .04 ? .6 : .92;
       ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, w, h); ctx.fillStyle = 'rgba(2,3,8,.6)'; ctx.fillRect(0, 0, w, h);
@@ -34,7 +35,7 @@
   }
   requestAnimationFrame(frame);
   // paralaksa: baner przesuwa się wolniej niż strona
-  if (!RM) addEventListener('scroll', function () { var y = Math.min(scrollY, 900); fig.style.transform = 'translateY(' + (y * .3) + 'px)'; }, { passive: true });
+  // paralaksa wyłączona: na iPhonie przewijanie zacinało się na banerze
 })();
 // Bohaterowie: animowane wersje (arkusze klatek z silnika filmów), pętla tam i z powrotem, zamiast statycznych obrazków
 (function () {

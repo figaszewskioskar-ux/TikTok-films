@@ -10,10 +10,7 @@ html body, html body #MainContent { background: var(--pl-bg) !important; }
   background: var(--pl-bg) !important; color: var(--pl-fg);
 }
 /* ziarno filmowe na całej stronie */
-html body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .07; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: plGrain .5s steps(2) infinite; }
-@keyframes plGrain { 50% { transform: translate(-6px, 4px); } }
+/* ziarno filmowe wyłączone: na iPhonie blokowało płynne przewijanie */
 :is(#b94, #b94a, #b94k, #b94w, #b94w2, #b94g) :is(section, section[class], .band, .rules, .sup, .parts) { background: transparent !important; }
 :is(#b94, #b94a, #b94k, #b94w) section + section { border-top: 0 !important; }
 :is(#b94k, #b94w) .lamp, #b94:before { display: none !important; }
@@ -116,7 +113,7 @@ html body .po-head { background: rgba(0, 0, 0, .9) !important; border-bottom: 1p
 html body .po-nav a { text-transform: uppercase; letter-spacing: .06em; font-size: 12px !important; font-weight: 700; }
 html body .po-foot, html body .po-foot > * { background: #000 !important; }
 html body .po-foot { border-top: 1px solid var(--pl-line) !important; }
-@media (prefers-reduced-motion: reduce) { html body::after, #b94 .hero h1 { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { #b94 .hero h1 { animation: none !important; } }
 
 /* ---------- NAPIWKI: kasa biletowa kina ---------- */
 #b94 .sup .w { grid-template-columns: 1fr !important; gap: 22px !important; }
@@ -245,3 +242,14 @@ html body .b94s-ig svg { animation: plFlash 4.4s ease-out infinite; }
 #b94 .floors button[aria-pressed=true] { border-color: #111 !important; }
 #b94 .btn.red.tipbtn { margin-top: 16px !important; min-height: 62px; font-size: 16px !important; }
 #b94 .payic { gap: 6px !important; margin-top: 16px !important; }
+
+/* ---------- NAPIWKI v4: zaokrąglony bilet ---------- */
+#b94 .tipcard { border-radius: 28px !important; }
+#b94 .chars { border-radius: 28px 28px 0 0; }
+#b94 .floors button { border-radius: 16px !important; }
+#b94 .btn.red.tipbtn { border-radius: 18px !important; }
+#b94 .chars .bubble { border-radius: 14px !important; }
+#b94 .payic .pi, #b94 .payic svg { border-radius: 6px; }
+#b94 .goal { border-radius: 0 0 28px 28px !important; }
+html body .b94w, html body .b94w-b, html body .b94w .b94s-row { border-radius: 18px !important; overflow: hidden; }
+html body .b94w-x { border-radius: 50% !important; }
