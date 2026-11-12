@@ -52,7 +52,7 @@ function bubble(c, s, cx, by, tx, ty, age = 9, left = 9, size = 42) {
   font(c, size, 700);
   const w = Math.max(...lines.map(l => c.measureText(l).width)) + 70;
   const lh = size * 1.25, h = lines.length * lh + 46;
-  let x = clamp(cx - w / 2, 40, 900 - w), y = by - h;
+  let x = clamp(cx - w / 2, 40, 1040 - w), y = by - h;
   const sc = age < 0.25 ? back(age / 0.25) : 1, al = clamp(left / 0.15);
   c.save(); c.globalAlpha *= al;
   const ox = tx, oy = ty; c.translate(ox, oy); c.scale(sc, sc); c.translate(-ox, -oy);
