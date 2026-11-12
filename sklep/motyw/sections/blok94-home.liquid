@@ -279,20 +279,36 @@
   var g2=ctx.createRadialGradient(x+w/2,y+h/2,2,x+w/2,y+h/2,w*1.8);g2.addColorStop(0,'rgba(120,170,255,'+(.55*f)+')');g2.addColorStop(1,'rgba(120,170,255,0)');ctx.fillStyle=g2;ctx.fillRect(x-w*1.5,y-h*1.5,w*4,h*4);
   // snop latarki co ok. 9 s
   var p=(t%9)/9;if(p<.35){var q=p/.35,lx=X(80+q*900),ly=Y(980);ctx.save();ctx.translate(lx,ly);ctx.rotate(-1.2+q*.5);var lg=ctx.createLinearGradient(0,0,0,-M.h*dpr);lg.addColorStop(0,'rgba(255,240,200,.22)');lg.addColorStop(1,'rgba(255,240,200,0)');ctx.fillStyle=lg;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-60*dpr,-M.h*dpr);ctx.lineTo(60*dpr,-M.h*dpr);ctx.fill();ctx.restore();}
+  // tablica LED nad klatką: odliczanie do nowego odcinka, po czasie „WKRÓTCE”
+  led(t);
   // Kaptur: stoi tyłem, odwraca się, idzie do klatki, pojawia się w oknie 104
   kap(t);
   // śnieg
   ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(235,240,255,.75)';
   snow.forEach(function(sn){sn.y+=sn.v*dt*3;if(sn.y>1.02){sn.y=-.02;sn.x=Math.random();}var sx=(sn.x+Math.sin(t*.7+sn.d)*.01)*cv.width,sy=sn.y*cv.height;ctx.beginPath();ctx.arc(sx,sy,sn.s*dpr,0,6.3);ctx.fill();});}
  var KS=new Image(),KR=false,FW=480,FH=720;KS.onload=function(){KR=true;};if(cv.dataset.kaptur)KS.src=cv.dataset.kaptur;
+ var CD=document.getElementById('cd'),CT=CD?Date.parse(CD.dataset.t):NaN,EPN=(function(){var l=document.querySelector('#b94 .next .lbl');var m=l&&l.textContent.match(/\d+/);return m?m[0]:'';})();
+ function led(t){var x0=X(290),y0=Y(640),w=500*M.s*dpr,h=160*M.s*dpr,k=M.s*dpr;ctx.globalCompositeOperation='source-over';
+  var fl=(t%13>12.6&&Math.random()<.5)||((t%25)>14.6&&(t%25)<15.6&&Math.random()<.4)?.25:1;
+  ctx.fillStyle='rgba(6,7,10,.92)';ctx.fillRect(x0,y0,w,h);ctx.strokeStyle='rgba(120,125,140,.55)';ctx.lineWidth=3*k;ctx.strokeRect(x0,y0,w,h);
+  ctx.fillStyle='rgba(60,62,70,.9)';ctx.fillRect(x0+w*.2,y0+h,5*k,40*k);ctx.fillRect(x0+w*.8-5*k,y0+h,5*k,40*k);
+  var s1,s2,blink=1,left=CT-Date.now();
+  if(!isNaN(CT)&&left>0){var z=Math.floor(left/1000),d=Math.floor(z/86400),hh=Math.floor(z%86400/3600),mm=Math.floor(z%3600/60),ss=z%60,P=function(n){return(n<10?'0':'')+n;};
+   s1=(EPN?'ODC. '+EPN+' ZA':'NOWY ODC. ZA');s2=(d>0?d+'D ':'')+P(hh)+':'+P(mm)+':'+P(ss);}
+  else{s1=EPN?'ODC. '+EPN:'NOWY ODCINEK';s2='WKRÓTCE';blink=(Math.floor(t*1.6)%2)?1:.35;}
+  ctx.save();ctx.globalAlpha=fl;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='rgba(255,40,30,.9)';ctx.shadowBlur=14*k;ctx.fillStyle='#ff3b30';
+  ctx.font='700 '+Math.round(34*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s1,x0+w/2,y0+h*.24);
+  ctx.globalAlpha=fl*blink;ctx.font='800 '+Math.round(84*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s2,x0+w/2,y0+h*.65);ctx.restore();
+  ctx.fillStyle='rgba(0,0,0,.35)';for(var gy=y0+2*k;gy<y0+h;gy+=4*k)ctx.fillRect(x0,gy,w,1.2*k);}
+ try{document.fonts.load('800 40px "Big Shoulders Display"','ODC. WKRÓTCE 0123456789:');}catch(e){}
  function E(v){return v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2;}
- function kap(t){if(!KR)return;var u=t%25,a=1,fr=0,sx=1,x=760,y=1340,s=1,q;ctx.globalCompositeOperation='source-over';
+ function kap(t){if(!KR)return;var u=t%25,a=1,fr=0,sx=1,x=870,y=1340,s=1,q;ctx.globalCompositeOperation='source-over';
   if(u<1)a=u;
   else if(u<5){fr=0;}
   else if(u<5.5){q=(u-5)/.5;sx=Math.max(.04,Math.abs(Math.cos(q*Math.PI)));fr=q<.5?0:1;}
   else if(u<8){fr=1;}
   else if(u<8.5){q=(u-8)/.5;sx=Math.max(.04,Math.abs(Math.cos(q*Math.PI)));fr=q<.5?1:0;}
-  else if(u<15.8){q=Math.min(1,(u-8.5)/6.5);var e=E(q);x=760-220*e;y=1340-256*e;s=1-.79*e;fr=2+Math.floor((u-8.5)*7)%8;if(u>15)a=Math.max(0,1-(u-15)/.8);}
+  else if(u<15.8){q=Math.min(1,(u-8.5)/6.5);var e=E(q);x=870-330*e;y=1340-256*e;s=1-.79*e;fr=2+Math.floor((u-8.5)*7)%8;if(u>15)a=Math.max(0,1-(u-15)/.8);}
   else a=0;
   if(u>14.6&&u<16.2){ctx.fillStyle='rgba(5,6,10,'+(Math.random()<.35?.6:.12)+')';ctx.fillRect(X(452),Y(930),176*M.s*dpr,150*M.s*dpr);}
   if(a>0){var w=FW*s*M.s*dpr,h=FH*s*M.s*dpr,k=w/FW;ctx.save();ctx.globalAlpha=a;ctx.translate(X(x),Y(y));ctx.scale(sx,1);
