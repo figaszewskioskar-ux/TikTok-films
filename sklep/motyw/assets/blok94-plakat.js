@@ -25,7 +25,7 @@
     if (vis) {
       if (performance.now() - touched > 3000) { lx = .5 + Math.sin(t / 1700) * .3; ly = .42 + Math.sin(t / 950) * .14; }
       var w = cv.width, h = cv.height, cx = lx * w, cy = ly * h, R = Math.min(w, h) * .42, fl = Math.random() < .04 ? .6 : .92;
-      ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, w, h); ctx.fillStyle = 'rgba(2,3,8,.72)'; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, w, h); ctx.fillStyle = 'rgba(2,3,8,.38)'; ctx.fillRect(0, 0, w, h);
       ctx.globalCompositeOperation = 'destination-out'; var g = ctx.createRadialGradient(cx, cy, R * .05, cx, cy, R);
       g.addColorStop(0, 'rgba(0,0,0,' + fl + ')'); g.addColorStop(.6, 'rgba(0,0,0,' + fl * .55 + ')'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fill();
       ctx.globalCompositeOperation = 'source-over'; var wg = ctx.createRadialGradient(cx, cy, 2, cx, cy, R); wg.addColorStop(0, 'rgba(255,240,200,.10)'); wg.addColorStop(1, 'rgba(255,240,200,0)'); ctx.fillStyle = wg; ctx.fillRect(cx - R, cy - R, R * 2, R * 2);

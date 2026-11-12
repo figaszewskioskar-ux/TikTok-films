@@ -42,12 +42,12 @@ html body::after { content: ""; position: fixed; inset: 0; pointer-events: none;
 #b94 section.hero, #b94 .hero { padding: 0 0 30px !important; overflow: hidden; }
 #b94 .hero .wrap { display: flex !important; flex-direction: column; gap: 0 !important; }
 #b94 .hero figure { order: -1; margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) !important; border-radius: 0 !important; border: 0 !important; box-shadow: none !important; position: relative; will-change: transform; }
-#b94 .hero figure img { height: min(86vh, 700px) !important; width: 100%; object-fit: cover; object-position: 55% 30% !important; }
-#b94 .hero figure::after { height: 70% !important; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 40%, #000 96%) !important; }
-#b94 .hero .wrap > div:first-child { margin-top: -330px !important; text-align: center; position: relative; z-index: 6; }
+#b94 .hero figure img { height: auto !important; width: 100%; aspect-ratio: 1080 / 1350; object-fit: cover; object-position: 50% 50% !important; }
+#b94 .hero figure::after { height: 22% !important; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 100%) !important; }
+#b94 .hero .wrap > div:first-child { margin-top: -40px !important; text-align: center; position: relative; z-index: 6; }
 #b94 .hero .eyebrow { justify-content: center; color: #C8C2B6 !important; }
 #b94 .hero .eyebrow::before { display: none !important; }
-#b94 .hero h1 { font-size: clamp(110px, 33vw, 200px) !important; line-height: .82 !important; margin: 10px auto 12px !important; max-width: 5ch; animation: plNeon 6s infinite; }
+#b94 .hero h1 { font-size: clamp(88px, 27vw, 170px) !important; line-height: .82 !important; margin: 10px auto 12px !important; max-width: 5ch; animation: plNeon 6s infinite; }
 #b94 .hero h1 .sign { color: var(--pl-fg) !important; text-shadow: none; }
 @keyframes plNeon { 0%, 18%, 22%, 58%, 61%, 100% { text-shadow: 0 0 22px rgba(215, 38, 61, .55), 0 0 2px #fff; opacity: 1; } 20%, 59.5% { text-shadow: none; opacity: .5; } }
 #b94 .hero .tagline { font: 800 12px/1.6 var(--pl-body) !important; letter-spacing: .34em !important; color: var(--pl-red) !important; text-align: center; margin: 0 0 20px !important; }
