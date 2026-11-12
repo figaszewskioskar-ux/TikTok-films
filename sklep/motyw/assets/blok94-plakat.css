@@ -36,7 +36,7 @@ html body::after { content: ""; position: fixed; inset: 0; pointer-events: none;
 :is(#b94, #b94a, #b94k, #b94w, #b94w2, #b94g) :is(.btn.red, .btn.go) { background: var(--pl-fg) !important; color: #000 !important; }
 :is(#b94, #b94a, #b94k, #b94w, #b94w2, #b94g) :is(.btn.line, .btn.ghost) { background: transparent !important; color: var(--pl-fg) !important; border: 1px solid var(--pl-line) !important; }
 :is(#b94k, #b94w) .btn.gold { background: transparent !important; color: var(--pl-fg) !important; border: 1px solid var(--pl-fg) !important; }
-#b94 .tipbtn { background: var(--pl-red) !important; color: #fff !important; }
+#b94 .btn.red.tipbtn { background: var(--pl-red) !important; color: #fff !important; }
 
 /* ---------- STRONA GŁÓWNA: plakat ---------- */
 #b94 section.hero, #b94 .hero { padding: 0 0 30px !important; overflow: hidden; }
@@ -117,3 +117,51 @@ html body .po-nav a { text-transform: uppercase; letter-spacing: .06em; font-siz
 html body .po-foot, html body .po-foot > * { background: #000 !important; }
 html body .po-foot { border-top: 1px solid var(--pl-line) !important; }
 @media (prefers-reduced-motion: reduce) { html body::after, #b94 .hero h1 { animation: none !important; } }
+
+/* ---------- NAPIWKI: kasa biletowa kina ---------- */
+#b94 .sup .w { grid-template-columns: 1fr !important; gap: 22px !important; }
+#b94 .tipcard { background: #070708 !important; border: 1px solid var(--pl-line) !important; border-radius: 0 !important; box-shadow: none !important; padding: 0 !important; position: relative; overflow: hidden; }
+#b94 .tipcard::before, #b94 .tipcard::after { content: ""; position: absolute; top: 236px; width: 26px; height: 26px; border-radius: 50%; background: #000; border: 1px solid var(--pl-line); z-index: 2; }
+#b94 .tipcard::before { left: -14px; } #b94 .tipcard::after { right: -14px; }
+#b94 .chars { margin: 0 !important; padding: 18px 18px 0; height: 210px; align-items: flex-end !important; background: radial-gradient(60% 80% at 50% 100%, rgba(215, 38, 61, .18), transparent 70%); border-bottom: 1px dashed var(--pl-line); }
+#b94 .chars img { width: 34% !important; max-width: 140px; }
+#b94 .chars .bubble { background: var(--pl-fg) !important; color: #000 !important; border: 0 !important; border-radius: 0 !important; font: 700 13px/1.3 var(--pl-body) !important; margin-bottom: 110px !important; }
+#b94 .panel { background: none !important; box-shadow: none !important; border-radius: 0 !important; padding: 22px 18px 18px !important; }
+#b94 .plate { color: var(--pl-muted) !important; font: 600 10px var(--pl-body) !important; letter-spacing: .32em !important; }
+#b94 .plate b { background: none !important; color: var(--pl-fg) !important; padding: 0 !important; letter-spacing: .32em; }
+#b94 .led { background: none !important; box-shadow: none !important; padding: 8px 0 4px !important; }
+#b94 .led .amount { font: 400 96px/1 var(--pl-display) !important; color: var(--pl-fg) !important; text-shadow: none !important; }
+#b94 .led .buys { color: var(--pl-red) !important; font: 700 12px var(--pl-body) !important; letter-spacing: .18em; text-transform: uppercase; }
+#b94 .floors { gap: 0 !important; margin: 18px 0 0 !important; border-top: 1px solid var(--pl-line); border-left: 1px solid var(--pl-line); }
+#b94 .floors button { aspect-ratio: auto !important; height: 64px; border-radius: 0 !important; background: none !important; box-shadow: none !important; color: var(--pl-fg) !important;
+  border-right: 1px solid var(--pl-line) !important; border-bottom: 1px solid var(--pl-line) !important; font: 400 30px/1 var(--pl-display) !important; transition: background .15s, color .15s; }
+#b94 .floors button small { font: 600 10px var(--pl-body) !important; letter-spacing: .2em; opacity: .6; }
+#b94 .floors button[aria-pressed=true] { background: var(--pl-fg) !important; color: #000 !important; }
+#b94 .tipbtn { margin-top: 18px !important; min-height: 60px; font: 800 15px var(--pl-body) !important; letter-spacing: .16em !important; }
+#b94 .payic { opacity: .55 !important; filter: grayscale(1); }
+#b94 .goal { margin: 0 !important; border: 0 !important; border-top: 1px dashed var(--pl-line) !important; padding: 16px 18px !important; }
+#b94 .goal .gt b { font: 600 11px var(--pl-body); letter-spacing: .2em; text-transform: uppercase; color: var(--pl-muted); }
+#b94 .goal .gt span { color: var(--pl-fg) !important; font: 400 20px var(--pl-display) !important; }
+#b94 .goal .gb { height: 4px !important; border-radius: 0 !important; background: rgba(255, 255, 255, .1) !important; }
+#b94 .goal .gb i { background: var(--pl-red) !important; border-radius: 0 !important; }
+#b94 .tipcard > .note { display: block; padding: 0 18px 18px; color: var(--pl-muted) !important; font-size: 11px !important; }
+
+/* ---------- OKIENKO POWITALNE: zwiastun ---------- */
+html body .b94w { background: #000 !important; border: 1px solid var(--pl-line) !important; border-radius: 0 !important; padding: 0 !important; box-shadow: 0 40px 120px rgba(0, 0, 0, .9) !important; overflow: hidden; text-align: center; }
+html body .b94w::backdrop { background: rgba(0, 0, 0, .82) !important; backdrop-filter: blur(4px); }
+html body .b94w-hero { position: relative; height: 220px; background-position: 50% 45%; background-size: cover; }
+html body .b94w-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .2), #000); }
+html body .b94w-in { padding: 0 22px 18px; margin-top: -54px; position: relative; z-index: 1; }
+html body .b94w-x { background: rgba(0, 0, 0, .6) !important; border-radius: 0 !important; z-index: 3; }
+html body .b94w-e { background: none !important; color: var(--pl-muted) !important; padding: 0 !important; border-radius: 0 !important; font: 600 10px var(--pl-body) !important; letter-spacing: .38em !important; }
+html body .b94w h2 { font: 400 56px/.9 var(--pl-display) !important; text-transform: uppercase; margin: 10px 0 10px !important; animation: plNeon 6s infinite; }
+html body .b94w p { color: var(--pl-muted) !important; font-size: 14px !important; line-height: 1.55; }
+html body .b94w .b94w-n { color: var(--pl-fg) !important; font: 600 10px var(--pl-body) !important; letter-spacing: .3em; text-transform: uppercase; margin: 14px 0 10px !important; }
+html body .b94w .b94s-row { grid-template-columns: repeat(3, 1fr) !important; gap: 0 !important; border: 1px solid var(--pl-line); }
+html body .b94w .b94s-a { background: none !important; border: 0 !important; border-right: 1px solid var(--pl-line) !important; border-radius: 0 !important; box-shadow: none !important; color: var(--pl-fg) !important; min-height: 52px; font-size: 12px !important; letter-spacing: .06em; padding: 0 4px !important; }
+html body .b94w .b94s-a:last-child { border-right: 0 !important; }
+html body .b94w-go { gap: 0 !important; margin-top: 12px !important; }
+html body .b94w-b { border-radius: 0 !important; font: 800 13px var(--pl-body) !important; letter-spacing: .14em; text-transform: uppercase; min-height: 56px !important; }
+html body .b94w-g { background: var(--pl-fg) !important; color: #000 !important; }
+html body .b94w-s { background: var(--pl-red) !important; color: #fff !important; }
+html body .b94w-l { color: var(--pl-muted) !important; font: 600 11px var(--pl-body) !important; letter-spacing: .24em; text-transform: uppercase; text-decoration: none !important; }

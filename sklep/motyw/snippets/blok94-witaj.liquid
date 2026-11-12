@@ -1,15 +1,18 @@
 {%- comment -%} Okienko po wejściu na stronę: media społecznościowe + gra + wsparcie. Raz na wizytę (sessionStorage). {%- endcomment -%}
 <dialog id="b94-witaj" class="b94w" aria-labelledby="b94w-t">
   <button type="button" class="b94w-x" id="b94w-x" aria-label="Zamknij">×</button>
+  <div class="b94w-hero" style="background-image:url('{{ 'blok94-hero-bg.jpg' | asset_url }}')" aria-hidden="true"></div>
+  <div class="b94w-in">
   <span class="b94w-e">Klatka II · 9. piętro</span>
   <h2 id="b94w-t">Witaj w bloku 94.</h2>
-  <p>Tu nikt nie śpi spokojnie. Zagraj w grę, przejrzyj akta sprawy i zapukaj tam, gdzie świeci się światło… 👀</p><p class="b94w-n">Obserwuj nas, żeby nie przegapić kolejnej nocy:</p>
+  <p>Tu nikt nie śpi spokojnie. Zagraj w grę, przejrzyj akta sprawy i zapukaj tam, gdzie świeci się światło…</p><p class="b94w-n">Obserwuj nas, żeby nie przegapić kolejnej nocy:</p>
   {% render 'blok94-social' %}
   <div class="b94w-go">
-    <a class="b94w-b b94w-g" href="/pages/gra">🎮 Zagraj w grę</a>
-    <a class="b94w-b b94w-s" href="{{ routes.root_url }}#wesprzyj" id="b94w-s">❤️ Wesprzyj nas</a>
+    <a class="b94w-b b94w-g" href="/pages/gra">Zagraj w grę</a>
+    <a class="b94w-b b94w-s" href="{{ routes.root_url }}#wesprzyj" id="b94w-s">Wesprzyj nas</a>
   </div>
   <button type="button" class="b94w-l" id="b94w-l">Później</button>
+  </div>
 </dialog>
 <style>
 .b94w{border:0;padding:24px 20px 18px;border-radius:24px;max-width:min(440px,calc(100vw - 32px));width:100%;background:radial-gradient(500px 260px at 80% -10%,#26305a,#0f1220 70%);color:#f3efe6;font-family:"Public Sans",system-ui,sans-serif;box-shadow:0 30px 80px rgba(0,0,0,.6)}
