@@ -93,6 +93,11 @@
 @media(min-width:900px){#b94a .end{grid-template-columns:1fr 1fr;align-items:start}}
 #b94a .end .box{background:var(--wall);border-radius:22px;padding:22px}
 #b94a .end .box .b94n{margin-top:12px}
+#b94a .rules-a{margin-top:44px}
+#b94a .rl{list-style:none;counter-reset:r;margin:22px 0 0;padding:0;border-top:1px solid rgba(243,239,230,.16)}
+#b94a .rl li{counter-increment:r;display:grid;grid-template-columns:52px 1fr;column-gap:12px;padding:18px 0;border-bottom:1px solid rgba(243,239,230,.16)}
+#b94a .rl li::before{content:counter(r,decimal-leading-zero);grid-row:span 2;font:400 34px/1 Anton,Impact,sans-serif;color:var(--sign)}
+#b94a .rl li>b{font-size:17px;color:var(--ink);display:block}#b94a .rl li>span{color:var(--muted);font-size:15px;margin-top:4px;display:block;font-weight:400}#b94a .rl .n112{color:var(--ink)}
 </style>
 
 {%- capture ic_eye -%}<span class="ic" aria-hidden="true">👁</span>{%- endcapture -%}
@@ -206,6 +211,11 @@
       <div class="row"><button type="button" class="btn red" id="b94a-copy">Kopiuj komentarz</button><a class="btn line" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Otwórz TikToka</a></div></div>
   </section>
 
+  <section class="rules-a" id="zasady">
+    <span class="eyebrow">Z każdej części jedna zasada</span><h2 style="margin-top:12px">Zasady z bloku 94</h2>
+    <p class="lead" style="margin-top:8px">Każdy błąd w serii ma swoją zasadę. Tu są wszystkie w jednym miejscu.</p>
+    <ol class="rl"><li><b>Ktoś puka w nocy, a wizjer jest czarny?</b><span>Nie pytaj „kto tam?”. Nie zdradzaj, że jesteś w domu. Dzwoń na <b class="n112">112</b>.</span></li><li><b>Ktoś prosi o pomoc zza drzwi?</b><span>Nie otwieraj, nawet na łańcuch. Pomoc wezwiesz przez drzwi.</span></li><li><b>Ktoś mówi, że jest z policji?</b><span>Zapytaj dyspozytora <b class="n112">112</b>, czy patrol jest pod twoim adresem.</span></li>{%- if P >= 3 -%}<li><b>Prąd zgasł tylko u ciebie?</b><span>Nie wychodź w nocy na korytarz do licznika.</span></li>{%- endif -%}{%- if P >= 4 -%}<li><b>Zgubione klucze z numerem mieszkania?</b><span>Zamek wymień tej samej nocy. Nie noś numeru na breloczku.</span></li>{%- endif -%}{%- if P >= 5 -%}<li><b>Nowy sąsiad pyta, kiedy jesteś sam?</b><span>Bądź miły przez drzwi, ale nie mów tego i nie wpuszczaj obcych do środka.</span></li>{%- endif -%}<li><b>Jesteś sam w domu?</b><span>Nie pisz o tym w relacji i nie dodawaj lokalizacji.</span></li></ol>
+  </section>
   <div class="end">
     <div class="box"><span class="eyebrow">Nie przegap</span><h2 style="margin-top:12px">Nowe akta po każdej premierze</h2>
       {% render 'blok94-powiadom', id: 'akta' %}</div>
