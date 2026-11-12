@@ -25,8 +25,9 @@
 #b94 .hero .wrap>div:first-child{position:relative;z-index:4;margin-top:-96px}
 #b94 .hero .eyebrow{display:flex;align-items:center;gap:10px}
 #b94 .hero .eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sign);box-shadow:0 0 0 4px rgba(215,38,61,.2);animation:b94rec 2s ease-in-out infinite}
-#b94 .hero h1{font-size:clamp(60px,16vw,112px);line-height:1;margin:14px 0 16px}
-#b94 .hero h1 .sign{background:var(--sign)!important;color:#fff;padding:.04em .28em .1em;border-radius:.18em;transform:rotate(-1.5deg);box-shadow:0 10px 30px rgba(215,38,61,.35)!important}
+#b94 .hero h1{font-size:clamp(72px,19vw,132px);line-height:.88;margin:14px 0 14px;letter-spacing:-.015em}
+#b94 .hero h1 .sign{background:none!important;color:var(--ink);padding:0;transform:none;box-shadow:none!important;animation:none!important;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+#b94 .hero h1 .sign:after{content:"";display:block;height:.09em;width:1.15em;background:var(--sign);margin-top:.06em;transform-origin:left;animation:b94line 1s .5s cubic-bezier(.2,.8,.2,1) both}
 #b94 .hero .tagline{font:800 15px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 14px}
 #b94 .hero .tagline span{color:var(--sign)}
 #b94 .hero .story{color:var(--muted);font-size:17px;line-height:1.6;margin:0}
@@ -100,6 +101,7 @@
 /* ---------- animacje: tylko kilka, spokojnych ---------- */
 @keyframes b94in{from{opacity:0;filter:brightness(.4)}to{opacity:1;filter:none}}
 @keyframes b94up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes b94line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes b94rec{0%,100%{opacity:1}50%{opacity:.35}}
 #b94 .rv{transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
 

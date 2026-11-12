@@ -247,7 +247,7 @@
  function place(){if(!img.naturalWidth)return;var w=img.clientWidth,h=img.clientHeight,nw=img.naturalWidth,nh=img.naturalHeight,cs=getComputedStyle(img),fit=cs.objectFit,
   pos=(cs.objectPosition||'50% 50%').split(' ').map(function(v){return parseFloat(v)/100;}),s=fit==='cover'?Math.max(w/nw,h/nh):w/nw,ox=(w-nw*s)*(fit==='cover'?pos[0]:0),oy=(h-nh*s)*(fit==='cover'?pos[1]:0);
   b.style.left=(img.offsetLeft+ox+701/1080*nw*s)+'px';b.style.top=(img.offsetTop+oy+136/1350*nh*s)+'px';b.hidden=false;pk.style.left=b.style.left;pk.style.top=b.style.top;}
- if(img.complete)place();img.addEventListener('load',place);addEventListener('resize',place);
+ if(img.complete)place();img.addEventListener('load',place);addEventListener('resize',place);if('ResizeObserver' in window)new ResizeObserver(function(){place();}).observe(img);
  var n=0,t=0;b.addEventListener('click',function(){var now=Date.now();n=(now-t<1500)?n+1:1;t=now;b.classList.remove('knock');void b.offsetWidth;b.classList.add('knock');pk.textContent=n<3?'PUK '+n+'/3':'PUK!';pk.classList.add('on');clearTimeout(ph);ph=setTimeout(function(){pk.classList.remove('on');},900);
   if(n>=3){n=0;try{d.showModal();}catch(e){d.setAttribute('open','');}}});
  var v=document.getElementById('b94-okno-v');document.getElementById('b94-okno-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
@@ -322,7 +322,7 @@
     if(!(u>20.3&&u<20.45)){ctx.fillStyle='rgba(255,245,220,'+on+')';ctx.beginPath();ctx.arc(wx+ww*.44,wy+wh*.47,Math.max(1,ww*.028),0,7);ctx.arc(wx+ww*.56,wy+wh*.47,Math.max(1,ww*.028),0,7);ctx.fill();}}}
  }
  function start(){fit();if(RM){draw(1);}else requestAnimationFrame(frame);}
- if(img.complete)start();else img.addEventListener('load',start);addEventListener('resize',fit);
+ if(img.complete)start();else img.addEventListener('load',start);addEventListener('resize',fit);if('ResizeObserver' in window)new ResizeObserver(function(){fit();}).observe(img);
  if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting;}).observe(cv);
 })();
 // sekcje wjeżdżają przy przewijaniu
