@@ -112,7 +112,7 @@
     </div>
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odc. 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>TikTok · {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.webp' | asset_url }}" data-obrot="{{ 'blok94-kaptur-obrot.webp' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
+  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.webp' | asset_url }}" data-obrot="{{ 'blok94-kaptur-obrot.webp' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
@@ -286,18 +286,19 @@
   // śnieg
   ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(235,240,255,.75)';
   snow.forEach(function(sn){sn.y+=sn.v*dt*3;if(sn.y>1.02){sn.y=-.02;sn.x=Math.random();}var sx=(sn.x+Math.sin(t*.7+sn.d)*.01)*cv.width,sy=sn.y*cv.height;ctx.beginPath();ctx.arc(sx,sy,sn.s*dpr,0,6.3);ctx.fill();});}
- var KS=new Image(),KO=new Image(),KR=0,FW=480,FH=720;KS.onload=KO.onload=function(){KR++;};if(cv.dataset.kaptur){KS.src=cv.dataset.kaptur;KO.src=cv.dataset.obrot;}
+ var KS=new Image(),KO=new Image(),KR=0,FW=480,FH=780;KS.onload=KO.onload=function(){KR++;};if(cv.dataset.kaptur){KS.src=cv.dataset.kaptur;KO.src=cv.dataset.obrot;}
  var CD=document.getElementById('cd'),CT=CD?Date.parse(CD.dataset.t):NaN,EPN=(function(){var l=document.querySelector('#b94 .next .lbl');var m=l&&l.textContent.match(/\d+/);return m?m[0]:'';})();
  function led(t){var x0=X(290),y0=Y(640),w=500*M.s*dpr,h=160*M.s*dpr,k=M.s*dpr;ctx.globalCompositeOperation='source-over';
   var fl=(t%13>12.6&&Math.random()<.5)||((t%25)>14.6&&(t%25)<15.6&&Math.random()<.4)?.25:1;
-  ctx.fillStyle='rgba(6,7,10,.92)';ctx.fillRect(x0,y0,w,h);ctx.strokeStyle='rgba(120,125,140,.55)';ctx.lineWidth=3*k;ctx.strokeRect(x0,y0,w,h);
+  ctx.fillStyle='rgba(6,7,10,.92)';ctx.fillRect(x0,y0,w,h);var bon=Math.floor(t*2)%2===0;ctx.save();ctx.strokeStyle=bon?'#ff3b30':'rgba(120,40,35,.6)';if(bon){ctx.shadowColor='rgba(255,40,30,.95)';ctx.shadowBlur=18*k;}ctx.lineWidth=4*k;ctx.strokeRect(x0,y0,w,h);ctx.restore();
+  ctx.fillStyle=bon?'#ff3b30':'#5a1c18';for(var di=0;di<14;di++){var dx=x0+w*(di+.5)/14;ctx.beginPath();ctx.arc(dx,y0+5*k,2.2*k,0,7);ctx.arc(dx,y0+h-5*k,2.2*k,0,7);ctx.fill();}
   ctx.fillStyle='rgba(60,62,70,.9)';ctx.fillRect(x0+w*.2,y0+h,5*k,40*k);ctx.fillRect(x0+w*.8-5*k,y0+h,5*k,40*k);
   var s1,s2,blink=1,left=CT-Date.now();
   if(!isNaN(CT)&&left>0){var z=Math.floor(left/1000),d=Math.floor(z/86400),hh=Math.floor(z%86400/3600),mm=Math.floor(z%3600/60),ss=z%60,P=function(n){return(n<10?'0':'')+n;};
-   s1=(EPN?'ODC. '+EPN+' ZA':'NOWY ODC. ZA');s2=(d>0?d+'D ':'')+P(hh)+':'+P(mm)+':'+P(ss);}
-  else{s1=EPN?'ODC. '+EPN:'NOWY ODCINEK';s2='WKRÓTCE';blink=(Math.floor(t*1.6)%2)?1:.35;}
+   s1='NASTĘPNY ODCINEK ZA';s2=(d>0?d+'D ':'')+P(hh)+':'+P(mm)+':'+P(ss);}
+  else{s1='NASTĘPNY ODCINEK';s2='WKRÓTCE';blink=(Math.floor(t*1.6)%2)?1:.35;}
   ctx.save();ctx.globalAlpha=fl;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='rgba(255,40,30,.9)';ctx.shadowBlur=14*k;ctx.fillStyle='#ff3b30';
-  ctx.font='700 '+Math.round(34*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s1,x0+w/2,y0+h*.24);
+  ctx.font='700 '+Math.round(30*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s1,x0+w/2,y0+h*.24);
   ctx.globalAlpha=fl*blink;ctx.font='800 '+Math.round(84*k)+'px "Big Shoulders Display",Impact,sans-serif';ctx.fillText(s2,x0+w/2,y0+h*.65);ctx.restore();
   ctx.fillStyle='rgba(0,0,0,.35)';for(var gy=y0+2*k;gy<y0+h;gy+=4*k)ctx.fillRect(x0,gy,w,1.2*k);}
  try{document.fonts.load('800 40px "Big Shoulders Display"','ODC. WKRÓTCE 0123456789:');}catch(e){}
@@ -312,8 +313,8 @@
   else a=0;
   if(u>14.6&&u<16.2){ctx.fillStyle='rgba(5,6,10,'+(Math.random()<.35?.6:.12)+')';ctx.fillRect(X(452),Y(930),176*M.s*dpr,150*M.s*dpr);}
   if(a>0){var w=FW*s*M.s*dpr,h=FH*s*M.s*dpr,k=w/FW;ctx.save();ctx.globalAlpha=a;ctx.translate(X(x),Y(y));
-   ctx.drawImage(img,fr*FW,row*FH,FW,FH,-w/2,-h*700/720,w,h);
-   if(front&&img===KO&&(fr===23&&row===0)){ctx.globalCompositeOperation='lighter';var pu=.6+.4*Math.sin(t*7);[204,276].forEach(function(ex){var gx=-w/2+ex*k,gy=-h*700/720+138*k,g=ctx.createRadialGradient(gx,gy,0,gx,gy,26*k);g.addColorStop(0,'rgba(255,250,220,'+(.9*pu)+')');g.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=g;ctx.fillRect(gx-26*k,gy-26*k,52*k,52*k);});}
+   ctx.drawImage(img,fr*FW,row*FH,FW,FH,-w/2,-h*760/780,w,h);
+   if(front&&img===KO&&(fr===23&&row===0)){ctx.globalCompositeOperation='lighter';var pu=.6+.4*Math.sin(t*7);[204,276].forEach(function(ex){var gx=-w/2+ex*k,gy=-h*760/780+198*k,g=ctx.createRadialGradient(gx,gy,0,gx,gy,26*k);g.addColorStop(0,'rgba(255,250,220,'+(.9*pu)+')');g.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=g;ctx.fillRect(gx-26*k,gy-26*k,52*k,52*k);});}
    ctx.restore();}
   if(u>18&&u<22.5){var on=u<18.4?(u-18)/.4:(u>22?1-(u-22)/.5:1);on*=.85+.15*Math.sin(u*23);var wx=X(665),wy=Y(20),ww=72*M.s*dpr,wh=55*M.s*dpr;
    ctx.globalCompositeOperation='lighter';var rg=ctx.createRadialGradient(wx+ww/2,wy+wh/2,2,wx+ww/2,wy+wh/2,ww*1.6);rg.addColorStop(0,'rgba(220,70,50,'+(.45*on)+')');rg.addColorStop(1,'rgba(220,70,50,0)');ctx.fillStyle=rg;ctx.fillRect(wx-ww*1.2,wy-wh*1.2,ww*3.4,wh*3.4);

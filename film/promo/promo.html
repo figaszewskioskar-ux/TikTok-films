@@ -11,7 +11,7 @@ function kap3d(c, x, y, s, th, hth, glow) {
   const items = [];
   // nogi
   for (const side of [-1, 1]) {
-    const lx = side * 15 * cs, z = -side * 15 * sn, toe = sn * 12;
+    const lx = side * 15 * cs, z = side * 15 * sn, toe = sn * 12;
     items.push({ z: z - 1, f: () => {
       const dk = z < 0 ? -.25 : 0;
       fillRR(c, lx - 10, -86, 20, 82, 8, shade(K.pants, dk));
@@ -21,7 +21,7 @@ function kap3d(c, x, y, s, th, hth, glow) {
   }
   // ręce
   for (const side of [-1, 1]) {
-    const ax = side * 40 * cs, z = -side * 40 * sn, swing = 0.14 * Math.abs(cs) + 0.03;
+    const ax = side * 40 * cs, z = side * 40 * sn, swing = 0.14 * Math.abs(cs) + 0.03;
     items.push({ z, f: () => {
       c.save(); c.translate(ax, -178); c.rotate(-side * Math.sign(cs || 1) * swing);
       const dk = z < -5 ? -.3 : (z > 5 ? .06 : 0);
@@ -97,19 +97,19 @@ window.PROMO = {
   },
   // klatki Kaptura do animacji na stronie: 0 tyłem, 1 przodem (świecące oczy), 2..9 chód tyłem
   kapturSheet() {
-    const FW = 480, FH = 720, c = document.createElement('canvas'); c.width = FW * 10; c.height = FH; const x = c.getContext('2d');
+    const FW = 480, FH = 780, c = document.createElement('canvas'); c.width = FW * 10; c.height = FH; const x = c.getContext('2d');
     const fr = [{ t: 1, back: true }, { t: 1, glow: 1 }];
     for (let k = 0; k < 8; k++) fr.push({ t: 1, back: true, walk: k * Math.PI / 4 });
-    fr.forEach((o, i) => { x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, 'kaptur', i * FW + FW / 2, 700, 2.4, o); x.restore(); });
+    fr.forEach((o, i) => { x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, 'kaptur', i * FW + FW / 2, 760, 2.4, o); x.restore(); });
     return c.toDataURL('image/png').split(',')[1];
   },
   // obrót Kaptura: wiersz 0 = z tyłu na przód, wiersz 1 = z przodu na tył; 24 klatki, głowa wyprzedza ciało
   kapturTurn() {
-    const FW = 480, FH = 720, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH * 2; const x = c.getContext('2d');
+    const FW = 480, FH = 780, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH * 2; const x = c.getContext('2d');
     for (let r = 0; r < 2; r++) for (let i = 0; i < N; i++) {
       const q = i / (N - 1), th = r === 0 ? q * Math.PI : (1 - q) * Math.PI;
       const hth = Math.max(0, Math.min(Math.PI, th + (r === 0 ? 1 : -1) * 0.5 * Math.sin(q * Math.PI)));
-      x.save(); x.beginPath(); x.rect(i * FW, r * FH, FW, FH); x.clip(); kap3d(x, i * FW + FW / 2, r * FH + 700, 2.4, th, hth, 1); x.restore();
+      x.save(); x.beginPath(); x.rect(i * FW, r * FH, FW, FH); x.clip(); kap3d(x, i * FW + FW / 2, r * FH + 760, 2.4, th, hth, 1); x.restore();
     }
     return c.toDataURL('image/png').split(',')[1];
   },
