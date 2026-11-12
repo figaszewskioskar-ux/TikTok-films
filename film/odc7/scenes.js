@@ -16,6 +16,10 @@ window.EP = {
 };
 const S = [];
 function scene(o) { S.push(o); return o; }
+// dymek nad głową mówiącej postaci: ogonek wskazuje jej głowę (px, py = stopy, s = skala)
+function say(a, b, text, who, px, py, s, dx = 0, lift = 0) { const top = py - 312 * s; return [a, b, text, clamp(px + dx, 200, 880), top - 18 - lift, px, top + 12, who]; }
+function sayAt(a, b, text, who, px, py, dx = 0, up = 60) { return [a, b, text, clamp(px + dx, 200, 880), py - up, px, py, who]; }
+function talking(sc, who, lt) { return (sc.bubbles || []).some(b => b[7] === who && lt >= b[0] && lt < b[0] + Math.min(b[1] - b[0] - .2, .055 * b[2].length + .3)); }
 function bigSign(c, lt, l1, l2, y = 390) {
   const sp = prog(lt, 0.15, 0.4), shake = lt < 1 ? (1 - lt) * 9 : 0; if (sp <= 0) return;
   c.save(); c.translate(540 + Math.sin(lt * 70) * shake, y); const s = back(sp); c.scale(s, s); c.rotate(-0.02);
@@ -72,7 +76,6 @@ function bathroom(c) {
 // 0. HAK
 scene({
   name: 'hook', start: 0, end: 6,
-  cam: lt => ({ z: 1.04 + lt * 0.015 }),
   draw(c, lt) {
     zdzRoom(c, lt, { shadow: .9, eyes: lt > 2.5 ? .9 : 0, sway: 1 });
     night(c, .5, [{ x: 770, y: 880, r: 620, a: .85 }]);
@@ -96,19 +99,21 @@ scene({
 scene({
   name: 'zdz', start: 11, end: 20,
   labels: [[0.3, 5, '23:40 · 2 PIĘTRO', 540, 280, 'dark', 40]],
-  draw(c, lt) {
+  bubbles: [say(2.7, 4.0, 'Duszno jak w piecu…', 'zdzisiek', 760, 1500, 2.0, -80), say(6.2, 7.2, 'Niech no tylko przyjdzie.', 'zdzisiek', 280, 1360, 1.64, 140)],
+  draw(c, lt, sc) {
     zdzRoom(c, lt, { open: lt > 3.2, sway: lt > 3.4 ? .4 : 0 });
     const zx = lt < 2.8 ? mv(lt, 0.4, 2.6, 280, 760) : lt < 4 ? 760 : mv(lt, 4, 6, 760, 280);
-    person(c, 'zdzisiek', zx, lt > 6 ? 1360 : 1500, 2.0, { t: lt, aR: lt > 2.6 && lt < 4 ? 1.6 : .14, walk: (lt > .4 && lt < 2.6) || (lt > 4 && lt < 6) ? lt * 5 : null, squash: lt > 6 ? .82 : 1, look: lt > 6 ? 1 : 0 });
+    person(c, 'zdzisiek', zx, lt > 6 ? 1360 : 1500, 2.0, { t: lt, aR: lt > 2.6 && lt < 4 ? 1.6 : .14, walk: (lt > .4 && lt < 2.6) || (lt > 4 && lt < 6) ? lt * 5 : null, squash: lt > 6 ? .82 : 1, look: lt > 6 ? 1 : 0, talk: talking(sc, 'zdzisiek', lt) });
     night(c, .65, [{ x: 300, y: 1000, r: 420, a: .9, tint: 'rgba(255,210,140,.10)' }, { x: 770, y: 900, r: 380, a: .6 }]);
   },
-  post(c, lt) { if (lt > 7.2) card(c, 70, 330, 860, 'BŁĄD 1', 'zostawił uchylony balkon na noc —\ndrugie piętro to nie dziewiąte', lt - 7.2, '#F39C12', 42); },
+  post(c, lt) { if (lt > 7.4) card(c, 70, 330, 860, 'BŁĄD 1', 'zostawił uchylony balkon na noc —\ndrugie piętro to nie dziewiąte', lt - 7.4, '#F39C12', 42); },
 });
 // 3. PUKANIE — Zdzisiek nie odpowiada
 scene({
   name: 'knock', start: 20, end: 28,
-  cam: lt => { const k = (lt > 0.4 && lt < 1.0) || (lt > 4.0 && lt < 4.6); return { z: 1.02, x: k ? Math.sin(lt * 90) * 9 : 0 }; },
-  labels: [[0.4, 3, 'PUK. PUK. PUK.', 540, 300, 'dark', 48], [5.0, 8, 'NIE ODZYWA SIĘ. DOBRZE.', 540, 300, 'yellow', 40]],
+  cam: lt => { const k = (lt > 0.4 && lt < 1.0) || (lt > 4.0 && lt < 4.6); return { z: 1, x: k ? Math.sin(lt * 90) * 9 : 0 }; },
+  labels: [[0.4, 1.4, 'PUK. PUK. PUK.', 540, 300, 'dark', 48], [5.0, 8, 'NIE ODZYWA SIĘ', 540, 300, 'yellow', 40]],
+  bubbles: [sayAt(1.4, 4.0, 'Panie Zdzisiu… to ja, sąsiad.\nOtworzy pan?', 'zadrzwiami', 310, 880, 120, 70)],
   draw(c, lt) {
     c.fillStyle = '#2D2A33'; c.fillRect(0, 0, W, H); c.fillStyle = '#211B16'; c.fillRect(0, 1420, W, 500);
     paddedDoor(c, 120, 560, 380, 860, '22', { peepDark: true });
@@ -119,11 +124,12 @@ scene({
 // 4. FIRANKA — ktoś na balkonie
 scene({
   name: 'curtain', start: 28, end: 38,
-  cam: lt => { const j = lt > 3.4 && lt < 3.9; return { z: 1.0 + lt * 0.02 + (lt > 3.4 ? .06 : 0), x: j ? Math.sin(lt * 90) * 14 : 0 }; },
+  cam: lt => { const j = lt > 3.4 && lt < 3.9; return { z: 1, x: j ? Math.sin(lt * 90) * 14 : 0 }; },
   labels: [[4.2, 10, 'KTOŚ STOI NA BALKONIE', 540, 380, 'red', 44]],
-  draw(c, lt) {
+  bubbles: [say(7.0, 9.0, 'Matko jedyna…', 'zdzisiek', 280, 1360, 1.64, 140)],
+  draw(c, lt, sc) {
     zdzRoom(c, lt, { open: true, sway: lt > 1.2 ? 1 : .2, shadow: clamp((lt - 2.4) / 1.0), eyes: lt > 6 ? .9 : 0 });
-    person(c, 'zdzisiek', 280, 1360, 2.0, { t: lt, squash: .82, look: 1, wide: lt > 3.4, mouth: lt > 3.4 ? 'o' : null });
+    person(c, 'zdzisiek', 280, 1360, 2.0, { t: lt, squash: .82, look: 1, wide: lt > 3.4, mouth: lt > 3.4 && !talking(sc, 'zdzisiek', lt) ? 'o' : null, talk: talking(sc, 'zdzisiek', lt) });
     night(c, .6, [{ x: 300, y: 1000, r: 380, a: .85, tint: 'rgba(255,210,140,.08)' }, { x: 770, y: 880, r: 520, a: .85 }]);
     if (lt > 3.4 && lt < 3.55) { c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(0, 0, W, H); }
   },
@@ -132,27 +138,36 @@ scene({
 scene({
   name: 'call', start: 38, end: 46,
   labels: [[1.4, 8, '112 · POŁĄCZENIE', 540, 300, 'dark', 42]],
-  bubbles: [[2.4, 6.4, 'Halo, sto dwanaście?\nKtoś jest na moim balkonie!', 520, 820, 520, 1000, 'zdzisiek']],
+  bubbles: [
+    say(1.0, 3.6, 'Halo, sto dwanaście?\nKtoś jest na moim balkonie!', 'zdzisiek', 520, 1500, 2.1, 0),
+    sayAt(3.8, 5.6, 'Patrol jedzie.\nProszę się zamknąć i czekać.', 'dyspozytor', 720, 970, -160, 70),
+    say(5.8, 8.0, 'Ola? Zamknijcie się!\nKtoś jest u mnie na balkonie!', 'zdzisiek', 520, 1500, 2.1, 0),
+  ],
   draw(c, lt, sc) {
     bathroom(c);
-    person(c, 'zdzisiek', 520, 1500, 2.1, { t: lt, aR: 2.5, phone: 2, wide: true, talk: lt > 2.4 && lt < 6.4 });
+    person(c, 'zdzisiek', 520, 1500, 2.1, { t: lt, aR: 2.5, phone: 2, wide: true, talk: talking(sc, 'zdzisiek', lt) });
     night(c, .6, [{ x: 520, y: 1000, r: 500, a: .9, tint: 'rgba(80,220,150,.08)' }]);
   },
 });
 // 6. OLA I KUBA WYBIEGAJĄ — błąd 2
 scene({
   name: 'run', start: 46, end: 54,
-  draw(c, lt) {
-    if (lt < 2.6) { // z przedpokoju do drzwi
+  bubbles: [
+    say(0.1, 0.9, 'Pan Zdzisiek ma kłopoty!\nLecimy!', 'kuba', 580, 1500, 2.1, 40),
+    say(0.9, 1.5, 'Kuba, czekaj! Drzwi!', 'ola', 880, 1500, 2.1, -60),
+    say(1.5, 2.2, 'Nie ma czasu!', 'kuba', 580, 1500, 2.1, 40),
+  ],
+  draw(c, lt, sc) {
+    if (lt < 3.4) { // z przedpokoju do drzwi
       hallBg(c, lt, { gap: 150, nochain: true });
-      const k = mv(lt, 0.3, 1.9, 1100, 500), o = mv(lt, 0.6, 2.3, 1180, 540);
-      person(c, 'kuba', k, 1500, 2.1, { t: lt, walk: lt > .3 && lt < 1.9 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 1.8, 2.1) });
-      person(c, 'ola', o, 1500, 2.1, { t: lt, phone: 2, aR: .9, walk: lt > .6 && lt < 2.3 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.2, 2.5) });
+      const k = mv(lt, 2.2, 3.0, 580, 380), o = mv(lt, 2.4, 3.3, 880, 460);
+      person(c, 'kuba', k, 1500, 2.1, { t: lt, walk: lt > 2.2 && lt < 3.0 ? lt * 14 : null, look: -1, talk: talking(sc, 'kuba', lt), alpha: 1 - prog(lt, 2.8, 3.0) });
+      person(c, 'ola', o, 1500, 2.1, { t: lt, phone: 2, aR: .9, aL: lt > .9 && lt < 1.6 ? 1.2 : .14, walk: lt > 2.4 && lt < 3.3 ? lt * 14 : null, look: -1, talk: talking(sc, 'ola', lt), alpha: 1 - prog(lt, 3.1, 3.4) });
       night(c, .6, [{ x: 560, y: 1000, r: 600, a: .8 }]);
       return;
     }
     // widok z klatki: wybiegają z 94 i biegną do schodów, drzwi zostają otwarte
-    const l = lt - 2.6;
+    const l = lt - 3.4;
     corridorBg(c, lt, { open: true, num: '94', num2: '93', floor: '9' });
     const k = mv(l, 0, 1.6, 520, -180), o = mv(l, 0.3, 2.0, 560, -160);
     person(c, 'kuba', k, 1560, 2.0, { t: lt, walk: l < 1.6 ? l * 16 : null, look: -1, alpha: 1 - prog(l, 1.3, 1.6) });
@@ -161,27 +176,27 @@ scene({
     if (l > .8) label(c, 'SCHODAMI NA 2. PIĘTRO', 540, 430, 'dark', 40, l - .8, 9);
     if (l > 1.4) label(c, 'DRZWI 94 ZOSTAJĄ OTWARTE', 540, 300, 'red', 44, l - 1.4, 9);
   },
-  post(c, lt) { if (lt > 4.6) card(c, 70, 1380, 860, 'BŁĄD 2', 'wybiegli w nocy na klatkę\ni nie zamknęli mieszkania', lt - 4.6, '#F39C12', 42); },
+  post(c, lt) { if (lt > 5.4) card(c, 70, 1380, 860, 'BŁĄD 2', 'wybiegli w nocy na klatkę\ni nie zamknęli mieszkania', lt - 5.4, '#F39C12', 42); },
 });
 // 7. POLICJA NA BALKONIE — zasada
 scene({
   name: 'police', start: 54, end: 62,
-  labels: [[0.4, 5, 'PO 4 MINUTACH', 540, 280, 'dark', 40]],
-  draw(c, lt) {
+  labels: [[0.4, 2.6, 'PO 4 MINUTACH', 540, 280, 'dark', 40]],
+  bubbles: [say(2.8, 4.4, 'Pusto. Tylko ślady butów\nna barierce. I kartka.', 'policjant', 540, 1480, 2.2, 0)],
+  draw(c, lt, sc) {
     c.fillStyle = '#0B1020'; c.fillRect(0, 0, W, H);
     for (let i = 0; i < 40; i++) circ(c, hash(i) * W, hash(i + 3) * 700, 2, 'rgba(255,255,255,.5)');
     fillRR(c, 0, 1100, W, 30, 0, '#9AA1A8'); for (let i = 0; i < 18; i++) c.fillRect(i * 64, 1130, 10, 300); c.fillStyle = '#8D949B'; c.fillRect(0, 1420, W, 500);
-    person(c, 'policjant', 540, 1480, 2.2, { t: lt, aR: 1.4, look: lt < 2.5 ? -1 : 1 });
+    person(c, 'policjant', 540, 1480, 2.2, { t: lt, aR: 1.4, look: lt < 2.5 ? -1 : 1, talk: talking(sc, 'policjant', lt) });
     const on = Math.floor(lt * 6) % 2;
     night(c, .5, [{ x: 760, y: 1200, r: 420, a: .9, tint: 'rgba(255,250,210,.15)' }, { x: 1080, y: 700, r: 500, a: .6, tint: on ? 'rgba(60,120,255,.2)' : 'rgba(255,50,50,.15)' }]);
     if (lt > 2.8) { c.save(); c.translate(830, 1105); c.rotate(-.08); fillRR(c, -70, -44, 140, 88, 3, '#F2EEE4'); c.restore(); label(c, 'KARTKA', 830, 1000, 'red', 30, lt - 2.8, 9); }
   },
-  post(c, lt) { if (lt > 4.4) card(c, 70, 330, 860, 'ZASADA', 'Sąsiad w niebezpieczeństwie? Dzwoń na 112.\nNie wybiegaj w nocy. Zawsze zamykaj drzwi.', lt - 4.4, '#F39C12', 38); },
+  post(c, lt) { if (lt > 4.6) card(c, 70, 330, 860, 'ZASADA', 'Sąsiad w niebezpieczeństwie? Dzwoń na 112.\nNie wybiegaj w nocy. Zawsze zamykaj drzwi.', lt - 4.6, '#F39C12', 38); },
 });
 // 8. KARTKA
 scene({
   name: 'note', start: 62, end: 66,
-  cam: lt => ({ z: 1.0 + lt * 0.04 }),
   draw(c, lt) {
     c.fillStyle = '#1E1712'; c.fillRect(0, 0, W, H);
     c.save(); c.translate(540, 950); c.rotate(-0.05);
@@ -194,12 +209,17 @@ scene({
 // 9. POWRÓT DO 94 — karteczka na szybie od środka
 scene({
   name: 'back', start: 66, end: 76,
-  labels: [[1.0, 6, 'DRZWI 94: OTWARTE', 540, 300, 'red', 44]],
-  draw(c, lt) {
+  labels: [[1.0, 2.4, 'DRZWI 94: OTWARTE', 540, 300, 'red', 44]],
+  bubbles: [
+    say(1.5, 2.0, 'Kuba… nie zamknąłeś?', 'ola', 620, 1560, 2.0, 0),
+    say(2.0, 2.4, 'Myślałem, że ty…', 'kuba', 920, 1560, 2.0, -60),
+    say(5.0, 7.4, '„Dobranoc, sąsiadko”…', 'ola', 420, 1500, 2.1, 160),
+  ],
+  draw(c, lt, sc) {
     if (lt < 2.4) { // widok z klatki: wracają na 9. piętro, drzwi 94 otwarte
       corridorBg(c, lt, { open: true, num: '94', num2: '93', floor: '9' });
-      person(c, 'ola', mv(lt, 0.1, 1.4, -160, 760), 1560, 2.0, { t: lt, phone: 1, aR: .9, walk: lt < 1.4 ? lt * 12 : null, look: 1, wide: lt > 1.2, mouth: lt > 1.2 ? 'o' : null });
-      person(c, 'kuba', mv(lt, 0.3, 1.6, -200, 930), 1560, 2.0, { t: lt, walk: lt > .3 && lt < 1.6 ? lt * 12 : null, look: -1, wide: lt > 1.4, mouth: lt > 1.4 ? 'o' : null });
+      person(c, 'ola', mv(lt, 0.1, 1.4, -160, 620), 1560, 2.0, { t: lt, phone: 1, aR: .9, walk: lt < 1.4 ? lt * 12 : null, look: 1, wide: lt > 1.2, mouth: lt > 1.2 && !talking(sc, 'ola', lt) ? 'o' : null, talk: talking(sc, 'ola', lt) });
+      person(c, 'kuba', mv(lt, 0.3, 1.6, -200, 920), 1560, 2.0, { t: lt, walk: lt > .3 && lt < 1.6 ? lt * 12 : null, look: -1, wide: lt > 1.4, mouth: lt > 1.4 && !talking(sc, 'kuba', lt) ? 'o' : null, talk: talking(sc, 'kuba', lt) });
       night(c, .55, [{ x: 520, y: 1000, r: 520, a: .9, tint: 'rgba(255,220,160,.08)' }, { x: 540, y: 250, r: 600, a: .7 }]);
     } else if (lt < 4.6) { // wchodzą do środka
       const l = lt - 2.4;
@@ -211,7 +231,7 @@ scene({
       ROOM(c);
       // karteczka na szybie od środka
       c.save(); c.translate(780, 560); c.rotate(.06); fillRR(c, -86, -70, 172, 140, 4, '#F5E36A'); txt(c, 'DOBRANOC,', 0, -18, 28, '#222', 900); txt(c, 'SĄSIADKO', 0, 20, 28, '#222', 900); c.restore();
-      person(c, 'ola', 420, 1500, 2.1, { t: lt, phone: 1, aR: 1.3, look: 1, wide: true, mouth: 'o' });
+      person(c, 'ola', 420, 1500, 2.1, { t: lt, phone: 1, aR: 1.3, look: 1, wide: true, mouth: talking(sc, 'ola', lt) ? null : 'o', talk: talking(sc, 'ola', lt) });
       night(c, .75, [{ x: 520, y: 1100, r: 380, a: .9, tint: 'rgba(200,220,255,.08)' }, { x: 780, y: 560, r: 260, a: .85 }]);
       label(c, 'OD ŚRODKA', 780, 420, 'red', 34, lt - 4.6, 9);
     }
@@ -220,7 +240,7 @@ scene({
 // 10. SZAFA
 scene({
   name: 'end', start: 76, end: 86,
-  cam: lt => { const sh = lt > 6.6 && lt < 7.1 ? (7.1 - lt) * 30 : 0; return { z: 1.0 + Math.min(lt, 6.6) * 0.06, x: Math.sin(lt * 90) * sh, y: -Math.min(lt, 6.6) * 18 }; },
+  cam: lt => { const sh = lt > 6.6 && lt < 7.1 ? (7.1 - lt) * 30 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   labels: [[7.4, 10, 'ODC. 8 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
     ROOM(c);
