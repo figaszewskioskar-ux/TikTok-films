@@ -97,6 +97,7 @@ const KINDS = {
   sasiad: { jacket: '#2F343F', dark: '#22262F', pants: '#1A1D24', skin: '#E3AC88', shoes: '#0E0F12' },
   policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
+  pasazer: { jacket: '#4E535B', dark: '#3E424A', pants: '#4E535B', skin: '#D9CFC3', shoes: '#16171A' },
 };
 function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return '#' + ((1 << 24) + (m(r) << 16) + (m(g) << 8) + m(b)).toString(16).slice(1); }
 function arm(c, sx, sy, a, side, k, len = 92) {
@@ -126,7 +127,7 @@ function person(c, kind, x, y, s, o = {}) {
   const gR = idle && o.talk && o.aR == null ? 0.22 + 0.22 * Math.sin(t * 3.1 + seed) : 0, gL = idle && o.talk && o.aL == null ? 0.1 + 0.1 * Math.sin(t * 2.3 + seed + 1) : 0;
   const aL = (o.aL ?? 0.14) + sw * 0.35 + gL, aR = (o.aR ?? 0.14) - sw * 0.35 + gR;
   // nogi
-  const LONG = kind === 'halina' || kind === 'kobieta';
+  const LONG = kind === 'halina' || kind === 'kobieta' || kind === 'pasazer';
   if (!LONG) {
     for (const side of [-1, 1]) {
       const lift = Math.max(0, side * sw) * 14, dx = side * sw * 6;
@@ -137,7 +138,7 @@ function person(c, kind, x, y, s, o = {}) {
     }
   } else {
     fillRR(c, -26, -12, 22, 12, 6, k.shoes); fillRR(c, 4, -12, 22, 12, 6, k.shoes);
-    fillRR(c, -20, -34, 14, 24, 6, kind === 'kobieta' ? '#2A2420' : k.skin); fillRR(c, 6, -34, 14, 24, 6, kind === 'kobieta' ? '#2A2420' : k.skin);
+    fillRR(c, -20, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin); fillRR(c, 6, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin);
   }
   c.translate(0, bob);
   const back_ = !!o.back;
@@ -275,6 +276,9 @@ function person(c, kind, x, y, s, o = {}) {
       if (o.talk) { const oh = 4 + 6 * Math.abs(Math.sin(t * 17 + x)); ell(c, 0, my, 9, oh, '#6B2B2B'); }
       else if (o.mouth === 'o') ell(c, 0, my, 8, 10, '#6B2B2B');
       else if (o.mouth === 'angry') { c.strokeStyle = '#6B2B2B'; c.lineWidth = 4; c.beginPath(); c.arc(0, my + 10, 11, Math.PI * 1.2, Math.PI * 1.8); c.stroke(); }
+      else if (o.mouth === 'grin') { // szeroki, niepokojący uśmiech
+        c.fillStyle = '#4A1E1E'; c.beginPath(); c.moveTo(-26, my - 6); c.quadraticCurveTo(0, my + 22, 26, my - 6); c.quadraticCurveTo(0, my + 6, -26, my - 6); c.fill();
+        c.fillStyle = '#F2EEE4'; c.beginPath(); c.moveTo(-22, my - 4); c.quadraticCurveTo(0, my + 8, 22, my - 4); c.quadraticCurveTo(0, my + 3, -22, my - 4); c.fill(); }
       else if (o.mouth === 'smile') { c.strokeStyle = '#6B2B2B'; c.lineWidth = 4; c.beginPath(); c.arc(0, my - 6, 11, 0.2 * Math.PI, 0.8 * Math.PI); c.stroke(); }
       else { c.fillStyle = '#6B2B2B'; c.fillRect(-8, my - 2, 16, 4); }
       if (kind === 'zdzisiek') circ(c, 0, hy + 12, 10, '#E04848');
@@ -296,6 +300,8 @@ function person(c, kind, x, y, s, o = {}) {
       fillRR(c, -54, hy - 26, back_ ? 108 : 124, 14, 7, '#22335A');
     } else if (kind === 'zdzisiek') {
       ell(c, 0, hy - 30, 54, 24, '#3B3B3B'); fillRR(c, -50, hy - 22, 116, 12, 6, '#2E2E2E');
+    } else if (kind === 'pasazer') { // kapelusz z rondem
+      fillRR(c, -78, hy - 34, 156, 14, 7, '#26282D'); fillRR(c, -48, hy - 86, 96, 58, 14, '#2E3036'); fillRR(c, -48, hy - 46, 96, 10, 3, '#1A1B1F');
     } else if (kind === 'sasiad') {
       c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#231B17'; c.fill(); fillRR(c, -52, hy - 30, 40, 22, 8, '#231B17');
     } else if (kind === 'policjant') {
