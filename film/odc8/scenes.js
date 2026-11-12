@@ -2,7 +2,7 @@
 window.EP = {
   badge: 'BLOK 94 · ODC. 8',
   loop: true,
-  vignette: .8,
+  vignette: .86,
   cues(add) {
     add(0.3, 'stab'); add(15.6, 'error'); add(18.4, 'creak');
     add(20.6, 'slam'); add(30.4, 'creak'); add(32.6, 'hit');
@@ -21,6 +21,8 @@ function bigSign(c, lt, l1, l2, y = 390) {
   txt(c, l1, 0, -44, 86, '#FFFFFF', 900); txt(c, l2, 0, 54, 86, '#FFFFFF', 900);
   c.restore();
 }
+// dymek nad głową mówiącej postaci: ogonek wskazuje jej głowę (px, py = stopy, s = skala)
+function say(a, b, text, who, px, py, s, dx = 0, lift = 0) { const top = py - 312 * s; return [a, b, text, clamp(px + dx, 200, 880), top - 18 - lift, px, top + 12, who]; }
 function talking(sc, who, lt) { return (sc.bubbles || []).some(b => b[7] === who && lt >= b[0] && lt < b[0] + Math.min(b[1] - b[0] - .2, .055 * b[2].length + .3)); }
 // szafa w pokoju Oli; o.gap – szpara, o.eyes – świecące punkty, o.open – otwarta (kamera na półce)
 function wardrobe(c, lt, o = {}) {
@@ -59,7 +61,6 @@ function laptop(c, x, y, fn) {
 // 0. HAK
 scene({
   name: 'hook', start: 0, end: 6,
-  cam: lt => ({ z: 1.05 + lt * 0.02 }),
   draw(c, lt) { roomBg(c); wardrobe(c, lt, { gap: 60, eyes: 1 }); night(c, .85, [{ x: 540, y: 860, r: 520, a: .6 }]); bigSign(c, lt, 'COŚ NIE TAK?', 'WYJDŹ Z DOMU!'); },
 });
 // 1. PRZYPOMNIENIE
@@ -75,40 +76,48 @@ scene({
 // 2. KUBA IDZIE SPRAWDZIĆ — błąd 1
 scene({
   name: 'check', start: 11, end: 20,
-  bubbles: [[5.2, 7.6, 'Kuba, nie!', 640, 860, 900, 1010, 'ola']],
+  bubbles: [
+    say(0.2, 1.0, 'Dość. Sprawdzę,\nco tam jest.', 'kuba', 660, 1500, 2.1, -40),
+    say(5.2, 6.6, 'Kuba, nie!', 'ola', 960, 1500, 2.1, -40),
+    say(7.0, 8.8, 'To… nie są oczy.', 'kuba', 420, 1500, 2.1, 60),
+  ],
   draw(c, lt, sc) {
     roomBg(c); wardrobe(c, lt, { gap: 60, eyes: lt < 4 ? 1 : .6 });
-    const kx = mv(lt, 1.0, 5.0, 1000, 700);
-    person(c, 'kuba', kx, 1500, 2.1, { t: lt, aR: 2.3, look: -1, walk: lt > 1 && lt < 5 ? lt * 3 : null, mouth: 'angry' });
+    const kx = mv(lt, 1.0, 5.0, 660, 420);
+    person(c, 'kuba', kx, 1500, 2.1, { t: lt, aR: 2.3, look: -1, walk: lt > 1 && lt < 5 ? lt * 3 : null, mouth: talking(sc, 'kuba', lt) ? null : (lt > 6.8 ? 'o' : 'angry'), wide: lt > 6.8, talk: talking(sc, 'kuba', lt) });
     // lampka w ręce
     c.save(); c.translate(kx + 80, 1080); fillRR(c, -10, -40, 20, 80, 6, '#C9CDD2'); circ(c, 0, -50, 22, '#F5E9B0'); c.restore();
-    person(c, 'ola', 980, 1500, 2.1, { t: lt, phone: 1, aR: .9, aL: lt > 5 ? 1.5 : .14, look: -1, wide: true, talk: talking(sc, 'ola', lt) });
+    person(c, 'ola', 960, 1500, 2.1, { t: lt, phone: 1, aR: .9, aL: lt > 5 ? 1.5 : .14, look: -1, wide: true, talk: talking(sc, 'ola', lt) });
     night(c, .82, [{ x: kx + 80, y: 1040, r: 380, a: .9, tint: 'rgba(255,240,190,.1)' }]);
   },
-  post(c, lt) { if (lt > 4.4) card(c, 70, 330, 860, 'BŁĄD 1', 'chciał sam sprawdzić,\nkto jest w szafie', lt - 4.4, '#F39C12', 44); },
+  post(c, lt) { if (lt > 4.4 && lt < 7.0) card(c, 70, 330, 860, 'BŁĄD 1', 'chciał sam sprawdzić,\nkto jest w szafie', lt - 4.4, '#F39C12', 44); },
 });
 // 3. WYCHODZĄ — zasada 1
 scene({
   name: 'leave', start: 20, end: 28,
-  cam: lt => { const s = lt > .5 && lt < .9 ? 14 : 0; return { z: 1.02, x: Math.sin(lt * 80) * s }; },
-  draw(c, lt) {
+  cam: lt => { const s = lt > .5 && lt < .9 ? 14 : 0; return { z: 1, x: Math.sin(lt * 80) * s }; },
+  bubbles: [
+    say(2.6, 4.0, 'Proszę pana! Ktoś jest\nw naszym mieszkaniu!', 'ola', 520, 1500, 2.0, 40),
+    say(4.2, 5.6, 'Zostańcie tutaj.\nJa sprawdzę.', 'policjant', 820, 1500, 2.1, -40),
+  ],
+  draw(c, lt, sc) {
     lobbyBg(c, lt, { floor: '2' });
-    person(c, 'ola', mv(lt, 0.4, 2.4, 120, 520), 1500, 2.0, { t: lt, phone: 2, aR: .9, walk: lt > .4 && lt < 2.4 ? lt * 10 : null, look: 1 });
+    person(c, 'ola', mv(lt, 0.4, 2.4, 120, 520), 1500, 2.0, { t: lt, phone: 2, aR: .9, walk: lt > .4 && lt < 2.4 ? lt * 10 : null, look: 1, wide: true, talk: talking(sc, 'ola', lt) });
     person(c, 'kuba', mv(lt, 0.6, 2.6, 0, 360), 1500, 2.0, { t: lt, walk: lt > .6 && lt < 2.6 ? lt * 10 : null, look: 1 });
-    person(c, 'policjant', 820, 1500, 2.1, { t: lt, look: -1, aL: lt > 2.6 ? 1.2 : .14 });
+    person(c, 'policjant', 820, 1500, 2.1, { t: lt, look: -1, aL: lt > 4.2 ? 1.2 : .14, talk: talking(sc, 'policjant', lt) });
     night(c, .4, [{ x: 540, y: 300, r: 900, a: .8 }]);
   },
-  post(c, lt) { if (lt > 2.8) card(c, 70, 330, 860, 'ZASADA', 'Ktoś może być w domu? Nie sprawdzaj.\nWyjdź i dzwoń na 112 z bezpiecznego miejsca.', lt - 2.8, '#F39C12', 38); },
+  post(c, lt) { if (lt > 5.8) card(c, 70, 330, 860, 'ZASADA', 'Ktoś może być w domu? Nie sprawdzaj.\nWyjdź i dzwoń na 112 z bezpiecznego miejsca.', lt - 5.8, '#F39C12', 38); },
 });
 // 4. POLICJA OTWIERA SZAFĘ
 scene({
   name: 'open', start: 28, end: 38,
-  cam: lt => ({ z: 1.0 + (lt > 4.6 ? (lt - 4.6) * .05 : 0), y: lt > 4.6 ? -(lt - 4.6) * 30 : 0 }),
   labels: [[4.8, 10, 'KAMERA', 515, 560, 'red', 48]],
-  draw(c, lt) {
+  bubbles: [say(5.2, 7.0, 'To kamera.\nKtoś ją tu zamontował.', 'policjant', 960, 1500, 2.1, -80)],
+  draw(c, lt, sc) {
     roomBg(c); const op = lt > 2.4;
     wardrobe(c, lt, op ? { open: true } : { gap: mv(lt, 0, 2.4, 60, 120), eyes: 1 });
-    person(c, 'policjant', 960, 1500, 2.1, { t: lt, aL: 1.3, look: -1 });
+    person(c, 'policjant', 960, 1500, 2.1, { t: lt, aL: 1.3, look: -1, talk: talking(sc, 'policjant', lt) });
     night(c, .8, [{ x: 600, y: 760, r: 460, a: .95, tint: 'rgba(255,250,210,.12)' }]);
     if (lt > 2.4 && lt < 2.55) { c.fillStyle = 'rgba(255,255,255,.4)'; c.fillRect(0, 0, W, H); }
   },
@@ -116,7 +125,7 @@ scene({
 // 5. KONTO — „to twoje konto”
 scene({
   name: 'account', start: 38, end: 48,
-  bubbles: [[3.0, 5.6, 'Kuba… to twoje konto.', 420, 820, 300, 1010, 'policjant'], [5.8, 9.6, 'Moje? Nigdy tego\nnie instalowałem!', 640, 820, 860, 1010, 'kuba']],
+  bubbles: [say(3.0, 5.6, 'Kuba… to twoje konto.', 'policjant', 230, 1760, 1.5, 120), say(5.8, 9.6, 'Moje? Nigdy tego\nnie instalowałem!', 'kuba', 860, 1760, 1.5, -100)],
   draw(c, lt, sc) {
     c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
     bigPhone(c, (cc, x, y, w, h) => {
@@ -149,7 +158,6 @@ scene({
 // 7. WSZYSTKO SIĘ ŁĄCZY — zasada 2
 scene({
   name: 'explain', start: 58, end: 66,
-  cam: lt => ({ z: 1.0 + lt * 0.012 }),
   draw(c, lt) {
     // ciemne, puste mieszkanie 104: Kaptur przy laptopie, z ekranu wylatują dane rodziny
     c.fillStyle = '#121420'; c.fillRect(0, 0, W, H); c.fillStyle = '#0E0F16'; c.fillRect(0, 1380, W, 540);
@@ -174,10 +182,12 @@ scene({
 // 8. NOC — kamerka laptopa zapala się sama, a na podglądzie ktoś stoi za Kubą
 scene({
   name: 'end', start: 66, end: 78,
-  cam: lt => { const q = lt > 5.2 ? eio(clamp((lt - 5.2) / 2.2)) : 0, z = lt < 5.2 ? 1.0 + lt * 0.02 : 1.1 + q * .8 + (lt > 7.6 ? (lt - 7.6) * .04 : 0), sh = lt > 7.6 && lt < 8.1 ? (8.1 - lt) * 28 : 0; return { z, x: Math.sin(lt * 90) * sh, y: q * 280 * z }; },
+  cam: lt => { const sh = lt > 7.6 && lt < 8.1 ? (8.1 - lt) * 28 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   labels: [[9.4, 12, 'ODC. 9 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
+    const close = lt > 5.2; // cięcie: ekran laptopa w dużym planie
     roomBg(c);
+    if (close) { c.fillStyle = '#07080C'; c.fillRect(0, 0, W, H); c.save(); c.translate(540, 900); c.scale(1.7, 1.7); c.translate(-540, -700); }
     fillRR(c, 160, 900, 760, 30, 6, '#4A3A2C');
     laptop(c, 260, 520, (cc, x, y, w, h) => {
       if (lt < 5.2) {
@@ -197,8 +207,8 @@ scene({
       if (lt > 7.6) { const a = clamp((lt - 7.6) / .3); cc.save(); cc.globalAlpha = a; fillRR(cc, x + 30, y + h - 90, w - 60, 70, 12, 'rgba(10,10,14,.85)'); txt(cc, 'k4ptur_94: za późno, kuba.', x + 50, y + h - 55, 26, '#FFFFFF', 900, 'left'); cc.restore(); }
     });
     if (lt > 4.4) { const b = .6 + .4 * Math.sin(lt * 8); c.save(); c.shadowColor = '#3BFF7A'; c.shadowBlur = 30; circ(c, 540, 529, 8, `rgba(59,255,122,${b})`); c.restore(); }
-    person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: true });
-    night(c, lt > 5.2 ? .7 : .8, [{ x: 540, y: 680, r: lt > 5.2 ? 420 : 560, a: 1, tint: 'rgba(200,220,255,.12)' }]);
+    if (close) c.restore(); else person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: true });
+    night(c, close ? .6 : .8, [{ x: 540, y: close ? 900 : 680, r: close ? 700 : 560, a: 1, tint: 'rgba(200,220,255,.12)' }]);
     if (lt > 7.6 && lt < 7.85) { c.fillStyle = 'rgba(255,255,255,.55)'; c.fillRect(0, 0, W, H); }
     if (lt > 10.6) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 10.6) / 1.2) * .85})`; c.fillRect(0, 0, W, H); }
   },

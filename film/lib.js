@@ -115,12 +115,16 @@ function person(c, kind, x, y, s, o = {}) {
   c.translate(x, y);
   // cień
   ell(c, 0, 0, 62 * s, 11 * s, 'rgba(0,0,0,.28)');
-  if (o.rot) c.rotate(o.rot);
-  c.scale(s * (o.flip ? -1 : 1), s * (o.squash ?? 1));
   const ph = o.walk;
+  // ruch w spoczynku: kołysanie, głowa, wzrok, gesty przy mówieniu (o.still = bez ruchu)
+  const seed = o.seed ?? (kind.length * 1.7 + (kind.charCodeAt(0) % 7)), idle = !o.still && ph == null && !o.rot;
+  if (o.rot) c.rotate(o.rot);
+  else if (idle) c.rotate(0.014 * Math.sin(t * 0.9 + seed) + (o.talk ? 0.008 * Math.sin(t * 2.6 + seed) : 0));
+  c.scale(s * (o.flip ? -1 : 1), s * (o.squash ?? 1));
   const sw = ph == null ? 0 : Math.sin(ph);
   const bob = ph == null ? Math.sin(t * 2.1 + x) * 1.5 : -Math.abs(sw) * 7;
-  const aL = (o.aL ?? 0.14) + sw * 0.35, aR = (o.aR ?? 0.14) - sw * 0.35;
+  const gR = idle && o.talk && o.aR == null ? 0.22 + 0.22 * Math.sin(t * 3.1 + seed) : 0, gL = idle && o.talk && o.aL == null ? 0.1 + 0.1 * Math.sin(t * 2.3 + seed + 1) : 0;
+  const aL = (o.aL ?? 0.14) + sw * 0.35 + gL, aR = (o.aR ?? 0.14) - sw * 0.35 + gR;
   // nogi
   const LONG = kind === 'halina' || kind === 'kobieta';
   if (!LONG) {
@@ -214,7 +218,9 @@ function person(c, kind, x, y, s, o = {}) {
   // głowa
   const hy = -242;
   if (kind !== 'kaptur') { fillRR(c, -14, hy + 34, 28, 28, 8, shade(k.skin, -.18)); }
-  c.save(); c.translate(0, hy + 40); c.scale(.93, .93); c.translate(0, -(hy + 40));
+  c.save(); c.translate(0, hy + 40);
+  if (idle) { c.rotate(0.06 * Math.sin(t * 0.75 + seed) + (o.talk ? 0.05 * Math.sin(t * 4.2 + seed) : 0)); c.translate(0, o.talk ? Math.sin(t * 6 + seed) * 2 : 0); }
+  c.scale(.93, .93); c.translate(0, -(hy + 40));
   if (kind === 'kaptur') {
     circ(c, 0, hy + 2, 66, '#1A1C21');
     if (back_) {
@@ -244,7 +250,7 @@ function person(c, kind, x, y, s, o = {}) {
     c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(0,0,0,.08)'; c.beginPath(); c.arc(20, hy + 8, 50, 0, 7); c.fill(); c.restore();
     if (back_) { /* tył głowy */ }
     else {
-      const lk = (o.look || 0) * 7, ly = (o.lookY || 0) * 5;
+      const lk = (o.look || 0) * 7 + (idle ? 2.5 * Math.sin(t * 0.45 + seed * 2) : 0), ly = (o.lookY || 0) * 5 + (idle ? 1.2 * Math.sin(t * 0.33 + seed) : 0);
       const blink = o.blink || ((t * 1000 + x * 37) % 3900) < 110;
       if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
       if (o.squint) { c.strokeStyle = '#1E1E24'; c.lineWidth = 5; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 9 + lk, hy - 2); c.lineTo(sx + 9 + lk, hy - 2); c.stroke(); } }
