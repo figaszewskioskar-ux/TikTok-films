@@ -1,9 +1,9 @@
 {%- comment -%} Okienko po wejściu na stronę: media społecznościowe + gra + wsparcie. Raz na wizytę (sessionStorage). {%- endcomment -%}
 <dialog id="b94-witaj" class="b94w" aria-labelledby="b94w-t">
   <button type="button" class="b94w-x" id="b94w-x" aria-label="Zamknij">×</button>
-  <span class="b94w-e">BLOK 94 · ŚCIŚLE TAJNE</span>
-  <h2 id="b94w-t">Znajdziesz 2 ukryte zapowiedzi?</h2>
-  <p>Na stronie głównej ukryliśmy dwa easter eggi z zapowiedziami kolejnych odcinków. Podpowiedź: ktoś tu puka… 👀</p><p class="b94w-n">Obserwuj nas, żeby nie przegapić premiery:</p>
+  <span class="b94w-e">Klatka II · 9. piętro</span>
+  <h2 id="b94w-t">Witaj w bloku 94.</h2>
+  <p>Tu nikt nie śpi spokojnie. Zagraj w grę, przejrzyj akta sprawy i zapukaj tam, gdzie świeci się światło… 👀</p><p class="b94w-n">Obserwuj nas, żeby nie przegapić kolejnej nocy:</p>
   {% render 'blok94-social' %}
   <div class="b94w-go">
     <a class="b94w-b b94w-g" href="/pages/gra">🎮 Zagraj w grę</a>
@@ -27,7 +27,7 @@
 .b94w-x:focus-visible,.b94w-b:focus-visible,.b94w-l:focus-visible{outline:3px solid #f39c12;outline-offset:2px}
 </style>
 <script>
-(function(){var d=document.getElementById('b94-witaj');if(!d)return;var K='b94-witaj-2';
+(function(){var d=document.getElementById('b94-witaj');if(!d)return;var K='b94-witaj-3';
  try{if(sessionStorage.getItem(K))return;}catch(e){}
  function close(){try{sessionStorage.setItem(K,'1');}catch(e){}if(d.close)d.close();else d.removeAttribute('open');}
  setTimeout(function(){if(document.querySelector('dialog[open]'))return;try{d.showModal();}catch(e){d.setAttribute('open','');}try{sessionStorage.setItem(K,'1');}catch(e){}},1200);
