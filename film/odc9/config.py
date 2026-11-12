@@ -12,7 +12,6 @@ VOICES = {
     'mama':      ('EXAVITQu4vr4xnSDxMaL', 'eleven_v3', V3),
     'mama_tel':  ('EXAVITQu4vr4xnSDxMaL', 'eleven_v3', V3),
 }
-PREVIEW_NO_VOICE = True   # podgląd wersji 2 (więcej dialogów) do akceptacji
 SCENES = [('hook', 0, 6), ('recap', 6, 12), ('turn', 12, 24), ('reply', 24, 34), ('click', 34, 44), ('ola', 44, 54),
           ('police', 54, 68), ('stairs', 68, 82), ('notif', 82, 98), ('end', 98, 118)]
 SEG = [
