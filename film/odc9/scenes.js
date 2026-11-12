@@ -3,7 +3,7 @@ window.EP = {
   badge: 'BLOK 94 · ODC. 9',
   loop: false,
   vignette: .78,
-  PREVIEW: true, // napisy z planowanym tekstem lektora (wersja do akceptacji, bez nagrań)
+  PREVIEW: false, // true = napisy z planowanym tekstem lektora
   cues(add) {
     add(0.2, 'stab'); add(6.2, 'whoosh'); add(13.6, 'creak'); add(17.4, 'hit');
     add(24.6, 'notif'); add(29.4, 'error'); add(35.0, 'click'); add(38.6, 'error');
