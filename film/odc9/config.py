@@ -1,7 +1,7 @@
 """BLOK 94 · „Kto tam?” ODC. 9 — „Nie klikaj w link!”. Wersja do akceptacji: bez lektora (PREVIEW)."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'   # lektor: Victor
 MODEL = 'eleven_multilingual_v2'
-SETTINGS = {'stability': 0.5, 'similarity_boost': 0.8, 'style': 0.2, 'use_speaker_boost': True}
+SETTINGS = {'stability': 0.32, 'similarity_boost': 0.85, 'style': 0.55, 'use_speaker_boost': True, 'speed': 0.9}   # lektor B (wybrany przez użytkownika)
 V3 = {'stability': 0.5, 'similarity_boost': 0.8}
 VOICES = {
     'ola':       ('d4Z5Fvjohw3zxGpV8XUV', 'eleven_v3', V3),
@@ -43,6 +43,7 @@ SEG = [
     ['turn', 3.6, '[scared] Kuba?! Co się stało?', 'ola'],
     ['ola', 2.8, '[crying] Mamo, ktoś jest w naszym laptopie. Wróć, proszę.', 'ola'],
     ['stairs', 1.6, 'W nocy ktoś chodził po dachu. Słyszałem.', 'zdzisiek'],
+    ['ola', 0.9, '[angry] Kuba, zostaw to! Nie klikaj!', 'ola'],
 ]
 VFILTER = {'ola': 'highpass=f=110', 'zdzisiek': 'highpass=f=90', 'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
 VGAIN = {'kaptur': 1.6}
