@@ -114,13 +114,19 @@ window.PROMO = {
     return c.toDataURL('image/png').split(',')[1];
   },
   // animowana postać do strony: N klatek ruchu w spoczynku (pętla tam i z powrotem)
+  // animowana postać do strony: 24 klatki, pełna pętla (wszystkie ruchy okresowe), bez ruchu w spoczynku silnika
   charSheet(kind, o) {
-    const FW = 350, FH = 500, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH; const x = c.getContext('2d');
-    for (let i = 0; i < N; i++) { const t = 1.3 + i * (4.2 / N), oo = Object.assign({ t }, o);
-      if (kind === 'kaptur') oo.glow = .4 + .6 * Math.abs(Math.sin(i / N * Math.PI * 2));
-      if (kind === 'kuba') oo.aR = .9 + .25 * Math.sin(i / N * Math.PI * 4);
-      if (kind === 'zdzisiek') oo.look = Math.sin(i / N * Math.PI * 2);
-      x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, kind, i * FW + FW / 2, 480, 1.5, oo); x.restore(); }
+    const FW = 420, FH = 500, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH; const x = c.getContext('2d');
+    for (let i = 0; i < N; i++) {
+      const f = i / N * Math.PI * 2, oo = Object.assign({ t: 1.3, still: true, blink: false }, o);
+      let bob = Math.abs(Math.sin(f)) * -6, rot = 0;
+      if (kind === 'ola') { oo.aR = 2.5 + .45 * Math.sin(f * 2); oo.aL = .2; oo.mouth = 'smile'; oo.look = .5 * Math.sin(f); oo.blink = i === 17 || i === 18; rot = .03 * Math.sin(f); }
+      if (kind === 'kuba') { oo.keys = true; oo.aR = 2.2 + .5 * Math.sin(f * 2); oo.mouth = 'smile'; oo.blink = i === 5; rot = .025 * Math.sin(f * 2); bob = -Math.abs(Math.sin(f * 2)) * 8; }
+      if (kind === 'zdzisiek') { oo.net = true; oo.look = Math.sin(f); oo.squint = Math.sin(f) > .7 || Math.sin(f) < -.7; rot = .02 * Math.sin(f); }
+      if (kind === 'kaptur') { oo.glow = .35 + .65 * (.5 + .5 * Math.sin(f)); oo.look = .6 * Math.sin(f); rot = .035 * Math.sin(f); bob = -2 * Math.sin(f); }
+      oo.rot = rot;
+      x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, kind, i * FW + FW / 2 - 20, 482 + bob, 1.38, oo); x.restore();
+    }
     return c.toDataURL('image/png').split(',')[1];
   },
   hero() {

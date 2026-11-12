@@ -40,25 +40,26 @@
 (function () {
   var imgs = document.querySelectorAll('#b94 .who img, #b94 .chars img'); if (!imgs.length) return;
   var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; if (RM) return;
-  var FW = 350, FH = 500, N = 24, all = [];
+  var FW = 420, FH = 500, N = 24, all = [];
   imgs.forEach(function (im) {
     var m = (im.getAttribute('src') || '').match(/blok94-(ola|kuba|zdzisiek|kaptur)\.png/); if (!m) return;
-    var url = im.getAttribute('src').split('?')[0].replace('blok94-' + m[1] + '.png', 'blok94-anim-' + m[1] + '.webp');
+    var url = im.getAttribute('src').split('?')[0].replace('blok94-' + m[1] + '.png', 'blok94-anim-' + m[1] + '.webp') + '?v=3';
     var sheet = new Image(); sheet.decoding = 'async';
     sheet.onload = function () {
-      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), inChars = !!im.closest('.chars'), h = inChars ? Math.round(im.clientWidth * FH / FW * .95) || 180 : (im.clientHeight || 200), w = Math.round(h * FW / FH);
+      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), inChars = !!im.closest('.chars'), h = inChars ? 190 : (im.clientHeight || 200), w = Math.round(h * FW / FH);
       cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.display = 'block'; cv.style.margin = inChars ? '0' : '0 auto 6px'; if (inChars) { cv.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,.45))'; }
       cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', im.alt || m[1]);
-      im.replaceWith(cv); all.push({ cv: cv, ctx: cv.getContext('2d'), sheet: sheet, off: Math.random() * N, vis: true });
-      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { all.forEach(function (a) { if (a.cv === e[0].target) a.vis = e[0].isIntersecting; }); }).observe(cv);
+      var frames = []; for (var i = 0; i < N; i++) { var fc = document.createElement('canvas'); fc.width = cv.width; fc.height = cv.height; fc.getContext('2d').drawImage(sheet, i * FW, 0, FW, FH, 0, 0, fc.width, fc.height); frames.push(fc); }
+      im.replaceWith(cv); var a0 = { cv: cv, ctx: cv.getContext('2d'), frames: frames, off: Math.floor(Math.random() * N), vis: true }; a0.ctx.drawImage(frames[0], 0, 0); all.push(a0);
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { all.forEach(function (a) { if (a.cv === e.target) a.vis = e.isIntersecting; }); }); }).observe(cv);
     };
     sheet.src = url;
   });
   var last = 0;
   function frame(t) {
-    if (t - last > 1000 / 12) { last = t;
-      all.forEach(function (a) { if (!a.vis) return; var k = Math.floor(t / (1000 / 8) + a.off) % (2 * N - 2), f = k < N ? k : 2 * N - 2 - k;
-        a.ctx.clearRect(0, 0, a.cv.width, a.cv.height); a.ctx.drawImage(a.sheet, f * FW, 0, FW, FH, 0, 0, a.cv.width, a.cv.height); }); }
+    if (t - last > 1000 / 16) { last = t;
+      all.forEach(function (a) { if (!a.vis) return; var f = Math.floor(t / (1000 / 16) + a.off) % N;
+        a.ctx.clearRect(0, 0, a.cv.width, a.cv.height); a.ctx.drawImage(a.frames[f], 0, 0); }); }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
