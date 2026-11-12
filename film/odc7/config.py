@@ -36,7 +36,7 @@ SEG = [
     ['back', 0.3, 'Ola i Kuba wracają na dziewiąte. Drzwi są tak, jak je zostawili. Otwarte.'],
     ['back', 4.6, 'W pokoju Oli, na szybie, od środka… karteczka.'],
     ['end', 0.4, 'A szafa… jest uchylona.'],
-    ['end', 5.4, '[whispers] Cześć, Ola.', 'kaptur'],
+    ['end', 6.6, '[whispers] Cześć, Ola.', 'kaptur'],
     ['knock', 5.6, 'Ktoś stoi pod drzwiami jeszcze długo. Potem odchodzi. Za wolno.'],
     ['run', 4.6, 'Oboje zbiegają po schodach. Siedem pięter w ciemności.'],
     ['police', 6.2, 'Na balkonie nikogo. Tylko ślady butów na barierce.'],
@@ -49,13 +49,13 @@ SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 6, 11, 20, 28, 31.2, 31.4, 32, 38, 46, 54, 62, 66, 76, 80.4, 80.6, 85.99],
          [-27, -30, -33, -30, -26, -60, -22, -24, -26, -24, -30, -26, -25, -24, -60, -22, -24]),
-    loops={'drone': ([0, 72, 78, 84.8, 85.0, 85.99], [-90, -90, -24, -14, -60, -60]), 'roomtone': ([0, 85.99], [-39, -39]), 'wind': ([0, 27.9, 28, 37.9, 38, 85.99], [-90, -90, -36, -36, -90, -90])},
-    heartbeat=([0, 28, 30, 38, 46, 54, 66, 76, 80.4, 80.5, 85.99], [-90, -90, -27, -22, -22, -90, -26, -21, -18, -90, -22]),
+    loops={'drone': ([0, 72, 78, 82.55, 82.7, 84, 85.99], [-90, -90, -24, -12, -40, -26, -60]), 'roomtone': ([0, 85.99], [-39, -39]), 'wind': ([0, 27.9, 28, 37.9, 38, 85.99], [-90, -90, -36, -36, -90, -90])},
+    heartbeat=([0, 28, 30, 38, 46, 54, 66, 76, 82.5, 82.6, 85.99], [-90, -90, -27, -22, -22, -90, -26, -21, -14, -90, -90]),
 )
 REALMAP = {'knock': [('knock', -4)], 'tap': [('tap', -6)], 'doorlock': [('doorlock', -8)], 'dial': [('dial', -12)], 'run': [('run', -9)],
            'siren': [('siren', -10)], 'paper': [('paper', -9)], 'creak': [('creak', -10)], 'boom': [('boom', -6)], 'stab': [('boom', -5)],
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
-EXTRA = [(84.85, 'boom', -1), (34.0, 'breath', -15), (78.5, 'breath', -13)]
+EXTRA = [(82.6, 'boom', -1), (34.0, 'breath', -15), (78.5, 'breath', -13)]
 
 # poprawiony na prośbę użytkownika: ok. 2 minut (TARGET domyślnie 118 s)
 MAXK = 1.5

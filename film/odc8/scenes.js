@@ -149,31 +149,61 @@ scene({
 // 7. WSZYSTKO SIĘ ŁĄCZY — zasada 2
 scene({
   name: 'explain', start: 58, end: 66,
+  cam: lt => ({ z: 1.0 + lt * 0.012 }),
   draw(c, lt) {
-    c.fillStyle = '#0B0C10'; c.fillRect(0, 0, W, H);
-    const items = [['ZDJĘCIE KLUCZY Z „94”', 'z chmury'], ['RELACJA „SAMA NA CHACIE”', 'z konta'], ['RODZICE: NOCE PON–CZW', 'z kalendarza'], ['GDZIE JEST KUBA', 'z lokalizacji']];
-    items.forEach((it, i) => { if (lt > 0.3 + i * .7) { label(c, it[0], 540, 380 + i * 200, 'red', 40, lt - .3 - i * .7, 9); txt(c, it[1], 540, 450 + i * 200, 28, '#AEB0C2', 700); } });
+    // ciemne, puste mieszkanie 104: Kaptur przy laptopie, z ekranu wylatują dane rodziny
+    c.fillStyle = '#121420'; c.fillRect(0, 0, W, H); c.fillStyle = '#0E0F16'; c.fillRect(0, 1380, W, 540);
+    for (let i = 0; i < 18; i++) { c.fillStyle = 'rgba(255,255,255,.02)'; c.fillRect(i * 64, 0, 26, 1380); }
+    // ściana ze zdjęciami drzwi w tle
+    for (let k = 0; k < 6; k++) { const x = 120 + (k % 3) * 300, y = 220 + Math.floor(k / 3) * 250; c.save(); c.translate(x, y); c.rotate((hash(k) - .5) * .12); fillRR(c, -80, -100, 160, 200, 4, '#D9D4C8'); fillRR(c, -60, -82, 120, 150, 3, '#5E4029'); txt(c, ['94', '71', '31', '22', '81', '103'][k], 0, 90, 22, '#141414', 900); c.restore(); }
+    c.strokeStyle = 'rgba(215,38,61,.7)'; c.lineWidth = 3; c.beginPath(); c.moveTo(120, 220); c.lineTo(420, 260); c.lineTo(720, 230); c.moveTo(120, 470); c.lineTo(420, 500); c.lineTo(720, 470); c.stroke();
+    // biurko, laptop, Kaptur od tyłu
+    fillRR(c, 200, 1180, 680, 30, 6, '#3A2E22');
+    laptop(c, 330, 860, (cc, x, y, w, h) => { cc.fillStyle = '#0F1A2E'; cc.fillRect(x, y, w, h); for (let r = 0; r < 6; r++) fillRR(cc, x + 20, y + 20 + r * 44, (w - 40) * (.4 + hash(r + Math.floor(lt * 2)) * .6), 26, 6, 'rgba(120,170,255,.35)'); });
+    person(c, 'kaptur', 610, 1700, 2.3, { t: lt, back: true });
+    // dane wylatują z ekranu
+    const items = [['KLUCZE „94”', 'z chmury', 300, 700], ['RELACJA „SAMA”', 'z konta', 780, 640], ['RODZICE: NOCE', 'z kalendarza', 300, 990], ['GDZIE JEST KUBA', 'z lokalizacji', 780, 950]];
+    items.forEach((it, k) => { const t0 = .5 + k * 1.1; if (lt < t0) return; const p = eout(clamp((lt - t0) / .7)), x = lerp(590, it[2], p), y = lerp(1000, it[3], p);
+      c.save(); c.globalAlpha = p * .6; c.strokeStyle = '#78AAFF'; c.lineWidth = 2; c.setLineDash([8, 8]); c.beginPath(); c.moveTo(590, 1000); c.lineTo(x, y); c.stroke(); c.restore();
+      c.save(); c.globalAlpha = p; label(c, it[0], x, y, 'red', 30, 9, 9); txt(c, it[1], x, y + 52, 24, '#AEB0C2', 700); c.restore(); });
+    night(c, .75, [{ x: 590, y: 1000, r: 520, a: .95, tint: 'rgba(120,170,255,.16)' }]);
+    if (lt > .2 && lt < 4.4) label(c, 'MIESZKANIE 104', 540, 300, 'dark', 40, lt - .2, 4.4 - lt);
   },
-  post(c, lt) { if (lt > 3.6) card(c, 70, 1260, 860, 'ZASADA', 'Inne hasło do każdego konta\ni weryfikacja dwuetapowa.', lt - 3.6, '#F39C12', 44); },
+  post(c, lt) { if (lt > 4.6) card(c, 70, 1460, 860, 'ZASADA', 'Inne hasło do każdego konta\ni weryfikacja dwuetapowa.', lt - 4.6, '#F39C12', 44); },
 });
-// 8. NOC — kamerka laptopa zapala się sama
+// 8. NOC — kamerka laptopa zapala się sama, a na podglądzie ktoś stoi za Kubą
 scene({
   name: 'end', start: 66, end: 78,
-  cam: lt => ({ z: 1.0 + lt * 0.03 }),
-  labels: [[10.2, 12, 'ODC. 9 ↓', 540, 1650, 'red', 56]],
+  cam: lt => { const q = lt > 5.2 ? eio(clamp((lt - 5.2) / 2.2)) : 0, z = lt < 5.2 ? 1.0 + lt * 0.02 : 1.1 + q * .8 + (lt > 7.6 ? (lt - 7.6) * .04 : 0), sh = lt > 7.6 && lt < 8.1 ? (8.1 - lt) * 28 : 0; return { z, x: Math.sin(lt * 90) * sh, y: q * 280 * z }; },
+  labels: [[9.4, 12, 'ODC. 9 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
     roomBg(c);
     fillRR(c, 160, 900, 760, 30, 6, '#4A3A2C');
     laptop(c, 260, 520, (cc, x, y, w, h) => {
-      cc.fillStyle = '#E9ECF2'; cc.fillRect(x, y, w, h);
-      txt(cc, 'Zmień hasło', x + 30, y + 40, 26, '#14161B', 800, 'left');
-      fillRR(cc, x + 30, y + 70, w - 60, 50, 8, '#FFFFFF'); txt(cc, '•'.repeat(Math.min(14, Math.floor(lt * 4))), x + 44, y + 96, 26, '#14161B', 800, 'left');
-      if (lt > 6.6) { const a = clamp((lt - 6.6) / .3); cc.save(); cc.globalAlpha = a; fillRR(cc, x + 40, y + 150, w - 80, 110, 14, '#1B1D22'); txt(cc, 'k4ptur_94:', x + 60, y + 185, 22, '#AEB0C2', 700, 'left'); txt(cc, 'za późno, kuba.', x + 60, y + 228, 34, '#FFFFFF', 800, 'left'); cc.restore(); }
+      if (lt < 5.2) {
+        cc.fillStyle = '#E9ECF2'; cc.fillRect(x, y, w, h);
+        txt(cc, 'Zmień hasło', x + 30, y + 40, 26, '#14161B', 800, 'left');
+        fillRR(cc, x + 30, y + 70, w - 60, 50, 8, '#FFFFFF'); txt(cc, '•'.repeat(Math.min(14, Math.floor(lt * 4))), x + 44, y + 96, 26, '#14161B', 800, 'left');
+        return;
+      }
+      // podgląd z kamerki: Kuba od przodu, za nim drzwi pokoju
+      cc.fillStyle = '#1A1D28'; cc.fillRect(x, y, w, h);
+      fillRR(cc, x + w * .62, y + 20, 120, h - 20, 4, '#0A0B10');
+      const k = lt > 6.2 ? clamp((lt - 6.2) / .8) : 0;
+      if (k) { cc.save(); cc.globalAlpha = k; person(cc, 'kaptur', x + w * .62 + 60, y + h + 80, .8, { t: lt, glow: 1 }); cc.restore(); }
+      cc.save(); cc.beginPath(); cc.rect(x, y, w, h); cc.clip(); person(cc, 'kuba', x + w * .36, y + h + 210, 1.25, { t: lt, wide: lt > 7.2, mouth: lt > 7.2 ? 'o' : null }); cc.restore();
+      cc.fillStyle = 'rgba(255,255,255,.06)'; for (let r = 0; r < h; r += 4) cc.fillRect(x, y + r, w, 1);
+      circ(cc, x + 24, y + 24, 7, Math.floor(lt * 2) % 2 ? '#FF3B30' : '#7A1A16'); txt(cc, 'REC', x + 40, y + 25, 18, '#FF3B30', 900, 'left');
+      if (lt > 7.6) { const a = clamp((lt - 7.6) / .3); cc.save(); cc.globalAlpha = a; fillRR(cc, x + 30, y + h - 90, w - 60, 70, 12, 'rgba(10,10,14,.85)'); txt(cc, 'k4ptur_94: za późno, kuba.', x + 50, y + h - 55, 26, '#FFFFFF', 900, 'left'); cc.restore(); }
     });
-    // dioda kamerki
     if (lt > 4.4) { const b = .6 + .4 * Math.sin(lt * 8); c.save(); c.shadowColor = '#3BFF7A'; c.shadowBlur = 30; circ(c, 540, 529, 8, `rgba(59,255,122,${b})`); c.restore(); }
-    person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: lt < 4.4, wide: true, mouth: lt > 7 ? 'o' : null });
-    night(c, .8, [{ x: 540, y: 700, r: 560, a: .95, tint: 'rgba(200,220,255,.12)' }]);
-    if (lt > 4.4) label(c, 'KAMERKA WŁĄCZYŁA SIĘ SAMA', 540, 400, 'red', 38, lt - 4.4, 9);
+    person(c, 'kuba', 540, 1640, 2.0, { t: lt, back: true });
+    night(c, lt > 5.2 ? .7 : .8, [{ x: 540, y: 680, r: lt > 5.2 ? 420 : 560, a: 1, tint: 'rgba(200,220,255,.12)' }]);
+    if (lt > 7.6 && lt < 7.85) { c.fillStyle = 'rgba(255,255,255,.55)'; c.fillRect(0, 0, W, H); }
+    if (lt > 10.6) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 10.6) / 1.2) * .85})`; c.fillRect(0, 0, W, H); }
+  },
+  post(c, lt) {
+    if (lt > 4.4 && lt < 6.2) label(c, 'KAMERKA WŁĄCZYŁA SIĘ SAMA', 540, 300, 'red', 38, lt - 4.4, 6.2 - lt);
+    if (lt > 6.4 && lt < 7.6) label(c, 'KTOŚ STOI ZA NIM', 540, 300, 'red', 46, lt - 6.4, 7.6 - lt);
   },
 });

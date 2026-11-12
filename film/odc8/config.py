@@ -33,6 +33,7 @@ SEG = [
     ['end', 0.3, 'W nocy Kuba zmienia wszystkie hasła.'],
     ['end', 4.4, 'Kamerka w laptopie zapala się sama.'],
     ['end', 7.6, '[whispers] Za późno, Kuba.', 'kaptur'],
+    ['end', 5.6, 'Na podglądzie z kamerki… ktoś stoi za Kubą.'],
     ['check', 7.4, 'Szafa skrzypi. Coś w środku świeci.'],
     ['leave', 5.6, 'Na klatce Kuba się trzęsie. Ola nie puszcza jego ręki.'],
     ['open', 7.4, 'Ktoś ją tu zamontował. I ktoś ją podłączył.'],
@@ -45,12 +46,12 @@ VGAIN = {'kaptur': 1.5}
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 6, 11, 20, 28, 32.4, 32.6, 38, 48, 58, 66, 72.4, 72.6, 77.99], [-27, -30, -26, -30, -26, -60, -22, -27, -26, -28, -26, -60, -22, -24]),
-    loops={'drone': ([0, 62, 68, 76.8, 77.0, 77.99], [-90, -90, -24, -14, -60, -60]), 'roomtone': ([0, 77.99], [-39, -39])},
-    heartbeat=([0, 11, 13, 20, 28, 32.4, 32.5, 66, 70, 77.99], [-90, -90, -26, -90, -26, -20, -90, -90, -24, -20]),
+    loops={'drone': ([0, 62, 70, 73.55, 73.7, 75, 77.99], [-90, -90, -24, -12, -40, -26, -60]), 'roomtone': ([0, 77.99], [-39, -39])},
+    heartbeat=([0, 11, 13, 20, 28, 32.4, 32.5, 66, 70, 73.5, 73.6, 77.99], [-90, -90, -26, -90, -26, -20, -90, -90, -24, -14, -90, -90]),
 )
 REALMAP = {'creak': [('creak', -10)], 'slam': [('slam', -4)], 'notif': [('notif', -8)], 'boom': [('boom', -6)], 'stab': [('boom', -5)],
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
-EXTRA = [(76.85, 'boom', -1), (12.0, 'breath', -16)]
+EXTRA = [(73.6, 'boom', -1), (12.0, 'breath', -16)]
 
 # poprawiony na prośbę użytkownika: ok. 2 minut (TARGET domyślnie 118 s)
 MAXK = 1.5

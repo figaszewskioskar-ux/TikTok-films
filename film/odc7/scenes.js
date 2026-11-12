@@ -220,21 +220,33 @@ scene({
 // 10. SZAFA
 scene({
   name: 'end', start: 76, end: 86,
-  cam: lt => ({ z: 1.0 + lt * 0.035, x: -lt * 6 }),
-  labels: [[8.4, 10, 'ODC. 8 ↓', 540, 1650, 'red', 56]],
+  cam: lt => { const sh = lt > 6.6 && lt < 7.1 ? (7.1 - lt) * 30 : 0; return { z: 1.0 + Math.min(lt, 6.6) * 0.06, x: Math.sin(lt * 90) * sh, y: -Math.min(lt, 6.6) * 18 }; },
+  labels: [[7.4, 10, 'ODC. 8 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
-    c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H); c.fillStyle = '#1F1A22'; c.fillRect(0, 1420, W, 500);
-    // szafa
+    ROOM(c);
+    // szafa na pierwszym planie
     fillRR(c, 200, 300, 620, 1120, 10, '#4B3A2C'); c.fillStyle = '#3A2C20'; c.fillRect(506, 300, 8, 1120);
-    const gap = mv(lt, 1.0, 4.0, 4, 70);
+    c.fillStyle = 'rgba(255,255,255,.05)'; c.fillRect(214, 314, 14, 1092); c.fillRect(522, 314, 14, 1092);
+    const gap = mv(lt, 1.0, 5.4, 4, 120);
     c.fillStyle = '#020203'; c.fillRect(510, 320, gap, 1080);
     fillRR(c, 470, 820, 14, 70, 6, '#C9CDD2'); fillRR(c, 536 + gap, 820, 14, 70, 6, '#C9CDD2');
-    if (lt > 4.6) {
-      const a = clamp((lt - 4.6) / .4);
-      c.save(); c.globalAlpha = a; c.shadowColor = 'rgba(255,255,255,.9)'; c.shadowBlur = 24;
-      ell(c, 528 + gap * .28, 700, 14, 9, '#F4F1EA'); ell(c, 528 + gap * .78, 700, 14, 9, '#F4F1EA'); c.restore();
+    // oczy: zapalają się, mrugają, a na koniec duże i blisko
+    if (lt > 3.6) {
+      const a = clamp((lt - 3.6) / .5), big = lt > 6.6 ? 1.9 : 1, blink = lt < 6.6 && Math.floor(lt * 3) % 7 === 0 ? .15 : 1;
+      c.save(); c.globalAlpha = a; c.shadowColor = 'rgba(255,255,255,.95)'; c.shadowBlur = 40 * big;
+      const ex = 510 + gap / 2;
+      ell(c, ex - 26 * big, 690, 16 * big, 10 * big * blink, '#F8F6EE'); ell(c, ex + 26 * big, 690, 16 * big, 10 * big * blink, '#F8F6EE');
+      c.shadowBlur = 0; circ(c, ex - 26 * big, 690, 5 * big * blink, '#111'); circ(c, ex + 26 * big, 690, 5 * big * blink, '#111');
+      c.restore();
+      if (lt > 6.0) { // ręka w czarnej rękawiczce chwyta skrzydło szafy od środka
+        const h = clamp((lt - 6.0) / .5); c.save(); c.globalAlpha = h;
+        for (let f = 0; f < 4; f++) fillRR(c, 510 + gap - 6, 760 + f * 26, 34, 18, 9, '#121316');
+        fillRR(c, 510 + gap - 30, 750, 30, 120, 12, '#0c0d10'); c.restore(); }
+      if (lt > 6.6) { c.save(); c.globalAlpha = clamp((lt - 6.6) / .4) * .9; fillRR(c, 510 + gap / 2 - 60, 900, 120, 26, 12, '#0b0b0d'); c.fillStyle = '#16171B'; fillRR(c, 510 + gap / 2 - 70, 900, 50, 200, 22, '#0d0e10'); c.restore(); }
     }
-    night(c, .88, [{ x: 540, y: 860, r: 520, a: .6 }]);
-    if (lt > 4.6 && lt < 4.75) { c.fillStyle = 'rgba(255,255,255,.35)'; c.fillRect(0, 0, W, H); }
+    night(c, lt < 6.6 ? .82 : .9, [{ x: 540, y: 760, r: lt < 6.6 ? 560 : 380, a: .75 }]);
+    if (lt > 6.6 && lt < 6.85) { c.fillStyle = 'rgba(255,255,255,.55)'; c.fillRect(0, 0, W, H); }
+    if (lt > 9.0) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 9) / .9) * .85})`; c.fillRect(0, 0, W, H); }
   },
+  post(c, lt) { if (lt > 3.9 && lt < 6.4) label(c, 'COŚ JEST W SZAFIE', 540, 300, 'red', 46, lt - 3.9, 6.4 - lt); },
 });
