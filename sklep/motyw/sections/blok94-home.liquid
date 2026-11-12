@@ -65,6 +65,15 @@
 }
 #b94 .part{position:relative}#b94 .hot{position:absolute;top:12px;left:12px;background:var(--sign);color:#fff;font:800 13px/1 var(--body);padding:8px 10px;border-radius:999px;box-shadow:0 6px 18px rgba(215,38,61,.5)}
 #b94 section{scroll-margin-top:130px}
+#b94 .next .lbl{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#b94 .remind{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;background:rgba(245,197,66,.16);display:inline-flex;align-items:center;justify-content:center;font-size:15px;transition:transform .15s}
+#b94 .remind:hover{transform:scale(1.1)}#b94 .remind:focus-visible{outline:3px solid var(--hat);outline-offset:2px}
+#b94 .remind.done{background:rgba(48,164,108,.3)}
+#b94 .goal{margin:14px 0 6px;background:rgba(0,0,0,.35);border-radius:14px;padding:10px 12px}
+#b94 .goal .gt{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#f3efe6}#b94 .goal .gt span{color:#F5C542;font-weight:800;white-space:nowrap}
+#b94 .goal .gb{height:8px;border-radius:6px;background:rgba(255,255,255,.12);margin:7px 0 5px;overflow:hidden}#b94 .goal .gb i{display:block;height:100%;min-width:6px;border-radius:6px;background:linear-gradient(90deg,#F5C542,#d7263d)}
+#b94 .goal small{color:#c9c6bb;font-size:12px}
+
 /* blok 94: lepiej widoczny + animacje */
 #b94 .hero figure img{filter:brightness(1.35) saturate(1.12) contrast(1.05)}
 #b94 .hero figure .fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
@@ -93,7 +102,7 @@
     <div class="cta"><a class="btn red" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj na TikToku</a><a class="btn line" href="#seria">Wszystkie odcinki</a></div>
     {%- assign next_ep = section.settings.parts | plus: 2 -%}
     <div class="next" aria-label="Kolejny odcinek">
-      <div class="lbl">Odc. {{ next_ep }}<small>{% if section.settings.premiere != blank %}{{ section.settings.premiere_label }}{% else %}już niedługo na TikToku{% endif %}</small></div>
+      <div class="lbl">Odc. {{ next_ep }}{%- if section.settings.premiere != blank -%}<button type="button" class="remind" id="b94-remind" aria-label="Przypomnij mi o premierze w kalendarzu" title="Dodaj do kalendarza">🔔</button>{%- endif -%}<small>{% if section.settings.premiere != blank %}{{ section.settings.premiere_label }}{% else %}już niedługo na TikToku{% endif %}</small></div>
       {%- if section.settings.premiere != blank -%}
       <div class="cd" id="cd" data-t="{{ section.settings.premiere }}"><span id="cd-d">0<i>dni</i></span><span id="cd-h">00<i>godz.</i></span><span id="cd-m">00<i>min</i></span><span id="cd-s">00<i>sek.</i></span></div>
       {%- else -%}
@@ -161,6 +170,8 @@
       <a class="btn red tipbtn" href="#wesprzyj" id="t-btn">Daję napiwek · 20 zł</a>
       <div class="payic" aria-label="Metody płatności">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'pi' }}{%- endfor -%}</div>
     </div>
+    {%- assign goal = section.settings.tip_goal | default: 20 -%}{%- assign raised = section.settings.tip_raised | default: 0 -%}{%- assign gp = raised | times: 100 | divided_by: goal -%}{%- if gp > 100 -%}{%- assign gp = 100 -%}{%- endif -%}
+    <div class="goal"><div class="gt"><b>Cel: {{ goal }} zł na rozwój bloku 94</b><span>{{ raised }} / {{ goal }} zł</span></div><div class="gb"><i style="width:{{ gp }}%"></i></div><small>{% if raised == 0 %}Bądź pierwszą osobą, która wpuści nas dalej 🚪{% elsif gp >= 100 %}Cel osiągnięty! Dziękujemy ❤️{% else %}Brakuje {{ goal | minus: raised }} zł{% endif %}</small></div>
     <small class="note">Napiwek to dobrowolne wsparcie. Nie dostajesz produktu, tylko nasze wielkie dzięki i kolejne części.</small>
   </div>
 
@@ -279,6 +290,18 @@
  if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
  els.forEach(function(el,i){if(el.closest('.hero'))return;el.classList.add('rv');el.style.transitionDelay=(i%4)*70+'ms';io.observe(el);});})();
 </script>
+
+<script>
+// przypomnienie o premierze: plik kalendarza (.ics) — iPhone i Android dodają wydarzenie
+(function(){var b=document.getElementById('b94-remind'),cd=document.getElementById('cd');if(!b||!cd)return;
+ b.addEventListener('click',function(){var t=new Date(cd.dataset.t);if(isNaN(t))return;var f=function(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');};
+  var ep=(b.parentNode.firstChild.textContent||'Nowy odcinek').trim(),e=new Date(t.getTime()+15*60000);
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//BLOK94//PL','BEGIN:VEVENT','UID:blok94-'+t.getTime()+'@protokolocaleni.online','DTSTAMP:'+f(new Date()),'DTSTART:'+f(t),'DTEND:'+f(e),
+   'SUMMARY:BLOK 94 · '+ep+' na TikToku','DESCRIPTION:Nowy odcinek „Kto tam?” na tiktok.com/@protokolocaleni','URL:https://www.tiktok.com/@protokolocaleni',
+   'BEGIN:VALARM','TRIGGER:-PT10M','ACTION:DISPLAY','DESCRIPTION:Za 10 minut nowy odcinek BLOK 94','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='blok94-premiera.ics';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);
+  b.classList.add('done');b.textContent='✓';});})();
+</script>
 {% schema %}
 {"name":"BLOK 94 · strona główna","settings":[
  {"type":"range","id":"parts","label":"Ile części serii pokazać","min":1,"max":8,"step":1,"default":2},
@@ -291,6 +314,8 @@
  {"type":"text","id":"likes","label":"Polubienia","default":"8,7 tys."},
  {"type":"text","id":"views","label":"Wyświetlenia odcinka 2","default":"160 tys."},
  {"type":"text","id":"videos","label":"Liczba filmów","default":"9"},
+ {"type":"number","id":"tip_goal","label":"Cel napiwków (zł)","default":20},
+ {"type":"number","id":"tip_raised","label":"Zebrano do celu (zł)","default":0},
  {"type":"text","id":"stats_date","label":"Data statystyk","default":"7.11.2026"}
 ],"presets":[{"name":"BLOK 94 · strona główna"}]}
 {% endschema %}

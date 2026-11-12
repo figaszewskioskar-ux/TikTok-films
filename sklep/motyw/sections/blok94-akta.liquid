@@ -58,6 +58,22 @@
 #b94a .facts b{color:#f5c542}
 #b94a .pq{margin:12px 0 0;color:var(--muted);font-style:italic}
 @media(max-width:899px){#b94a .fl{min-height:36px;padding:4px 10px}#b94a .fl .win i{width:12px;height:15px}#b94a .fl .tag{font-size:11px;padding:5px 7px}}
+#b94a .fl2{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:8px;padding:5px 10px;background:#1a1f35;border-bottom:2px solid #0d1020}
+#b94a .fl2 .no{font:800 12px/1 var(--mono);color:var(--muted)}
+#b94a .fl2 .apts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+#b94a .apt{all:unset;box-sizing:border-box;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:900 13px/1 var(--body);cursor:pointer;background:#2a3150;color:var(--ink);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25);transition:transform .15s}
+#b94a .apt:hover{transform:translateY(-2px)}#b94a .apt:focus-visible{outline:3px solid var(--hat);outline-offset:2px}
+#b94a .apt.dim{background:#141829;cursor:default;box-shadow:none}
+#b94a .apt.home{background:#F5C542;color:#14161b;box-shadow:0 0 14px rgba(245,197,66,.5)}
+#b94a .apt.hot{background:var(--sign);color:#fff;animation:b94hot 2.4s infinite}
+@keyframes b94hot{50%{box-shadow:0 0 16px 3px rgba(215,38,61,.7)}}
+#b94a .apt[aria-pressed=true]{outline:3px solid #fff;outline-offset:2px}
+#b94a .acard{position:relative;margin:12px 0 14px;background:linear-gradient(180deg,var(--paper),var(--paper2));color:#1d1a14;border-radius:14px;padding:14px 14px 12px;animation:b94ac .3s ease}
+@keyframes b94ac{from{opacity:0;transform:translateY(8px)}}
+#b94a .acard .pt{font:800 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8a2a1a}
+#b94a .acard h3{font-size:24px;color:#1d1a14;margin:6px 0 4px}#b94a .acard p{margin:0 0 10px;font-size:15px;line-height:1.45}
+#b94a .acard .ax{all:unset;position:absolute;top:8px;right:10px;cursor:pointer;font-size:22px;width:32px;height:32px;text-align:center}
+@media(prefers-reduced-motion:reduce){#b94a .apt.hot{animation:none}}
 #b94a .locked{background:repeating-linear-gradient(45deg,#151a2e 0 14px,#11152a 14px 28px);border-radius:16px;padding:18px;text-align:center;color:var(--muted);font-weight:700}
 #b94a .locked b{display:block;font-family:var(--display);font-size:28px;color:var(--ink)}
 /* typowanie */
@@ -83,23 +99,38 @@
 <div id="b94a"><div class="wrap">
   <span class="eyebrow">Śledztwo · odcinki 2–{{ P | plus: 1 }}</span>
   <h1>Akta sprawy <span class="sign">Kaptur</span></h1>
-  <p class="lead">Wszystko, co wiemy o Kapturze, piętro po piętrze. Kliknij piętro w bloku, a pokażemy poszlaki, które się z nim łączą. Po każdej nowej części akta się powiększają.</p>
+  <p class="lead">Wszystko, co wiemy o Kapturze, piętro po piętrze. Kliknij mieszkanie na mapie bloku, a zobaczysz, kto tam mieszka i jakie poszlaki się z nim łączą. Po każdej nowej części akta się powiększają.</p>
 
   <div class="lay">
     <div class="blk" aria-label="Przekrój bloku 94">
       <p class="hint" style="margin-top:0">Kasztanowa 12 · klatka II</p>
       <div class="roof" aria-hidden="true"></div>
-      {%- comment -%} piętra od 10 do parteru {%- endcomment -%}
-      {%- if P >= 4 -%}<button class="fl" data-f="10" aria-pressed="false"><span class="no">10 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i class="on"></i><i></i></span><span class="tag">104 · nad pokojem Oli</span></button>
-      {%- else -%}<div class="fl quiet"><span class="no">10 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag q">?</span></div>{%- endif -%}
-      <button class="fl" data-f="9" aria-pressed="false"><span class="no">9 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i class="on"></i><i></i></span><span class="tag">94 · Ola{% if P >= 3 %} i Kuba{% endif %}</span></button>
-      {%- for f in (4..8) reversed -%}<div class="fl quiet"><span class="no">{{ f }} p.</span><span class="win" aria-hidden="true"><i></i><i{% if f == 6 %} class="on"{% endif %}></i><i></i><i></i></span><span></span></div>{%- endfor -%}
-      {%- if P >= 2 -%}<button class="fl" data-f="3" aria-pressed="false"><span class="no">3 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag">tu złapano kobietę</span></button>
-      {%- else -%}<div class="fl quiet"><span class="no">3 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span></span></div>{%- endif -%}
-      <button class="fl" data-f="2" aria-pressed="false"><span class="no">2 p.</span><span class="win" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span><span class="tag">{% if P >= 5 %}22 · {% endif %}pan Zdzisiek</span></button>
-      <div class="fl quiet"><span class="no">1 p.</span><span class="win" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span></span></div>
-      <button class="fl" data-f="0" aria-pressed="false"><span class="no">parter</span><span class="win" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="tag">7 · okradziona sąsiadka</span></button>
+      {%- comment -%} mapa: piętra 10 → parter, w każdym 4 mieszkania; znane są klikalne (bez spoilerów z dalszych części) {%- endcomment -%}
+      {%- assign floors = '10,9,8,7,6,5,4,3,2,1,0' | split: ',' -%}
+      {%- for fs in floors -%}{%- assign f = fs | plus: 0 -%}
+      <div class="fl2" data-f="{{ f }}"><span class="no">{% if f == 0 %}parter{% else %}{{ f }} p.{% endif %}</span><span class="apts">
+        {%- for q in (1..4) -%}
+          {%- assign apt = '' -%}
+          {%- if f == 10 and q == 4 and P >= 4 -%}{%- assign apt = '104' -%}{%- endif -%}
+          {%- if f == 9 and q == 4 -%}{%- assign apt = '94' -%}{%- endif -%}
+          {%- if f == 7 and q == 1 and P >= 5 -%}{%- assign apt = '71' -%}{%- endif -%}
+          {%- if f == 3 and q == 1 and P >= 5 -%}{%- assign apt = '31' -%}{%- endif -%}
+          {%- if f == 2 and q == 2 -%}{%- assign apt = '22' -%}{%- endif -%}
+          {%- if f == 0 and q == 3 -%}{%- assign apt = '7' -%}{%- endif -%}
+          {%- if apt != '' -%}<button class="apt{% if apt == '94' %} home{% endif %}{% if apt == '104' %} hot{% endif %}" data-a="{{ apt }}" data-f="{{ f }}" aria-label="Mieszkanie {{ apt }}">{{ apt }}</button>
+          {%- else -%}<i class="apt dim" aria-hidden="true"></i>{%- endif -%}
+        {%- endfor -%}</span></div>
+      {%- endfor -%}
       <div class="ground" aria-hidden="true"></div>
+      <div class="acard" id="b94a-card" hidden><button type="button" class="ax" aria-label="Zamknij">×</button><span class="pt" id="ac-pt"></span><h3 id="ac-h"></h3><p id="ac-p"></p><button type="button" class="btn red" id="ac-go" style="min-height:42px;font-size:14px">Pokaż poszlaki z tego piętra</button></div>
+      <script type="application/json" id="b94a-apts">{
+        "94": {"pt":"9. piętro · mieszkanie 94","h":"Ola{% if P >= 3 %} i Kuba{% endif %}","p":"Rodzice pracują na noce. Wizjer zaklejony od zewnątrz{% if P >= 3 %}, prąd wyłączony w skrzynce{% endif %}{% if P >= 4 %}, klucze w rękach Kaptura{% endif %}. Tu wszystko się zaczęło."},
+        "104": {"pt":"10. piętro · mieszkanie 104","h":"{% if P >= 5 %}Puste. Kryjówka Kaptura{% else %}Ktoś tu się ukrył{% endif %}","p":"Dokładnie nad pokojem Oli. Kaptur uciekł tu po nocy z kluczem{% if P >= 5 %}. Właściciel jest w Norwegii, a na ścianie wiszą zdjęcia drzwi z całego bloku{% endif %}."},
+        "22": {"pt":"2. piętro · mieszkanie 22","h":"Pan Zdzisiek","p":"„Ja tu znam wszystkich.” Pilnuje klatki{% if P >= 2 %} i słyszał już płacz pod siódemką{% endif %}{% if P >= 5 %}. Ostatnie zdjęcie na ścianie w 104: jego drzwi z podpisem „sam”{% endif %}."},
+        "31": {"pt":"3. piętro · mieszkanie 31","h":"Babcia sama","p":"Na zdjęciu w 104 podpis: „babcia sama”. Następna na liście?"},
+        "71": {"pt":"7. piętro · mieszkanie 71","h":"Sąsiadka, która „wyjechała”","p":"Kaptur zapisał, że mieszkanie stoi puste. Kto jeszcze to wie?"},
+        "7": {"pt":"Parter · mieszkanie 7","h":"Okradziona sąsiadka","p":"Tydzień przed Olą: ten sam płacz za drzwiami. Rano nie było telewizora ani obrączki."}
+      }</script>
     </div>
 
     <div class="files">
@@ -186,7 +217,18 @@
 <script>
 (function(){var r=document.getElementById('b94a');if(!r)return;
  r.querySelectorAll('details.file').forEach(function(d){var n=d.querySelectorAll('li').length,c=d.querySelector('.cnt');if(c)c.textContent=n+(n===1?' poszlaka':n<5?' poszlaki':' poszlak')+' · rozwiń';});
- var fls=r.querySelectorAll('.fl[data-f]'),items=r.querySelectorAll('.file li[data-f]');
+ var items=r.querySelectorAll('.file li[data-f]');
+ function showFloor(f){var first=null;items.forEach(function(li){li.classList.remove('hit');if(li.getAttribute('data-f')===f){var dd=li.closest('details');if(dd)dd.open=true;void li.offsetWidth;li.classList.add('hit');if(!first)first=li;}});if(first)first.scrollIntoView({behavior:'smooth',block:'center'});}
+ var A={};try{A=JSON.parse(document.getElementById('b94a-apts').textContent);}catch(e){}
+ var card=document.getElementById('b94a-card'),apts=r.querySelectorAll('.apt[data-a]'),curF=null;
+ apts.forEach(function(b){b.addEventListener('click',function(){var d=A[b.getAttribute('data-a')];if(!d)return;curF=b.getAttribute('data-f');
+  apts.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+  document.getElementById('ac-pt').textContent=d.pt;document.getElementById('ac-h').textContent=d.h;document.getElementById('ac-p').textContent=d.p;
+  card.hidden=false;card.style.animation='none';void card.offsetWidth;card.style.animation='';
+  var hasItems=[].some.call(items,function(li){return li.getAttribute('data-f')===curF;});document.getElementById('ac-go').hidden=!hasItems;});});
+ document.getElementById('ac-go').addEventListener('click',function(){if(curF!==null)showFloor(curF);});
+ card.querySelector('.ax').addEventListener('click',function(){card.hidden=true;apts.forEach(function(x){x.setAttribute('aria-pressed','false');});});
+ var fls=[];
  fls.forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f'),first=null;
   fls.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
   items.forEach(function(li){li.classList.remove('hit');if(li.getAttribute('data-f')===f){var dd=li.closest('details');if(dd)dd.open=true;void li.offsetWidth;li.classList.add('hit');if(!first)first=li;}});
