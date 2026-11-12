@@ -4,11 +4,11 @@ window.EP = {
   loop: false,
   vignette: .84,
   cues(add) {
-    add(0.2, 'stab'); add(6.2, 'whoosh'); add(19.0, 'door'); add(26.2, 'error');
-    add(31.0, 'door'); add(36.0, 'hit'); add(45.0, 'door'); add(49.0, 'creak'); add(53.0, 'hit'); add(56.4, 'error');
-    add(60.0, 'click'); add(62.6, 'door'); add(66.0, 'hit');
-    add(73.0, 'error'); add(80.0, 'whoosh'); add(87.0, 'door'); add(95.0, 'notif');
-    add(102.4, 'whoosh'); add(110.0, 'creak'); add(114.4, 'hit');
+    add(0.2, 'stab'); add(16.2, 'whoosh'); add(29.0, 'door'); add(36.2, 'error');
+    add(41.0, 'door'); add(46.0, 'hit'); add(55.0, 'door'); add(59.0, 'creak'); add(63.0, 'hit'); add(66.4, 'error');
+    add(70.0, 'click'); add(72.6, 'door'); add(76.0, 'hit');
+    add(83.0, 'error'); add(90.0, 'whoosh'); add(97.0, 'door'); add(105.0, 'notif');
+    add(112.4, 'whoosh'); add(120.0, 'creak'); add(124.4, 'hit');
   },
 };
 const S = [];
@@ -149,9 +149,38 @@ scene({
     bigSign(c, lt, 'NIE SIADAJ', 'Z TYŁU!', 360);
   },
 });
+// 1. IMPREZA: urodziny Zuzi, Ola wychodzi sama na nocny autobus
+scene({
+  name: 'party', start: 6, end: 16,
+  labels: [[0.3, 3.6, '00:38 · URODZINY ZUZI', 540, 300, 'dark', 38]],
+  bubbles: [
+    say(1.4, 3.6, 'Na pewno nie zostaniesz\nna noc?', 'zuzia', 470, 1560, 1.85, -40),
+    say(3.8, 6.0, 'Obiecałam mamie.\nZłapię nocny.', 'ola', 800, 1560, 1.9, -40),
+    say(6.2, 7.4, 'Napisz, jak dojedziesz!', 'zuzia', 470, 1560, 1.85, -40),
+    say(7.5, 8.2, 'Jasne!', 'ola', 800, 1560, 1.9, -40),
+  ],
+  draw(c, lt, sc) {
+    const open = lt < 8.4;
+    corridorBg(c, lt, { open, num: '52', num2: '51', floor: '5' });
+    if (open) { // impreza w środku: kolorowe światła, balony, tańczący znajomi
+      c.save(); c.beginPath(); c.rect(330, 560, 380, 840); c.clip();
+      const hue = (lt * 90) % 360; c.fillStyle = `hsla(${hue},80%,55%,.35)`; c.fillRect(330, 560, 380, 840);
+      for (let k = 0; k < 3; k++) { const dx = 380 + k * 120, bob = Math.sin(lt * 7 + k * 2) * 14; c.save(); c.globalAlpha = .7; person(c, ['sasiad', 'kurier', 'sasiad'][k], dx, 1300 + bob, 1.1, { t: lt, aL: 1.6 + Math.sin(lt * 7 + k) * .4, aR: 1.6 - Math.sin(lt * 7 + k) * .4, still: true }); c.restore(); }
+      for (let k = 0; k < 4; k++) { circ(c, 360 + k * 95, 620 + Math.sin(lt * 1.5 + k) * 10, 26, ['#E85A4F', '#F5C542', '#4FA8E8', '#F28CB1'][k]); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 2; c.beginPath(); c.moveTo(360 + k * 95, 646); c.lineTo(360 + k * 95, 740); c.stroke(); }
+      c.restore();
+      // nuty muzyki wylatują przez drzwi
+      for (let k = 0; k < 5; k++) { const p = (lt * .4 + k / 5) % 1; txt(c, '♪', 700 + p * 260, 900 - p * 300 + Math.sin(p * 9 + k) * 20, 40, `rgba(255,230,160,${1 - p})`, 900); }
+      person(c, 'zuzia', 470, 1560, 1.85, { t: lt, look: 1, mouth: talking(sc, 'zuzia', lt) ? null : 'smile', talk: talking(sc, 'zuzia', lt), aR: lt > 6.2 && lt < 7.4 ? 2.2 : null });
+    }
+    const ox = lt < 8.6 ? 800 : mv(lt, 8.6, 10, 800, 1180);
+    person(c, 'ola', ox, 1560, 1.9, { t: lt, look: lt < 8.4 ? -1 : 1, mouth: talking(sc, 'ola', lt) ? null : (lt < 8.4 ? 'smile' : null), talk: talking(sc, 'ola', lt), walk: lt > 8.6 ? lt * 9 : null });
+    night(c, open ? .45 : .8, [{ x: 520, y: 1000, r: open ? 600 : 200, a: .9, tint: open ? 'rgba(255,120,200,.10)' : null }, { x: ox, y: 1100, r: 320, a: .5 }]);
+  },
+  post(c, lt) { if (lt > 8.4 && lt < 10) label(c, 'DRZWI SIĘ ZAMYKAJĄ. CISZA.', 540, 300, 'dark', 38, lt - 8.4, 10 - lt); },
+});
 // 1. PRZYSTANEK: 00:45, telefon 3%, wiadomość do mamy
 scene({
-  name: 'stop', start: 6, end: 18,
+  name: 'stop', start: 16, end: 28,
   labels: [[0.3, 4, '00:45 · PRZYSTANEK PARK LEŚNY', 540, 300, 'dark', 38]],
   bubbles: [say(4.2, 7.6, 'Mamo, jestem na przystanku.\nN94 za dwie minuty.', 'ola', 470, 1400, 1.9, 40)],
   draw(c, lt, sc) {
@@ -166,7 +195,7 @@ scene({
 function breathPuff(c, x, y, lt) { for (let i = 0; i < 3; i++) { const p = ((lt * .7 + i / 3) % 1); c.fillStyle = `rgba(230,235,245,${.2 * (1 - p)})`; c.beginPath(); c.arc(x + p * 60, y - p * 50, 10 + p * 26, 0, 7); c.fill(); } }
 // 2. WSIADA: autobus podjeżdża, kierowca, Ola idzie na sam koniec (BŁĄD 1)
 scene({
-  name: 'board', start: 18, end: 30,
+  name: 'board', start: 28, end: 40,
   bubbles: [say(5.4, 6.6, 'Dobry wieczór.', 'kierowca', 900, 1500, 1.8, -60), say(6.8, 7.8, 'Dobry wieczór.', 'ola', 560, 1520, 1.9, 0)],
   draw(c, lt, sc) {
     if (lt < 4.6) { // autobus podjeżdża pod wiatę, drzwi się otwierają
@@ -191,7 +220,7 @@ scene({
 });
 // 3. ŁĄKOWA: wsiada pasażer. Pusty autobus — a on siada blisko
 scene({
-  name: 'ride1', start: 30, end: 44,
+  name: 'ride1', start: 40, end: 54,
   draw(c, lt) {
     const cam = lt > 7.6;
     busInside(c, lt, { led: lt < 6 ? 'PRZYSTANEK: ŁĄKOWA' : 'NASTĘPNY: OGRODOWA', speed: lt < 5 ? 0 : 1 });
@@ -207,7 +236,7 @@ scene({
 });
 // 4. OGRODOWA: przesiada się bliżej. „Zimno dziś, prawda?” — odbicie w szybie, telefon gaśnie
 scene({
-  name: 'ride2', start: 44, end: 58,
+  name: 'ride2', start: 54, end: 68,
   bubbles: [say(4.4, 6.4, 'Zimno dziś, prawda?', 'pasazer', SEATS[1] + 60, 1394, 1.6, 60), say(6.6, 7.6, '…Tak.', 'ola', SEATS[0] + 60, 1394, 1.6, 40)],
   draw(c, lt, sc) {
     if (lt < 9.0) {
@@ -236,7 +265,7 @@ scene({
 });
 // 5. KASZTANOWA: Ola wciska STOP. On też wstaje. Wysiadają razem
 scene({
-  name: 'getoff', start: 58, end: 70,
+  name: 'getoff', start: 68, end: 80,
   draw(c, lt) {
     if (lt < 6.4) {
       busInside(c, lt, { led: 'PRZYSTANEK: KASZTANOWA', speed: lt < 3 ? 1 - lt / 3 : 0 });
@@ -261,7 +290,7 @@ scene({
 });
 // 6. ULICA: Ola idzie w stronę bloku (BŁĄD 2), on za nią. Skręca do sklepu 24h
 scene({
-  name: 'street', start: 70, end: 86,
+  name: 'street', start: 80, end: 96,
   bubbles: [say(8.6, 10.6, 'Nie do domu…\nnie do domu.', 'ola', 640, 1500, 1.7, -60)],
   draw(c, lt, sc) {
     streetBg(c, lt, { shop: lt > 6 });
@@ -283,7 +312,7 @@ scene({
 });
 // 7. SKLEP 24h: kasjerka dzwoni na policję. On stoi pod latarnią i patrzy. ZASADA (bez czytania)
 scene({
-  name: 'shop', start: 86, end: 102,
+  name: 'shop', start: 96, end: 112,
   bubbles: [
     say(1.4, 4.4, 'Przepraszam… ktoś za mną idzie.\nMogę tu zostać?', 'ola', 560, 1600, 1.9, 0),
     say(4.6, 7.4, 'Siadaj tu, kochanie.\nDzwonię na policję.', 'kasjerka', 900, 1600, 1.9, -60),
@@ -301,7 +330,7 @@ scene({
 });
 // 8. ZAKOŃCZENIE: monitor kamer — CAM 1 pusto, CAM 2: on stoi w sklepie, tuż za Olą
 scene({
-  name: 'end', start: 102, end: 120,
+  name: 'end', start: 112, end: 130,
   cam: lt => { const sh = lt > 12.4 && lt < 13.0 ? (13.0 - lt) * 30 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   labels: [[15.0, 18, 'ODC. 2 ↓', 540, 1650, 'red', 64]],
   bubbles: [say(0.6, 2.6, 'Poszedł sobie.\nJuż dobrze.', 'kasjerka', 900, 1600, 1.9, -60)],

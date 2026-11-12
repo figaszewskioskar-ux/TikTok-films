@@ -97,6 +97,7 @@ const KINDS = {
   sasiad: { jacket: '#2F343F', dark: '#22262F', pants: '#1A1D24', skin: '#E3AC88', shoes: '#0E0F12' },
   policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
+  zuzia: { jacket: '#2E8B7A', dark: '#236B5E', pants: '#3B3F5C', skin: '#F2C2A0', shoes: '#E8E4DA' },
   pasazer: { jacket: '#4E535B', dark: '#3E424A', pants: '#3A3E45', skin: '#CFC8BE', shoes: '#16171A' },
 };
 function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return '#' + ((1 << 24) + (m(r) << 16) + (m(g) << 8) + m(b)).toString(16).slice(1); }
@@ -252,15 +253,16 @@ function person(c, kind, x, y, s, o = {}) {
     if (kind === 'halina') { circ(c, 0, hy - 6, 56, '#8C7B6B'); }
     if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
+    if (kind === 'zuzia') { circ(c, 0, hy - 4, 57, '#C2562B'); circ(c, 56, hy - 30, 22, '#C2562B'); circ(c, -56, hy - 30, 22, '#C2562B'); }
     if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
-    if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
+    if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina' && kind !== 'zuzia') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
     circ(c, 0, hy, 50, k.skin);
     c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(0,0,0,.08)'; c.beginPath(); c.arc(20, hy + 8, 50, 0, 7); c.fill(); c.restore();
     if (back_) { /* tył głowy */ }
     else {
       const lk = (o.look || 0) * 7 + (idle ? 2.5 * Math.sin(t * 0.45 + seed * 2) : 0), ly = (o.lookY || 0) * 5 + (idle ? 1.2 * Math.sin(t * 0.33 + seed) : 0);
       const blink = o.blink || ((t * 1000 + x * 37) % 3900) < 110;
-      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
+      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta' || kind === 'zuzia') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
       if (kind === 'pasazer') { // zapadnięte, czarne oczy z małymi białymi punktami, cienie pod oczami, cień na połowie twarzy
         c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(20,18,24,.28)'; c.fillRect(4, hy - 60, 60, 120); c.restore();
         { const sg = c.createLinearGradient(0, hy - 50, 0, hy + 10); sg.addColorStop(0, 'rgba(8,8,12,.75)'); sg.addColorStop(1, 'rgba(8,8,12,0)'); c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = sg; c.fillRect(-60, hy - 60, 120, 70); c.restore(); }
@@ -319,6 +321,9 @@ function person(c, kind, x, y, s, o = {}) {
       c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#231B17'; c.fill(); fillRR(c, -52, hy - 30, 40, 22, 8, '#231B17');
     } else if (kind === 'policjant') {
       fillRR(c, -54, hy - 70, 108, 46, 10, '#1F2C4C'); fillRR(c, -56, hy - 30, 120, 12, 6, '#0E1530'); circ(c, 0, hy - 50, 10, '#D9B84A');
+    } else if (kind === 'zuzia') { // rude włosy z dwoma kokami i grzywką
+      c.beginPath(); c.arc(0, hy - 24, 50, Math.PI, 0); c.fillStyle = '#C2562B'; c.fill(); fillRR(c, -48, hy - 34, 70, 18, 9, '#C2562B');
+      circ(c, -40, hy - 66, 20, '#A8451F'); circ(c, 40, hy - 66, 20, '#A8451F');
     } else if (kind === 'ola') {
       c.beginPath(); c.arc(0, hy - 26, 50, Math.PI, 0); c.fillStyle = '#7B4FC9'; c.fill();
       fillRR(c, -50, hy - 34, 64, 18, 9, '#7B4FC9');

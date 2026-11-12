@@ -8,11 +8,11 @@ VOICES = {
     'kierowca': ('xsSg7GkDPDhaGZpbKOLn', 'eleven_v3', V3),
     'pasazer':  ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
     'kasjerka': ('EXAVITQu4vr4xnSDxMaL', 'eleven_v3', V3),
+    'zuzia':    ('cgSgspJ2msm6clMCkdW9', 'eleven_v3', V3),
 }
-VFILTER = {'ola': 'highpass=f=110', 'kierowca': 'highpass=f=100', 'kasjerka': 'highpass=f=120', 'pasazer': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
+VFILTER = {'zuzia': 'highpass=f=120', 'ola': 'highpass=f=110', 'kierowca': 'highpass=f=100', 'kasjerka': 'highpass=f=120', 'pasazer': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
 VGAIN = {'pasazer': 1.3}
-SCENES = [('hook', 0, 6), ('stop', 6, 18), ('board', 18, 30), ('ride1', 30, 44), ('ride2', 44, 58), ('getoff', 58, 70),
-          ('street', 70, 86), ('shop', 86, 102), ('end', 102, 120)]
+SCENES = [('hook', 0, 6), ('party', 6, 16), ('stop', 16, 28), ('board', 28, 40), ('ride1', 40, 54), ('ride2', 54, 68), ('getoff', 68, 80), ('street', 80, 96), ('shop', 96, 112), ('end', 112, 130)]
 SEG = [
     ['hook', 0.2, 'Pusty nocny autobus. A on zawsze siada bliżej.'],
     ['stop', 0.4, 'Za piętnaście pierwsza. Ola wraca sama.'],
@@ -43,20 +43,27 @@ SEG = [
     ['end', 3.4, 'Monitor kamer. Kamera pierwsza: ulica. Pusto.'],
     ['end', 5.6, 'Kamera druga: sklep.'],
     ['end', 9.0, '[whispers] Wysiadamy razem… Ola.', 'pasazer'],
+    ['party', 0.2, 'Urodziny Zuzi. Za dwadzieścia pierwsza.'],
+    ['party', 1.4, '[cheerful] Na pewno nie zostaniesz na noc?', 'zuzia'],
+    ['party', 3.8, 'Obiecałam mamie. Złapię nocny.', 'ola'],
+    ['party', 6.2, '[cheerful] Napisz, jak dojedziesz!', 'zuzia'],
+    ['party', 7.5, '[cheerful] Jasne!', 'ola'],
 ]
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 119.99], [-34, -34]),
-    loops={'groza': ([0, .3, 5.5, 6.5, 18, 22, 28, 30, 34, 37, 44, 48, 50, 53, 56, 58, 62, 66, 70, 75, 80, 86, 90, 98, 102, 106, 110, 114.35, 114.5, 116, 119.99],
-                     [-60, -12, -12, -24, -22, -20, -16, -18, -14, -10, -16, -12, -9, -7, -9, -12, -9, -7, -14, -10, -8, -12, -16, -22, -24, -16, -10, -4, -70, -22, -30]),
-           'tension': ([0, 30, 58, 102, 114.35, 114.5, 119.99], [-32, -26, -22, -20, -14, -60, -60]),
-           'drone': ([0, 104, 114.35, 114.5, 119.99], [-30, -24, -14, -60, -60]),
-           'wind': ([0, 6, 18, 18.1, 58, 58.1, 86, 86.1, 119.99], [-90, -30, -30, -90, -90, -30, -30, -90, -90]),
-           'roomtone': ([0, 119.99], [-40, -40])},
-    heartbeat=([0, 30, 34, 44, 48, 58, 70, 86, 102, 108, 114.35, 114.45, 119.99], [-90, -90, -18, -16, -12, -12, -14, -90, -90, -14, -6, -90, -90]),
+    bed=([0, 129.99], [-34, -34]),
+    loops={'crowd': ([0, 6, 6.3, 14.2, 14.6, 129.99], [-90, -90, -22, -22, -60, -90]),
+ 'drone': ([0, 114, 124.35, 124.5, 129.99], [-30, -24, -14, -60, -60]),
+ 'groza': ([0, 6.2, 0.3, 5.5, 16.5, 28, 32, 38, 40, 44, 47, 54, 58, 60, 63, 66, 68, 72, 76, 80, 85, 90, 96, 100, 108, 112, 116, 120, 124.35, 124.5, 126, 129.99],
+           [-60, -40, -12, -12, -24, -22, -20, -16, -18, -14, -10, -16, -12, -9, -7, -9, -12, -9, -7, -14, -10, -8, -12, -16, -22, -24, -16, -10, -4, -70, -22, -30]),
+ 'roomtone': ([0, 129.99], [-40, -40]),
+ 'tension': ([0, 40, 68, 112, 124.35, 124.5, 129.99], [-32, -26, -22, -20, -14, -60, -60]),
+ 'wind': ([0, 16, 28, 28.1, 68, 68.1, 96, 96.1, 129.99], [-90, -30, -30, -90, -90, -30, -30, -90, -90])},
+    heartbeat=([0, 40, 44, 54, 58, 68, 80, 96, 112, 118, 124.35, 124.45, 129.99], [-90, -90, -18, -16, -12, -12, -14, -90, -90, -14, -6, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -18)], 'creak': [('creak', -8)], 'hit': [('boom', -3)],
            'notif': [('notif', -9)], 'error': [('boom', -8)], 'click': [('tap', -8)], 'door': [('doorclose', -10)]}
-EXTRA = [(114.4, 'hit_low', 0), (114.4, 'sting', -3), (110.4, 'riser', -6), (36.0, 'hit_low', -2), (53.0, 'hit_low', -2), (66.0, 'hit_low', -2),
-         (48.0, 'breath', -12), (75.0, 'breath', -12), (108.0, 'breath', -8)] + [(t, 'hit_low', -6) for t in (0.2, 6, 18, 30, 44, 58, 70, 86, 102)]
+EXTRA = [(124.4, 'hit_low', 0), (124.4, 'sting', -3), (120.4, 'riser', -6), (46.0, 'hit_low', -2), (63.0, 'hit_low', -2), (76.0, 'hit_low', -2), (58.0, 'breath', -12), (85.0, 'breath', -12),
+ (118.0, 'breath', -8), (0.2, 'hit_low', -6), (16, 'hit_low', -6), (28, 'hit_low', -6), (40, 'hit_low', -6), (54, 'hit_low', -6), (68, 'hit_low', -6), (80, 'hit_low', -6), (96, 'hit_low', -6),
+ (112, 'hit_low', -6), (14.4, 'doorclose', -6), (14.4, 'hit_low', -4)]
 MAXK = 1.5
