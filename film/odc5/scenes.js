@@ -1,8 +1,8 @@
 // BLOK 94 · „KTO TAM?” CZĘŚĆ 4 — klucz w zamku o 3:12, Zdzisiek z latarką, Kaptur ucieka w górę.
 window.EP = {
   badge: 'BLOK 94 · ODC. 5',
-  loop: true,
-  vignette: .78,
+  loop: false,
+  vignette: .86,
   cues(add) {
     add(0.3, 'stab'); add(0.6, 'keyturn');
     add(20.8, 'error');
@@ -18,6 +18,8 @@ window.EP = {
 
 const S = [];
 function scene(o) { S.push(o); return o; }
+function say(a, b, text, who, px, py, s, dx = 0, lift = 0) { const top = py - 312 * s; return [a, b, text, clamp(px + dx, 200, 880), top - 18 - lift, px, top + 12, who]; }
+function sayAt(a, b, text, who, px, py, dx = 0, up = 60) { return [a, b, text, clamp(px + dx, 200, 880), py - up, px, py, who]; }
 function talking(sc, who, lt) {
   return (sc.bubbles || []).some(b => b[7] === who && lt >= b[0] && lt < b[0] + Math.min(b[1] - b[0] - .2, .055 * b[2].length + .3));
 }
@@ -37,7 +39,6 @@ function stairwellZdz(c, lt, o = {}) {
 // 0. HAK — gałka zamka obraca się sama
 scene({
   name: 'hook', start: 0, end: 6,
-  cam: lt => ({ z: 1.0 + lt * 0.015 }),
   draw(c, lt) {
     lockCloseup(c, lt, mv(lt, 0.6, 1.6, 0, Math.PI / 2));
     night(c, .6, [{ x: 540, y: 900, r: 600, a: .9, tint: 'rgba(200,220,255,.06)' }]);
@@ -62,9 +63,10 @@ scene({
 scene({
   name: 'decide', start: 12, end: 22,
   bubbles: [
-    [0.4, 3.2, 'Zadzwońmy na policję…', 640, 860, 860, 1010, 'ola'],
-    [3.4, 6.4, 'I co powiemy? Że zgubiłem\nklucze? Rano wymienimy zamek.', 420, 860, 360, 1010, 'kuba'],
-    [6.6, 8.6, 'Mamy łańcuch. Nic się nie stanie.', 440, 860, 360, 1010, 'kuba'],
+    say(0.4, 2.0, 'Kuba, on ma nasze klucze.\nZ numerem mieszkania.', 'ola', 860, 1500, 2.15, -60),
+    say(2.1, 3.2, 'Zadzwońmy na policję…', 'ola', 860, 1500, 2.15, -60),
+    say(3.4, 6.4, 'I co powiemy? Że zgubiłem\nklucze? Rano wymienimy zamek.', 'kuba', 360, 1500, 2.1, 80),
+    say(6.6, 8.6, 'Mamy łańcuch. Nic się nie stanie.', 'kuba', 360, 1500, 2.1, 80),
   ],
   draw(c, lt, sc) {
     hallBg(c, lt);
@@ -77,7 +79,6 @@ scene({
 // 3. NOC — 3:12
 scene({
   name: 'night', start: 22, end: 30,
-  cam: lt => ({ z: 1.0 + lt * 0.012 }),
   labels: [[0.3, 8, '03:12', 540, 300, 'yellow', 48], [1.6, 8, 'METAL W ZAMKU', 540, 400, 'red', 40]],
   draw(c, lt) {
     ROOM(c);
@@ -91,19 +92,21 @@ scene({
 scene({
   name: 'locks', start: 30, end: 40,
   labels: [[1.2, 10, 'KLUCZ PASUJE', 540, 300, 'red', 46]],
-  draw(c, lt) {
+  bubbles: [say(2.2, 4.4, 'Kuba… to nasz klucz.', 'ola', 950, 1520, 1.9, -120), say(6.0, 8.4, 'Ola, dzwoń na 112. Już!', 'kuba', 700, 1500, 2.0, -40)],
+  draw(c, lt, sc) {
     hallBg(c, lt, { locks: [mv(lt, 1.0, 1.8, 0, Math.PI / 2), mv(lt, 4.6, 5.4, 0, Math.PI / 2)] });
-    person(c, 'kuba', 890, 1500, 2.0, { t: lt, phone: 1, aR: 1.3, look: -1, wide: true, mouth: 'o' });
-    person(c, 'ola', 1010, 1520, 1.9, { t: lt, phone: 1, aR: 1.0, look: -1, wide: true, mouth: 'o' });
-    night(c, .9, [{ x: 720, y: 1000, r: 440, a: .9, tint: 'rgba(200,220,255,.08)' }, { x: 540, y: 1425, r: 260, a: .8 }]);
+    person(c, 'kuba', 700, 1500, 2.0, { t: lt, phone: 1, aR: 1.3, look: -1, wide: true, mouth: talking(sc, 'kuba', lt) ? null : 'o', talk: talking(sc, 'kuba', lt) });
+    person(c, 'ola', 950, 1520, 1.9, { t: lt, phone: 1, aR: 1.0, look: -1, wide: true, mouth: talking(sc, 'ola', lt) ? null : 'o', talk: talking(sc, 'ola', lt) });
+    night(c, .9, [{ x: 760, y: 1000, r: 520, a: .9, tint: 'rgba(200,220,255,.08)' }, { x: 540, y: 1425, r: 260, a: .8 }]);
   },
 });
 // 5. ŁAŃCUCH TRZYMA — Kuba dociska drzwi
 scene({
   name: 'chain', start: 40, end: 48,
-  cam: lt => { const sl = lt > 4.4 && lt < 4.9 ? 18 : 0; return { z: 1.05, x: Math.sin(lt * 80) * sl }; },
+  cam: lt => { const sl = lt > 4.4 && lt < 4.9 ? 18 : 0; return { z: 1, x: Math.sin(lt * 80) * sl }; },
   labels: [[1.2, 4.4, 'ŁAŃCUCH TRZYMA. NA RAZIE.', 540, 300, 'dark', 42]],
-  draw(c, lt) {
+  bubbles: [say(5.0, 7.8, 'Halo, sto dwanaście? Ktoś otwiera\nnasze drzwi kluczem!', 'ola', 990, 1500, 2.1, -220)],
+  draw(c, lt, sc) {
     const gap = lt < 4.4 ? mv(lt, 0.2, 0.7, 0, 110) : mv(lt, 4.4, 4.6, 110, 0);
     hallBg(c, lt, gap > 2 ? { gap, rattle: lt < 4.4 ? 4 : 0 } : {});
     if (lt > 1.4 && lt < 4.5) {
@@ -114,15 +117,14 @@ scene({
     }
     const kx = lt < 3.8 ? 860 : mv(lt, 3.8, 4.4, 860, 500);
     person(c, 'kuba', kx, 1500, 2.1, { t: lt, phone: 1, aR: 1.3, aL: lt > 3.8 ? 1.6 : .14, look: -1, wide: true, mouth: 'angry', rot: lt > 4 && lt < 4.8 ? -.12 : 0 });
-    person(c, 'ola', 990, 1500, 2.1, { t: lt, phone: 2, aR: 2.5, look: -1, wide: true });
+    person(c, 'ola', 990, 1500, 2.1, { t: lt, phone: 2, aR: 2.5, look: -1, wide: true, talk: talking(sc, 'ola', lt) });
     night(c, .9, [{ x: kx + 60, y: 1000, r: 400, a: .9 }, { x: 990, y: 1000, r: 240, a: .7, tint: 'rgba(80,220,150,.08)' }]);
   },
 });
 // 6. ZDZISIEK Z LATARKĄ
 scene({
   name: 'zdz', start: 48, end: 58,
-  cam: lt => ({ z: 1.0 + lt * 0.008 }),
-  bubbles: [[2.2, 5.6, 'Ej, ty! Ja tu znam wszystkich.\nCiebie też poznam!', 600, 820, 860, 1010, 'zdzisiek']],
+  bubbles: [say(2.2, 5.6, 'Ej, ty! Ja tu znam wszystkich.\nCiebie też poznam!', 'zdzisiek', 880, 1500, 2.05, -160)],
   draw(c, lt, sc) {
     stairwellZdz(c, lt);
     const run = prog(lt, 6.0, 7.6);
@@ -136,17 +138,17 @@ scene({
 // 7. KUBA CHCE GONIĆ — błąd 2 + zasada
 scene({
   name: 'chase', start: 58, end: 66,
-  bubbles: [[1.2, 3.8, 'Kuba, stój! Nie goń!', 560, 820, 860, 1010, 'zdzisiek']],
+  bubbles: [say(0.2, 1.2, 'Puść mnie! Dorwę go!', 'kuba', 520, 1480, 2.1, 0), say(1.3, 3.8, 'Kuba, stój! Nie goń!', 'zdzisiek', 880, 1500, 2.05, -120), say(4.0, 6.4, 'Policja już jedzie.\nWracaj do siostry.', 'zdzisiek', 880, 1500, 2.05, -120)],
   draw(c, lt, sc) {
     stairwellZdz(c, lt);
     const kx = lt < 1.2 ? mv(lt, 0.2, 1.2, 800, 520) : 520;
-    person(c, 'kuba', kx, 1480, 2.1, { t: lt, look: -1, walk: lt > .2 && lt < 1.2 ? lt * 12 : null, mouth: 'angry', aR: lt > 1.2 ? .14 : .14 });
+    person(c, 'kuba', kx, 1480, 2.1, { t: lt, look: lt > 1.3 ? 1 : -1, walk: lt > .2 && lt < 1.2 ? lt * 12 : null, mouth: talking(sc, 'kuba', lt) ? null : 'angry', talk: talking(sc, 'kuba', lt) });
     person(c, 'zdzisiek', 880, 1500, 2.05, { t: lt, aL: lt > 1.2 ? 1.6 : .14, talk: talking(sc, 'zdzisiek', lt), look: -1 });
     night(c, .55, [{ x: 640, y: 1000, r: 700, a: .9, tint: 'rgba(255,240,190,.08)' }]);
   },
   post(c, lt) {
-    if (lt > 2.4 && lt < 4.6) card(c, 70, 330, 860, 'BŁĄD 2', 'chciał gonić obcego\npo ciemnej klatce', lt - 2.4, '#F39C12', 44);
-    if (lt > 4.6) card(c, 70, 330, 860, 'ZASADA', 'Ktoś ma twoje klucze? Zamek wymień\ntej samej nocy. Do tego czasu: 112.', lt - 4.6, '#F39C12', 40);
+    if (lt > 1.6 && lt < 4.4) card(c, 70, 330, 860, 'BŁĄD 2', 'chciał gonić obcego\npo ciemnej klatce', lt - 1.6, '#F39C12', 44);
+    if (lt > 4.4) card(c, 70, 330, 860, 'ZASADA', 'Ktoś ma twoje klucze? Zamek wymień\ntej samej nocy. Do tego czasu: 112.', lt - 4.4, '#F39C12', 40);
   },
 });
 // 8. PRZEKRÓJ — ucieka w górę
@@ -180,15 +182,19 @@ scene({
 // 9. SUFIT — pukanie z góry
 scene({
   name: 'end', start: 74, end: 84,
-  cam: lt => ({ z: 1.0 + lt * 0.012, y: lt * 6 }),
-  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.4, 10, 'ODC. 6 ↓', 540, 1650, 'red', 56]],
-  draw(c, lt) {
+  cam: lt => { const sh = lt > 7.6 && lt < 8.1 ? (8.1 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
+  labels: [[3.0, 6, 'PUK.  PUK.  PUK.', 540, 420, 'dark', 50], [8.6, 10, 'ODC. 6 ↓', 540, 1650, 'red', 56]],
+  bubbles: [say(4.6, 6.8, 'Ola… to z mieszkania\nnad nami.', 'kuba', 880, 1560, 1.9, -120)],
+  draw(c, lt, sc) {
     ROOM(c);
     c.fillStyle = '#1D2130'; c.fillRect(0, 0, W, 260); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 250, W, 14);
     const sh = (lt > 3.0 && lt < 4.2) ? Math.sin(lt * 90) * 3 : 0;
     fillRR(c, 470 + sh, 230, 140, 24, 6, '#2B2F42'); // lampa sufitowa drży
     person(c, 'ola', 450, 1300, 1.9, { t: lt, look: 0, lookY: -1, wide: true, mouth: 'o' });
+    if (lt > 4.0) person(c, 'kuba', mv(lt, 4.0, 4.6, 1200, 880), 1560, 1.9, { t: lt, look: -1, lookY: -1, wide: true, talk: talking(sc, 'kuba', lt), walk: lt < 4.6 ? lt * 10 : null });
     fillRR(c, 80, 1250, 760, 200, 30, '#4A5A8A');
-    night(c, .82, [{ x: 780, y: 560, r: 260, a: .5 }, { x: 450, y: 900, r: 300, a: .5 }]);
+    night(c, lt > 7.6 ? .92 : .82, [{ x: 780, y: 560, r: 260, a: .5 }, { x: 450, y: 900, r: 300, a: .5 }]);
+    if (lt > 7.6 && lt < 7.85) { c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(0, 0, W, H); }
+    if (lt > 9.2) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 9.2) / .8) * .85})`; c.fillRect(0, 0, W, H); }
   },
 });
