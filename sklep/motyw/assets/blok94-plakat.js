@@ -36,3 +36,30 @@
   // paralaksa: baner przesuwa się wolniej niż strona
   if (!RM) addEventListener('scroll', function () { var y = Math.min(scrollY, 900); fig.style.transform = 'translateY(' + (y * .3) + 'px)'; }, { passive: true });
 })();
+// Bohaterowie: animowane wersje (arkusze klatek z silnika filmów), pętla tam i z powrotem, zamiast statycznych obrazków
+(function () {
+  var imgs = document.querySelectorAll('#b94 .who img'); if (!imgs.length) return;
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; if (RM) return;
+  var FW = 350, FH = 500, N = 24, all = [];
+  imgs.forEach(function (im) {
+    var m = (im.getAttribute('src') || '').match(/blok94-(ola|kuba|zdzisiek|kaptur)\.png/); if (!m) return;
+    var url = im.getAttribute('src').split('?')[0].replace('blok94-' + m[1] + '.png', 'blok94-anim-' + m[1] + '.webp');
+    var sheet = new Image(); sheet.decoding = 'async';
+    sheet.onload = function () {
+      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), h = im.clientHeight || 200, w = Math.round(h * FW / FH);
+      cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.display = 'block'; cv.style.margin = '0 auto 6px';
+      cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', im.alt || m[1]);
+      im.replaceWith(cv); all.push({ cv: cv, ctx: cv.getContext('2d'), sheet: sheet, off: Math.random() * N, vis: true });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { all.forEach(function (a) { if (a.cv === e[0].target) a.vis = e[0].isIntersecting; }); }).observe(cv);
+    };
+    sheet.src = url;
+  });
+  var last = 0;
+  function frame(t) {
+    if (t - last > 1000 / 12) { last = t;
+      all.forEach(function (a) { if (!a.vis) return; var k = Math.floor(t / (1000 / 8) + a.off) % (2 * N - 2), f = k < N ? k : 2 * N - 2 - k;
+        a.ctx.clearRect(0, 0, a.cv.width, a.cv.height); a.ctx.drawImage(a.sheet, f * FW, 0, FW, FH, 0, 0, a.cv.width, a.cv.height); }); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();

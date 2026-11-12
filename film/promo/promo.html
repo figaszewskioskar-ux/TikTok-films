@@ -113,6 +113,16 @@ window.PROMO = {
     }
     return c.toDataURL('image/png').split(',')[1];
   },
+  // animowana postać do strony: N klatek ruchu w spoczynku (pętla tam i z powrotem)
+  charSheet(kind, o) {
+    const FW = 350, FH = 500, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH; const x = c.getContext('2d');
+    for (let i = 0; i < N; i++) { const t = 1.3 + i * (4.2 / N), oo = Object.assign({ t }, o);
+      if (kind === 'kaptur') oo.glow = .4 + .6 * Math.abs(Math.sin(i / N * Math.PI * 2));
+      if (kind === 'kuba') oo.aR = .9 + .25 * Math.sin(i / N * Math.PI * 4);
+      if (kind === 'zdzisiek') oo.look = Math.sin(i / N * Math.PI * 2);
+      x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, kind, i * FW + FW / 2, 480, 1.5, oo); x.restore(); }
+    return c.toDataURL('image/png').split(',')[1];
+  },
   hero() {
     const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
     x.translate(0, -420); blockBg(x, 2, { night: true });
