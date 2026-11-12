@@ -38,7 +38,7 @@
 })();
 // Bohaterowie: animowane wersje (arkusze klatek z silnika filmów), pętla tam i z powrotem, zamiast statycznych obrazków
 (function () {
-  var imgs = document.querySelectorAll('#b94 .who img'); if (!imgs.length) return;
+  var imgs = document.querySelectorAll('#b94 .who img, #b94 .chars img'); if (!imgs.length) return;
   var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; if (RM) return;
   var FW = 350, FH = 500, N = 24, all = [];
   imgs.forEach(function (im) {
@@ -46,8 +46,8 @@
     var url = im.getAttribute('src').split('?')[0].replace('blok94-' + m[1] + '.png', 'blok94-anim-' + m[1] + '.webp');
     var sheet = new Image(); sheet.decoding = 'async';
     sheet.onload = function () {
-      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), h = im.clientHeight || 200, w = Math.round(h * FW / FH);
-      cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.display = 'block'; cv.style.margin = '0 auto 6px';
+      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), inChars = !!im.closest('.chars'), h = inChars ? Math.round(im.clientWidth * FH / FW * .95) || 180 : (im.clientHeight || 200), w = Math.round(h * FW / FH);
+      cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.display = 'block'; cv.style.margin = inChars ? '0' : '0 auto 6px'; if (inChars) { cv.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,.45))'; }
       cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', im.alt || m[1]);
       im.replaceWith(cv); all.push({ cv: cv, ctx: cv.getContext('2d'), sheet: sheet, off: Math.random() * N, vis: true });
       if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { all.forEach(function (a) { if (a.cv === e[0].target) a.vis = e[0].isIntersecting; }); }).observe(cv);
@@ -63,3 +63,6 @@
   }
   requestAnimationFrame(frame);
 })();
+
+// strzałki „→” w linkach: osobny element, żeby mogły się ruszać
+(function () { document.querySelectorAll('#b94 .part a, #b94 .pc-go, #b94 a').forEach(function (a) { if (a.children.length || a.textContent.indexOf('→') < 0) return; a.innerHTML = a.textContent.replace('→', '<span class="pl-arrow" aria-hidden="true">→</span>'); }); })();
