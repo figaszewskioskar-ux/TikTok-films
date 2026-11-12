@@ -37,3 +37,10 @@
   kołysanie, mruganie.
 - **Kadrowanie:** zbliżenia na twarze w kluczowych momentach, dzielony ekran (dwa miejsca naraz), ciemna winieta jak przez okno.
 - **Każdy przedmiot z fabuły pokazany wyraźnie** (zegar z godziną, ślady butów, telefon, klucze).
+
+## Oszczędzanie kredytów ElevenLabs
+- Nowe kwestie dopisuj **na końcu listy `SEG`** (kolejność w liście nie zmienia czasu sceny). Wstawienie w środek przesuwa numery plików i wymusza ponowne nagranie wszystkich dalszych kwestii.
+- Nie zmieniaj tekstu nagranych kwestii, jeśli nie trzeba: każda zmiana to nowe nagranie. Przesunięcie czasu (`a`) jest darmowe.
+- Rozpoznawanie mowy (sprawdzanie) tylko dla nowych nagrań i raz na gotowy film, nie wielokrotnie.
+- Efekty dźwiękowe najpierw z biblioteki `film/cache/sfx` lub generowane lokalnie; ElevenLabs tylko gdy brak odpowiednika.
+- Przed większym nagraniem sprawdź stan kredytów i podaj szacunek użytkownikowi.
