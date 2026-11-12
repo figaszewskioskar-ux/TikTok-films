@@ -43,8 +43,8 @@ html body::after { content: ""; position: fixed; inset: 0; pointer-events: none;
 #b94 .hero .wrap { display: flex !important; flex-direction: column; gap: 0 !important; }
 #b94 .hero figure { order: -1; margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) !important; border-radius: 0 !important; border: 0 !important; box-shadow: none !important; position: relative; will-change: transform; }
 #b94 .hero figure img { height: auto !important; width: 100%; aspect-ratio: 1080 / 1350; object-fit: cover; object-position: 50% 50% !important; }
-#b94 .hero figure::after { height: 22% !important; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 100%) !important; }
-#b94 .hero .wrap > div:first-child { margin-top: -40px !important; text-align: center; position: relative; z-index: 6; }
+#b94 .hero figure::after { height: 45% !important; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 55%, #000 100%) !important; }
+#b94 .hero .wrap > div:first-child { margin-top: -110px !important; text-align: center; position: relative; z-index: 6; }
 #b94 .hero .eyebrow { justify-content: center; color: #C8C2B6 !important; }
 #b94 .hero .eyebrow::before { display: none !important; }
 #b94 .hero h1 { font-size: clamp(88px, 27vw, 170px) !important; line-height: .82 !important; margin: 10px auto 12px !important; max-width: 5ch; animation: plNeon 6s infinite; }
