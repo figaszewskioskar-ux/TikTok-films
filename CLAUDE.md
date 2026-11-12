@@ -45,3 +45,11 @@
 - Rozpoznawanie mowy (sprawdzanie) tylko dla nowych nagrań i raz na gotowy film, nie wielokrotnie.
 - Efekty dźwiękowe najpierw z biblioteki `film/cache/sfx` lub generowane lokalnie; ElevenLabs tylko gdy brak odpowiednika.
 - Przed większym nagraniem sprawdź stan kredytów i podaj szacunek użytkownikowi.
+
+## Dźwięk grozy (standard, wzorowany charakterem na @nierobcietego — własne dźwięki, nic nie kopiujemy)
+- Przez cały film pętla `tension` (cache/sfx/tension.wav): wysoki dysonansowy pisk ok. 740–770 Hz z „biciem”, głęboki pomruk 40–80 Hz, szum wiatru.
+  Poziom ok. −20…−15 dB, narasta w drugiej połowie, przed kulminacją −9…−6 dB, po uderzeniu cisza.
+- Do tego `drone`, `heartbeat` w scenach napięcia, `roomtone` jako tło.
+- Mocne niskie uderzenia `hit_low` przy każdej zmianie sceny i ważnym momencie (co ok. 5–10 s), głośniej przy kartach BŁĄD i zwrotach.
+- Zakończenie: `riser` (4 s narastania) → `hit_low` + `sting` (dysonansowy akord) dokładnie na zwrocie → nagła cisza.
+- Pliki generowane lokalnie (bez kredytów ElevenLabs), skrypt: patrz historia commitów „własny zestaw dźwięków grozy”.
