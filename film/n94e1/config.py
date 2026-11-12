@@ -1,15 +1,49 @@
-"""NOCNY N94 · ODC. 1 — „Nie siadaj z tyłu!”. Wersja do akceptacji: bez lektora i głosów (PREVIEW)."""
+"""NOCNY N94 · ODC. 1 — „Nie siadaj z tyłu!”. Lektor B + głosy postaci."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'   # lektor: Victor (ustawienia B)
 MODEL = 'eleven_multilingual_v2'
 SETTINGS = {'stability': 0.32, 'similarity_boost': 0.85, 'style': 0.55, 'use_speaker_boost': True, 'speed': 0.9}
 V3 = {'stability': 0.5, 'similarity_boost': 0.8}
 VOICES = {
     'ola':      ('d4Z5Fvjohw3zxGpV8XUV', 'eleven_v3', V3),
+    'kierowca': ('xsSg7GkDPDhaGZpbKOLn', 'eleven_v3', V3),
+    'pasazer':  ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
+    'kasjerka': ('EXAVITQu4vr4xnSDxMaL', 'eleven_v3', V3),
 }
-PREVIEW_NO_VOICE = True   # po akceptacji: usuń, dopisz SEG i usuń n94e1/timeline.js
+VFILTER = {'ola': 'highpass=f=110', 'kierowca': 'highpass=f=100', 'kasjerka': 'highpass=f=120', 'pasazer': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
+VGAIN = {'pasazer': 1.3}
 SCENES = [('hook', 0, 6), ('stop', 6, 18), ('board', 18, 30), ('ride1', 30, 44), ('ride2', 44, 58), ('getoff', 58, 70),
           ('street', 70, 86), ('shop', 86, 102), ('end', 102, 120)]
-SEG = []
+SEG = [
+    ['hook', 0.2, 'Pusty nocny autobus. A on zawsze siada bliżej.'],
+    ['stop', 0.4, 'Za piętnaście pierwsza. Ola wraca sama.'],
+    ['stop', 4.2, '[tired] Mamo, jestem na przystanku. N94 za dwie minuty.', 'ola'],
+    ['stop', 8.4, 'Telefon: trzy procent.'],
+    ['board', 0.4, 'Nocny N94. Prawie pusty.'],
+    ['board', 5.4, 'Dobry wieczór.', 'kierowca'],
+    ['board', 6.8, 'Dobry wieczór.', 'ola'],
+    ['board', 8.2, 'Ola idzie na sam koniec.'],
+    ['ride1', 0.4, 'Przystanek Łąkowa. Wsiada jeden pasażer.'],
+    ['ride1', 5.0, 'Cały autobus jest pusty. A on siada… tutaj.'],
+    ['ride2', 0.4, 'Ogrodowa. Pasażer wstaje. I przesiada się bliżej.'],
+    ['ride2', 4.4, '[softly, creepy] Zimno dziś, prawda?', 'pasazer'],
+    ['ride2', 6.6, '[scared, quiet] …Tak.', 'ola'],
+    ['ride2', 9.2, 'W szybie widać, że patrzy tylko na nią.'],
+    ['ride2', 12.6, 'Telefon gaśnie.'],
+    ['getoff', 0.4, 'Następny: Kasztanowa. Ola wciska stop.'],
+    ['getoff', 3.4, 'On też wstaje.'],
+    ['getoff', 7.0, 'Autobus odjeżdża. Zostają sami.'],
+    ['street', 0.4, 'Ola idzie w stronę domu. Kroki za nią nie cichną.'],
+    ['street', 8.6, '[whispers] Nie do domu… nie do domu.', 'ola'],
+    ['street', 11.2, 'Całodobowy sklep. Jedyne światło na ulicy.'],
+    ['shop', 1.4, '[scared] Przepraszam… ktoś za mną idzie. Mogę tu zostać?', 'ola'],
+    ['shop', 4.6, 'Siadaj tu, kochanie. Dzwonię na policję.', 'kasjerka'],
+    ['shop', 10.4, 'Za szybą, pod latarnią, on stoi i patrzy.'],
+    ['shop', 12.8, 'A potem… znika.'],
+    ['end', 0.6, 'Poszedł sobie. Już dobrze.', 'kasjerka'],
+    ['end', 3.4, 'Monitor kamer. Kamera pierwsza: ulica. Pusto.'],
+    ['end', 5.6, 'Kamera druga: sklep.'],
+    ['end', 9.0, '[whispers] Wysiadamy razem… Ola.', 'pasazer'],
+]
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 119.99], [-34, -34]),
