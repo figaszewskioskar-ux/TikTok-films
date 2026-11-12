@@ -1,0 +1,122 @@
+/* BLOK 94 · warstwa wyglądu „klatka schodowa”.
+   Zasady: grafit zamiast granatu, jeden ciepły akcent (lampa sodowa), czerwień tylko dla „NIE…” i głównego przycisku.
+   Bez poświaty, bez pigułek, bez unoszenia kart. Metadane pismem maszynowym, jak w aktach.
+   Ładowane na końcu strony, nadpisuje style sekcji (selektory z ID). */
+:root{--k-bg:#0d0e10;--k-bg2:#121316;--k-card:#17181c;--k-card2:#1d1e23;--k-line:rgba(236,229,214,.11);--k-line2:rgba(236,229,214,.22);
+ --k-ink:#ece5d6;--k-mut:#9e998e;--k-sod:#e9a23b;--k-red:#c8202f;--k-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+
+/* ---------- tło i powierzchnie ---------- */
+html body,html body #MainContent{background:var(--k-bg)}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g){--night:var(--k-bg);--stair:var(--k-bg2);--wall:var(--k-card);--ink:var(--k-ink);--muted:var(--k-mut);--hat:var(--k-sod);--sign:var(--k-red);background:var(--k-bg);color:var(--k-ink)}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2) :is(section,.hero,.sup,.rules,.band){background:var(--k-bg)!important}
+:is(#b94,#b94a,#b94k,#b94w) section+section{border-top:1px solid var(--k-line)}
+:is(#b94,#b94k,#b94w) section.hero{background:radial-gradient(600px 380px at 85% 0%,rgba(233,162,59,.07),transparent 70%),var(--k-bg)}
+
+/* ---------- typografia ---------- */
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) :is(h1,h2,h3){letter-spacing:-.005em;color:var(--k-ink)}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2) h2{font-size:clamp(34px,7vw,56px);line-height:.98}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .lead,:is(#b94) .hero .story{color:var(--k-mut);line-height:1.6}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) a:not(.btn){text-decoration-thickness:1px;text-underline-offset:3px}
+
+/* nadtytuły: zamiast pomarańczowej pigułki — kreska i pismo maszynowe */
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .eyebrow{background:none!important;color:var(--k-sod)!important;padding:0!important;border-radius:0!important;
+ font:500 12px/1.2 var(--k-mono)!important;letter-spacing:.16em!important;display:inline-flex;align-items:center;gap:10px}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .eyebrow:before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+/* numeracja sekcji jak w aktach: 01, 02… */
+:is(#b94,#b94k,#b94w){counter-reset:k-sec}
+:is(#b94,#b94k,#b94w) section .eyebrow{counter-increment:k-sec}
+:is(#b94,#b94k,#b94w) section .eyebrow:before{content:counter(k-sec,decimal-leading-zero) " /";width:auto;height:auto;background:none;opacity:1;color:var(--k-mut);
+ margin-right:6px}
+
+/* czerwona tablica „Kto tam?” zostaje, ale bez poświaty — jak naklejka */
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .sign{box-shadow:none!important;border-radius:3px!important;background:var(--k-red)!important}
+
+/* ---------- przyciski ---------- */
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .btn{border-radius:4px!important;box-shadow:none!important;transform:none!important;letter-spacing:.01em;font-weight:700;transition:background-color .15s,color .15s,border-color .15s}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .btn.red,:is(#b94w2) .btn.go{background:var(--k-red)!important;color:#fff!important}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .btn.red:hover,:is(#b94w2) .btn.go:hover{background:#ad1b28!important}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) :is(.btn.line,.btn.ghost){background:transparent!important;color:var(--k-ink)!important;border:1px solid var(--k-line2)!important}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) :is(.btn.line,.btn.ghost):hover{border-color:var(--k-ink)!important}
+:is(#b94,#b94a,#b94k,#b94w,#b94w2,#b94g) .btn.gold{background:var(--k-sod)!important;color:#17130b!important}
+
+/* ---------- karty: płasko, cienka linia, bez unoszenia ---------- */
+:is(#b94,#b94k,#b94w) :is(.card,.part,.who,.pkg,.step,.ep,.stat,.road,.news a,.next,.tipcard,.playcard,details){
+ background:var(--k-card)!important;border:1px solid var(--k-line)!important;border-radius:6px!important;box-shadow:none!important}
+:is(#b94,#b94k,#b94w) :is(.part,.who,.pkg,.ep,.card):hover{transform:none!important;border-color:var(--k-line2)!important}
+:is(#b94) .part .no,:is(#b94k,#b94w) .ep .no{font:500 11px/1 var(--k-mono)!important;letter-spacing:.14em;color:var(--k-sod)}
+:is(#b94) .part .rule{background:transparent!important;border-left:2px solid var(--k-red)!important;border-radius:0!important;padding:2px 0 2px 12px!important;color:var(--k-ink)}
+:is(#b94) .part img{filter:saturate(.9)}
+:is(#b94) .hot{border-radius:3px!important;font:600 11px/1 var(--k-mono)!important;letter-spacing:.06em;box-shadow:none!important}
+
+/* bohaterowie: bez gradientu, plakietki jak etykiety na skrzynkach */
+:is(#b94) .who{background:var(--k-card)!important}
+:is(#b94) .who .tag{border-radius:2px!important;font:600 10px/1 var(--k-mono)!important;letter-spacing:.12em!important}
+:is(#b94) .who p{font-size:14px}
+
+/* zasady: zamiast pustych kółek — numer z kartoteki */
+:is(#b94) .rlist{counter-reset:k-r;gap:0!important;border-top:1px solid var(--k-line)}
+:is(#b94) .rlist li{counter-increment:k-r;background:transparent!important;border-radius:0!important;border-bottom:1px solid var(--k-line);padding:18px 0!important;grid-template-columns:44px 1fr!important;align-items:start!important}
+:is(#b94) .rlist .peep{width:auto!important;height:auto!important;background:none!important;box-shadow:none!important;border-radius:0!important}
+:is(#b94) .rlist .peep:before{content:counter(k-r,decimal-leading-zero);font:500 15px/1.5 var(--k-mono);color:var(--k-sod)}
+
+/* liczby kanału: bez neonu */
+:is(#b94) .stats b{font-family:var(--display)}
+:is(#b94k,#b94w) .stat b{color:var(--k-ink)!important;text-shadow:none!important}
+:is(#b94k,#b94w) .stat{box-shadow:none!important}
+:is(#b94k,#b94w) .road .bar,:is(#b94) .goal .bar{border-radius:0!important;background:var(--k-card2)!important}
+:is(#b94k,#b94w) .road .bar i,:is(#b94) .goal .bar i{background:var(--k-sod)!important;border-radius:0!important}
+:is(#b94k,#b94w) .step:before{background:none!important;box-shadow:none!important;color:var(--k-sod)!important;font:500 15px/1 var(--k-mono)!important;width:auto!important;height:auto!important;display:block!important;content:counter(s,decimal-leading-zero)!important}
+
+/* hero: zdjęcie bez wielkiego cienia i zaokrągleń */
+:is(#b94) .hero figure,:is(#b94k,#b94w) .scene{border-radius:6px!important;box-shadow:none!important;border:1px solid var(--k-line)}
+:is(#b94) .hero figure figcaption,:is(#b94k,#b94w) .scene .tag{border-radius:2px!important;font:500 12px/1.3 var(--k-mono)!important;background:rgba(13,14,16,.86)!important}
+:is(#b94) .next{border-radius:6px!important}
+
+/* ---------- akta: zostają papierowe teczki, reszta ciszej ---------- */
+:is(#b94a) .box,:is(#b94a) .prof{box-shadow:none!important;border-radius:6px!important}
+:is(#b94a) .file{border-radius:4px!important;box-shadow:none!important}
+
+/* ---------- nagłówek strony ---------- */
+html body .po-head{background:rgba(13,14,16,.94)!important;border-bottom:1px solid var(--k-line)!important;box-shadow:none!important}
+html body .po-sup{border-radius:4px!important;box-shadow:none!important;background:var(--k-red)!important;font-weight:700}
+html body .po-play{border-radius:4px!important;box-shadow:none!important;background:transparent!important;color:var(--k-ink)!important;border:1px solid var(--k-line2)!important}
+html body .po-nav a[aria-current]{color:var(--k-ink)!important}
+html body .po-nav a[aria-current]:after{background:var(--k-sod)!important}
+
+/* ---------- stopka: ikony społecznościowe w jednym stylu ---------- */
+html body .po-foot{background:var(--k-bg)!important;border-top:1px solid var(--k-line)!important}
+html body .po-foot :is(a[href*="tiktok.com"],a[href*="youtube.com"],a[href*="instagram.com"])[class]{background:transparent!important;color:var(--k-ink)!important;border:1px solid var(--k-line2)!important;box-shadow:none!important;border-radius:4px!important;background-image:none!important}
+html body .po-foot :is(a[href*="tiktok.com"],a[href*="youtube.com"],a[href*="instagram.com"])[class]:hover{border-color:var(--k-ink)!important}
+
+@media(prefers-reduced-motion:reduce){html body *{scroll-behavior:auto!important}}
+
+/* karta gry: płasko, bez emoji na pierwszym planie */
+:is(#b94) .playcard .pc{background:var(--k-card)!important;border:1px solid var(--k-line)!important;border-left:3px solid var(--k-sod)!important;border-radius:6px!important;box-shadow:none!important;transform:none!important}
+:is(#b94) .playcard .pc-ic{display:none!important}
+:is(#b94) .playcard .pc-go{border-radius:4px!important;box-shadow:none!important;background:var(--k-sod)!important;color:#17130b!important}
+html body .po-foot,html body .po-foot>*{background:var(--k-bg)!important}
+
+/* ---------- granat → grafit w aktach, grze Wizjer i na kamieniach milowych ---------- */
+:is(#b94a) :is(.box,.vote){background:var(--k-card)!important;border:1px solid var(--k-line)!important;box-shadow:none!important}
+:is(#b94a) .locked{background:repeating-linear-gradient(45deg,#17181c 0 14px,#131417 14px 28px)!important;border:1px dashed var(--k-line2)!important;box-shadow:none!important}
+:is(#b94a) .blk{background:#16171a!important;border-color:var(--k-line)!important}
+:is(#b94a) .blk .roof{background:#232428!important}
+:is(#b94a) .fl2{background:#1a1b1f!important}
+:is(#b94a) .apt.dim{background:#121316!important}
+:is(#b94a) :is(.fl:hover,.fl[aria-pressed=true]){background:#24252a!important}
+:is(#b94a) .fl .tag.q{background:#2a2b30!important}
+:is(#b94k,#b94w) .road .m{background:var(--k-bg2)!important;border:1px solid var(--k-line)!important;box-shadow:none!important;border-radius:4px!important}
+:is(#b94k,#b94w) .road .m.done{border-left:3px solid var(--k-sod)!important}
+:is(#b94k,#b94w) .road .m.done b:after{color:var(--k-sod)!important}
+:is(#b94w2) .rank-t{background:var(--k-card)!important;border:1px solid var(--k-line)!important;border-radius:6px!important;box-shadow:none!important}
+:is(#b94w2) .rank-t>*:not(h2):not(h3){background-color:transparent}
+:is(#b94w2) .bar{background:#24252a!important;border-radius:0!important}
+:is(#b94w2) .bar i{background:var(--k-sod)!important}
+:is(#b94a) .opts :is(button,label,.o){background:var(--k-bg2)!important;border:1px solid var(--k-line)!important;border-radius:4px!important;box-shadow:none!important}
+:is(#b94a) .apt:not(.dim):not(.hot):not(.home){background:#2a2b30!important;color:var(--k-ink)!important}
+:is(#b94,#b94a,#b94k,#b94w) :is(input[type=email],input[type=text]){border-radius:4px!important}
+:is(#b94,#b94a,#b94k,#b94w) form button[type=submit]{border-radius:4px!important;box-shadow:none!important}
+/* strona gier: przełączniki i karty trybów jak reszta */
+:is(#b94g) .chip{border-radius:4px!important;box-shadow:none!important;background:var(--k-card)!important;border:1px solid var(--k-line)!important}
+:is(#b94g) .chip:is([aria-pressed=true],.on,.sel){background:var(--k-sod)!important;color:#17130b!important;border-color:var(--k-sod)!important}
+:is(#b94g) .mode{border-radius:6px!important;box-shadow:none!important;background:var(--k-card)!important;border:1px solid var(--k-line)!important}
