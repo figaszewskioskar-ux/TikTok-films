@@ -47,7 +47,7 @@
     var url = im.getAttribute('src').split('?')[0].replace('blok94-' + m[1] + '.png', 'blok94-anim-' + m[1] + '.webp') + '?v=3';
     var sheet = new Image(); sheet.decoding = 'async';
     sheet.onload = function () {
-      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), inChars = !!im.closest('.chars'), h = inChars ? 190 : (im.clientHeight || 200), w = Math.round(h * FW / FH);
+      var cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1), inChars = !!im.closest('.chars'), h = inChars ? 168 : (im.clientHeight || 200), w = Math.round(h * FW / FH);
       cv.width = w * dpr; cv.height = h * dpr; cv.style.width = w + 'px'; cv.style.height = h + 'px'; cv.style.display = 'block'; cv.style.margin = inChars ? '0' : '0 auto 6px'; if (inChars) { cv.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,.45))'; }
       cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', im.alt || m[1]);
       var frames = []; for (var i = 0; i < N; i++) { var fc = document.createElement('canvas'); fc.width = cv.width; fc.height = cv.height; fc.getContext('2d').drawImage(sheet, i * FW, 0, FW, FH, 0, 0, fc.width, fc.height); frames.push(fc); }

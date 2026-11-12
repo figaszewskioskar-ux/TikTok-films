@@ -255,3 +255,10 @@ html body .b94w-x { border-radius: 50% !important; }
 html body .b94w .b94s-row { display: grid !important; grid-template-columns: 1fr !important; gap: 8px !important; }
 html body .b94s-a { border-radius: 14px !important; }
 html body .po-foot .b94s-a, html body .po-foot .b94s-a * { color: #fff !important; opacity: 1 !important; }
+
+/* bohaterowie przy napiwkach: dymek nad głowami, postacie nie nachodzą na dymek ani na siebie */
+#b94 .chars { height: 250px !important; padding: 74px 24px 0 !important; justify-content: space-between !important; }
+#b94 .chars .bubble { top: 34px !important; width: auto !important; white-space: nowrap; z-index: 2; }
+#b94 .chars canvas { position: relative; z-index: 1; }
+/* bohaterowie w obsadzie: animacja mieści się w karcie */
+#b94 .who { overflow: hidden; }
