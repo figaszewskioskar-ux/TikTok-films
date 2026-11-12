@@ -265,3 +265,7 @@ html body .b94w .b94s-a { background: none !important; background-image: none !i
 html body .b94w .b94s-a:last-child { border-right: 0 !important; }
 html body .po-foot .b94s-a { background: transparent !important; background-image: none !important; color: #f3efe6 !important; border: 1px solid rgba(243,239,230,.18) !important; box-shadow: none !important; border-radius: 10px !important; }
 html body .b94s-a::before, html body .b94s-a::after { display: none !important; }
+/* dymek przy napiwkach: większy, mieści cały tekst */
+#b94 .chars .bubble { white-space: normal !important; width: min(250px, 66%) !important; max-width: none !important; padding: 12px 16px !important; font: 800 15px/1.35 var(--pl-body) !important; top: 30px !important; }
+#b94 .chars { padding-top: 92px !important; height: 268px !important; }
+#b94 .chars::after { letter-spacing: .18em !important; font-size: 9px !important; white-space: nowrap; }
