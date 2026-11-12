@@ -2,7 +2,7 @@
 window.EP = {
   badge: 'BLOK 94 · ODC. 7',
   loop: true,
-  vignette: .8,
+  vignette: .88,
   cues(add) {
     add(0.3, 'stab'); add(19.4, 'error');
     add(20.4, 'knock'); add(24.0, 'knock');
@@ -11,7 +11,7 @@ window.EP = {
     add(47.0, 'run'); add(50.6, 'error');
     add(55.0, 'siren'); add(60.4, 'boom');
     add(62.4, 'paper'); add(66.4, 'boom'); add(71.0, 'boom');
-    add(77.0, 'creak'); add(80.6, 'hit');
+    add(77.0, 'creak'); add(23.2, 'creak'); add(44.4, 'creak'); add(70.2, 'hit'); add(80.6, 'hit');
   },
 };
 const S = [];
@@ -66,6 +66,13 @@ function zdzRoom(c, lt, o = {}) {
   // fotel i lampka
   fillRR(c, 80, 1080, 400, 360, 60, '#5A2E2A'); fillRR(c, 60, 1180, 80, 260, 30, '#4A2522'); fillRR(c, 420, 1180, 80, 260, 30, '#4A2522');
 }
+function feetUnder(c, x, y, w, a, shift = 0) { // pasek światła pod drzwiami i cienie dwóch stóp
+  c.fillStyle = 'rgba(255,225,160,.75)'; c.fillRect(x + 6, y - 6, w - 12, 8);
+  const g = c.createLinearGradient(0, y, 0, y + 160); g.addColorStop(0, 'rgba(255,225,160,.3)'); g.addColorStop(1, 'rgba(255,225,160,0)');
+  c.fillStyle = g; c.beginPath(); c.moveTo(x, y); c.lineTo(x + w, y); c.lineTo(x + w + 70, y + 160); c.lineTo(x - 70, y + 160); c.fill();
+  if (a > 0) { c.fillStyle = `rgba(0,0,0,${a})`; const f1 = x + w * .3 + shift, f2 = x + w * .58 + shift * .6;
+    for (const fx of [f1, f2]) { c.fillRect(fx, y - 6, 60, 8); c.beginPath(); c.moveTo(fx, y); c.lineTo(fx + 60, y); c.lineTo(fx + 80, y + 150); c.lineTo(fx - 20, y + 150); c.fill(); } }
+}
 function bathroom(c) {
   c.fillStyle = '#B9C4C6'; c.fillRect(0, 0, W, H);
   for (let y = 0; y < 1420; y += 90) for (let x = 0; x < W; x += 90) { c.strokeStyle = 'rgba(0,0,0,.12)'; c.lineWidth = 3; c.strokeRect(x, y, 90, 90); }
@@ -116,9 +123,12 @@ scene({
   bubbles: [sayAt(1.4, 4.0, 'Panie Zdzisiu… to ja, sąsiad.\nOtworzy pan?', 'zadrzwiami', 310, 880, 120, 70)],
   draw(c, lt) {
     c.fillStyle = '#2D2A33'; c.fillRect(0, 0, W, H); c.fillStyle = '#211B16'; c.fillRect(0, 1420, W, 500);
-    paddedDoor(c, 120, 560, 380, 860, '22', { peepDark: true });
-    person(c, 'zdzisiek', 760, 1500, 2.05, { t: lt, look: -1, squint: true });
-    night(c, .78, [{ x: 310, y: 1425, r: 280, a: .8 }, { x: 760, y: 1000, r: 320, a: .55 }]);
+    const hd = lt > 2.6 && lt < 4.4 ? Math.sin(clamp((lt - 2.6) / 1.8) * Math.PI) * .7 : 0;
+    paddedDoor(c, 120, 560, 380, 860, '22', { peepDark: true, handle: hd });
+    feetUnder(c, 120, 1420, 380, lt > 6.4 ? clamp((7.6 - lt) / 1.2) * .9 : .9, lt > 6.4 ? (lt - 6.4) * 60 : 0);
+    person(c, 'zdzisiek', 760, 1500, 2.05, { t: lt, look: -1, squint: lt < 2.6, wide: lt > 2.6, mouth: lt > 2.6 ? 'o' : null });
+    night(c, .84, [{ x: 310, y: 1440, r: 300, a: .85, tint: 'rgba(255,225,160,.06)' }, { x: 760, y: 1000, r: 300, a: .5 }]);
+    if (lt > 2.6 && lt < 4.4) label(c, 'KLAMKA…', 400, 880, 'red', 36, lt - 2.6, 4.4 - lt);
   },
 });
 // 4. FIRANKA — ktoś na balkonie
@@ -131,6 +141,9 @@ scene({
     zdzRoom(c, lt, { open: true, sway: lt > 1.2 ? 1 : .2, shadow: clamp((lt - 2.4) / 1.0), eyes: lt > 6 ? .9 : 0 });
     person(c, 'zdzisiek', 280, 1360, 2.0, { t: lt, squash: .82, look: 1, wide: lt > 3.4, mouth: lt > 3.4 && !talking(sc, 'zdzisiek', lt) ? 'o' : null, talk: talking(sc, 'zdzisiek', lt) });
     night(c, .6, [{ x: 300, y: 1000, r: 380, a: .85, tint: 'rgba(255,210,140,.08)' }, { x: 770, y: 880, r: 520, a: .85 }]);
+    if (lt > 5.0) { const a = clamp((lt - 5.0) / .6) * .35; c.save(); c.globalAlpha = a; c.fillStyle = '#E8EEF4'; // odcisk dłoni na szybie
+      ell(c, 690, 1000, 46, 58, '#E8EEF4'); for (let f = 0; f < 4; f++) fillRR(c, 650 + f * 24, 900 - (f === 1 || f === 2 ? 30 : 10), 16, 70, 8, '#E8EEF4'); fillRR(c, 726, 990, 50, 16, 8, '#E8EEF4'); c.restore(); }
+    if (lt > 2.4) { const b = .18 + .14 * Math.sin(lt * 2.4); c.save(); c.globalAlpha = b; const fg = c.createRadialGradient(854, 830, 4, 854, 830, 90); fg.addColorStop(0, '#F2F5F8'); fg.addColorStop(1, 'rgba(242,245,248,0)'); c.fillStyle = fg; c.fillRect(760, 740, 190, 180); c.restore(); } // para z oddechu na szybie
     if (lt > 3.4 && lt < 3.55) { c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(0, 0, W, H); }
   },
 });
@@ -145,8 +158,11 @@ scene({
   ],
   draw(c, lt, sc) {
     bathroom(c);
-    person(c, 'zdzisiek', 520, 1500, 2.1, { t: lt, aR: 2.5, phone: 2, wide: true, talk: talking(sc, 'zdzisiek', lt) });
-    night(c, .6, [{ x: 520, y: 1000, r: 500, a: .9, tint: 'rgba(80,220,150,.08)' }]);
+    { const hd = lt > 6.2 && lt < 7.6 ? Math.sin(lt * 16) * .35 : 0; fillRR(c, -10, 520, 300, 900, 4, '#E8E6E0'); c.strokeStyle = 'rgba(0,0,0,.15)'; c.lineWidth = 4; c.strokeRect(20, 560, 240, 380); c.strokeRect(20, 980, 240, 400);
+      c.save(); c.translate(240, 1000); c.rotate(hd); fillRR(c, -40, -7, 50, 14, 7, '#C9CDD2'); c.restore(); feetUnder(c, -10, 1420, 300, lt > 5.6 ? .9 : 0, 0); }
+    person(c, 'zdzisiek', 520, 1500, 2.1, { t: lt, aR: 2.5, phone: 2, wide: true, look: lt > 6.2 ? -1 : 0, talk: talking(sc, 'zdzisiek', lt) });
+    night(c, .66, [{ x: 520, y: 1000, r: 500, a: .9, tint: 'rgba(80,220,150,.08)' }, { x: 140, y: 1440, r: 260, a: .7 }]);
+    if (lt > 6.2 && lt < 7.8) label(c, 'KTOŚ JEST W MIESZKANIU', 540, 420, 'red', 38, lt - 6.2, 7.8 - lt);
   },
 });
 // 6. OLA I KUBA WYBIEGAJĄ — błąd 2
@@ -224,11 +240,16 @@ scene({
     } else if (lt < 4.6) { // wchodzą do środka
       const l = lt - 2.4;
       hallBg(c, lt, { gap: 150, nochain: true });
+      for (let k = 0; k < 7; k++) { const fx = 420 + k * 95, fy = 1520 + (k % 2) * 46; c.save(); c.translate(fx, fy); c.rotate(.15); ell(c, 0, 0, 22, 12, 'rgba(10,12,16,.55)'); ell(c, 26, 0, 12, 10, 'rgba(10,12,16,.55)'); c.restore(); }
+      if (l > .4) label(c, 'MOKRE ŚLADY BUTÓW', 640, 420, 'red', 36, l - .4, 9);
       person(c, 'ola', mv(l, 0.1, 1.4, 520, 760), 1500, 2.1, { t: lt, phone: 1, aR: .9, walk: l < 1.4 ? l * 6 : null, look: 1, wide: true });
       person(c, 'kuba', mv(l, 0.4, 1.8, 420, 980), 1500, 2.1, { t: lt, walk: l > .4 && l < 1.8 ? l * 6 : null, look: 1 });
       night(c, .7, [{ x: 760, y: 1000, r: 420, a: .9 }]);
     } else {
       ROOM(c);
+      // okno uchylone: firanka wydyma się, śnieg wpada do środka
+      c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(925, 380, 15, 420);
+      for (let k = 0; k < 16; k++) { const p = (lt * .5 + hash(k)) % 1; circ(c, 930 - p * 420 + Math.sin(lt * 3 + k) * 10, 420 + hash(k + 5) * 380 + p * 120, 3, `rgba(235,240,255,${.8 * (1 - p)})`); }
       // karteczka na szybie od środka
       c.save(); c.translate(780, 560); c.rotate(.06); fillRR(c, -86, -70, 172, 140, 4, '#F5E36A'); txt(c, 'DOBRANOC,', 0, -18, 28, '#222', 900); txt(c, 'SĄSIADKO', 0, 20, 28, '#222', 900); c.restore();
       person(c, 'ola', 420, 1500, 2.1, { t: lt, phone: 1, aR: 1.3, look: 1, wide: true, mouth: talking(sc, 'ola', lt) ? null : 'o', talk: talking(sc, 'ola', lt) });
