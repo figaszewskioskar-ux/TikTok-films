@@ -266,7 +266,7 @@ SKIP_REAL = {'heart', 'vibrate', 'step', 'ding'} | set(getattr(cfg, 'SKIP', []))
 for cue in info['cues']:
     ty = cue['type']
     if ty == 'voice':
-        if dub:
+        if dub or getattr(cfg, 'PREVIEW_NO_VOICE', False):
             continue
         add(voice(cue['who'], cue['dur']), cue['t'], 1.0, pan=rng.uniform(-.2, .2))
     elif ty in SKIP_REAL:
