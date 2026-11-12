@@ -1,0 +1,304 @@
+<title>BLOK 94 · trzy wersje strony</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&family=VT323&family=IBM+Plex+Mono:wght@400;600&family=Special+Elite&family=Caveat:wght@700&display=swap">
+<style>
+/* Trzy kierunki strony BLOK 94 z efektami: C plakat filmowy (latarka, paralaksa, mgła), B monitoring (zakłócenia, kaseta), A akta (papier, teczki 3D, pieczątki).
+   Każdy kierunek to jeden świadomy wygląd, więc bez wersji jasnej/ciemnej. */
+:root {
+  color-scheme: dark;
+  --bg: #000; --fg: #F2EEE6; --muted: #8F8A80; --red: #D7263D; --line: rgba(242,238,230,.18);
+  --vhs-bg: #050605; --vhs-fg: #C9F2C9; --vhs-dim: #7FBF7F; --vhs-line: #2A4A2A;
+  --paper: #E9E1CF; --ink: #1C1A17; --ink-soft: #5A5146; --manila: #D9C9A0; --note: #F5E36A;
+  --display: Anton, Impact, "Arial Narrow", sans-serif; --body: Inter, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace; --pixel: VT323, "IBM Plex Mono", monospace;
+  --type: "Special Elite", "Courier New", monospace; --hand: Caveat, "Comic Sans MS", cursive;
+}
+html, body { background: var(--bg); color: var(--fg); }
+body { margin: 0; font-family: var(--body); overflow-x: hidden; }
+body[data-dir="vhs"] { background: var(--vhs-bg); }
+body[data-dir="akta"] { background: var(--paper); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: #000; }
+* { box-sizing: border-box; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* przełącznik kierunków */
+.switch { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; gap: 6px; padding: 10px max(12px, env(safe-area-inset-right, 0px)) 10px max(12px, env(safe-area-inset-left, 0px)); background: rgba(0,0,0,.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.switch button { flex: 1; min-width: 0; border: 1px solid var(--line); background: transparent; color: var(--fg); padding: 10px 6px; border-radius: 8px; font: 800 12px/1.1 var(--body); letter-spacing: .06em; text-transform: uppercase; }
+.switch button[aria-pressed="true"] { background: var(--fg); color: #000; }
+.switch small { display: block; font-weight: 600; letter-spacing: .02em; text-transform: none; opacity: .7; margin-top: 3px; }
+.dir { display: none; }
+.dir.on { display: block; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 760px; margin: 0 auto; }
+
+/* ===== C · PLAKAT FILMOWY ===== */
+.c-hero { position: relative; height: 680px; overflow: hidden; background: #05070F; touch-action: pan-y; }
+.c-layer { position: absolute; inset: -40px; will-change: transform; }
+.c-bg { background: url(blok94-hero-bg.jpg) 55% 30% / cover no-repeat; }
+.c-kaptur { position: absolute; width: 190px; left: 58%; bottom: 120px; filter: drop-shadow(0 0 18px rgba(0,0,0,.8)); }
+.c-fog { position: absolute; inset: auto -30% 0 -30%; height: 340px; background: radial-gradient(ellipse at 30% 60%, rgba(160,170,200,.22), transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(160,170,200,.18), transparent 55%); animation: fog 18s linear infinite alternate; }
+.c-fog.b { animation-duration: 26s; animation-direction: alternate-reverse; opacity: .7; bottom: 60px; }
+@keyframes fog { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
+.c-dark, .c-snow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.c-grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.6) 0%, transparent 28%, transparent 55%, #000 96%); pointer-events: none; }
+.c-title { position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; pointer-events: none; }
+.c-title small { font: 600 11px var(--body); letter-spacing: .42em; color: #C8C2B6; text-transform: uppercase; }
+.c-title h1 { font: 400 clamp(110px, 34vw, 190px)/.82 var(--display); margin: 10px 0; text-transform: uppercase; color: var(--fg); animation: neon 6s infinite; text-wrap: balance; }
+@keyframes neon { 0%, 18%, 22%, 58%, 61%, 100% { text-shadow: 0 0 22px rgba(215,38,61,.55), 0 0 2px #fff; opacity: 1; } 20%, 59.5% { text-shadow: none; opacity: .45; } }
+.c-title b { font: 800 13px var(--body); letter-spacing: .34em; color: var(--red); }
+.c-hint { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font: 600 11px var(--body); letter-spacing: .2em; color: rgba(242,238,230,.6); text-transform: uppercase; white-space: nowrap; }
+.c-credits { text-align: center; font: 600 11px/1.9 var(--body); letter-spacing: .18em; color: var(--muted); text-transform: uppercase; padding-block: 18px 6px; }
+.c-cta { display: grid; gap: 10px; padding-block: 18px; }
+.c-cta a { display: block; text-align: center; padding: 17px; font: 800 14px var(--body); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--fg); border: 1px solid var(--line); }
+.c-cta a.p { background: var(--fg); color: #000; border-color: var(--fg); }
+.c-next { text-align: center; padding-block: 26px; font: 600 12px var(--body); letter-spacing: .3em; color: var(--muted); text-transform: uppercase; }
+.c-next .d { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+.c-next .d span { font: 400 64px/1 var(--display); color: var(--fg); letter-spacing: .02em; font-variant-numeric: tabular-nums; min-width: 1.15em; }
+.c-next .d i { font: 400 64px/1 var(--display); color: var(--red); font-style: normal; }
+.c-h2 { font: 400 46px var(--display); text-transform: uppercase; margin: 30px 0 14px; }
+.c-eps { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; perspective: 900px; }
+.c-ep { flex: 0 0 64%; scroll-snap-align: start; transform-style: preserve-3d; transition: transform .25s ease-out; }
+.c-ep figure { margin: 0; position: relative; overflow: hidden; }
+.c-ep img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
+.c-ep figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.85)); }
+.c-ep b { position: absolute; left: 12px; bottom: 8px; z-index: 1; font: 400 76px/1 var(--display); color: var(--fg); }
+.c-ep span { display: block; font: 800 13px var(--body); letter-spacing: .12em; margin-top: 10px; text-transform: uppercase; }
+.c-cut { position: fixed; inset: 0; background: #000; pointer-events: none; opacity: 0; z-index: 25; }
+
+/* ===== B · MONITORING / VHS ===== */
+.dir.vhs { color: var(--vhs-fg); font-family: var(--mono); }
+.v-feed { position: relative; margin: 14px 0; border: 1px solid var(--vhs-line); aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: #000; }
+.v-feed canvas { width: 100%; height: 100%; display: block; }
+.v-hud { position: absolute; inset: 0; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; font: 400 21px var(--pixel); pointer-events: none; text-shadow: 0 0 6px rgba(201,242,201,.5); }
+.v-hud div { display: flex; justify-content: space-between; gap: 8px; }
+.v-rec { color: #FF3B30; }
+.v-rec::before { content: "● "; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.v-title { font: 400 clamp(84px, 26vw, 140px)/.85 var(--pixel); margin: 18px 0 4px; animation: rgb 3.2s infinite; }
+@keyframes rgb { 0%, 92%, 100% { text-shadow: 2px 0 #FF3B30, -2px 0 #3BC9FF; transform: none; } 93% { text-shadow: 8px 0 #FF3B30, -8px 0 #3BC9FF; transform: translateX(-4px) skewX(-6deg); } 95% { text-shadow: -6px 0 #FF3B30, 6px 0 #3BC9FF; transform: translateX(5px); } }
+.v-tag { font: 600 12px var(--mono); letter-spacing: .14em; color: var(--vhs-dim); }
+.v-p { font-size: 14px; line-height: 1.65; color: #A8D8A8; max-width: 60ch; }
+.v-p::after { content: "_"; animation: blink 1s steps(1) infinite; }
+.v-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+.v-cta a { border: 1px solid var(--vhs-fg); padding: 14px 8px; text-align: center; font: 400 23px var(--pixel); color: var(--vhs-fg); text-decoration: none; }
+.v-cta a.p { background: var(--vhs-fg); color: var(--vhs-bg); }
+.v-count { border: 1px solid var(--vhs-line); padding: 12px 14px; font: 400 22px var(--pixel); }
+.v-count b { display: block; font: 400 58px/1 var(--pixel); color: #FF3B30; font-variant-numeric: tabular-nums; }
+.v-h2 { font: 400 40px var(--pixel); margin: 26px 0 10px; }
+.v-tapes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.v-tape { border: 1px solid var(--vhs-line); position: relative; overflow: hidden; }
+.v-tape img { width: 100%; height: 150px; object-fit: cover; display: block; filter: grayscale(1) sepia(.3) hue-rotate(60deg) contrast(1.2); }
+.v-tape i { position: absolute; top: 6px; left: 6px; font: 400 18px var(--pixel); background: var(--vhs-bg); padding: 0 5px; font-style: normal; }
+.v-tape span { display: block; padding: 8px; font: 400 19px var(--pixel); }
+.v-tape:hover img, .v-tape:active img { animation: jitter .18s steps(2) infinite; }
+@keyframes jitter { 50% { transform: translate(-3px, 2px); filter: grayscale(1) contrast(2) brightness(1.3); } }
+.vhs-scan { position: fixed; inset: 0; pointer-events: none; z-index: 15; background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px); }
+
+/* ===== A · AKTA ===== */
+.dir.akta { color: var(--ink); background: var(--paper); background-image: radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px); background-size: 5px 5px; }
+.a-case { font: 400 13px var(--type); letter-spacing: .08em; color: var(--ink-soft); border-bottom: 1px dashed #8A7F70; padding-block: 22px 8px; }
+.a-title { font: 400 clamp(64px, 20vw, 110px)/.95 var(--type); margin: 18px 0 6px; }
+.a-stamp { display: inline-block; border: 4px solid var(--red); color: var(--red); font: 800 19px var(--body); letter-spacing: .18em; padding: 6px 14px; border-radius: 4px; transform: rotate(-7deg) scale(1); margin: 4px 0 20px; }
+.a-stamp.hit { animation: stamp .45s cubic-bezier(.2,.9,.3,1.3); }
+@keyframes stamp { 0% { transform: rotate(-7deg) scale(2.6); opacity: 0; } 60% { transform: rotate(-7deg) scale(.92); opacity: 1; } 100% { transform: rotate(-7deg) scale(1); } }
+.shake { animation: shake .35s; }
+@keyframes shake { 20% { transform: translate(-5px, 3px); } 40% { transform: translate(5px, -3px); } 60% { transform: translate(-3px, 2px); } 80% { transform: translate(2px, -1px); } }
+.a-desk { perspective: 1100px; margin: 8px 0 26px; }
+.a-folder { position: relative; background: var(--manila); border-radius: 4px 14px 4px 4px; padding: 16px; transform-origin: bottom; box-shadow: 0 6px 0 #B9A77C, 0 18px 30px rgba(0,0,0,.18); }
+.a-folder::before { content: "SPRAWA 94"; position: absolute; top: -26px; left: 0; background: var(--manila); padding: 6px 14px; border-radius: 8px 8px 0 0; font: 400 13px var(--type); }
+.a-cover { position: absolute; inset: 0; background: #CDBB8E; border-radius: 4px 14px 4px 4px; transform-origin: top; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); display: grid; place-items: center; font: 400 26px var(--type); color: #6B5A3C; backface-visibility: hidden; z-index: 3; }
+.a-folder.open .a-cover { transform: rotateX(-178deg); }
+.a-photo { position: relative; background: #fff; padding: 10px 10px 48px; box-shadow: 0 10px 24px rgba(0,0,0,.25); transform: rotate(2.4deg); }
+.a-photo.drop { animation: drop .9s cubic-bezier(.2,.8,.25,1.05) both .9s; }
+@keyframes drop { from { transform: translateY(-60px) rotate(-10deg) scale(1.08); box-shadow: 0 40px 60px rgba(0,0,0,.35); opacity: 0; } to { transform: rotate(2.4deg); opacity: 1; } }
+.a-photo img { width: 100%; height: 260px; object-fit: cover; object-position: 50% 40%; display: block; }
+.a-photo i { position: absolute; bottom: 10px; left: 14px; font: 700 25px var(--hand); color: #2A2622; font-style: normal; }
+.a-tape { position: absolute; top: -14px; left: 40%; width: 90px; height: 28px; background: rgba(240,225,170,.75); transform: rotate(-4deg); }
+.a-p { font-size: 16px; line-height: 1.6; color: #3A342C; max-width: 60ch; }
+.a-cta { display: flex; gap: 10px; margin: 18px 0; flex-wrap: wrap; }
+.a-cta a { flex: 1 1 140px; text-align: center; padding: 15px 8px; font: 800 15px var(--body); border: 2px solid var(--ink); border-radius: 4px; color: var(--ink); text-decoration: none; }
+.a-cta a.p { background: var(--red); border-color: var(--red); color: #fff; }
+.a-note { background: var(--note); padding: 16px; transform: rotate(-1.6deg); box-shadow: 0 8px 16px rgba(0,0,0,.18); font: 700 23px/1.2 var(--hand); margin: 22px 4px; }
+.a-note b { display: block; font: 400 36px var(--type); margin-top: 6px; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.a-h2 { font: 400 36px var(--type); margin: 30px 0 4px; }
+.a-sub { font: 400 13px var(--type); color: #7A6F60; letter-spacing: .06em; }
+.a-files { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 14px; margin-block: 22px 40px; perspective: 900px; }
+.a-file { background: var(--manila); border-radius: 2px 10px 2px 2px; padding: 10px; position: relative; box-shadow: 0 4px 0 #B9A77C; transition: transform .25s ease-out; }
+.a-file::before { content: ""; position: absolute; top: -12px; left: 0; width: 56%; height: 14px; background: var(--manila); border-radius: 6px 6px 0 0; }
+.a-file img { width: 100%; height: 120px; object-fit: cover; display: block; filter: grayscale(.3) sepia(.2); }
+.a-file b { display: block; font: 400 13px var(--type); color: var(--red); margin-top: 8px; }
+.a-file span { font: 600 14px var(--body); }
+
+.foot { padding-block: 26px 40px; font: 600 12px/1.6 var(--body); color: var(--muted); text-align: center; }
+body[data-dir="akta"] .foot { color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<nav class="switch" aria-label="Wersje strony">
+  <button type="button" id="b-plakat" data-dir="plakat" aria-pressed="true">C · Plakat<small>latarka, paralaksa</small></button>
+  <button type="button" id="b-vhs" data-dir="vhs" aria-pressed="false">B · Monitoring<small>zakłócenia, kaseta</small></button>
+  <button type="button" id="b-akta" data-dir="akta" aria-pressed="false">A · Akta<small>teczki, pieczątki</small></button>
+</nav>
+
+<!-- ===== C · PLAKAT ===== -->
+<section class="dir on" id="plakat" aria-label="Wersja C: plakat filmowy">
+  <div class="c-hero" id="c-hero">
+    <div class="c-layer c-bg" id="c-bg"></div>
+    <img class="c-kaptur" id="c-kaptur" src="blok94-kaptur.png" alt="Postać w kapturze pod blokiem">
+    <div class="c-fog"></div><div class="c-fog b"></div>
+    <canvas class="c-snow" id="c-snow"></canvas>
+    <canvas class="c-dark" id="c-dark"></canvas>
+    <div class="c-grad"></div>
+    <div class="c-hint">Przesuń palcem · latarka</div>
+    <div class="c-title"><small>Blok 94 przedstawia</small><h1>Kto<br>tam?</h1><b>NIE OTWIERAJ</b></div>
+  </div>
+  <div class="wrap">
+    <div class="c-credits">Animowana seria grozy · 10 odcinków · nowy odcinek w piątek o 1:30 · tylko na TikToku</div>
+    <div class="c-cta"><a class="p" href="https://www.tiktok.com/@protokolocaleni">▶ Oglądaj odcinek 2</a><a href="#plakat">Wszystkie odcinki</a></div>
+    <div class="c-next">Następny odcinek za<div class="d" id="c-count"><span>00</span><i>:</i><span>00</span><i>:</i><span>00</span></div></div>
+    <h2 class="c-h2">Odcinki</h2>
+    <div class="c-eps" id="c-eps">
+      <div class="c-ep"><figure><img src="blok94-czesc1.jpg" alt="Okładka odcinka 2"><b>02</b></figure><span>Nie pytaj „kto tam?”</span></div>
+      <div class="c-ep"><figure><img src="blok94-czesc2.jpg" alt="Okładka odcinka 3"><b>03</b></figure><span>Nie otwieraj „policji”</span></div>
+      <div class="c-ep"><figure><img src="blok94-czesc3.jpg" alt="Okładka odcinka 4"><b>04</b></figure><span>Nie wychodź do licznika</span></div>
+      <div class="c-ep"><figure><img src="blok94-czesc4.jpg" alt="Okładka odcinka 5"><b>05</b></figure><span>Nie czekaj do rana</span></div>
+    </div>
+    <div class="foot">Wersja C · efekty: latarka za palcem odsłania Kaptura, paralaksa bloku przy przewijaniu, śnieg w trzech warstwach głębi, ruchoma mgła, migający neon tytułu, cięcie do czerni przy zmianie wersji.</div>
+  </div>
+</section>
+
+<!-- ===== B · VHS ===== -->
+<section class="dir vhs" id="vhs" aria-label="Wersja B: monitoring">
+  <div class="wrap">
+    <div class="v-feed"><canvas id="v-feed" width="480" height="360"></canvas>
+      <div class="v-hud"><div><span>CAM 01 · KASZTANOWA 12</span><span class="v-rec">REC</span></div><div><span>9 P. · OKNO 94</span><span id="v-time">02:47:13</span></div></div>
+    </div>
+    <h1 class="v-title">KTO TAM?</h1>
+    <div class="v-tag">ARCHIWUM NAGRAŃ · BLOK 94</div>
+    <p class="v-p">&gt; Animowana seria grozy. Każde nagranie to jedna noc, dwa błędy i jedna zasada, która może uratować także ciebie</p>
+    <div class="v-cta"><a class="p" href="https://www.tiktok.com/@protokolocaleni">▶ ODTWÓRZ</a><a href="#vhs">ARCHIWUM</a></div>
+    <div class="v-count">NASTĘPNE NAGRANIE ZA<b id="v-count">00:00:00</b></div>
+    <h2 class="v-h2">// NAGRANIA</h2>
+    <div class="v-tapes">
+      <div class="v-tape"><img src="blok94-czesc1.jpg" alt="Nagranie 02"><i>02.mp4</i><span>ZAKLEJONY WIZJER</span></div>
+      <div class="v-tape"><img src="blok94-czesc2.jpg" alt="Nagranie 03"><i>03.mp4</i><span>FAŁSZYWA POLICJA</span></div>
+      <div class="v-tape"><img src="blok94-czesc3.jpg" alt="Nagranie 04"><i>04.mp4</i><span>PRĄD TYLKO W 94</span></div>
+      <div class="v-tape"><img src="blok94-czesc4.jpg" alt="Nagranie 05"><i>05.mp4</i><span>KLUCZ PASUJE</span></div>
+    </div>
+    <div class="foot" style="color:var(--vhs-dim)">Wersja B · efekty: obraz z kamery z szumem i pasem zakłóceń, losowe przesunięcia linii obrazu, Kaptur na pojedynczej klatce, przesunięcie kolorów w tytule, drgające kasety po dotknięciu.</div>
+  </div>
+  <div class="vhs-scan" aria-hidden="true"></div>
+</section>
+
+<!-- ===== A · AKTA ===== -->
+<section class="dir akta" id="akta" aria-label="Wersja A: akta sprawy">
+  <div class="wrap">
+    <div class="a-case">SPRAWA NR 94 · KASZTANOWA 12 · KLATKA II</div>
+    <h1 class="a-title">KTO<br>TAM?</h1>
+    <button type="button" class="a-stamp" id="a-stamp" aria-label="Przybij pieczątkę">NIE OTWIERAJ</button>
+    <div class="a-desk"><div class="a-folder" id="a-folder"><div class="a-cover">ŚCIŚLE TAJNE</div>
+      <div class="a-photo drop"><div class="a-tape"></div><img src="blok94-hero-bg.jpg" alt="Blok nocą"><i>9. piętro… ktoś tu nie śpi</i></div>
+    </div></div>
+    <p class="a-p">Animowana seria grozy. Każdy odcinek to jedna noc w bloku 94, dwa błędy i jedna zasada, która może uratować także ciebie.</p>
+    <div class="a-cta"><a class="p" href="https://www.tiktok.com/@protokolocaleni">▶ OGLĄDAJ</a><a href="#akta">AKTA SPRAWY</a></div>
+    <div class="a-note">następny odcinek za:<b id="a-count">00 : 00 : 00</b></div>
+    <h2 class="a-h2">Dowody</h2><div class="a-sub">ODCINKI 2–10 · KAŻDY TO OSOBNA TECZKA</div>
+    <div class="a-files" id="a-files">
+      <div class="a-file"><img src="blok94-czesc1.jpg" alt="Odcinek 2"><b>ODC. 2 · 02:47</b><span>Zaklejony wizjer</span></div>
+      <div class="a-file"><img src="blok94-czesc2.jpg" alt="Odcinek 3"><b>ODC. 3 · TA SAMA NOC</b><span>Fałszywa policja</span></div>
+      <div class="a-file"><img src="blok94-czesc3.jpg" alt="Odcinek 4"><b>ODC. 4 · 23:58</b><span>Prąd tylko w 94</span></div>
+      <div class="a-file"><img src="blok94-czesc4.jpg" alt="Odcinek 5"><b>ODC. 5 · 3:12</b><span>Klucz pasuje</span></div>
+    </div>
+    <div class="foot">Wersja A · efekty: teczka otwiera się w 3D, zdjęcie spada na stół z cieniem, pieczątka uderza z drganiem ekranu (dotknij jej), teczki z dowodami pochylają się pod palcem.</div>
+  </div>
+</section>
+<div class="c-cut" id="cut"></div>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = s => document.querySelector(s);
+  // ---------- przełączanie wersji z cięciem do czerni ----------
+  const dirs = ['plakat', 'vhs', 'akta'];
+  function show(d, cut) {
+    if (!dirs.includes(d)) d = 'plakat';
+    const apply = () => {
+      dirs.forEach(k => { document.getElementById(k).classList.toggle('on', k === d); document.getElementById('b-' + k).setAttribute('aria-pressed', k === d); });
+      document.body.dataset.dir = d; scrollTo(0, 0);
+      if (d === 'akta') openFolder();
+    };
+    if (!cut || RM) { apply(); return; }
+    const c = $('#cut'); c.style.transition = 'opacity .18s'; c.style.opacity = 1;
+    setTimeout(() => { apply(); c.style.transition = 'opacity .5s'; c.style.opacity = 0; }, 200);
+  }
+  document.querySelectorAll('.switch button').forEach(b => b.addEventListener('click', () => { history.replaceState(null, '', '#' + b.dataset.dir); show(b.dataset.dir, true); }));
+  addEventListener('hashchange', () => show(location.hash.slice(1), true));
+
+  // ---------- odliczanie (premiera: piątek 1:30) ----------
+  const T = Date.parse('2026-11-13T00:30:00Z'), P = n => String(n).padStart(2, '0');
+  function tick() {
+    let s = Math.max(0, Math.floor((T - Date.now()) / 1000)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    const ds = $('#c-count').querySelectorAll('span'); ds[0].textContent = P(h); ds[1].textContent = P(m); ds[2].textContent = P(x);
+    $('#v-count').textContent = s ? P(h) + ':' + P(m) + ':' + P(x) : 'WKRÓTCE';
+    $('#a-count').textContent = s ? P(h) + ' : ' + P(m) + ' : ' + P(x) : 'wkrótce!';
+    const d = new Date(); $('#v-time').textContent = P(d.getHours()) + ':' + P(d.getMinutes()) + ':' + P(d.getSeconds());
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ---------- C: latarka, śnieg, paralaksa ----------
+  const hero = $('#c-hero'), dark = $('#c-dark'), snowC = $('#c-snow'), dx = dark.getContext('2d'), sx = snowC.getContext('2d');
+  let W = 0, H = 0, dpr = Math.min(2, devicePixelRatio || 1), lx = .62, ly = .55, touched = 0;
+  function size() { const r = hero.getBoundingClientRect(); W = r.width; H = r.height; for (const c of [dark, snowC]) { c.width = W * dpr; c.height = H * dpr; } }
+  size(); addEventListener('resize', size);
+  const move = e => { const r = hero.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; lx = (p.clientX - r.left) / r.width; ly = (p.clientY - r.top) / r.height; touched = performance.now(); };
+  hero.addEventListener('pointermove', move); hero.addEventListener('touchmove', move, { passive: true }); hero.addEventListener('pointerdown', move);
+  const flakes = Array.from({ length: 140 }, (_, i) => ({ x: Math.random(), y: Math.random(), z: [.4, .7, 1][i % 3], d: Math.random() * 6 }));
+  let last = 0;
+  function frameC(t) {
+    const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+    if (performance.now() - touched > 2500) { lx = .5 + Math.sin(t / 1600) * .32; ly = .52 + Math.sin(t / 900) * .12; } // latarka sama przeczesuje blok
+    const flick = .9 + (Math.random() < .04 ? -.35 : 0);
+    dx.setTransform(1, 0, 0, 1, 0, 0); dx.clearRect(0, 0, dark.width, dark.height); dx.globalCompositeOperation = 'source-over';
+    dx.fillStyle = 'rgba(2,3,8,.88)'; dx.fillRect(0, 0, dark.width, dark.height);
+    dx.globalCompositeOperation = 'destination-out'; const cx = lx * dark.width, cy = ly * dark.height, R = Math.min(dark.width, dark.height) * .36;
+    const g = dx.createRadialGradient(cx, cy, R * .05, cx, cy, R); g.addColorStop(0, `rgba(0,0,0,${flick})`); g.addColorStop(.6, `rgba(0,0,0,${flick * .6})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+    dx.fillStyle = g; dx.beginPath(); dx.arc(cx, cy, R, 0, 7); dx.fill();
+    dx.globalCompositeOperation = 'source-over'; const wg = dx.createRadialGradient(cx, cy, 2, cx, cy, R); wg.addColorStop(0, 'rgba(255,240,200,.10)'); wg.addColorStop(1, 'rgba(255,240,200,0)'); dx.fillStyle = wg; dx.fillRect(cx - R, cy - R, R * 2, R * 2);
+    sx.setTransform(1, 0, 0, 1, 0, 0); sx.clearRect(0, 0, snowC.width, snowC.height); const sc = scrollY;
+    for (const f of flakes) { f.y += dt * .06 * f.z; f.x += Math.sin(t / 900 + f.d) * .0004; if (f.y > 1.05) { f.y = -.05; f.x = Math.random(); }
+      const yy = ((f.y * H - sc * (f.z - .4) * .6) % H + H) % H; sx.fillStyle = `rgba(235,240,255,${.35 + f.z * .5})`; sx.beginPath(); sx.arc(f.x * W * dpr, yy * dpr, (1 + f.z * 2.2) * dpr, 0, 7); sx.fill(); }
+    if (!RM) requestAnimationFrame(frameC);
+  }
+  requestAnimationFrame(frameC);
+  const bg = $('#c-bg'), kap = $('#c-kaptur');
+  addEventListener('scroll', () => { if (document.body.dataset.dir && document.body.dataset.dir !== 'plakat') return; const y = scrollY; bg.style.transform = `translateY(${y * .35}px) scale(${1 + y * .0004})`; kap.style.transform = `translateY(${y * .18}px)`; }, { passive: true });
+  // pochylanie plakatów i teczek pod palcem
+  function tilt(sel) { document.querySelectorAll(sel).forEach(el => { el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(), a = (e.clientX - r.left) / r.width - .5, b = (e.clientY - r.top) / r.height - .5; el.style.transform = `rotateY(${a * 14}deg) rotateX(${-b * 12}deg)`; }); el.addEventListener('pointerleave', () => el.style.transform = ''); }); }
+  tilt('.c-ep'); tilt('.a-file');
+
+  // ---------- B: obraz z kamery z zakłóceniami ----------
+  const vf = $('#v-feed'), vx = vf.getContext('2d'), img = new Image(), kimg = new Image(); img.src = 'blok94-hero-bg.jpg'; kimg.src = 'blok94-kaptur.png';
+  let ghost = 0, nextGhost = 3000;
+  function frameB(t) {
+    if (document.body.dataset.dir === 'vhs' && img.complete) {
+      const w = vf.width, h = vf.height; vx.filter = 'grayscale(1) contrast(1.35) brightness(.95)'; vx.drawImage(img, 0, -40, w, w * img.height / img.width); vx.filter = 'none';
+      if (t > nextGhost) { ghost = t + 140; nextGhost = t + 4000 + Math.random() * 4000; }
+      if (t < ghost && kimg.complete) { vx.globalAlpha = .85; vx.drawImage(kimg, w * .56, h * .42, w * .22, w * .22 * kimg.height / kimg.width); vx.globalAlpha = 1; }
+      vx.globalCompositeOperation = 'multiply'; vx.fillStyle = 'rgb(150,230,150)'; vx.fillRect(0, 0, w, h); vx.globalCompositeOperation = 'source-over';
+      for (let k = 0; k < 3; k++) if (Math.random() < .08) { const y = Math.random() * h, hh = 4 + Math.random() * 18, off = (Math.random() - .5) * 40; vx.drawImage(vf, 0, y, w, hh, off, y, w, hh); }
+      const band = (t / 18) % (h + 60) - 30; const bg2 = vx.createLinearGradient(0, band - 20, 0, band + 20); bg2.addColorStop(0, 'rgba(255,255,255,0)'); bg2.addColorStop(.5, 'rgba(255,255,255,.18)'); bg2.addColorStop(1, 'rgba(255,255,255,0)'); vx.fillStyle = bg2; vx.fillRect(0, band - 20, w, 40);
+      try { const id = vx.getImageData(0, 0, w, h), d = id.data; for (let i = 0; i < d.length; i += 4 * 3) { const n = (Math.random() - .5) * 46; d[i] += n; d[i + 1] += n; d[i + 2] += n; } vx.putImageData(id, 0, 0); } catch (e) { for (let k = 0; k < 900; k++) { vx.fillStyle = `rgba(255,255,255,${Math.random() * .25})`; vx.fillRect(Math.random() * w, Math.random() * h, 2, 2); } }
+    }
+    if (!RM) requestAnimationFrame(frameB);
+  }
+  requestAnimationFrame(frameB);
+
+  // ---------- A: teczka, zdjęcie, pieczątka ----------
+  let opened = false;
+  function openFolder() { if (opened) return; opened = true; setTimeout(() => $('#a-folder').classList.add('open'), 350); setTimeout(stamp, 1700); }
+  function stamp() { const s = $('#a-stamp'); s.classList.remove('hit'); void s.offsetWidth; s.classList.add('hit'); const a = $('#akta'); setTimeout(() => { a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); }, 240); }
+  $('#a-stamp').addEventListener('click', stamp);
+
+  show(location.hash.slice(1) || 'plakat', false);
+})();
+</script>
