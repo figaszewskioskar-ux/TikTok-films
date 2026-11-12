@@ -26,3 +26,14 @@
   ciągłość miejsca i pozycji postaci między scenami, napisy niezasłaniające twarzy i rekwizytów,
   rekwizyty w rękach i przy postaciach (klamki, łańcuch, wieszak nie nachodzą na głowy), zgodność tekstu lektora z obrazem,
   numer odcinka w napisie u góry, poprawne nazwy i godziny. Dopiero potem wysyłać.
+
+## Wzorzec jakości animacji (na podstawie filmów @nierobcietego — wzorujemy się poziomem, niczego nie kopiujemy)
+- **Tła pełne detali:** każda scena ma rozpoznawalne miejsce z wieloma przedmiotami (meblościanka, dywan we wzór, kafelki,
+  lampa z kloszem, zegar, obrazki, rośliny, kaloryfer). Na zewnątrz: kamienice z cegły, oświetlone okna, latarnie, drzewa, śnieg, samochody.
+- **Światło jako nastrój:** ciepłe plamy światła pod lampami, chłodna noc dookoła, latarnie i okna rzucają poświatę.
+- **Postacie z charakterem:** różne fryzury, czapki, szaliki, wzory na swetrach, zamki i guziki kurtek; mocna mimika
+  (szeroki, niepokojący uśmiech u „miłego” obcego, łzy, strach). Tłum to też różne postacie, nie identyczne kształty.
+- **Drobne animacje życia:** para z ust na mrozie, padający śnieg, migające światło, fale dźwięku przy mówiącej postaci,
+  kołysanie, mruganie.
+- **Kadrowanie:** zbliżenia na twarze w kluczowych momentach, dzielony ekran (dwa miejsca naraz), ciemna winieta jak przez okno.
+- **Każdy przedmiot z fabuły pokazany wyraźnie** (zegar z godziną, ślady butów, telefon, klucze).
