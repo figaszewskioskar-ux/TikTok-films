@@ -48,11 +48,44 @@ function kubaRoom(c, lt, o = {}) {
   if (o.door) { c.fillStyle = '#05060A'; c.fillRect(dx, dy, dw, dh); const g = c.createLinearGradient(dx, 0, dx + dw, 0); g.addColorStop(0, 'rgba(255,220,160,.0)'); g.addColorStop(1, 'rgba(255,220,160,.08)'); c.fillStyle = g; c.fillRect(dx, dy, dw, dh);
     c.fillStyle = '#6E5A44'; c.beginPath(); c.moveTo(dx, dy); c.lineTo(dx + dw * (1 - o.door), dy + 30 * o.door); c.lineTo(dx + dw * (1 - o.door), dy + dh - 30 * o.door); c.lineTo(dx, dy + dh); c.fill(); }
   else { fillRR(c, dx, dy, dw, dh, 4, '#6E5A44'); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 4; c.strokeRect(dx + 26, dy + 40, dw - 52, 340); c.strokeRect(dx + 26, dy + 440, dw - 52, 400); fillRR(c, dx + 20, dy + 450, 60, 14, 6, '#C9CDD2'); }
+  // okno ze śniegiem i zasłoną
+  fillRR(c, 560, 230, 240, 330, 6, '#0D1222'); c.fillStyle = '#3A4058'; c.fillRect(675, 230, 10, 330); c.fillRect(560, 390, 240, 10);
+  circ(c, 760, 280, 22, '#E8E4CF'); circ(c, 770, 274, 20, '#0D1222');
+  for (let k = 0; k < 14; k++) circ(c, 570 + hash(k) * 220, 240 + ((lt * 36 + hash(k + 7) * 310) % 310), 2.6, 'rgba(235,240,255,.75)');
+  c.fillStyle = '#7A2F2F'; c.beginPath(); c.moveTo(540, 220); c.lineTo(600, 220); c.quadraticCurveTo(580, 400, 610, 580); c.lineTo(540, 580); c.fill();
+  fillRR(c, 540, 212, 290, 12, 6, '#2A2D36'); fillRR(c, 550, 560, 260, 14, 4, '#D9DCE6');
+  // zegar ścienny 22:47
+  circ(c, 420, 250, 52, '#E8E4DA'); circ(c, 420, 250, 44, '#F6F3EA'); c.strokeStyle = '#14161B'; c.lineWidth = 6;
+  { const hA = (10 + 47 / 60) / 12 * Math.PI * 2 - Math.PI / 2, mA = 47 / 60 * Math.PI * 2 - Math.PI / 2; c.beginPath(); c.moveTo(420, 250); c.lineTo(420 + Math.cos(hA) * 22, 250 + Math.sin(hA) * 22); c.stroke(); c.lineWidth = 3.5; c.beginPath(); c.moveTo(420, 250); c.lineTo(420 + Math.cos(mA) * 34, 250 + Math.sin(mA) * 34); c.stroke(); }
+  // karteczki na ścianie
+  [[300, 300, '#F5C542', -.08], [345, 330, '#7BC8F6', .06], [300, 360, '#F28CB1', .04]].forEach(([x, y, col, r]) => { c.save(); c.translate(x, y); c.rotate(r); fillRR(c, 0, 0, 40, 40, 2, col); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(6, 12, 26, 3); c.fillRect(6, 22, 20, 3); c.restore(); });
+  // róg łóżka z kocem w kratę
+  fillRR(c, -40, 1150, 170, 270, 20, '#2E4A7A'); for (let i = 0; i < 4; i++) { c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(-40 + i * 44, 1150, 14, 270); c.fillRect(-40, 1170 + i * 60, 170, 12); }
+  // dywan we wzór
+  ell(c, 560, 1640, 430, 110, '#4A2F2F'); ell(c, 560, 1640, 370, 88, '#5E3B3B'); c.strokeStyle = '#C9A15A'; c.lineWidth = 4; c.beginPath(); c.ellipse(560, 1640, 300, 66, 0, 0, 7); c.stroke();
+  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; circ(c, 560 + Math.cos(a) * 300, 1640 + Math.sin(a) * 66, 7, '#C9A15A'); }
+  // komputer pod biurkiem ze świecącym paskiem
+  fillRR(c, 700, 1120, 110, 260, 8, '#15171C'); c.fillStyle = `hsl(${(lt * 60) % 360},80%,55%)`; c.fillRect(712, 1130, 6, 240); circ(c, 790, 1150, 5, '#3BFF7A');
+  // lampka biurkowa z ciepłym światłem i kubek z parą (blat na 1080)
+  fillRR(c, 150, 1062, 60, 18, 6, '#2A2D36'); c.strokeStyle = '#2A2D36'; c.lineWidth = 8; c.beginPath(); c.moveTo(180, 1066); c.lineTo(150, 960); c.lineTo(190, 900); c.stroke();
+  c.fillStyle = '#E08A0B'; c.beginPath(); c.moveTo(165, 878); c.lineTo(222, 898); c.lineTo(212, 940); c.lineTo(160, 922); c.fill();
+  c.save(); c.globalCompositeOperation = 'lighter'; const lg = c.createRadialGradient(200, 1040, 10, 200, 1040, 260); lg.addColorStop(0, 'rgba(255,200,120,.35)'); lg.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = lg; c.fillRect(0, 780, 520, 520); c.restore();
+  fillRR(c, 880, 1030, 40, 50, 8, '#D7263D'); c.strokeStyle = '#D7263D'; c.lineWidth = 6; c.beginPath(); c.arc(924, 1052, 12, -1.3, 1.3); c.stroke();
+  for (let i = 0; i < 2; i++) { const p = (lt * .5 + i * .5) % 1; c.fillStyle = `rgba(230,235,245,${.25 * (1 - p)})`; c.beginPath(); c.arc(900 + Math.sin(p * 6 + i) * 8, 1020 - p * 70, 8 + p * 10, 0, 7); c.fill(); }
   // biurko z laptopem rysuje scena
 }
+const LAMP = { x: 190, y: 1010, r: 300, a: .85, tint: 'rgba(255,200,120,.08)' };
 // pokój Oli nocą z drzwiami (prawa ściana)
 function olaRoom(c, lt, o = {}) {
   ROOM(c);
+  // lampki na sznurku nad łóżkiem
+  c.strokeStyle = '#2A2D36'; c.lineWidth = 3; c.beginPath(); c.moveTo(90, 900); c.quadraticCurveTo(460, 990, 840, 900); c.stroke();
+  for (let i = 0; i < 11; i++) { const u = i / 10, x = lerp(90, 840, u), y = 900 + Math.sin(u * Math.PI) * 45; const on = .55 + .45 * Math.sin(lt * 2 + i); c.save(); c.shadowColor = '#FFD27A'; c.shadowBlur = 16 * on; circ(c, x, y + 10, 7, `rgba(255,210,122,${.5 + .5 * on})`); c.restore(); }
+  // zegar 02:47 na ścianie
+  circ(c, 470, 300, 48, '#E8E4DA'); circ(c, 470, 300, 40, '#F6F3EA'); c.strokeStyle = '#14161B'; c.lineWidth = 5;
+  { const hA = (2 + 47 / 60) / 12 * Math.PI * 2 - Math.PI / 2, mA = 47 / 60 * Math.PI * 2 - Math.PI / 2; c.beginPath(); c.moveTo(470, 300); c.lineTo(470 + Math.cos(hA) * 20, 300 + Math.sin(hA) * 20); c.stroke(); c.lineWidth = 3; c.beginPath(); c.moveTo(470, 300); c.lineTo(470 + Math.cos(mA) * 31, 300 + Math.sin(mA) * 31); c.stroke(); }
+  // kapcie przy łóżku
+  ell(c, 380, 1470, 40, 16, '#F28CB1'); ell(c, 470, 1478, 40, 16, '#F28CB1'); ell(c, 372, 1466, 16, 8, '#FFFFFF'); ell(c, 462, 1474, 16, 8, '#FFFFFF');
   const dx = 880, dy = 470, dw = 180, dh = 930;
   fillRR(c, dx - 12, dy - 12, dw + 24, dh + 12, 4, '#3B2E22');
   if (o.door) { c.fillStyle = '#030305'; c.fillRect(dx, dy, dw, dh); c.fillStyle = '#5E4A38'; c.beginPath(); c.moveTo(dx + dw, dy); c.lineTo(dx + dw * (o.door), dy + 26 * o.door); c.lineTo(dx + dw * (o.door), dy + dh - 26 * o.door); c.lineTo(dx + dw, dy + dh); c.fill(); }
@@ -106,7 +139,7 @@ scene({
     fillRR(c, 160, 1080, 760, 26, 6, '#4A3A2C');
     laptop(c, 260, 700, (cc, x, y, w, h) => { cc.fillStyle = '#1A1D28'; cc.fillRect(x, y, w, h); fillRR(cc, x + w * .62, y + 20, 110, h - 20, 4, '#0A0B10'); person(cc, 'kaptur', x + w * .62 + 55, y + h + 70, .7, { t: lt, glow: 1 }); person(cc, 'kuba', x + w * .36, y + h + 190, 1.1, { t: lt, wide: true, mouth: 'o' }); circ(cc, x + 22, y + 22, 7, Math.floor(lt * 2) % 2 ? '#FF3B30' : '#7A1A16'); });
     circ(c, 540, 709, 8, '#3BFF7A');
-    night(c, .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }]);
+    night(c, .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, LAMP]);
   },
 });
 sub('recap', .2, 6, 'Poprzednio: kamerka w laptopie zapaliła się sama. Na podglądzie ktoś stał za Kubą.');
@@ -139,7 +172,7 @@ scene({
     person(c, 'kuba', 250, 1640, 2.0, { t: lt, back: !turned, look: 1, wide: turned, mouth: turned && !talking(sc, 'kuba', lt) ? 'o' : null, talk: talking(sc, 'kuba', lt), rot: lt > 1.0 && lt < 1.6 ? .05 : 0 });
     if (lt > 2.6) person(c, 'ola', mv(lt, 2.6, 3.5, 1180, 900), 1600, 1.9, { t: lt, look: -1, wide: true, talk: talking(sc, 'ola', lt), walk: lt < 3.5 ? lt * 12 : null });
     c.restore();
-    night(c, lt > 9.0 ? .7 : .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, { x: 950, y: 1000, r: lt > 3.4 ? 300 : 0, a: .6 }]);
+    night(c, lt > 9.0 ? .7 : .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, LAMP, { x: 950, y: 1000, r: lt > 3.4 ? 300 : 0, a: .6 }]);
   },
   post(c, lt) {
     if (lt > 1.6 && lt < 3.4) label(c, 'NIKOGO', 950, 420, 'dark', 48, lt - 1.6, 3.4 - lt);
@@ -189,7 +222,7 @@ scene({
     });
     person(c, 'kuba', 420, 1640, 2.0, { t: lt, back: lt < 4.6, look: 1, wide: lt > 4.6, mouth: lt > 4.6 && !talking(sc, 'kuba', lt) ? 'o' : null, talk: talking(sc, 'kuba', lt), aR: lt < 2.6 ? 1.2 : .14 });
     person(c, 'ola', 900, 1620, 1.9, { t: lt, look: -1, wide: true, talk: talking(sc, 'ola', lt), aL: lt > 1.7 && lt < 3 ? 1.2 : .14 });
-    night(c, .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }]);
+    night(c, .78, [{ x: 540, y: 860, r: 520, a: .95, tint: 'rgba(200,220,255,.1)' }, LAMP]);
   },
   post(c, lt) {
     if (lt > 2.6 && lt < 7.8) card(c, 70, 300, 860, 'BŁĄD 2', 'kliknął w link od obcego\ni pobrał „program”', lt - 2.6, '#F39C12', 40);
