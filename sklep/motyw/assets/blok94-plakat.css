@@ -165,3 +165,7 @@ html body .b94w-b { border-radius: 0 !important; font: 800 13px var(--pl-body) !
 html body .b94w-g { background: var(--pl-fg) !important; color: #000 !important; }
 html body .b94w-s { background: var(--pl-red) !important; color: #fff !important; }
 html body .b94w-l { color: var(--pl-muted) !important; font: 600 11px var(--pl-body) !important; letter-spacing: .24em; text-transform: uppercase; text-decoration: none !important; }
+
+/* ---------- nagłówek na iPhonie: pełne tło także pod paskiem stanu ---------- */
+html body .po-head { background: #000 !important; padding-top: env(safe-area-inset-top, 0px) !important; top: 0 !important; }
+html body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: #000; z-index: 61; pointer-events: none; }
