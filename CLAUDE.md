@@ -1,7 +1,7 @@
 # BLOK 94 – zasady projektu
 
 ## Długość odcinków
-- **Każda nowa część serii „Kto tam?” ma mieć ok. 2 minut (ok. 1:55–2:00).**
+- **Każdy film (odcinki i specjale) ma mieć minimum 1:40 — ani sekundy mniej.** Cel: ok. 1:55–2:00.
   `film/narr.py` domyślnie wydłuża oś czasu do 118 s (`TARGET`), rozciągając sceny i pauzy, bez nowych nagrań lektora.
   Jeśli narracji jest za mało, dopisz więcej scen lub kwestii w `SEG`, zamiast zostawiać krótszy film.
 - **Gotowych filmów nie przerabiamy i nie renderujemy ponownie**, chyba że użytkownik wyraźnie o to poprosi.
@@ -9,7 +9,9 @@
 
 ## Styl serii
 - Realistyczny, nocny strach, bez humoru w stylu skeczu. Lektor (głos Victor, ElevenLabs) opowiada całą historię.
-- Każda część: hak z czerwoną tablicą „NIE …!”, 2 błędy (karty BŁĄD 1/2), 1 zasada bezpieczeństwa (karta ZASADA), niespodziewany cliffhanger i napis „CZĘŚĆ N ↓”.
+- Każda część: hak z czerwoną tablicą „NIE …!”, 2 błędy (karty BŁĄD 1/2), 1 zasada bezpieczeństwa (karta ZASADA), niespodziewany cliffhanger i napis „ODC. N ↓”.
+- **Zakończenie zawsze przerażające:** ostatnie 8–12 s to straszny zwrot akcji (coś/ktoś się pojawia, szept, światło gaśnie), który zostawia widza z pytaniem i chęcią obejrzenia kolejnego odcinka.
+  Pod zakończeniem zawsze **przerażający dźwięk w tle**: narastający niski dron/szum, bicie serca, a na sam koniec mocne uderzenie (stinger) lub nagła cisza po nim.
 - Porady bezpieczeństwa muszą być prawdziwe.
 
 ## Produkcja

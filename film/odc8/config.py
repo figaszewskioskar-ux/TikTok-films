@@ -45,12 +45,12 @@ VGAIN = {'kaptur': 1.5}
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 6, 11, 20, 28, 32.4, 32.6, 38, 48, 58, 66, 72.4, 72.6, 77.99], [-27, -30, -26, -30, -26, -60, -22, -27, -26, -28, -26, -60, -22, -24]),
-    loops={'roomtone': ([0, 77.99], [-39, -39])},
+    loops={'drone': ([0, 62, 68, 76.8, 77.0, 77.99], [-90, -90, -24, -14, -60, -60]), 'roomtone': ([0, 77.99], [-39, -39])},
     heartbeat=([0, 11, 13, 20, 28, 32.4, 32.5, 66, 70, 77.99], [-90, -90, -26, -90, -26, -20, -90, -90, -24, -20]),
 )
 REALMAP = {'creak': [('creak', -10)], 'slam': [('slam', -4)], 'notif': [('notif', -8)], 'boom': [('boom', -6)], 'stab': [('boom', -5)],
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
-EXTRA = [(12.0, 'breath', -16)]
+EXTRA = [(76.85, 'boom', -1), (12.0, 'breath', -16)]
 
 # poprawiony na prośbę użytkownika: ok. 2 minut (TARGET domyślnie 118 s)
 MAXK = 1.5
