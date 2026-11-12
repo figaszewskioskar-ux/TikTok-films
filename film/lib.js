@@ -434,9 +434,12 @@ function corridorBg(c, t, o = {}) {
   c.fillStyle = g; c.fillRect(0, 0, W, 1400);
   // winda po lewej
   fillRR(c, -60, 600, 230, 800, 4, '#8C939C'); c.fillStyle = '#B3BAC2'; c.fillRect(-40, 630, 190, 770); c.fillStyle = '#7D858E'; c.fillRect(54, 630, 4, 770);
-  fillRR(c, 30, 520, 90, 54, 8, '#16181C'); txt(c, '7', 75, 548, 36, '#FF3B30', 900);
+  fillRR(c, 30, 520, 90, 54, 8, '#16181C'); txt(c, o.floor || '7', 75, 548, 36, '#FF3B30', 900);
   // drzwi 72 po prawej
-  paddedDoor(c, 930, 560, 300, 840, '72');
+  paddedDoor(c, 930, 560, 300, 840, o.num2 || '72');
+  // skrzynka z licznikami i gaśnica
+  fillRR(c, 760, 300, 130, 180, 6, '#8E969E'); c.fillStyle = '#6F777F'; c.fillRect(770, 310, 110, 4); fillRR(c, 860, 380, 12, 30, 4, '#3A3F46');
+  fillRR(c, 210, 1240, 40, 110, 14, '#C0392B'); fillRR(c, 220, 1220, 20, 26, 4, '#2A2D36');
   // drzwi 71
   const dx = 330, dy = 560, dw = 380, dh = 840;
   if (o.open) {
@@ -446,9 +449,10 @@ function corridorBg(c, t, o = {}) {
     c.fillStyle = 'rgba(120,70,30,.35)'; c.fillRect(dx + 40, dy + 120, 120, 200); // obrazek
     // skrzydło drzwi otwarte do środka
     c.fillStyle = '#5A3C23'; c.beginPath(); c.moveTo(dx, dy); c.lineTo(dx + 70, dy + 40); c.lineTo(dx + 70, dy + dh - 30); c.lineTo(dx, dy + dh); c.fill();
+    fillRR(c, dx + dw / 2 - 44, dy - 70, 88, 48, 24, '#C9A15A'); txt(c, o.num || '71', dx + dw / 2, dy - 46, 30, '#3A2A1A', 900);
     // światło na podłogę
     c.fillStyle = 'rgba(246,213,142,.25)'; c.beginPath(); c.moveTo(dx, 1400); c.lineTo(dx + dw, 1400); c.lineTo(dx + dw + 160, 1920); c.lineTo(dx - 160, 1920); c.fill();
-  } else paddedDoor(c, dx, dy, dw, dh, '71', { peepDark: o.peepDark });
+  } else paddedDoor(c, dx, dy, dw, dh, o.num || '71', { peepDark: o.peepDark });
 }
 function entranceBg(c, t, o = {}) {
   // ściana bloku nocą
@@ -589,9 +593,20 @@ function hand(c, fx, fy, ang, k = KINDS.kuba) {
 function hallBg(c, t, o = {}) {
   c.fillStyle = '#3B3A44'; c.fillRect(0, 0, W, 1420);
   for (let i = 0; i < 20; i++) { c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(i * 60, 0, 22, 1420); }
+  c.fillStyle = 'rgba(255,255,255,.035)'; for (let y = 60; y < 1380; y += 120) for (let x = 30 + ((y / 120) % 2) * 30; x < W; x += 60) { c.beginPath(); c.moveTo(x, y - 12); c.lineTo(x + 8, y); c.lineTo(x, y + 12); c.lineTo(x - 8, y); c.fill(); }
   c.fillStyle = '#2E241C'; c.fillRect(0, 1420, W, 500);
-  for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(0, 1440 + i * 44, W, 3); }
-  fillRR(c, 0, 1400, W, 24, 0, '#241B14');
+  for (let r = 0; r < 12; r++) for (let q = -1; q < 12; q++) { c.fillStyle = (r + q) % 2 ? 'rgba(0,0,0,.14)' : 'rgba(255,255,255,.025)'; c.save(); c.translate(q * 100 + (r % 2) * 50, 1430 + r * 44); c.fillRect(0, 0, 96, 40); c.restore(); }
+  fillRR(c, 0, 1396, W, 28, 0, '#241B14'); c.fillStyle = 'rgba(255,255,255,.06)'; c.fillRect(0, 1396, W, 3);
+  // kinkiet z ciepłym światłem
+  fillRR(c, 64, 560, 56, 20, 6, '#6B5A44'); c.beginPath(); c.moveTo(70, 580); c.lineTo(114, 580); c.lineTo(126, 640); c.lineTo(58, 640); c.closePath(); c.fillStyle = '#E9D9A8'; c.fill();
+  { const lg = c.createRadialGradient(92, 620, 4, 92, 620, 260); lg.addColorStop(0, 'rgba(255,220,150,.28)'); lg.addColorStop(1, 'rgba(255,220,150,0)'); c.fillStyle = lg; c.fillRect(0, 360, 360, 520); }
+  // lustro nad szafką
+  fillRR(c, 650, 560, 150, 230, 70, '#6B5A44'); { const mg = c.createLinearGradient(660, 570, 790, 780); mg.addColorStop(0, '#7E8AA3'); mg.addColorStop(1, '#3E465C'); fillRR(c, 662, 572, 126, 206, 60, mg); } c.fillStyle = 'rgba(255,255,255,.18)'; c.fillRect(690, 600, 10, 140);
+  // szafka na buty i buty
+  fillRR(c, 640, 1300, 420, 104, 6, '#5A4632'); c.fillStyle = '#4A3828'; c.fillRect(648, 1350, 404, 4); fillRR(c, 836, 1312, 28, 10, 4, '#C9A15A');
+  for (const [x, col] of [[680, '#20232B'], [740, '#B23A3A'], [930, '#2C3B5A'], [990, '#E8E4DA']]) { fillRR(c, x, 1282, 46, 20, 8, col); }
+  // dywanik przed drzwiami
+  if (!o.gap) { fillRR(c, 190, 1440, 400, 110, 10, '#7A2F2F'); c.strokeStyle = '#C9A15A'; c.lineWidth = 4; rr(c, 204, 1452, 372, 86, 6); c.stroke(); for (let i = 0; i < 9; i++) circ(c, 230 + i * 42, 1495, 6, '#C9A15A'); }
   // wieszak z kurtką Kuby
   c.fillStyle = '#5A4632'; c.fillRect(840, 540, 160, 16);
   fillRR(c, 860, 550, 60, 200, 20, '#6E7B3B'); fillRR(c, 930, 550, 50, 150, 20, '#E08A0B');
@@ -656,15 +671,27 @@ function tapeTexture(c, cx, cy, r, a = 1) {
   c.restore();
 }
 
+function roomDecor(c) {
+  // plakat i półka z książkami
+  fillRR(c, 60, 360, 200, 270, 6, '#E9B52C'); fillRR(c, 72, 372, 176, 246, 4, '#7B4FC9'); circ(c, 160, 470, 46, '#F4C29C'); txt(c, 'BAND', 160, 580, 30, '#F4F1EA', 900);
+  fillRR(c, 300, 700, 260, 14, 3, '#5A4632'); for (let i = 0; i < 7; i++) fillRR(c, 312 + i * 34, 600 + hash(i) * 30, 26, 100 - hash(i) * 30, 3, ['#D7263D', '#1BB0A3', '#F5C542', '#5C7DB5', '#E8E4DA', '#30A46C', '#E08A0B'][i]);
+  // dywan
+  ell(c, 540, 1600, 420, 90, '#3B2F4A'); ell(c, 540, 1600, 360, 70, '#4A3C5C');
+}
 const ROOM = (c) => {
   c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H);
+  roomDecor(c);
   // okno z księżycem
   fillRR(c, 620, 380, 320, 420, 8, '#0D1222'); circ(c, 860, 470, 40, '#E8E4CF'); circ(c, 878, 458, 36, '#0D1222');
   c.fillStyle = '#3A4058'; c.fillRect(775, 380, 10, 420); c.fillRect(620, 585, 320, 10);
   for (let i = 0; i < 6; i++) fillRR(c, 650 + i * 45, 640 + hash(i) * 120, 22, 160, 3, '#141A2C');
   c.fillStyle = '#1F1A22'; c.fillRect(0, 1380, W, 540);
-  // łóżko
-  fillRR(c, 80, 1100, 760, 330, 30, '#3D4A73'); fillRR(c, 90, 1060, 220, 120, 40, '#D9DCE6');
+  // łóżko z kołdrą i poduszką
+  fillRR(c, 80, 1100, 760, 330, 30, '#3D4A73'); fillRR(c, 80, 1100, 760, 40, 20, '#4A5888'); fillRR(c, 90, 1060, 220, 120, 40, '#D9DCE6');
+  for (let i = 0; i < 6; i++) circ(c, 380 + i * 80, 1250, 10, 'rgba(255,255,255,.12)');
+  // biurko i lampka
+  fillRR(c, 880, 1080, 200, 24, 4, '#5A4632'); c.fillStyle = '#4A3828'; c.fillRect(900, 1104, 16, 300); c.fillRect(1050, 1104, 16, 300);
+  fillRR(c, 960, 1000, 10, 80, 4, '#2A2D36'); c.beginPath(); c.moveTo(930, 1000); c.lineTo(1000, 1000); c.lineTo(985, 960); c.lineTo(945, 960); c.fillStyle = '#F5C542'; c.fill();
 };
 
 // ---------- telefon i czat (CZĘŚĆ 3+) ----------

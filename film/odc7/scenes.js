@@ -48,6 +48,17 @@ function zdzRoom(c, lt, o = {}) {
     c.restore();
     if (o.eyes) { c.save(); c.globalAlpha = o.eyes; c.shadowColor = '#fff'; c.shadowBlur = 24; ell(c, bx + bw * .7 - 40, by + bh - 580, 18, 11, '#F4F1EA'); ell(c, bx + bw * .7 + 40, by + bh - 580, 18, 11, '#F4F1EA'); c.restore(); }
   }
+  // meblościanka z telewizorem, kryształami i książkami
+  fillRR(c, 30, 300, 500, 760, 8, '#4A3423'); c.fillStyle = '#3B2919'; c.fillRect(30, 600, 500, 10); c.fillRect(270, 300, 10, 760);
+  fillRR(c, 50, 320, 210, 270, 4, 'rgba(160,190,210,.18)'); for (let i = 0; i < 5; i++) { c.fillStyle = 'rgba(220,235,245,.55)'; c.beginPath(); c.moveTo(70 + i * 38, 560); c.lineTo(84 + i * 38, 560); c.lineTo(92 + i * 38, 500); c.lineTo(62 + i * 38, 500); c.fill(); }
+  fillRR(c, 290, 330, 220, 160, 8, '#1A1C21'); { const tvg = c.createLinearGradient(0, 345, 0, 475); tvg.addColorStop(0, '#5C7DB5'); tvg.addColorStop(1, '#2A3A5A'); fillRR(c, 302, 342, 196, 136, 4, tvg); } fillRR(c, 380, 490, 40, 14, 3, '#2A2D36');
+  for (let i = 0; i < 8; i++) fillRR(c, 300 + i * 26, 520 + hash(i + 3) * 20, 20, 70 - hash(i + 3) * 20, 2, ['#8E2B2B', '#2E5A3A', '#C9A15A', '#3E4E7A', '#E8E4DA', '#6B3A5A', '#8A6A3A', '#2A2D36'][i]);
+  fillRR(c, 50, 630, 460, 400, 4, '#5A4029'); c.strokeStyle = '#3B2919'; c.lineWidth = 4; c.strokeRect(60, 640, 210, 380); c.strokeRect(290, 640, 210, 380); circ(c, 250, 830, 7, '#C9A15A'); circ(c, 310, 830, 7, '#C9A15A');
+  // dywan we wzór
+  fillRR(c, 40, 1470, 1000, 330, 14, '#7A2F2F'); c.strokeStyle = '#C9A15A'; c.lineWidth = 6; rr(c, 70, 1495, 940, 280, 10); c.stroke();
+  for (let i = 0; i < 5; i++) { c.save(); c.translate(180 + i * 180, 1635); c.rotate(Math.PI / 4); c.strokeStyle = '#E3C27A'; c.lineWidth = 5; c.strokeRect(-36, -36, 72, 72); c.restore(); }
+  // lampa stojąca
+  c.fillStyle = '#2A2D36'; c.fillRect(1018, 760, 8, 660); ell(c, 1022, 1420, 40, 10, '#2A2D36'); c.beginPath(); c.moveTo(980, 760); c.lineTo(1064, 760); c.lineTo(1050, 690); c.lineTo(994, 690); c.fillStyle = '#E9D9A8'; c.fill();
   // fotel i lampka
   fillRR(c, 80, 1080, 400, 360, 60, '#5A2E2A'); fillRR(c, 60, 1180, 80, 260, 30, '#4A2522'); fillRR(c, 420, 1180, 80, 260, 30, '#4A2522');
 }
@@ -132,12 +143,23 @@ scene({
 scene({
   name: 'run', start: 46, end: 54,
   draw(c, lt) {
-    hallBg(c, lt, { gap: 150, nochain: true });
-    const k = mv(lt, 0.4, 2.2, 1100, 500), o = mv(lt, 0.8, 2.6, 1180, 540);
-    person(c, 'kuba', k, 1500, 2.1, { t: lt, walk: lt > .4 && lt < 2.2 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.0, 2.4) });
-    person(c, 'ola', o, 1500, 2.1, { t: lt, phone: 2, aR: .9, walk: lt > .8 && lt < 2.6 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.4, 2.8) });
-    night(c, .6, [{ x: 560, y: 1000, r: 600, a: .8 }]);
-    if (lt > 3.2) label(c, 'DRZWI ZOSTAJĄ OTWARTE', 540, 300, 'red', 44, lt - 3.2, 9);
+    if (lt < 2.6) { // z przedpokoju do drzwi
+      hallBg(c, lt, { gap: 150, nochain: true });
+      const k = mv(lt, 0.3, 1.9, 1100, 500), o = mv(lt, 0.6, 2.3, 1180, 540);
+      person(c, 'kuba', k, 1500, 2.1, { t: lt, walk: lt > .3 && lt < 1.9 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 1.8, 2.1) });
+      person(c, 'ola', o, 1500, 2.1, { t: lt, phone: 2, aR: .9, walk: lt > .6 && lt < 2.3 ? lt * 14 : null, look: -1, alpha: 1 - prog(lt, 2.2, 2.5) });
+      night(c, .6, [{ x: 560, y: 1000, r: 600, a: .8 }]);
+      return;
+    }
+    // widok z klatki: wybiegają z 94 i biegną do schodów, drzwi zostają otwarte
+    const l = lt - 2.6;
+    corridorBg(c, lt, { open: true, num: '94', num2: '93', floor: '9' });
+    const k = mv(l, 0, 1.6, 520, -180), o = mv(l, 0.3, 2.0, 560, -160);
+    person(c, 'kuba', k, 1560, 2.0, { t: lt, walk: l < 1.6 ? l * 16 : null, look: -1, alpha: 1 - prog(l, 1.3, 1.6) });
+    person(c, 'ola', o, 1560, 2.0, { t: lt, phone: 2, aR: .9, walk: l > .3 && l < 2.0 ? l * 16 : null, look: -1, alpha: 1 - prog(l, 1.7, 2.0) });
+    night(c, .55, [{ x: 520, y: 1000, r: 520, a: .9, tint: 'rgba(255,220,160,.08)' }, { x: 540, y: 250, r: 600, a: .7 }]);
+    if (l > .8) label(c, 'SCHODAMI NA 2. PIĘTRO', 540, 430, 'dark', 40, l - .8, 9);
+    if (l > 1.4) label(c, 'DRZWI 94 ZOSTAJĄ OTWARTE', 540, 300, 'red', 44, l - 1.4, 9);
   },
   post(c, lt) { if (lt > 4.6) card(c, 70, 1380, 860, 'BŁĄD 2', 'wybiegli w nocy na klatkę\ni nie zamknęli mieszkania', lt - 4.6, '#F39C12', 42); },
 });
@@ -174,10 +196,16 @@ scene({
   name: 'back', start: 66, end: 76,
   labels: [[1.0, 6, 'DRZWI 94: OTWARTE', 540, 300, 'red', 44]],
   draw(c, lt) {
-    if (lt < 4.6) {
+    if (lt < 2.4) { // widok z klatki: wracają na 9. piętro, drzwi 94 otwarte
+      corridorBg(c, lt, { open: true, num: '94', num2: '93', floor: '9' });
+      person(c, 'ola', mv(lt, 0.1, 1.4, -160, 760), 1560, 2.0, { t: lt, phone: 1, aR: .9, walk: lt < 1.4 ? lt * 12 : null, look: 1, wide: lt > 1.2, mouth: lt > 1.2 ? 'o' : null });
+      person(c, 'kuba', mv(lt, 0.3, 1.6, -200, 930), 1560, 2.0, { t: lt, walk: lt > .3 && lt < 1.6 ? lt * 12 : null, look: -1, wide: lt > 1.4, mouth: lt > 1.4 ? 'o' : null });
+      night(c, .55, [{ x: 520, y: 1000, r: 520, a: .9, tint: 'rgba(255,220,160,.08)' }, { x: 540, y: 250, r: 600, a: .7 }]);
+    } else if (lt < 4.6) { // wchodzą do środka
+      const l = lt - 2.4;
       hallBg(c, lt, { gap: 150, nochain: true });
-      person(c, 'ola', mv(lt, 0.2, 2.0, 520, 760), 1500, 2.1, { t: lt, phone: 1, aR: .9, walk: lt < 2 ? lt * 6 : null, look: 1, wide: true });
-      person(c, 'kuba', mv(lt, 0.6, 2.4, 420, 980), 1500, 2.1, { t: lt, walk: lt > .6 && lt < 2.4 ? lt * 6 : null, look: 1 });
+      person(c, 'ola', mv(l, 0.1, 1.4, 520, 760), 1500, 2.1, { t: lt, phone: 1, aR: .9, walk: l < 1.4 ? l * 6 : null, look: 1, wide: true });
+      person(c, 'kuba', mv(l, 0.4, 1.8, 420, 980), 1500, 2.1, { t: lt, walk: l > .4 && l < 1.8 ? l * 6 : null, look: 1 });
       night(c, .7, [{ x: 760, y: 1000, r: 420, a: .9 }]);
     } else {
       ROOM(c);

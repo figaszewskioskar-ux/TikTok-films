@@ -40,7 +40,17 @@ function wardrobe(c, lt, o = {}) {
     if (o.eyes) { c.save(); c.globalAlpha = o.eyes; c.shadowColor = '#fff'; c.shadowBlur = 24; ell(c, 518, 670, 11, 11, '#FF5A4E'); ell(c, 518 + Math.max(14, gap * .6), 670, 11, 11, '#F4F1EA'); c.restore(); }
   }
 }
-function roomBg(c) { c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H); c.fillStyle = '#1F1A22'; c.fillRect(0, 1420, W, 500); }
+function roomBg(c) { c.fillStyle = '#262B3D'; c.fillRect(0, 0, W, H); c.fillStyle = '#1F1A22'; c.fillRect(0, 1420, W, 500);
+  for (let i = 0; i < 18; i++) { c.fillStyle = 'rgba(255,255,255,.025)'; c.fillRect(i * 64, 0, 26, 1420); }
+  fillRR(c, 0, 1396, W, 28, 0, '#171319');
+  // plakat i półka nad łóżkiem po prawej
+  fillRR(c, 870, 360, 170, 230, 6, '#E9B52C'); fillRR(c, 880, 370, 150, 210, 4, '#7B4FC9'); circ(c, 955, 455, 38, '#F4C29C');
+  fillRR(c, 860, 660, 200, 12, 3, '#5A4632'); for (let i = 0; i < 5; i++) fillRR(c, 872 + i * 34, 580 + hash(i) * 26, 26, 80 - hash(i) * 26, 3, ['#D7263D', '#1BB0A3', '#F5C542', '#5C7DB5', '#E8E4DA'][i]);
+  // łóżko po prawej (za postaciami)
+  fillRR(c, 840, 1180, 260, 250, 24, '#3D4A73'); fillRR(c, 850, 1150, 200, 70, 30, '#D9DCE6');
+  // dywan
+  ell(c, 520, 1640, 420, 90, '#3B2F4A'); ell(c, 520, 1640, 360, 70, '#4A3C5C');
+}
 function laptop(c, x, y, fn) {
   fillRR(c, x, y, 560, 360, 18, '#1B1D22'); c.save(); rr(c, x + 18, y + 18, 524, 300, 8); c.clip(); fn(c, x + 18, y + 18, 524, 300); c.restore();
   fillRR(c, x - 60, y + 360, 680, 30, 12, '#2B2E35'); circ(c, x + 280, y + 9, 4, '#111');

@@ -13,7 +13,7 @@ SCENES = [('hook', 0, 6), ('recap', 6, 11), ('zdz', 11, 20), ('knock', 20, 28), 
 SEG = [
     ['hook', 0.1, 'Mieszkasz nisko? Na noc zamknij balkon.'],
     ['hook', 2.6, 'Drugie piętro to nie dziewiąte. Na balkon da się wejść.'],
-    ['recap', 0.2, 'Część szósta. Na ścianie w pustym mieszkaniu wisiało zdjęcie drzwi pana Zdziśka. Podpis: sam.'],
+    ['recap', 0.2, 'Poprzednio: na ścianie w pustym mieszkaniu wisiało zdjęcie drzwi pana Zdziśka. Podpis: sam.'],
     ['zdz', 0.3, 'Pan Zdzisiek wie o zdjęciu. Nie śpi. Siedzi w fotelu i czeka.'],
     ['zdz', 3.2, 'Tylko balkon uchylił. Bo duszno.'],
     ['zdz', 7.2, 'Błąd pierwszy.'],
@@ -37,6 +37,10 @@ SEG = [
     ['back', 4.6, 'W pokoju Oli, na szybie, od środka… karteczka.'],
     ['end', 0.4, 'A szafa… jest uchylona.'],
     ['end', 5.4, '[whispers] Cześć, Ola.', 'kaptur'],
+    ['knock', 5.6, 'Ktoś stoi pod drzwiami jeszcze długo. Potem odchodzi. Za wolno.'],
+    ['run', 4.6, 'Oboje zbiegają po schodach. Siedem pięter w ciemności.'],
+    ['police', 6.2, 'Na balkonie nikogo. Tylko ślady butów na barierce.'],
+    ['back', 6.2, 'Ola nie zamknęła okna. Nikt nie zamknął okna.'],
 ]
 VFILTER = {'zdzisiek': 'highpass=f=120,lowpass=f=6000,aecho=0.6:0.4:20:0.3', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
 VGAIN = {'kaptur': 1.5}
@@ -53,4 +57,5 @@ REALMAP = {'knock': [('knock', -4)], 'tap': [('tap', -6)], 'doorlock': [('doorlo
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
 EXTRA = [(34.0, 'breath', -15), (78.5, 'breath', -13)]
 
-TARGET = None   # gotowy film: zostaje w długości, w jakiej powstał
+# poprawiony na prośbę użytkownika: ok. 2 minut (TARGET domyślnie 118 s)
+MAXK = 1.5

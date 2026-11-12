@@ -14,7 +14,7 @@ SCENES = [('hook', 0, 6), ('recap', 6, 11), ('check', 11, 20), ('leave', 20, 28)
           ('pass', 48, 58), ('explain', 58, 66), ('end', 66, 78)]
 SEG = [
     ['hook', 0.1, 'Wracasz, a w domu coś jest nie tak? Nie sprawdzaj. Wyjdź.'],
-    ['recap', 0.2, 'Część siódma. Karteczka na szybie od środka. I uchylona szafa.'],
+    ['recap', 0.2, 'Poprzednio: karteczka na szybie od środka. I uchylona szafa.'],
     ['check', 0.4, 'Kuba łapie lampkę. Idzie sprawdzić.'],
     ['check', 4.4, 'Błąd pierwszy.'],
     ['check', 5.2, '[scared] Kuba, nie!', 'ola'],
@@ -33,6 +33,12 @@ SEG = [
     ['end', 0.3, 'W nocy Kuba zmienia wszystkie hasła.'],
     ['end', 4.4, 'Kamerka w laptopie zapala się sama.'],
     ['end', 7.6, '[whispers] Za późno, Kuba.', 'kaptur'],
+    ['check', 7.4, 'Szafa skrzypi. Coś w środku świeci.'],
+    ['leave', 5.6, 'Na klatce Kuba się trzęsie. Ola nie puszcza jego ręki.'],
+    ['open', 7.4, 'Ktoś ją tu zamontował. I ktoś ją podłączył.'],
+    ['account', 8.0, 'Kuba przegląda historię logowań. Dziesiątki nocy. Zawsze o tej samej godzinie.'],
+    ['pass', 6.6, 'Poczta. Chmura ze zdjęciami. Kalendarz rodziny. Wszędzie to samo hasło.'],
+    ['explain', 6.0, 'Policjant zabiera kamerę jako dowód. Ale konto Kuby wciąż jest otwarte.'],
 ]
 VFILTER = {'ola': 'highpass=f=110', 'kuba': 'highpass=f=100', 'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
 VGAIN = {'kaptur': 1.5}
@@ -46,4 +52,5 @@ REALMAP = {'creak': [('creak', -10)], 'slam': [('slam', -4)], 'notif': [('notif'
            'whoosh': [('whoosh', -18)], 'error': [('boom', -7)], 'hit': [('boom', -1)]}
 EXTRA = [(12.0, 'breath', -16)]
 
-TARGET = None   # gotowy film: zostaje w długości, w jakiej powstał
+# poprawiony na prośbę użytkownika: ok. 2 minut (TARGET domyślnie 118 s)
+MAXK = 1.5
