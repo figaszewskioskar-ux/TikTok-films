@@ -192,7 +192,7 @@ function person(c, kind, x, y, s, o = {}) {
     fillRR(c, -78, -172, 156, 104, 6, '#B07A45');
     c.fillStyle = '#D9B57E'; c.fillRect(-78, -150, 156, 12);
     c.fillStyle = '#9A6838'; c.fillRect(-78, -172, 156, 6);
-    txt(c, '71', 34, -105, 38, '#1E1E1E', 900);
+    txt(c, o.boxNum || '71', 34, -105, 38, '#1E1E1E', 900);
     circ(c, -78, -110, 13, k.skin); circ(c, 78, -110, 13, k.skin);
   }
   if (o.bag) { ell(c, hr[0] + 6, hr[1] + 40, 34, 42, '#121317'); c.fillStyle = '#121317'; c.fillRect(hr[0] - 4, hr[1], 12, 14); }
@@ -599,7 +599,7 @@ function feedEntrance(t, opt = {}) {
   return (c, sx, sy, sw, sh) => {
     c.save(); c.translate(sx, sy); const sc = sw / 600; c.scale(sc, sc); c.translate(-240, -(opt.y0 ?? 1000));
     entranceBg(c, t, { doorOpen: opt.doorOpen || 0 });
-    if (opt.courier !== false) person(c, 'kurier', opt.cx ?? 540, 1490, 1.55, { box: opt.box ?? true, t, talk: opt.talk, look: opt.look ?? 0, alpha: opt.calpha ?? 1 });
+    if (opt.courier !== false) person(c, 'kurier', opt.cx ?? 540, 1490, 1.55, { box: opt.box ?? true, boxNum: opt.boxNum, t, talk: opt.talk, look: opt.look ?? 0, alpha: opt.calpha ?? 1 });
     snow(c, t, 50, .7);
     c.restore();
     c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = '#9FD8C4'; c.fillRect(sx, sy, sw, sh); c.restore();

@@ -112,9 +112,28 @@
     </div>
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odc. 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>TikTok · {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.webp' | asset_url }}" data-obrot="{{ 'blok94-kaptur-obrot.webp' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
+  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.webp' | asset_url }}" data-obrot="{{ 'blok94-kaptur-obrot.webp' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span><button type="button" class="okno o104" id="b94-104" aria-label="Okno mieszkania 104. Kliknij, gdy zapali się światło." hidden></button><span class="puk" id="b94-puk2" aria-hidden="true"></span></figure>
 </div></section>
 
+<section class="fresh" id="nowe"><div class="wrap">
+  <span class="eyebrow">Nowe na kanale</span><h2 style="margin-top:12px">Właśnie wyszły</h2>
+  <div class="fr">
+    <a class="fi" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-czesc6.jpg' | asset_url }}" alt="Okładka: BLOK 94, odcinek 7, Zamknij balkon na noc" loading="lazy" width="720" height="900"><span class="fb">NOWY</span><span class="ft"><small>BLOK 94 · odc. 7</small><b>Zamknij balkon na noc!</b></span></a>
+    <a class="fi" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-n94-1.jpg' | asset_url }}" alt="Okładka: NOCNY N94, odcinek 1, Nie siadaj z tyłu" loading="lazy" width="720" height="900"><span class="fb red">NOWA SERIA</span><span class="ft"><small>NOCNY N94 · odc. 1</small><b>Nie siadaj z tyłu!</b></span></a>
+  </div>
+  <p class="lead" style="margin:14px 0 0">Następny odcinek: <b style="color:var(--ink)">{{ section.settings.premiere_label }}</b>. A na banerze nowy easter egg: wypatruj światła w oknie 104.</p>
+</div></section>
+<style>
+#b94 .fresh .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+#b94 .fresh .fi{position:relative;display:block;border-radius:16px;overflow:hidden;border:1px solid var(--line,rgba(243,239,230,.09));text-decoration:none;color:#f3efe6;transition:transform .25s}
+#b94 .fresh .fi:hover{transform:translateY(-3px)}
+#b94 .fresh .fi img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+#b94 .fresh .fb{position:absolute;top:10px;left:10px;background:#f2b134;color:#14161b;font:900 11px/1 var(--body,sans-serif);letter-spacing:.12em;padding:6px 8px;border-radius:8px}
+#b94 .fresh .fb.red{background:#d7263d;color:#fff}
+#b94 .fresh .ft{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 12px;background:linear-gradient(transparent,rgba(5,6,10,.92))}
+#b94 .fresh .ft small{display:block;font:700 11px/1.2 var(--body,sans-serif);letter-spacing:.14em;color:#f2b134;text-transform:uppercase}
+#b94 .fresh .ft b{display:block;font:800 17px/1.15 var(--body,sans-serif);margin-top:4px}
+</style>
 <section class="parts" id="seria"><div class="wrap">
   <div class="head"><div><span class="eyebrow">Seria</span><h2 style="margin-top:12px">Oglądaj od początku</h2></div><p class="lead" style="margin:0">Historia Oli zaczyna się w odcinku 2 i każdy kończy się cliffhangerem. Odc. 1 z kurierem to osobna historia.</p><p class="swipe" aria-hidden="true">Przesuń, żeby zobaczyć kolejne →</p></div>
   <div class="grid4">
@@ -123,6 +142,7 @@
     {%- if section.settings.parts >= 3 -%}<article class="part"><img src="{{ 'blok94-czesc3.jpg' | asset_url }}" alt="Okładka odcinka 4: Nie wychodź do licznika" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 4</span><h3>Nie wychodź do licznika!</h3><p>O północy prąd gaśnie tylko w mieszkaniu 94. Kuba idzie włączyć korki.</p><div class="rule">Prąd zgasł tylko u ciebie? Nie wychodź na korytarz.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
     {%- if section.settings.parts >= 4 -%}<article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka odcinka 5: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 5</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
     {%- if section.settings.parts >= 5 -%}<article class="part"><img src="{{ 'blok94-czesc5.jpg' | asset_url }}" alt="Okładka odcinka 6: Nie mów, kiedy jesteś sam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 6</span><h3>Nie mów, kiedy jesteś sam!</h3><p>„Nowy sąsiad” z 104 pożycza śrubokręt i pyta, kiedy rodzice są w pracy.</p><div class="rule">Nowy sąsiad? Bądź miły przez drzwi, ale nie mów, kiedy jesteś sam.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
+    {%- if section.settings.parts >= 6 -%}<article class="part"><img src="{{ 'blok94-czesc6.jpg' | asset_url }}" alt="Okładka odcinka 7: Zamknij balkon na noc" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 7</span><span class="hot">Nowy</span><h3>Zamknij balkon na noc!</h3><p>Ktoś pukał do pana Zdziśka. Ale to nie jego szukał.</p><div class="rule">Sąsiad w niebezpieczeństwie? Dzwoń na 112, nie wybiegaj w nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
   </div>
 </div></section>
 
@@ -210,10 +230,11 @@
     <h3 id="b94-okno-t">Zapukałeś w okno 94.</h3>
     <p>Ktoś odpukał. To zapowiedź, której jeszcze nikt nie widział. Pochwal się w komentarzu hasłem poniżej.</p>
     <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · ODC. {{ section.settings.parts | plus: 2 }}</span>
+      <span class="akta-tag">● ZAPOWIEDŹ · ODC. 7</span>
       <video id="b94-okno-v" controls playsinline preload="none" poster="{{ 'blok94-egg-a.jpg' | asset_url }}" src="{{ 'blok94-egg-a.mp4' | asset_url }}"></video>
     </div>
     <p class="akta-code">Hasło do komentarza: <b>OKNO 94 ODPUKAŁO</b></p>
+    <p style="font-size:14px">Psst… jest nowy easter egg. Patrz na okno 104, gdy zapali się w nim światło.</p>
     <button type="button" class="btn red" id="b94-okno-x" style="width:100%">Zamknij okno</button>
   </div>
 </dialog>
@@ -301,6 +322,7 @@
    ctx.drawImage(img,fr*FW,row*FH,FW,FH,-w/2,-h*760/780,w,h);
    if(front&&img===KO&&(fr===23&&row===0)){ctx.globalCompositeOperation='lighter';var pu=.6+.4*Math.sin(t*7);[204,276].forEach(function(ex){var gx=-w/2+ex*k,gy=-h*760/780+198*k,g=ctx.createRadialGradient(gx,gy,0,gx,gy,26*k);g.addColorStop(0,'rgba(255,250,220,'+(.9*pu)+')');g.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=g;ctx.fillRect(gx-26*k,gy-26*k,52*k,52*k);});}
    ctx.restore();}
+  window.B94_104=(u>18.3&&u<22.3);
   if(u>18&&u<22.5){var on=u<18.4?(u-18)/.4:(u>22?1-(u-22)/.5:1);on*=.85+.15*Math.sin(u*23);var wx=X(665),wy=Y(20),ww=72*M.s*dpr,wh=55*M.s*dpr;
    ctx.globalCompositeOperation='lighter';var rg=ctx.createRadialGradient(wx+ww/2,wy+wh/2,2,wx+ww/2,wy+wh/2,ww*1.6);rg.addColorStop(0,'rgba(220,70,50,'+(.45*on)+')');rg.addColorStop(1,'rgba(220,70,50,0)');ctx.fillStyle=rg;ctx.fillRect(wx-ww*1.2,wy-wh*1.2,ww*3.4,wh*3.4);
    ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(200,70,50,'+(.7*on)+')';ctx.fillRect(wx,wy,ww,wh);
@@ -346,3 +368,30 @@
  {"type":"text","id":"stats_date","label":"Data statystyk","default":"7.11.2026"}
 ],"presets":[{"name":"BLOK 94 · strona główna"}]}
 {% endschema %}
+
+<dialog id="b94-104-d" class="b94-akta" aria-labelledby="b94-104-t">
+  <div class="akta-in">
+    <span class="akta-stamp">MIESZKANIE 104</span>
+    <h3 id="b94-104-t">Zobaczyłeś go w oknie.</h3>
+    <p>On też cię widział. Oto zapowiedź odcinka 8, zanim pojawi się na TikToku. Napisz w komentarzu hasło poniżej.</p>
+    <div class="akta-vid">
+      <span class="akta-tag">● ZAPOWIEDŹ · ODC. 8</span>
+      <video id="b94-104-v" controls playsinline preload="none" poster="{{ 'blok94-egg-104.jpg' | asset_url }}" src="{{ 'blok94-egg-104.mp4' | asset_url }}"></video>
+    </div>
+    <p class="akta-code">Hasło do komentarza: <b>W OKNIE 104 KTOŚ STAŁ</b></p>
+    <button type="button" class="btn red" id="b94-104-x" style="width:100%">Zasłoń okno</button>
+  </div>
+</dialog>
+<style>#b94 .hero figure .okno.o104:before{animation:none}#b94 .hero figure .okno.o104.lit:before{box-shadow:0 0 18px 6px rgba(230,80,60,.6)}</style>
+<script>
+(function(){var b=document.getElementById('b94-104'),d=document.getElementById('b94-104-d'),pk=document.getElementById('b94-puk2');if(!b||!d)return;var img=b.parentNode.querySelector('img'),ph;
+ function place(){if(!img.naturalWidth)return;var w=img.clientWidth,h=img.clientHeight,nw=img.naturalWidth,nh=img.naturalHeight,cs=getComputedStyle(img),fit=cs.objectFit,
+  pos=(cs.objectPosition||'50% 50%').split(' ').map(function(v){return parseFloat(v)/100;}),s=fit==='cover'?Math.max(w/nw,h/nh):w/nw,ox=(w-nw*s)*(fit==='cover'?pos[0]:0),oy=(h-nh*s)*(fit==='cover'?pos[1]:0);
+  b.style.left=(img.offsetLeft+ox+701/1080*nw*s)+'px';b.style.top=(img.offsetTop+oy+47/1350*nh*s)+'px';b.hidden=false;pk.style.left=b.style.left;pk.style.top=b.style.top;}
+ if(img.complete)place();img.addEventListener('load',place);addEventListener('resize',place);if('ResizeObserver' in window)new ResizeObserver(function(){place();}).observe(img);
+ setInterval(function(){b.classList.toggle('lit',!!window.B94_104);},200);
+ function say(t){pk.textContent=t;pk.classList.add('on');clearTimeout(ph);ph=setTimeout(function(){pk.classList.remove('on');},1100);}
+ b.addEventListener('click',function(){if(window.B94_104){try{d.showModal();}catch(e){d.setAttribute('open','');}}else say('Ciemno… czekaj na światło');});
+ var v=document.getElementById('b94-104-v');document.getElementById('b94-104-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
+ d.addEventListener('close',function(){if(v)v.pause();});d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
+</script>
