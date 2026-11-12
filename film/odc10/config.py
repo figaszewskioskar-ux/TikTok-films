@@ -1,4 +1,4 @@
-"""BLOK 94 · „Kto tam?” ODC. 10 — „Nie idź sprawdzać!”. Wersja do akceptacji: bez lektora i głosów (PREVIEW)."""
+"""BLOK 94 · „Kto tam?” ODC. 10 — „Nie idź sprawdzać!”. Lektor B + głosy postaci (zaakceptowane)."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'   # lektor: Victor
 MODEL = 'eleven_multilingual_v2'
 SETTINGS = {'stability': 0.32, 'similarity_boost': 0.85, 'style': 0.55, 'use_speaker_boost': True, 'speed': 0.9}   # lektor B
@@ -9,12 +9,48 @@ VOICES = {
     'zdzisiek':  ('xsSg7GkDPDhaGZpbKOLn', 'eleven_v3', V3),
     'kaptur':    ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
     'policjant': ('JWUOwsYG4XgR9Od3eeon', 'eleven_v3', V3),
+    'dyspozytor': ('JWUOwsYG4XgR9Od3eeon', 'eleven_v3', V3),
 }
-PREVIEW_NO_VOICE = True   # po akceptacji: usuń, dopisz SEG i usuń odc10/timeline.js
 SCENES = [('hook', 0, 6), ('recap', 6, 11), ('door', 11, 25), ('hall', 25, 40), ('kitchen', 40, 54), ('call', 54, 69),
           ('stairs', 69, 86), ('police', 86, 100), ('end', 100, 120)]
-SEG = []
-VFILTER = {'ola': 'highpass=f=110', 'kuba': 'highpass=f=100', 'zdzisiek': 'highpass=f=90', 'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
+SEG = [
+    ['hook', 0.2, 'Zdjęcie zrobione sekundę temu. Z progu jej pokoju.'],
+    ['recap', 0.2, 'Poprzednio: ktoś wysłał Oli zdjęcie jej łóżka. Przez Bluetooth. Z bliska.'],
+    ['door', 0.2, 'Drzwi są uchylone. W szparze tylko ciemność.'],
+    ['door', 3.0, '[whispers] Kuba…? To ty?', 'ola'],
+    ['door', 6.4, 'Cisza. A potem… skrzypnięcie w przedpokoju.'],
+    ['door', 10.2, 'Błąd pierwszy.'],
+    ['hall', 0.2, 'Drzwi wejściowe są otwarte. Łańcuch wisi luźno.'],
+    ['hall', 4.2, '[sleepy] Ola? Czemu nie śpisz?', 'kuba'],
+    ['hall', 6.8, '[whispers] Drzwi… były otwarte.', 'ola'],
+    ['hall', 9.4, '[scared] Zamykałem je! Na klucz, przysięgam!', 'kuba'],
+    ['kitchen', 0.2, 'W kuchni świeci otwarta lodówka. Na stole coś leży.'],
+    ['kitchen', 4.0, '[shocked] To moje klucze… te, co zgubiłem.', 'kuba'],
+    ['kitchen', 6.6, '[whispers] Czyli on ma swoje.', 'ola'],
+    ['kitchen', 8.8, '[angry] Dorwę go!', 'kuba'],
+    ['kitchen', 10.4, '[shouting] Kuba, nie!', 'ola'],
+    ['kitchen', 11.0, 'Błąd drugi.'],
+    ['call', 0.2, 'Ola zamyka oba zamki. I dzwoni.'],
+    ['call', 2.6, 'Numer alarmowy sto dwanaście. Co się stało?', 'dyspozytor'],
+    ['call', 5.4, '[scared] Ktoś był w naszym mieszkaniu. Brat pobiegł za nim na klatkę.', 'ola'],
+    ['call', 9.6, 'Zamknij drzwi i nie wychodź. Patrol już jedzie. Zostań ze mną na linii.', 'dyspozytor'],
+    ['stairs', 0.2, 'Kuba biegnie po schodach. W górę.'],
+    ['stairs', 3.0, 'Światło na klatce gaśnie.'],
+    ['stairs', 5.0, '[shouting] Halo?! Wiem, że tu jesteś!', 'kuba'],
+    ['stairs', 8.0, 'Dziesiąte piętro. Taśma na drzwiach sto cztery jest przecięta.'],
+    ['stairs', 12.2, 'Ktoś łapie go za ramię.'],
+    ['stairs', 13.0, 'Chłopcze! Do domu. Ale już.', 'zdzisiek'],
+    ['stairs', 15.2, '[scared] On tam jest!', 'kuba'],
+    ['police', 0.2, 'Patrol. Policjanci wchodzą do sto cztery.'],
+    ['police', 4.4, 'Pusto. Nikogo tu nie ma.', 'policjant'],
+    ['police', 9.4, 'Dobrze, że zadzwoniłaś i zostałaś w środku.', 'policjant'],
+    ['end', 0.2, 'Za dwadzieścia czwarta. Kuba nie odchodzi od siostry.'],
+    ['end', 4.2, 'Bluetooth. Ktoś udostępnia nagranie.'],
+    ['end', 6.4, 'Z wnętrza szafy. W sto cztery. Kiedy policja tam była.'],
+    ['end', 9.4, '[whispers] To… z szafy w sto cztery.', 'kuba'],
+    ['end', 14.6, '[whispers] Tu też jest szafa…', 'kaptur'],
+]
+VFILTER = {'dyspozytor': 'highpass=f=350,lowpass=f=3200,acompressor', 'ola': 'highpass=f=110', 'kuba': 'highpass=f=100', 'zdzisiek': 'highpass=f=90', 'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
 VGAIN = {'kaptur': 1.6}
 MAXK = 1.5
 SKIP = ['tik']

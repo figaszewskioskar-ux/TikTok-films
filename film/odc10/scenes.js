@@ -225,9 +225,9 @@ scene({
 scene({
   name: 'call', start: 54, end: 69,
   bubbles: [
-    sayPhone(2.6, 5.2, 'Numer alarmowy 112.\nCo się stało?', 'policjant', 700, 1020, 120, 70),
+    sayPhone(2.6, 5.2, 'Numer alarmowy 112.\nCo się stało?', 'dyspozytor', 700, 1020, 120, 70),
     say(5.4, 9.4, 'Ktoś był w naszym mieszkaniu.\nBrat pobiegł za nim na klatkę.', 'ola', 640, 1620, 1.95, -40),
-    sayPhone(9.6, 14.6, 'Zamknij drzwi i nie wychodź.\nPatrol już jedzie.\nZostań ze mną na linii.', 'policjant', 700, 1020, 60, 70),
+    sayPhone(9.6, 14.6, 'Zamknij drzwi i nie wychodź.\nPatrol już jedzie.\nZostań ze mną na linii.', 'dyspozytor', 700, 1020, 60, 70),
   ],
   draw(c, lt, sc) {
     const l1 = clamp((lt - .6) / .4), l2 = clamp((lt - 1.6) / .4);
@@ -236,7 +236,7 @@ scene({
     if (lt > 2.2) { c.strokeStyle = '#D6DADF'; c.lineWidth = 5; for (let i = 0; i < 7; i++) { c.beginPath(); c.ellipse(lerp(560, 620, i / 6), 897 + Math.sin(i / 6 * Math.PI) * 18, 10, 6, 0, 0, 7); c.stroke(); } }
     person(c, 'ola', 640, 1620, 1.95, { t: lt, look: 1, wide: true, phone: 2, aR: 2.6, talk: talking(sc, 'ola', lt), aL: lt < 2.2 ? 1.5 : .14 });
     // fala dźwięku przy telefonie, gdy mówi dyspozytor
-    if (talking(sc, 'policjant', lt)) for (let k = 1; k <= 3; k++) { c.strokeStyle = `rgba(190,217,255,${.5 - k * .12})`; c.lineWidth = 4; c.beginPath(); c.arc(700, 1020, 20 + k * 18 + (lt * 40) % 18, -.9, .9); c.stroke(); }
+    if (talking(sc, 'dyspozytor', lt)) for (let k = 1; k <= 3; k++) { c.strokeStyle = `rgba(190,217,255,${.5 - k * .12})`; c.lineWidth = 4; c.beginPath(); c.arc(700, 1020, 20 + k * 18 + (lt * 40) % 18, -.9, .9); c.stroke(); }
     night(c, .66, [{ x: 92, y: 620, r: 320, a: .7 }, { x: 680, y: 1060, r: 420, a: .8, tint: 'rgba(190,217,255,.06)' }]);
   },
   post(c, lt) {
