@@ -154,9 +154,6 @@ html body .b94w-e { background: none !important; color: var(--pl-muted) !importa
 html body .b94w h2 { font: 400 56px/.9 var(--pl-display) !important; text-transform: uppercase; margin: 10px 0 10px !important; animation: plNeon 6s infinite; }
 html body .b94w p { color: var(--pl-muted) !important; font-size: 14px !important; line-height: 1.55; }
 html body .b94w .b94w-n { color: var(--pl-fg) !important; font: 600 10px var(--pl-body) !important; letter-spacing: .3em; text-transform: uppercase; margin: 14px 0 10px !important; }
-html body .b94w .b94s-row { grid-template-columns: repeat(3, 1fr) !important; gap: 0 !important; border: 1px solid var(--pl-line); }
-html body .b94w .b94s-a { background: none !important; border: 0 !important; border-right: 1px solid var(--pl-line) !important; border-radius: 0 !important; box-shadow: none !important; color: var(--pl-fg) !important; min-height: 52px; font-size: 12px !important; letter-spacing: .06em; padding: 0 4px !important; }
-html body .b94w .b94s-a:last-child { border-right: 0 !important; }
 html body .b94w-go { gap: 0 !important; margin-top: 12px !important; }
 html body .b94w-b { border-radius: 0 !important; font: 800 13px var(--pl-body) !important; letter-spacing: .14em; text-transform: uppercase; min-height: 56px !important; }
 html body .b94w-g { background: var(--pl-fg) !important; color: #000 !important; }
@@ -251,5 +248,10 @@ html body .b94s-ig svg { animation: plFlash 4.4s ease-out infinite; }
 #b94 .chars .bubble { border-radius: 14px !important; }
 #b94 .payic .pi, #b94 .payic svg { border-radius: 6px; }
 #b94 .goal { border-radius: 0 0 28px 28px !important; }
-html body .b94w, html body .b94w-b, html body .b94w .b94s-row { border-radius: 18px !important; overflow: hidden; }
+html body .b94w, html body .b94w-b { border-radius: 18px !important; overflow: hidden; }
 html body .b94w-x { border-radius: 50% !important; }
+
+/* przyciski TikTok / YouTube / Instagram: oryginalne kolory aplikacji */
+html body .b94w .b94s-row { display: grid !important; grid-template-columns: 1fr !important; gap: 8px !important; }
+html body .b94s-a { border-radius: 14px !important; }
+html body .po-foot .b94s-a, html body .po-foot .b94s-a * { color: #fff !important; opacity: 1 !important; }
