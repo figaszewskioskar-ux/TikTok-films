@@ -20,6 +20,24 @@ window.PROMO = {
     const g = x.createRadialGradient(540, 960, 500, 540, 960, 1250); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.55)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
     return c.toDataURL('image/jpeg', .9).split(',')[1];
   },
+  heroBg() {
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+    x.translate(0, -420); blockBg(x, 2, { night: true });
+    const wx = 110 + 5 * 107.5 + 53.75, wy = 400 + 40 + 89 + 27;
+    x.fillStyle = 'rgba(120,160,230,.35)'; x.beginPath(); x.arc(wx, wy, 40, 0, 7); x.fill();
+    snow(x, 3, 90, .6);
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    const g = x.createLinearGradient(0, 900, 0, 1350); g.addColorStop(0, 'rgba(7,9,16,0)'); g.addColorStop(1, 'rgba(7,9,16,1)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    return c.toDataURL('image/jpeg', .9).split(',')[1];
+  },
+  // klatki Kaptura do animacji na stronie: 0 tyłem, 1 przodem (świecące oczy), 2..9 chód tyłem
+  kapturSheet() {
+    const FW = 480, FH = 720, c = document.createElement('canvas'); c.width = FW * 10; c.height = FH; const x = c.getContext('2d');
+    const fr = [{ t: 1, back: true }, { t: 1, glow: 1 }];
+    for (let k = 0; k < 8; k++) fr.push({ t: 1, back: true, walk: k * Math.PI / 4 });
+    fr.forEach((o, i) => { x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, 'kaptur', i * FW + FW / 2, 700, 2.4, o); x.restore(); });
+    return c.toDataURL('image/png').split(',')[1];
+  },
   hero() {
     const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
     x.translate(0, -420); blockBg(x, 2, { night: true });
