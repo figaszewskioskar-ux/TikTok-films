@@ -28,10 +28,10 @@ SEG = [
     ['ola', 2.4, 'Wyciąga wtyczkę od internetu. I dzwoni do mamy.'],
     ['ola', 5.8, 'Dobrze. Najpierw odłączyć. Potem wezwać dorosłych.'],
     ['police', 0.2, 'Rano przychodzi dzielnicowy.'],
-    ['police', 2.2, 'Nie usuwajcie niczego. To są dowody.', 'policjant'],
+    ['police', 1.0, 'Nie usuwajcie niczego. To są dowody.', 'policjant'],
     ['police', 5.0, 'Ktoś przejął konto? Odłącz urządzenie od internetu. Zmień hasła na innym urządzeniu. Włącz weryfikację dwuetapową. I zgłoś to policji oraz do CERT Polska.'],
     ['stairs', 0.2, 'Mama wynosi laptop do serwisu.'],
-    ['stairs', 1.6, 'Na klatce pan Zdzisiek: w nocy ktoś chodził po dachu.'],
+    ['stairs', 1.2, 'Na klatce pan Zdzisiek.'],
     ['stairs', 6.4, 'Dziesiąte piętro. Mieszkanie sto cztery zaplombowane przez policję.'],
     ['stairs', 9.2, 'A pod drzwiami… pali się światło.'],
     ['notif', 0.2, 'Noc. Internet jest wyłączony. Wszyscy śpią. Telefon Oli się zapala.'],
@@ -40,16 +40,24 @@ SEG = [
     ['end', 0.2, 'Zdjęcie. Łóżko Oli. Z perspektywy drzwi. Zrobione… teraz.'],
     ['end', 5.2, 'Ola nie oddycha. Za jej plecami drzwi pokoju powoli się uchylają.'],
     ['end', 13.4, '[whispers] Dobranoc, Ola.', 'kaptur'],
+    ['turn', 3.6, '[scared] Kuba?! Co się stało?', 'ola'],
+    ['ola', 2.8, '[crying] Mamo, ktoś jest w naszym laptopie. Wróć, proszę.', 'ola'],
+    ['stairs', 1.6, 'W nocy ktoś chodził po dachu. Słyszałem.', 'zdzisiek'],
 ]
-VFILTER = {'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
+VFILTER = {'ola': 'highpass=f=110', 'zdzisiek': 'highpass=f=90', 'policjant': 'highpass=f=90', 'kaptur': 'lowpass=f=3400,aecho=0.6:0.4:30:0.3'}
 VGAIN = {'kaptur': 1.6}
 MAXK = 1.5
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 6, 12, 24, 44, 54, 68, 82, 98, 111, 111.2, 117.99], [-26, -28, -24, -25, -24, -28, -24, -22, -20, -16, -60, -24]),
-    loops={'tension': ([0, .5, 12, 24, 34, 44, 54, 68, 82, 98, 106, 111.3, 111.45, 113, 117.99], [-60, -20, -17, -16, -15, -17, -22, -16, -14, -12, -9, -6, -60, -18, -40]),
-           'drone': ([0, 1, 12, 24, 34, 44, 54, 68, 82, 98, 104, 111.3, 111.45, 113, 117.99], [-60, -28, -24, -22, -20, -22, -30, -22, -20, -18, -14, -9, -40, -22, -60]),
-           'roomtone': ([0, 117.99], [-34, -34])},
+    bed=([0, 117.99], [-34, -34]),
+    # muzyka grozy (cache/sfx/groza.wav): narasta przy akcji, opada po niej, cisza po uderzeniu
+    loops={'groza': ([0, .3, 5.5, 6.5, 12, 15.5, 17.6, 20, 24, 28, 30.2, 33, 34, 37, 39.5, 43.5, 44.5, 50, 54, 60, 68, 72, 76.5, 80.5, 82.5,
+                      86, 92, 96.5, 98, 103, 107.3, 111.3, 111.45, 112.5, 117.99],
+                     [-60, -12, -12, -22, -22, -14, -7, -16, -22, -18, -9, -18, -18, -12, -9, -7, -18, -26, -30, -30, -28, -20, -14, -9, -24,
+                      -22, -16, -9, -14, -12, -8, -4, -70, -20, -30]),
+           'tension': ([0, 117.99], [-30, -30]),
+           'drone': ([0, 98, 111.3, 111.45, 117.99], [-30, -24, -14, -60, -60]),
+           'roomtone': ([0, 117.99], [-40, -40])},
     heartbeat=([0, 12, 14, 24, 34, 38, 44, 82, 86, 98, 111.3, 111.4, 117.99], [-90, -90, -18, -16, -90, -16, -90, -90, -16, -14, -6, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -18)], 'creak': [('creak', -10)], 'hit': [('boom', -3)],
