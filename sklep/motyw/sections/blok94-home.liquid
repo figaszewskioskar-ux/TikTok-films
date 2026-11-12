@@ -112,7 +112,7 @@
     </div>
     <div class="stats" aria-label="Kanał @protokolocaleni na TikToku"><div><b>{{ section.settings.followers }}</b>obserwujących</div><div><b>{{ section.settings.likes }}</b>polubień</div><div><b>{{ section.settings.views }}</b>wyświetleń odc. 2</div><div><b>{{ section.settings.videos }}</b>filmów</div><small>TikTok · {{ section.settings.stats_date }}</small></div>
   </div>
-  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.png' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
+  <figure><img src="{{ 'blok94-hero-bg.jpg' | asset_url }}" alt="Blok nocą, w oknie na 9. piętrze pali się światło. Pod blokiem stoi postać w kapturze, odwraca się i idzie do klatki." width="1080" height="1350"><figcaption>Kasztanowa 12 · 9. piętro · ktoś tu nie śpi…</figcaption><canvas class="fx" id="b94-fx" aria-hidden="true" data-kaptur="{{ 'blok94-kaptur-sheet.webp' | asset_url }}" data-obrot="{{ 'blok94-kaptur-obrot.webp' | asset_url }}"></canvas><button type="button" class="okno" id="b94-okno" aria-label="Okno mieszkania 94. Zapukaj trzy razy." hidden></button><span class="puk" id="b94-puk" aria-hidden="true"></span></figure>
 </div></section>
 
 <section class="parts" id="seria"><div class="wrap">
@@ -286,7 +286,7 @@
   // śnieg
   ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(235,240,255,.75)';
   snow.forEach(function(sn){sn.y+=sn.v*dt*3;if(sn.y>1.02){sn.y=-.02;sn.x=Math.random();}var sx=(sn.x+Math.sin(t*.7+sn.d)*.01)*cv.width,sy=sn.y*cv.height;ctx.beginPath();ctx.arc(sx,sy,sn.s*dpr,0,6.3);ctx.fill();});}
- var KS=new Image(),KR=false,FW=480,FH=720;KS.onload=function(){KR=true;};if(cv.dataset.kaptur)KS.src=cv.dataset.kaptur;
+ var KS=new Image(),KO=new Image(),KR=0,FW=480,FH=720;KS.onload=KO.onload=function(){KR++;};if(cv.dataset.kaptur){KS.src=cv.dataset.kaptur;KO.src=cv.dataset.obrot;}
  var CD=document.getElementById('cd'),CT=CD?Date.parse(CD.dataset.t):NaN,EPN=(function(){var l=document.querySelector('#b94 .next .lbl');var m=l&&l.textContent.match(/\d+/);return m?m[0]:'';})();
  function led(t){var x0=X(290),y0=Y(640),w=500*M.s*dpr,h=160*M.s*dpr,k=M.s*dpr;ctx.globalCompositeOperation='source-over';
   var fl=(t%13>12.6&&Math.random()<.5)||((t%25)>14.6&&(t%25)<15.6&&Math.random()<.4)?.25:1;
@@ -302,18 +302,18 @@
   ctx.fillStyle='rgba(0,0,0,.35)';for(var gy=y0+2*k;gy<y0+h;gy+=4*k)ctx.fillRect(x0,gy,w,1.2*k);}
  try{document.fonts.load('800 40px "Big Shoulders Display"','ODC. WKRÓTCE 0123456789:');}catch(e){}
  function E(v){return v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2;}
- function kap(t){if(!KR)return;var u=t%25,a=1,fr=0,sx=1,x=870,y=1340,s=1,q;ctx.globalCompositeOperation='source-over';
+ function kap(t){if(KR<2)return;var u=t%25,a=1,fr=0,row=0,img=KO,x=870,y=1340,s=1,q,front=false;ctx.globalCompositeOperation='source-over';
   if(u<1)a=u;
-  else if(u<5){fr=0;}
-  else if(u<5.5){q=(u-5)/.5;sx=Math.max(.04,Math.abs(Math.cos(q*Math.PI)));fr=q<.5?0:1;}
-  else if(u<8){fr=1;}
-  else if(u<8.5){q=(u-8)/.5;sx=Math.max(.04,Math.abs(Math.cos(q*Math.PI)));fr=q<.5?1:0;}
-  else if(u<15.8){q=Math.min(1,(u-8.5)/6.5);var e=E(q);x=870-330*e;y=1340-256*e;s=1-.79*e;fr=2+Math.floor((u-8.5)*7)%8;if(u>15)a=Math.max(0,1-(u-15)/.8);}
+  if(u<5){fr=0;}
+  else if(u<5.9){q=E((u-5)/.9);fr=Math.round(q*23);front=fr>16;}
+  else if(u<8){fr=23;front=true;}
+  else if(u<8.9){q=E((u-8)/.9);fr=Math.round(q*23);row=1;front=fr<7;}
+  else if(u<15.8){img=KS;q=Math.min(1,(u-8.9)/6.1);var e=E(q);x=870-330*e;y=1340-256*e;s=1-.79*e;fr=2+Math.floor((u-8.9)*7)%8;if(u>15)a=Math.max(0,1-(u-15)/.8);}
   else a=0;
   if(u>14.6&&u<16.2){ctx.fillStyle='rgba(5,6,10,'+(Math.random()<.35?.6:.12)+')';ctx.fillRect(X(452),Y(930),176*M.s*dpr,150*M.s*dpr);}
-  if(a>0){var w=FW*s*M.s*dpr,h=FH*s*M.s*dpr,k=w/FW;ctx.save();ctx.globalAlpha=a;ctx.translate(X(x),Y(y));ctx.scale(sx,1);
-   ctx.drawImage(KS,fr*FW,0,FW,FH,-w/2,-h*700/720,w,h);
-   if(fr===1&&sx>.5){ctx.globalCompositeOperation='lighter';var pu=.6+.4*Math.sin(t*7);[204,276].forEach(function(ex){var gx=-w/2+ex*k,gy=-h*700/720+132*k,g=ctx.createRadialGradient(gx,gy,0,gx,gy,26*k);g.addColorStop(0,'rgba(255,250,220,'+(.9*pu)+')');g.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=g;ctx.fillRect(gx-26*k,gy-26*k,52*k,52*k);});}
+  if(a>0){var w=FW*s*M.s*dpr,h=FH*s*M.s*dpr,k=w/FW;ctx.save();ctx.globalAlpha=a;ctx.translate(X(x),Y(y));
+   ctx.drawImage(img,fr*FW,row*FH,FW,FH,-w/2,-h*700/720,w,h);
+   if(front&&img===KO&&(fr===23&&row===0)){ctx.globalCompositeOperation='lighter';var pu=.6+.4*Math.sin(t*7);[204,276].forEach(function(ex){var gx=-w/2+ex*k,gy=-h*700/720+138*k,g=ctx.createRadialGradient(gx,gy,0,gx,gy,26*k);g.addColorStop(0,'rgba(255,250,220,'+(.9*pu)+')');g.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=g;ctx.fillRect(gx-26*k,gy-26*k,52*k,52*k);});}
    ctx.restore();}
   if(u>18&&u<22.5){var on=u<18.4?(u-18)/.4:(u>22?1-(u-22)/.5:1);on*=.85+.15*Math.sin(u*23);var wx=X(665),wy=Y(20),ww=72*M.s*dpr,wh=55*M.s*dpr;
    ctx.globalCompositeOperation='lighter';var rg=ctx.createRadialGradient(wx+ww/2,wy+wh/2,2,wx+ww/2,wy+wh/2,ww*1.6);rg.addColorStop(0,'rgba(220,70,50,'+(.45*on)+')');rg.addColorStop(1,'rgba(220,70,50,0)');ctx.fillStyle=rg;ctx.fillRect(wx-ww*1.2,wy-wh*1.2,ww*3.4,wh*3.4);

@@ -4,4 +4,5 @@ const { chromium } = require('playwright'); const fs = require('fs'), path = req
   await p.goto('file://' + path.join(__dirname, 'promo.html')); await p.evaluate(() => PROMO.ready()); const out = path.join(__dirname, 'out');
   fs.writeFileSync(path.join(out, 'blok94-hero-bg.jpg'), Buffer.from(await p.evaluate(() => PROMO.heroBg()), 'base64'));
   fs.writeFileSync(path.join(out, 'blok94-kaptur-sheet.png'), Buffer.from(await p.evaluate(() => PROMO.kapturSheet()), 'base64'));
+  fs.writeFileSync(path.join(out, 'blok94-kaptur-obrot.png'), Buffer.from(await p.evaluate(() => PROMO.kapturTurn()), 'base64'));
   await b.close(); })();

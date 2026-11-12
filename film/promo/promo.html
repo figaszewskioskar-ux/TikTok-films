@@ -4,6 +4,71 @@
 <script>
 // Grafiki promocyjne (postacie na przezroczystym tle, nocny blok)
 const ctx = document.getElementById('cv').getContext('2d');
+// Kaptur w pseudo-3D: th = obrót ciała (0 tyłem, PI przodem), hth = obrót głowy
+function kap3d(c, x, y, s, th, hth, glow) {
+  const K = KINDS.kaptur, cs = Math.cos(th), sn = Math.sin(th);
+  c.save(); c.translate(x, y); ell(c, 0, 0, 62 * s, 11 * s, 'rgba(0,0,0,.28)'); c.scale(s, s);
+  const items = [];
+  // nogi
+  for (const side of [-1, 1]) {
+    const lx = side * 15 * cs, z = -side * 15 * sn, toe = sn * 12;
+    items.push({ z: z - 1, f: () => {
+      const dk = z < 0 ? -.25 : 0;
+      fillRR(c, lx - 10, -86, 20, 82, 8, shade(K.pants, dk));
+      const sw = 30 * Math.abs(cs) + 42 * Math.abs(sn);
+      fillRR(c, lx - sw / 2 + toe, -12, sw, 13, 6, K.shoes);
+    } });
+  }
+  // ręce
+  for (const side of [-1, 1]) {
+    const ax = side * 40 * cs, z = -side * 40 * sn, swing = 0.14 * Math.abs(cs) + 0.03;
+    items.push({ z, f: () => {
+      c.save(); c.translate(ax, -178); c.rotate(-side * Math.sign(cs || 1) * swing);
+      const dk = z < -5 ? -.3 : (z > 5 ? .06 : 0);
+      fillRR(c, -12, -8, 24, 100, 12, shade(K.jacket, dk));
+      fillRR(c, -12, 78, 24, 10, 4, shade(K.jacket, dk - .25));
+      circ(c, 0, 94, 13, shade(K.skin, dk)); c.restore();
+    } });
+  }
+  // tułów
+  items.push({ z: 0, f: () => {
+    const w = 90 * Math.abs(cs) + 58 * Math.abs(sn);
+    rr(c, -w / 2, -192, w, 122, 24); c.save(); c.clip();
+    const g = c.createLinearGradient(-w / 2, 0, w / 2, 0);
+    g.addColorStop(0, shade(K.jacket, .1)); g.addColorStop(.5 + sn * cs * .3, K.jacket); g.addColorStop(1, shade(K.jacket, -.35));
+    c.fillStyle = g; c.fillRect(-w / 2, -192, w, 122);
+    c.fillStyle = shade(K.jacket, -.22); c.fillRect(-w / 2, -82, w, 12);
+    const fz = -cs; // przód widoczny
+    if (fz > 0) { const pw = 52 * fz, px = sn * 22; c.globalAlpha = Math.min(1, fz * 2); fillRR(c, px - pw / 2, -128, pw, 30, 10, K.dark); c.globalAlpha = 1; }
+    c.restore();
+  } });
+  items.sort((a, b) => a.z - b.z).forEach(i => i.f());
+  // głowa / kaptur
+  const hc = Math.cos(hth), hs = Math.sin(hth), hy = -236;
+  c.save();
+  const hg = c.createRadialGradient(-22, hy - 26, 8, 0, hy, 70); hg.addColorStop(0, '#2A2D34'); hg.addColorStop(1, '#141519');
+  c.fillStyle = hg; c.beginPath(); c.arc(0, hy, 62, 0, 7); c.fill();
+  c.fillStyle = hg; c.beginPath(); c.arc(hs * 10, hy + 2, 60, 0, 7); c.fill();
+  c.beginPath(); c.arc(0, hy, 62, 0, 7); c.clip();
+  if (hc > 0) { c.globalAlpha = hc; c.strokeStyle = '#0F1013'; c.lineWidth = 4; const bx = -hs * 58; c.beginPath(); c.moveTo(bx, hy - 62); c.quadraticCurveTo(bx * 1.25, hy, bx, hy + 62); c.stroke(); c.globalAlpha = 1; }
+  const fz = -hc;
+  if (fz > 0) {
+    const fx = hs * 34 * (1 - fz * .55), fw = 41 * fz + 4, a = Math.min(1, fz * 1.8);
+    c.globalAlpha = a;
+    c.strokeStyle = '#2B2E35'; c.lineWidth = 6; c.beginPath(); c.ellipse(fx, hy + 10, fw + 4, 49, 0, 0, 7); c.stroke();
+    ell(c, fx, hy + 10, fw, 45, '#0B0C0F');
+    const g2 = c.createLinearGradient(0, hy - 35, 0, hy + 55); g2.addColorStop(0, 'rgba(0,0,0,.9)'); g2.addColorStop(1, 'rgba(60,62,70,.55)');
+    c.save(); c.beginPath(); c.ellipse(fx, hy + 10, fw, 45, 0, 0, 7); c.clip(); c.fillStyle = g2; c.fillRect(fx - 50, hy - 40, 100, 110); c.restore();
+    for (const side of [-1, 1]) {
+      const ex = fx + side * 15 * fz;
+      c.save(); if (glow) { c.shadowColor = 'rgba(255,250,225,.95)'; c.shadowBlur = 26 * glow * fz; }
+      ell(c, ex, hy + 2, 9.5 * fz + 1, 6, '#F4F1EA'); c.restore();
+      circ(c, ex + hs * 2, hy + 2, 3.6 * Math.max(.4, fz), '#111');
+    }
+    c.globalAlpha = 1;
+  }
+  c.restore(); c.restore();
+}
 window.PROMO = {
   async ready() { await document.fonts.load('800 40px Inter'); await document.fonts.load('900 40px Inter'); },
   char(kind, o) {
@@ -36,6 +101,16 @@ window.PROMO = {
     const fr = [{ t: 1, back: true }, { t: 1, glow: 1 }];
     for (let k = 0; k < 8; k++) fr.push({ t: 1, back: true, walk: k * Math.PI / 4 });
     fr.forEach((o, i) => { x.save(); x.beginPath(); x.rect(i * FW, 0, FW, FH); x.clip(); person(x, 'kaptur', i * FW + FW / 2, 700, 2.4, o); x.restore(); });
+    return c.toDataURL('image/png').split(',')[1];
+  },
+  // obrót Kaptura: wiersz 0 = z tyłu na przód, wiersz 1 = z przodu na tył; 24 klatki, głowa wyprzedza ciało
+  kapturTurn() {
+    const FW = 480, FH = 720, N = 24, c = document.createElement('canvas'); c.width = FW * N; c.height = FH * 2; const x = c.getContext('2d');
+    for (let r = 0; r < 2; r++) for (let i = 0; i < N; i++) {
+      const q = i / (N - 1), th = r === 0 ? q * Math.PI : (1 - q) * Math.PI;
+      const hth = Math.max(0, Math.min(Math.PI, th + (r === 0 ? 1 : -1) * 0.5 * Math.sin(q * Math.PI)));
+      x.save(); x.beginPath(); x.rect(i * FW, r * FH, FW, FH); x.clip(); kap3d(x, i * FW + FW / 2, r * FH + 700, 2.4, th, hth, 1); x.restore();
+    }
     return c.toDataURL('image/png').split(',')[1];
   },
   hero() {
