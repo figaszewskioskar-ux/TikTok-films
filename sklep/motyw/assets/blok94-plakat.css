@@ -251,10 +251,6 @@ html body .b94s-ig svg { animation: plFlash 4.4s ease-out infinite; }
 html body .b94w, html body .b94w-b { border-radius: 18px !important; overflow: hidden; }
 html body .b94w-x { border-radius: 50% !important; }
 
-/* przyciski TikTok / YouTube / Instagram: oryginalne kolory aplikacji */
-html body .b94w .b94s-row { display: grid !important; grid-template-columns: 1fr !important; gap: 8px !important; }
-html body .b94s-a { border-radius: 14px !important; }
-html body .po-foot .b94s-a, html body .po-foot .b94s-a * { color: #fff !important; opacity: 1 !important; }
 
 /* bohaterowie przy napiwkach: dymek nad głowami, postacie nie nachodzą na dymek ani na siebie */
 #b94 .chars { height: 250px !important; padding: 74px 24px 0 !important; justify-content: space-between !important; }
@@ -262,3 +258,10 @@ html body .po-foot .b94s-a, html body .po-foot .b94s-a * { color: #fff !importan
 #b94 .chars canvas { position: relative; z-index: 1; }
 /* bohaterowie w obsadzie: animacja mieści się w karcie */
 #b94 .who { overflow: hidden; }
+
+/* TikTok / YouTube / Instagram: spokojne, jednokolorowe przyciski (jak wcześniej) */
+html body .b94w .b94s-row { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 0 !important; border: 1px solid var(--pl-line); border-radius: 18px !important; overflow: hidden; }
+html body .b94w .b94s-a { background: none !important; background-image: none !important; border: 0 !important; border-right: 1px solid var(--pl-line) !important; border-radius: 0 !important; box-shadow: none !important; color: var(--pl-fg) !important; min-height: 52px; font-size: 12px !important; padding: 0 4px !important; justify-content: center; }
+html body .b94w .b94s-a:last-child { border-right: 0 !important; }
+html body .po-foot .b94s-a { background: transparent !important; background-image: none !important; color: #f3efe6 !important; border: 1px solid rgba(243,239,230,.18) !important; box-shadow: none !important; border-radius: 10px !important; }
+html body .b94s-a::before, html body .b94s-a::after { display: none !important; }
