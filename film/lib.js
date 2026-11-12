@@ -97,7 +97,7 @@ const KINDS = {
   sasiad: { jacket: '#2F343F', dark: '#22262F', pants: '#1A1D24', skin: '#E3AC88', shoes: '#0E0F12' },
   policjant: { jacket: '#1F2C4C', dark: '#16203A', pants: '#1A2440', skin: '#E9B08A', shoes: '#0E0F12' },
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
-  pasazer: { jacket: '#4E535B', dark: '#3E424A', pants: '#4E535B', skin: '#D9CFC3', shoes: '#16171A' },
+  pasazer: { jacket: '#4E535B', dark: '#3E424A', pants: '#3A3E45', skin: '#CFC8BE', shoes: '#16171A' },
 };
 function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return '#' + ((1 << 24) + (m(r) << 16) + (m(g) << 8) + m(b)).toString(16).slice(1); }
 function arm(c, sx, sy, a, side, k, len = 92) {
@@ -128,7 +128,14 @@ function person(c, kind, x, y, s, o = {}) {
   const aL = (o.aL ?? 0.14) + sw * 0.35 + gL, aR = (o.aR ?? 0.14) - sw * 0.35 + gR;
   // nogi
   const LONG = kind === 'halina' || kind === 'kobieta' || kind === 'pasazer';
-  if (!LONG) {
+  if (o.sit) { // siedzi: uda poziomo (kolana w prawo), łydki w dół
+    for (const side of [1, -1]) {
+      const dk = side < 0 ? -.18 : 0;
+      fillRR(c, -22 + side * 4, -52 + side * 3, 86, 24, 11, shade(LONG ? '#2A2420' : k.pants, dk));
+      fillRR(c, 46 + side * 6, -44 + side * 3, 22, 44, 9, shade(LONG ? '#2A2420' : k.pants, dk));
+      fillRR(c, 42 + side * 6, -12, 36, 13, 6, k.shoes);
+    }
+  } else if (!LONG) {
     for (const side of [-1, 1]) {
       const lift = Math.max(0, side * sw) * 14, dx = side * sw * 6;
       fillRR(c, side * 15 - 10 + dx, -86 - lift, 20, 82, 8, k.pants);
@@ -140,7 +147,7 @@ function person(c, kind, x, y, s, o = {}) {
     fillRR(c, -26, -12, 22, 12, 6, k.shoes); fillRR(c, 4, -12, 22, 12, 6, k.shoes);
     fillRR(c, -20, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin); fillRR(c, 6, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin);
   }
-  c.translate(0, bob);
+  c.translate(0, bob + (o.sit ? 40 : 0));
   const back_ = !!o.back;
   // ciało
   if (LONG) {
@@ -254,10 +261,15 @@ function person(c, kind, x, y, s, o = {}) {
       const lk = (o.look || 0) * 7 + (idle ? 2.5 * Math.sin(t * 0.45 + seed * 2) : 0), ly = (o.lookY || 0) * 5 + (idle ? 1.2 * Math.sin(t * 0.33 + seed) : 0);
       const blink = o.blink || ((t * 1000 + x * 37) % 3900) < 110;
       if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
-      if (o.squint) { c.strokeStyle = '#1E1E24'; c.lineWidth = 5; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 9 + lk, hy - 2); c.lineTo(sx + 9 + lk, hy - 2); c.stroke(); } }
+      if (kind === 'pasazer') { // zapadnięte, czarne oczy z małymi białymi punktami, cienie pod oczami, cień na połowie twarzy
+        c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(20,18,24,.28)'; c.fillRect(4, hy - 60, 60, 120); c.restore();
+        { const sg = c.createLinearGradient(0, hy - 50, 0, hy + 10); sg.addColorStop(0, 'rgba(8,8,12,.75)'); sg.addColorStop(1, 'rgba(8,8,12,0)'); c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = sg; c.fillRect(-60, hy - 60, 120, 70); c.restore(); }
+        for (const sx of [-19, 19]) { ell(c, sx, hy + 6, 17, 11, 'rgba(70,30,50,.4)'); ell(c, sx, hy - 3, 15, 14, '#050406'); circ(c, sx + lk * .4, hy - 4, 1.8, '#FFFFFF'); }
+      }
+      else if (o.squint) { c.strokeStyle = '#1E1E24'; c.lineWidth = 5; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 9 + lk, hy - 2); c.lineTo(sx + 9 + lk, hy - 2); c.stroke(); } }
       else if (blink) { c.strokeStyle = '#1E1E24'; c.lineWidth = 4; for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 6, hy - 2); c.lineTo(sx + 6, hy - 2); c.stroke(); } }
       else for (const sx of [-17, 17]) { circ(c, sx + lk, hy - 2 + ly, o.wide ? 8 : 6, '#1E1E24'); circ(c, sx + lk + 2, hy - 4 + ly, 2, 'rgba(255,255,255,.85)'); }
-      if (kind !== 'zdzisiek' && kind !== 'halina') { c.strokeStyle = 'rgba(40,28,24,.75)'; c.lineWidth = 3.5; c.lineCap = 'round'; const br = o.mouth === 'angry' ? 6 : o.wide ? -5 : 0;
+      if (kind !== 'zdzisiek' && kind !== 'halina' && kind !== 'pasazer') { c.strokeStyle = 'rgba(40,28,24,.75)'; c.lineWidth = 3.5; c.lineCap = 'round'; const br = o.mouth === 'angry' ? 6 : o.wide ? -5 : 0;
         for (const sd of [-1, 1]) { c.beginPath(); c.moveTo(sd * 25, hy - 17 + (o.mouth === 'angry' ? -3 : 0)); c.lineTo(sd * 10, hy - 18 + br); c.stroke(); } }
       if (kind !== 'zdzisiek') ell(c, 2, hy + 12, 5, 4, shade(k.skin, -.18));
       if (kind === 'zdzisiek') {
@@ -276,9 +288,10 @@ function person(c, kind, x, y, s, o = {}) {
       if (o.talk) { const oh = 4 + 6 * Math.abs(Math.sin(t * 17 + x)); ell(c, 0, my, 9, oh, '#6B2B2B'); }
       else if (o.mouth === 'o') ell(c, 0, my, 8, 10, '#6B2B2B');
       else if (o.mouth === 'angry') { c.strokeStyle = '#6B2B2B'; c.lineWidth = 4; c.beginPath(); c.arc(0, my + 10, 11, Math.PI * 1.2, Math.PI * 1.8); c.stroke(); }
-      else if (o.mouth === 'grin') { // szeroki, niepokojący uśmiech
-        c.fillStyle = '#4A1E1E'; c.beginPath(); c.moveTo(-26, my - 6); c.quadraticCurveTo(0, my + 22, 26, my - 6); c.quadraticCurveTo(0, my + 6, -26, my - 6); c.fill();
-        c.fillStyle = '#F2EEE4'; c.beginPath(); c.moveTo(-22, my - 4); c.quadraticCurveTo(0, my + 8, 22, my - 4); c.quadraticCurveTo(0, my + 3, -22, my - 4); c.fill(); }
+      else if (o.mouth === 'grin') { // bardzo szeroki, wąski uśmiech od ucha do ucha, ciemne wnętrze, zęby
+        c.fillStyle = '#0E0809'; c.beginPath(); c.moveTo(-38, my - 12); c.quadraticCurveTo(0, my + 20, 38, my - 12); c.quadraticCurveTo(0, my + 8, -38, my - 12); c.fill();
+        c.strokeStyle = '#E8E4D8'; c.lineWidth = 2; for (let i = -5; i <= 5; i++) { const tx = i * 6, ty = my - 2 + (1 - Math.abs(i) / 6) * 6; c.beginPath(); c.moveTo(tx, ty - 3); c.lineTo(tx, ty + 3); c.stroke(); }
+        c.strokeStyle = 'rgba(40,20,20,.6)'; c.lineWidth = 2; c.beginPath(); c.moveTo(-38, my - 12); c.lineTo(-42, my - 16); c.moveTo(38, my - 12); c.lineTo(42, my - 16); c.stroke(); }
       else if (o.mouth === 'smile') { c.strokeStyle = '#6B2B2B'; c.lineWidth = 4; c.beginPath(); c.arc(0, my - 6, 11, 0.2 * Math.PI, 0.8 * Math.PI); c.stroke(); }
       else { c.fillStyle = '#6B2B2B'; c.fillRect(-8, my - 2, 16, 4); }
       if (kind === 'zdzisiek') circ(c, 0, hy + 12, 10, '#E04848');

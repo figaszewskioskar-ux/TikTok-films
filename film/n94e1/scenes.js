@@ -97,7 +97,7 @@ function busInside(c, lt, o = {}) {
 function seatBack(c, x) { fillRR(c, x - 34, 1010, 46, 300, 16, '#2E4A8A'); fillRR(c, x - 34, 1010, 46, 30, 12, '#3A5AA8'); for (let i = 0; i < 4; i++) circ(c, x - 11, 1070 + i * 60, 5, 'rgba(255,255,255,.12)'); }
 function seatBase(c, x) { fillRR(c, x - 34, 1280, 230, 40, 12, '#2E4A8A'); c.fillStyle = '#5E6670'; c.fillRect(x + 60, 1320, 14, 80); }
 // siedzący pasażer (bez nóg — zasłania je siedzenie)
-function seated(c, kind, x, lt, o = {}) { person(c, kind, x + 90, 1350, 1.6, Object.assign({ t: lt, squash: .8 }, o)); }
+function seated(c, kind, x, lt, o = {}) { person(c, kind, x + 60, 1330, 1.6, Object.assign({ t: lt, sit: true }, o)); }
 // ulica nocą: śnieg, latarnie, bloki, w oddali blok 94, po prawej sklep 24h
 function streetBg(c, lt, o = {}) {
   const sky = c.createLinearGradient(0, 0, 0, 1100); sky.addColorStop(0, '#04060D'); sky.addColorStop(1, '#121829'); c.fillStyle = sky; c.fillRect(0, 0, W, H);
@@ -208,7 +208,7 @@ scene({
 // 4. OGRODOWA: przesiada się bliżej. „Zimno dziś, prawda?” — odbicie w szybie, telefon gaśnie
 scene({
   name: 'ride2', start: 44, end: 58,
-  bubbles: [say(4.4, 6.4, 'Zimno dziś, prawda?', 'pasazer', SEATS[1] + 90, 1350, 1.6 * .8, 60), say(6.6, 7.6, '…Tak.', 'ola', SEATS[0] + 90, 1350, 1.6 * .8, 40)],
+  bubbles: [say(4.4, 6.4, 'Zimno dziś, prawda?', 'pasazer', SEATS[1] + 60, 1394, 1.6, 60), say(6.6, 7.6, '…Tak.', 'ola', SEATS[0] + 60, 1394, 1.6, 40)],
   draw(c, lt, sc) {
     if (lt < 9.0) {
       busInside(c, lt, { led: lt < 2 ? 'PRZYSTANEK: OGRODOWA' : 'NASTĘPNY: KASZTANOWA', speed: lt < 1.6 ? 0 : 1 });
