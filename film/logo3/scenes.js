@@ -18,8 +18,8 @@ scene({ name: 'b', start: 1, end: 2, draw(c, lt) {
   night(c, .78, [{ x: 540, y: 1250, r: 520, a: .9 }]);
   person(c, 'kaptur', 540, 1500, 3.0, { t: .2, still: true, glow: .9, alpha: .95 });
   eyes(c, 540, 1500 - 3.0 * 236 + 12, 3.0);
-  person(c, 'kuba', 300, 1640, 2.4, { t: .4, still: true, look: 1, wide: true, mouth: 'o' });
-  person(c, 'ola', 790, 1640, 2.4, { t: .1, still: true, look: -1, wide: true, mouth: 'o', phone: 2, aR: 2.2 });
+  person(c, 'kuba', 330, 1640, 2.4, { t: .4, still: true, look: 1, wide: true, mouth: 'o' });
+  person(c, 'ola', 750, 1640, 2.4, { t: .1, still: true, look: -1, wide: true, mouth: 'o' });
 } });
 // C: WIZJER — Kaptur przez wizjer
 scene({ name: 'c', start: 2, end: 3, draw(c, lt) {
