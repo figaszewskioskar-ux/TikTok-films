@@ -1,0 +1,72 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;box-sizing:border-box}body{background:transparent;font-family:Inter,"Inter Display",sans-serif}
+.v{width:1000px;height:1000px;position:relative;overflow:hidden;display:none}
+.v.on{display:block}
+svg{display:block}
+</style></head><body>
+<!-- A: WIZJER -->
+<div class="v" id="A"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs>
+  <radialGradient id="bgA" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#1a1d2a"/><stop offset="1" stop-color="#07080d"/></radialGradient>
+  <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d08a"/><stop offset=".45" stop-color="#b8863b"/><stop offset=".55" stop-color="#8a5f22"/><stop offset="1" stop-color="#e2b866"/></linearGradient>
+  <radialGradient id="lens" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#20263a"/><stop offset=".8" stop-color="#05060a"/><stop offset="1" stop-color="#000"/></radialGradient>
+  <radialGradient id="eye" r=".5"><stop offset="0" stop-color="#fff9e6"/><stop offset=".35" stop-color="#ffe7a8"/><stop offset="1" stop-color="rgba(255,200,90,0)"/></radialGradient>
+ </defs>
+ <rect width="1000" height="1000" fill="url(#bgA)"/>
+ <g fill="#2a1e15" opacity=".55">
+  <path d="M0 0h1000v1000H0z" fill="none"/>
+ </g>
+ <circle cx="500" cy="420" r="250" fill="url(#brass)"/>
+ <circle cx="500" cy="420" r="214" fill="#3b2a14"/>
+ <circle cx="500" cy="420" r="200" fill="url(#lens)"/>
+ <path d="M500 280c-70 0-118 52-118 120 0 30 8 56 20 78h196c12-22 20-48 20-78 0-68-48-120-118-120z" fill="#000" opacity=".9"/>
+ <circle cx="455" cy="410" r="42" fill="url(#eye)"/><circle cx="545" cy="410" r="42" fill="url(#eye)"/>
+ <circle cx="455" cy="410" r="11" fill="#fff"/><circle cx="545" cy="410" r="11" fill="#fff"/>
+ <path d="M350 330a190 190 0 0 1 90-90" stroke="rgba(255,255,255,.22)" stroke-width="16" fill="none" stroke-linecap="round"/>
+ <text x="500" y="790" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="128" fill="#f3efe6" letter-spacing="2">PROTOKÓŁ</text>
+ <g transform="rotate(-3 500 870)"><rect x="235" y="815" width="530" height="110" rx="14" fill="#d7263d"/>
+ <text x="500" y="900" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="92" fill="#fff" letter-spacing="10">OCALENI</text></g>
+</svg></div>
+<!-- B: TABLICZKA DRZWI -->
+<div class="v" id="B"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs><pattern id="q" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="90" height="90" fill="#3a2819"/><path d="M0 0h90M0 0v90" stroke="#2c1e12" stroke-width="6"/><circle cx="0" cy="0" r="6" fill="#c9a15a"/></pattern>
+ <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7c57c"/><stop offset="1" stop-color="#a87a35"/></linearGradient></defs>
+ <rect width="1000" height="1000" fill="url(#q)"/><rect width="1000" height="1000" fill="rgba(5,6,10,.45)"/>
+ <rect x="150" y="300" width="700" height="400" rx="40" fill="url(#plate)" stroke="#6e4b1d" stroke-width="10"/>
+ <circle cx="200" cy="350" r="12" fill="#6e4b1d"/><circle cx="800" cy="350" r="12" fill="#6e4b1d"/><circle cx="200" cy="650" r="12" fill="#6e4b1d"/><circle cx="800" cy="650" r="12" fill="#6e4b1d"/>
+ <text x="500" y="470" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="120" fill="#2a1b0b" letter-spacing="4">PROTOKÓŁ</text>
+ <text x="500" y="610" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="120" fill="#b0182d" letter-spacing="14">OCALENI</text>
+ <circle cx="500" cy="190" r="56" fill="#1b1c22" stroke="#c9a15a" stroke-width="14"/><circle cx="500" cy="190" r="22" fill="#0b0c10"/><circle cx="488" cy="184" r="7" fill="#ffe7a8"/><circle cx="512" cy="184" r="7" fill="#ffe7a8"/>
+ <rect x="470" y="770" width="60" height="120" rx="30" fill="#c9a15a"/><circle cx="500" cy="815" r="14" fill="#1b1c22"/><rect x="494" y="815" width="12" height="40" fill="#1b1c22"/>
+</svg></div>
+<!-- C: PIECZĄTKA AKT -->
+<div class="v" id="C"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs><path id="arcT" d="M170 500a330 330 0 0 1 660 0"/><path id="arcB" d="M215 500a285 285 0 0 0 570 0"/>
+ <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.7 1.1"/><feComposite in="SourceGraphic" operator="in"/></filter></defs>
+ <rect width="1000" height="1000" fill="#0b0c12"/>
+ <g filter="url(#rough)" transform="rotate(-8 500 500)">
+  <circle cx="500" cy="500" r="430" fill="none" stroke="#e0283f" stroke-width="26"/>
+  <circle cx="500" cy="500" r="385" fill="none" stroke="#e0283f" stroke-width="8"/>
+  <text font-family="Inter Display" font-weight="900" font-size="96" fill="#e0283f" letter-spacing="14"><textPath href="#arcT" startOffset="50%" text-anchor="middle">PROTOKÓŁ</textPath></text>
+  <text font-family="Inter Display" font-weight="900" font-size="96" fill="#e0283f" letter-spacing="14" dominant-baseline="hanging"><textPath href="#arcB" startOffset="50%" text-anchor="middle">OCALENI</textPath></text>
+  <circle cx="230" cy="500" r="14" fill="#e0283f"/><circle cx="770" cy="500" r="14" fill="#e0283f"/>
+ </g>
+ <g transform="translate(500 500)">
+  <path d="M-200 0C-130 -110 130 -110 200 0C130 110 -130 110 -200 0Z" fill="#f3efe6"/>
+  <circle r="78" fill="#14161b"/><circle r="34" fill="#d7263d"/><circle cx="-24" cy="-24" r="14" fill="#fff"/>
+  <path d="M-200 0C-130 -110 130 -110 200 0" fill="none" stroke="#14161b" stroke-width="14"/>
+ </g>
+</svg></div>
+<!-- poziome (wordmark) -->
+<div class="v" id="H" style="width:1600px;height:400px"><svg width="1600" height="400" viewBox="0 0 1600 400">
+ <defs><linearGradient id="hbrass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d08a"/><stop offset=".45" stop-color="#b8863b"/><stop offset=".55" stop-color="#8a5f22"/><stop offset="1" stop-color="#e2b866"/></linearGradient>
+  <radialGradient id="hlens" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#20263a"/><stop offset=".8" stop-color="#05060a"/><stop offset="1" stop-color="#000"/></radialGradient>
+  <radialGradient id="heye" r=".5"><stop offset="0" stop-color="#fff9e6"/><stop offset=".35" stop-color="#ffe7a8"/><stop offset="1" stop-color="rgba(255,200,90,0)"/></radialGradient>
+ </defs><rect width="1600" height="400" fill="#07080d"/>
+ <g transform="translate(200 200)"><circle r="150" fill="url(#hbrass)"/><circle r="126" fill="#3b2a14"/><circle r="118" fill="url(#hlens)"/>
+ <path d="M0 -84c-42 0-70 31-70 72 0 18 5 33 12 46h116c7-13 12-28 12-46 0-41-28-72-70-72z" fill="#000"/>
+ <circle cx="-26" cy="-8" r="25" fill="url(#heye)"/><circle cx="26" cy="-8" r="25" fill="url(#heye)"/><circle cx="-26" cy="-8" r="7" fill="#fff"/><circle cx="26" cy="-8" r="7" fill="#fff"/></g>
+ <text x="410" y="200" font-family="Inter Display" font-weight="900" font-size="150" fill="#f3efe6" letter-spacing="2">PROTOKÓŁ</text>
+ <g transform="rotate(-2 700 290)"><rect x="410" y="225" width="560" height="110" rx="14" fill="#d7263d"/><text x="690" y="310" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="92" fill="#fff" letter-spacing="12">OCALENI</text></g>
+</svg></div>
+</body></html>
