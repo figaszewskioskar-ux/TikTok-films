@@ -118,10 +118,14 @@
 <section class="fresh" id="nowe"><div class="wrap">
   <span class="eyebrow">Nowe na kanale</span><h2 style="margin-top:12px">Właśnie wyszły</h2>
   <div class="fr">
-    <a class="fi" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-czesc6.jpg' | asset_url }}" alt="Okładka: BLOK 94, odcinek 7, Zamknij balkon na noc" loading="lazy" width="720" height="900"><span class="fb">NOWY</span><span class="ft"><small>BLOK 94 · odc. 7</small><b>Zamknij balkon na noc!</b></span></a>
-    <a class="fi" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-n94-1.jpg' | asset_url }}" alt="Okładka: NOCNY N94, odcinek 1, Nie siadaj z tyłu" loading="lazy" width="720" height="900"><span class="fb red">NOWA SERIA</span><span class="ft"><small>NOCNY N94 · odc. 1</small><b>Nie siadaj z tyłu!</b></span></a>
+    <a class="fi przed" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-czesc6.jpg' | asset_url }}" alt="Okładka: BLOK 94, odcinek 7, Zamknij balkon na noc" loading="lazy" width="720" height="900"><span class="fb">NOWY</span><span class="ft"><small>BLOK 94 · odc. 7</small><b>Zamknij balkon na noc!</b></span></a>
+    <a class="fi po" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-czesc7.jpg' | asset_url }}" alt="Okładka: BLOK 94, odcinek 8, Coś nie tak? Wyjdź z domu" loading="lazy" width="720" height="900"><span class="fb">NOWY</span><span class="ft"><small>BLOK 94 · odc. 8</small><b>Coś nie tak? Wyjdź z domu!</b></span></a>
+    <a class="fi po" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-kurier2.jpg' | asset_url }}" alt="Okładka: Nie otwieraj kurierowi, część 2, Nie schodź po paczkę" loading="lazy" width="720" height="900"><span class="fb red">CZĘŚĆ 2</span><span class="ft"><small>Kurier · część 2</small><b>Nie schodź po paczkę!</b></span></a>
+    <a class="fi przed" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-n94-1.jpg' | asset_url }}" alt="Okładka: NOCNY N94, odcinek 1, Nie siadaj z tyłu" loading="lazy" width="720" height="900"><span class="fb red">NOWA SERIA</span><span class="ft"><small>NOCNY N94 · odc. 1</small><b>Nie siadaj z tyłu!</b></span></a>
   </div>
-  <p class="lead" style="margin:14px 0 0">Nowe odcinki: <b style="color:var(--ink)">{{ section.settings.premiere_label }}</b>. A na banerze nowy easter egg: wypatruj światła w oknie 104.</p>
+  <p class="lead przed" style="margin:14px 0 0">Nowe odcinki: <b style="color:var(--ink)">{{ section.settings.premiere_label }}</b>, odc. 8 i „Nie otwieraj kurierowi!” część 2. A na banerze nowy easter egg: wypatruj światła w oknie 104.</p>
+  <p class="lead po" style="margin:14px 0 0">Kurier wrócił, a w szafie Oli coś świeci. Easter egg w oknie 104 ma już <b style="color:var(--ink)">nową zapowiedź: odc. 9</b>. Wypatruj światła.</p>
+<style>#b94 .po{display:none!important}#b94.premiered .po{display:block!important}#b94.premiered .przed{display:none!important}#b94.premiered .part.po{display:flex!important}</style>
 </div></section>
 <style>
 #b94 .fresh .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
@@ -143,6 +147,7 @@
     {%- if section.settings.parts >= 4 -%}<article class="part"><img src="{{ 'blok94-czesc4.jpg' | asset_url }}" alt="Okładka odcinka 5: Nie czekaj do rana" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 5</span><h3>Nie czekaj do rana!</h3><p>Kaptur ma klucze Kuby. O 3:12 zamek przekręca się sam.</p><div class="rule">Zgubione klucze? Zamek wymień tej samej nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
     {%- if section.settings.parts >= 5 -%}<article class="part"><img src="{{ 'blok94-czesc5.jpg' | asset_url }}" alt="Okładka odcinka 6: Nie mów, kiedy jesteś sam" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 6</span><h3>Nie mów, kiedy jesteś sam!</h3><p>„Nowy sąsiad” z 104 pożycza śrubokręt i pyta, kiedy rodzice są w pracy.</p><div class="rule">Nowy sąsiad? Bądź miły przez drzwi, ale nie mów, kiedy jesteś sam.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
     {%- if section.settings.parts >= 6 -%}<article class="part"><img src="{{ 'blok94-czesc6.jpg' | asset_url }}" alt="Okładka odcinka 7: Zamknij balkon na noc" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 7</span><span class="hot">Nowy</span><h3>Zamknij balkon na noc!</h3><p>Ktoś pukał do pana Zdziśka. Ale to nie jego szukał.</p><div class="rule">Sąsiad w niebezpieczeństwie? Dzwoń na 112, nie wybiegaj w nocy.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>{%- endif -%}
+    <article class="part po"><img src="{{ 'blok94-czesc7.jpg' | asset_url }}" alt="Okładka odcinka 8: Coś nie tak? Wyjdź z domu" loading="lazy" width="720" height="900"><div class="in"><span class="no">Odc. 8</span><span class="hot">Nowy</span><h3>Coś nie tak? Wyjdź z domu!</h3><p>Dwa światełka w szafie Oli. A Kuba ma jedno hasło do wszystkiego.</p><div class="rule">Inne hasło do każdego konta i weryfikacja dwuetapowa.</div><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">Oglądaj →</a></div></article>
   </div>
 </div></section>
 
@@ -373,10 +378,10 @@
   <div class="akta-in">
     <span class="akta-stamp">MIESZKANIE 104</span>
     <h3 id="b94-104-t">Zobaczyłeś go w oknie.</h3>
-    <p>On też cię widział. Oto zapowiedź odcinka 8, zanim pojawi się na TikToku. Napisz w komentarzu hasło poniżej.</p>
+    <p>On też cię widział. Oto zapowiedź <span id="b94-104-n">odcinka 8</span>, zanim pojawi się na TikToku. Napisz w komentarzu hasło poniżej.</p>
     <div class="akta-vid">
-      <span class="akta-tag">● ZAPOWIEDŹ · ODC. 8</span>
-      <video id="b94-104-v" controls playsinline preload="none" poster="{{ 'blok94-egg-104.jpg' | asset_url }}" src="{{ 'blok94-egg-104.mp4' | asset_url }}"></video>
+      <span class="akta-tag" id="b94-104-tag">● ZAPOWIEDŹ · ODC. 8</span>
+      <video id="b94-104-v" controls playsinline preload="none" poster="{{ 'blok94-egg-104.jpg' | asset_url }}" src="{{ 'blok94-egg-104.mp4' | asset_url }}" data-po-poster="{{ 'blok94-egg-104b.jpg' | asset_url }}" data-po-src="{{ 'blok94-egg-104b.mp4' | asset_url }}"></video>
     </div>
     <p class="akta-code">Hasło do komentarza: <b>W OKNIE 104 KTOŚ STAŁ</b></p>
     <button type="button" class="btn red" id="b94-104-x" style="width:100%">Zasłoń okno</button>
@@ -394,4 +399,13 @@
  b.addEventListener('click',function(){if(window.B94_104){try{d.showModal();}catch(e){d.setAttribute('open','');}}else say('Ciemno… czekaj na światło');});
  var v=document.getElementById('b94-104-v');document.getElementById('b94-104-x').addEventListener('click',function(){d.close?d.close():d.removeAttribute('open');});
  d.addEventListener('close',function(){if(v)v.pause();});d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close();});})();
+</script>
+
+<script>
+// po premierze (czas z odliczania): pokaż nowe odcinki, okno 104 = zapowiedź odc. 9
+(function(){var cd=document.getElementById('cd'),root=document.getElementById('b94');if(!cd||!root)return;var T=Date.parse(cd.dataset.t);if(isNaN(T))return;var done=false;
+ function go(){if(done||Date.now()<T)return;done=true;root.classList.add('premiered');
+  var v=document.getElementById('b94-104-v');if(v&&v.dataset.poSrc){v.poster=v.dataset.poPoster;v.src=v.dataset.poSrc;}
+  var t=document.getElementById('b94-104-tag');if(t)t.textContent='● ZAPOWIEDŹ · ODC. 9';var n=document.getElementById('b94-104-n');if(n)n.textContent='odcinka 9';}
+ go();if(!done){var iv=setInterval(function(){go();if(done)clearInterval(iv);},1000);}})();
 </script>
