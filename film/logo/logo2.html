@@ -1,0 +1,99 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-ext-400-normal.woff2);unicode-range:U+0100-02AF}
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2)}
+*{margin:0}body{background:#000}.v{display:none}.v.on{display:block}
+</style></head><body>
+
+<!-- 1 MASKOTKA: Kaptur wychyla się zza drzwi -->
+<div class="v" id="M1"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs>
+  <radialGradient id="m1bg" cx="40%" cy="40%" r="80%"><stop offset="0" stop-color="#1c2131"/><stop offset="1" stop-color="#05060a"/></radialGradient>
+  <linearGradient id="gap" x1="0" x2="1"><stop offset="0" stop-color="rgba(255,196,110,.0)"/><stop offset=".85" stop-color="rgba(255,196,110,.55)"/><stop offset="1" stop-color="rgba(255,226,170,.95)"/></linearGradient>
+  <pattern id="q1" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="70" height="70" fill="#4a3220"/><path d="M0 0h70M0 0v70" stroke="#3a2617" stroke-width="5"/><circle r="5" fill="#d6ad62"/></pattern>
+  <radialGradient id="eg" r=".5"><stop offset="0" stop-color="#fffbe8"/><stop offset=".3" stop-color="#ffe3a0" stop-opacity=".85"/><stop offset="1" stop-color="#ffc46a" stop-opacity="0"/></radialGradient>
+  <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#05060a" stop-opacity="0"/><stop offset="1" stop-color="#05060a"/></linearGradient>
+  <clipPath id="behind"><rect x="385" y="0" width="600" height="1000"/></clipPath>
+ </defs>
+ <rect width="1000" height="1000" fill="url(#m1bg)"/>
+ <!-- światło z klatki -->
+ <polygon points="370,40 400,40 1000,860 1000,1000 640,1000" fill="rgba(255,190,100,.10)"/>
+ <!-- Kaptur (z serii), za framugą -->
+ <g clip-path="url(#behind)"><image href="kaptur_seria.png" x="260" y="60" width="700" height="1000"/>
+  <circle cx="561" cy="309" r="62" fill="url(#eg)"/><circle cx="657" cy="309" r="62" fill="url(#eg)"/></g>
+ <!-- dłoń na framudze -->
+ <circle cx="400" cy="520" r="38" fill="#454652"/>
+ <!-- drzwi -->
+ <rect x="0" y="0" width="400" height="1000" fill="url(#q1)"/><rect x="0" y="0" width="400" height="1000" fill="rgba(5,6,10,.5)"/>
+ <rect x="370" y="0" width="34" height="1000" fill="url(#gap)"/>
+ <rect x="250" y="200" width="90" height="56" rx="10" fill="#d6ad62"/><text x="295" y="240" text-anchor="middle" font-family="Anton" font-size="38" fill="#2a1b0b">94</text>
+ <circle cx="295" cy="300" r="18" fill="#1b1c22" stroke="#d6ad62" stroke-width="6"/>
+ <rect x="270" y="500" width="80" height="22" rx="11" fill="#d6ad62"/>
+ <rect width="1000" height="1000" fill="url(#fade)"/>
+ <text x="500" y="880" text-anchor="middle" font-family="Anton" font-size="150" fill="#F3EFE6" letter-spacing="5">PROTOKÓŁ</text>
+ <text x="500" y="955" text-anchor="middle" font-family="Anton" font-size="62" fill="#E0283F" letter-spacing="34">OCALENI</text>
+</svg></div>
+
+<!-- 2 TYTUŁ HORRORU -->
+<div class="v" id="M2"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs>
+  <filter id="worn" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9" result="d"/>
+   <feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="3" result="g"/><feColorMatrix in="g" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 1.5" result="ga"/><feComposite in="d" in2="ga" operator="in"/></filter>
+  <radialGradient id="torch" cx="50%" cy="46%" r="52%"><stop offset="0" stop-color="#3a3528"/><stop offset=".45" stop-color="#16151a"/><stop offset="1" stop-color="#030305"/></radialGradient>
+  <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfc6b4"/></linearGradient>
+ </defs>
+ <rect width="1000" height="1000" fill="url(#torch)"/>
+ <g stroke="rgba(255,255,255,.05)" stroke-width="2"><path d="M80 120l300 40M600 860l320-30M120 700l80 160M820 140l-60 120"/></g>
+ <text x="500" y="250" text-anchor="middle" font-family="Anton" font-size="44" fill="#E0283F" letter-spacing="22">— KTO TAM? —</text>
+ <g filter="url(#worn)">
+  <text x="500" y="560" text-anchor="middle" font-family="Anton" font-size="262" fill="url(#ink)" letter-spacing="2" textLength="900" lengthAdjust="spacingAndGlyphs">PROTOKÓŁ</text>
+  <rect x="50" y="600" width="900" height="16" fill="#E0283F"/>
+  <text x="500" y="770" text-anchor="middle" font-family="Anton" font-size="150" fill="#E0283F" letter-spacing="40" textLength="880" lengthAdjust="spacing">OCALENI</text>
+ </g>
+ <g fill="#fff6d8"><circle cx="475" cy="860" r="7"/><circle cx="525" cy="860" r="7"/></g>
+ <circle cx="475" cy="860" r="24" fill="rgba(255,220,150,.25)"/><circle cx="525" cy="860" r="24" fill="rgba(255,220,150,.25)"/>
+</svg></div>
+
+<!-- 3 MINIMAL: dziurka od klucza = Kaptur, w ramce wizjera -->
+<div class="v" id="M3"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <rect width="1000" height="1000" fill="#0B0C10"/>
+ <circle cx="500" cy="430" r="300" fill="none" stroke="#F3EFE6" stroke-width="10"/>
+ <circle cx="500" cy="430" r="270" fill="none" stroke="#F3EFE6" stroke-width="3" opacity=".5"/>
+ <path d="M500 230 a110 110 0 0 1 64 199.5 L620 640 H380 L436 429.5 A110 110 0 0 1 500 230Z" fill="#F3EFE6"/>
+ <ellipse cx="472" cy="345" rx="17" ry="11" fill="#0B0C10"/><ellipse cx="528" cy="345" rx="17" ry="11" fill="#0B0C10"/>
+ <circle cx="472" cy="345" r="4" fill="#E0283F"/><circle cx="528" cy="345" r="4" fill="#E0283F"/>
+ <text x="500" y="865" text-anchor="middle" font-family="Anton" font-size="96" fill="#F3EFE6" letter-spacing="18">PROTOKÓŁ</text>
+ <text x="500" y="935" text-anchor="middle" font-family="Inter" font-weight="800" font-size="40" fill="#E0283F" letter-spacing="30">OCALENI</text>
+</svg></div>
+
+<!-- 4 ODZNAKA -->
+<div class="v" id="M4"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2d38e"/><stop offset=".5" stop-color="#c3913f"/><stop offset="1" stop-color="#8a6024"/></linearGradient>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121a33"/><stop offset="1" stop-color="#05070e"/></linearGradient>
+  <path id="arcU" d="M210 480 A290 290 0 0 1 790 480"/>
+  <clipPath id="shield"><path d="M500 135 L800 215 V500 C800 690 660 800 500 870 C340 800 200 690 200 500 V215 Z"/></clipPath>
+  <radialGradient id="eg4" r=".5"><stop offset="0" stop-color="#fffbe8"/><stop offset=".35" stop-color="#ffd27a" stop-opacity=".8"/><stop offset="1" stop-color="#ffc46a" stop-opacity="0"/></radialGradient>
+ </defs>
+ <rect width="1000" height="1000" fill="#07080d"/>
+ <path d="M500 105 L830 192 V500 C830 710 680 830 500 905 C320 830 170 710 170 500 V192 Z" fill="url(#gold)"/>
+ <path d="M500 135 L800 215 V500 C800 690 660 800 500 870 C340 800 200 690 200 500 V215 Z" fill="url(#sky)"/>
+ <g clip-path="url(#shield)">
+  <g transform="translate(0 40)"><rect x="330" y="300" width="340" height="560" fill="#1a2240"/>
+  <g fill="#0d1226">
+   <rect x="355" y="325" width="40" height="30"/><rect x="420" y="325" width="40" height="30"/><rect x="540" y="325" width="40" height="30"/><rect x="605" y="325" width="40" height="30"/>
+   <rect x="355" y="385" width="40" height="30"/><rect x="480" y="385" width="40" height="30"/><rect x="605" y="385" width="40" height="30"/>
+   <rect x="355" y="445" width="40" height="30"/><rect x="420" y="445" width="40" height="30"/><rect x="540" y="445" width="40" height="30"/>
+  </g>
+  <rect x="480" y="325" width="40" height="30" fill="#ffc46a"/><rect x="420" y="385" width="40" height="30" fill="#ffc46a"/><rect x="540" y="385" width="40" height="30" fill="#E0283F"/><rect x="605" y="445" width="40" height="30" fill="#ffc46a"/><rect x="480" y="445" width="40" height="30" fill="#7fa6ff"/></g>
+  <!-- Kaptur na pierwszym planie -->
+  <path d="M260 900 C270 760 330 720 390 700 C365 640 370 540 420 480 C450 445 475 435 500 435 C525 435 550 445 580 480 C630 540 635 640 610 700 C670 720 730 760 740 900Z" fill="#0b0d14"/>
+  <path d="M432 660 C424 590 440 520 475 498 C485 492 492 490 500 490 C508 490 515 492 525 498 C560 520 576 590 568 660 C540 680 460 680 432 660Z" fill="#000"/>
+  <circle cx="476" cy="575" r="30" fill="url(#eg4)"/><circle cx="524" cy="575" r="30" fill="url(#eg4)"/><ellipse cx="476" cy="575" rx="9" ry="6" fill="#fff"/><ellipse cx="524" cy="575" rx="9" ry="6" fill="#fff"/>
+ </g>
+ <text x="500" y="290" text-anchor="middle" font-family="Anton" font-size="92" fill="#F3EFE6" letter-spacing="10">PROTOKÓŁ</text>
+ <!-- wstęga -->
+ <path d="M150 760 H850 L815 812 L850 864 H150 L185 812Z" fill="#B3182D"/><path d="M190 760 H810 V864 H190Z" fill="#E0283F"/>
+ <text x="500" y="842" text-anchor="middle" font-family="Anton" font-size="72" fill="#fff" letter-spacing="26">OCALENI</text>
+ <text x="500" y="945" text-anchor="middle" font-family="Inter" font-weight="800" font-size="30" fill="#c3913f" letter-spacing="12">BLOK 94 · NOCNY N94</text>
+</svg></div>
+</body></html>
