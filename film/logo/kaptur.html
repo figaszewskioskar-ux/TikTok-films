@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-ext-400-normal.woff2);unicode-range:U+0100-02AF,U+0141-0142,U+0104-0107,U+0118-0119,U+0143-0144,U+015A-015B,U+0179-017C}
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:BSD;src:url(fonts/big-shoulders-display-latin-ext-900-normal.woff2);unicode-range:U+0100-02AF}
+@font-face{font-family:BSD;src:url(fonts/big-shoulders-display-latin-900-normal.woff2)}
+*{margin:0}body{background:#000}.v{display:none}.v.on{display:block}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <!-- sylwetka Kaptura: kaptur + ramiona, środek (0,0) = twarz -->
+ <symbol id="kap" viewBox="-300 -300 600 600" overflow="visible">
+  <path d="M-290 300 C-280 170 -210 120 -150 100 C-175 30 -170 -90 -120 -160 C-80 -215 -40 -232 0 -232 C40 -232 80 -215 120 -160 C170 -90 175 30 150 100 C210 120 280 170 290 300 L300 900 L-300 900 Z" fill="var(--hood)"/>
+  <path d="M-150 100 C-110 135 -60 150 0 150 C60 150 110 135 150 100" fill="none" stroke="var(--fold)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M-98 70 C-108 -10 -95 -95 -48 -132 C-30 -146 -15 -150 0 -150 C15 -150 30 -146 48 -132 C95 -95 108 -10 98 70 C60 98 -60 98 -98 70 Z" fill="var(--face)"/>
+  <path d="M-120 -160 C-80 -215 -40 -232 0 -232" fill="none" stroke="var(--rim)" stroke-width="10" stroke-linecap="round"/>
+ </symbol>
+ <radialGradient id="glow" r=".5"><stop offset="0" stop-color="#fff6dc"/><stop offset=".3" stop-color="#ffd98a" stop-opacity=".9"/><stop offset="1" stop-color="#ffb84a" stop-opacity="0"/></radialGradient>
+ <radialGradient id="rglow" r=".5"><stop offset="0" stop-color="#ffe0e0"/><stop offset=".3" stop-color="#ff3b4e" stop-opacity=".9"/><stop offset="1" stop-color="#d7263d" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
+<!-- D: czerwone godło -->
+<div class="v" id="D"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <rect width="1000" height="1000" fill="#D7263D"/>
+ <circle cx="500" cy="500" r="430" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="6"/>
+ <g style="--hood:#111318;--face:#000;--fold:#1d2028;--rim:#2b2f3a"><use href="#kap" x="140" y="250" width="720" height="720" transform="translate(0 0)"/></g>
+ <g transform="translate(0 0)"><circle cx="464" cy="610" r="48" fill="url(#glow)"/><circle cx="536" cy="610" r="48" fill="url(#glow)"/><ellipse cx="464" cy="610" rx="13" ry="9" fill="#fff"/><ellipse cx="536" cy="610" rx="13" ry="9" fill="#fff"/></g>
+</svg></div>
+
+<!-- E: noc + czerwone oczy -->
+<div class="v" id="E"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs><radialGradient id="ebg" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#1b2033"/><stop offset="1" stop-color="#05060a"/></radialGradient>
+ <linearGradient id="rimL" x1="0" x2="1"><stop offset="0" stop-color="#5d6a8a"/><stop offset="1" stop-color="#2a3044"/></linearGradient></defs>
+ <rect width="1000" height="1000" fill="url(#ebg)"/>
+ <g style="--hood:#0c0e14;--face:#000;--fold:#161a24;--rim:#7d8db5"><use href="#kap" x="180" y="250" width="640" height="640" transform="translate(0 60)"/></g>
+ <g transform="translate(0 60)"><circle cx="468" cy="557" r="46" fill="url(#rglow)"/><circle cx="532" cy="557" r="46" fill="url(#rglow)"/><ellipse cx="468" cy="557" rx="12" ry="8" fill="#fff"/><ellipse cx="532" cy="557" rx="12" ry="8" fill="#fff"/></g>
+ <rect x="0" y="0" width="1000" height="1000" fill="none" stroke="#D7263D" stroke-width="0"/>
+</svg></div>
+
+<!-- F: Kaptur w wizjerze (rybie oko) -->
+<div class="v" id="F"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <defs><radialGradient id="fl" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#cfd3c4"/><stop offset=".55" stop-color="#8b917f"/><stop offset="1" stop-color="#2a2d27"/></radialGradient>
+ <clipPath id="fc"><circle cx="500" cy="500" r="360"/></clipPath>
+ <linearGradient id="fb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9c77d"/><stop offset=".5" stop-color="#9a6b2a"/><stop offset="1" stop-color="#d9ad5c"/></linearGradient></defs>
+ <rect width="1000" height="1000" fill="#0a0b10"/>
+ <circle cx="500" cy="500" r="400" fill="url(#fb)"/><circle cx="500" cy="500" r="372" fill="#2a1d0e"/>
+ <g clip-path="url(#fc)"><rect width="1000" height="1000" fill="url(#fl)"/><rect y="640" width="1000" height="400" fill="#3a3d36"/>
+  <g style="--hood:#0d0f14;--face:#000;--fold:#1a1d25;--rim:#3a3f4c"><use href="#kap" x="170" y="260" width="660" height="660" transform="translate(0 60)"/></g>
+  <g transform="translate(0 60)"><circle cx="467" cy="557" r="44" fill="url(#glow)"/><circle cx="533" cy="557" r="44" fill="url(#glow)"/><ellipse cx="467" cy="557" rx="12" ry="8" fill="#fff"/><ellipse cx="533" cy="557" rx="12" ry="8" fill="#fff"/></g>
+  <circle cx="500" cy="500" r="360" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="120" style="filter:blur(20px)"/>
+ </g>
+ <path d="M300 330a250 250 0 0 1 110-100" stroke="rgba(255,255,255,.35)" stroke-width="14" fill="none" stroke-linecap="round"/>
+</svg></div>
+
+<!-- poziome: znak + napis -->
+<div class="v" id="HD"><svg width="1300" height="500" viewBox="0 0 1300 500">
+ <rect width="1300" height="500" fill="#07080d"/>
+ <clipPath id="hc"><circle cx="250" cy="250" r="190"/></clipPath>
+ <g clip-path="url(#hc)"><rect x="60" y="60" width="380" height="380" fill="#D7263D"/>
+  <g style="--hood:#111318;--face:#000;--fold:#1d2028;--rim:#2b2f3a"><use href="#kap" x="110" y="150" width="280" height="280" transform="translate(0 30)"/></g>
+  <g transform="translate(0 30)"><circle cx="236" cy="290" r="19" fill="url(#glow)"/><circle cx="264" cy="290" r="19" fill="url(#glow)"/><ellipse cx="236" cy="290" rx="5.5" ry="4" fill="#fff"/><ellipse cx="264" cy="290" rx="5.5" ry="4" fill="#fff"/></g></g>
+ <text x="500" y="268" font-family="Anton" font-size="190" fill="#F3EFE6" letter-spacing="6">PROTOKÓŁ</text>
+ <rect x="506" y="300" width="70" height="10" fill="#D7263D"/>
+ <text x="600" y="345" font-family="Anton" font-size="78" fill="#D7263D" letter-spacing="34">OCALENI</text>
+</svg></div>
+
+<!-- awatar z napisem (pod TikToka, gdzie nazwa i tak jest obok) -->
+<div class="v" id="DT"><svg width="1000" height="1000" viewBox="0 0 1000 1000">
+ <rect width="1000" height="1000" fill="#D7263D"/>
+ <g style="--hood:#111318;--face:#000;--fold:#1d2028;--rim:#2b2f3a"><use href="#kap" x="250" y="110" width="500" height="500"/></g>
+ <circle cx="476" cy="360" r="34" fill="url(#glow)"/><circle cx="524" cy="360" r="34" fill="url(#glow)"/><ellipse cx="476" cy="360" rx="9" ry="7" fill="#fff"/><ellipse cx="524" cy="360" rx="9" ry="7" fill="#fff"/>
+ <rect x="0" y="610" width="1000" height="390" fill="#07080d"/>
+ <text x="500" y="770" text-anchor="middle" font-family="Anton" font-size="150" fill="#F3EFE6" letter-spacing="6">PROTOKÓŁ</text>
+ <text x="500" y="868" text-anchor="middle" font-family="Anton" font-size="72" fill="#D7263D" letter-spacing="30">OCALENI</text>
+</svg></div>
+</body></html>
