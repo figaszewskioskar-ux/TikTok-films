@@ -227,25 +227,55 @@ function gymExit(c, lt) {
   c.fillStyle = '#1A1E2A'; c.fillRect(0, 1380, W, 540); c.fillStyle = '#DDE2EC'; c.fillRect(0, 1380, W, 30);
   const g = c.createRadialGradient(540, 500, 20, 540, 900, 800); g.addColorStop(0, 'rgba(255,250,230,.25)'); g.addColorStop(1, 'rgba(255,250,230,0)'); c.fillStyle = g; c.fillRect(0, 300, W, 1300);
 }
-// mapa dwóch dróg: ulica (oświetlona, 15 min) vs garaże (ciemno, 5 min)
+// mapa w aplikacji: kwartały bloków z nazwami ulic, park, sklep 24h, rząd garaży, latarnie (działające / zepsute),
+// ludzie na ulicy, niebieska kropka „Ty”, trasy rysują się po kolei, na dole karty wyboru trasy
 function routeMap(c, lt, pick) {
-  c.fillStyle = '#0F1320'; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#0B0E18'; c.fillRect(0, 0, W, H);
   bigPhone(c, (cc, x, y, w, h) => {
-    cc.fillStyle = '#1A2030'; cc.fillRect(x, y, w, h);
-    for (let i = 0; i < 9; i++) { cc.fillStyle = '#232B40'; cc.fillRect(x, y + 120 + i * 120, w, 50); cc.fillRect(x + 40 + i * 70, y, 30, h); }
-    // blok domu i hala
-    fillRR(cc, x + 60, y + 980, 120, 90, 10, '#1E5AA8'); txt(cc, 'HALA', x + 120, y + 1025, 22, '#fff', 900);
-    fillRR(cc, x + w - 180, y + 180, 120, 90, 10, '#30A46C'); txt(cc, 'DOM', x + w - 120, y + 225, 22, '#fff', 900);
-    const sx = x + 180, sy = y + 1020, ex = x + w - 180, ey = y + 230;
-    // trasa ulicą: dookoła, złota
-    cc.strokeStyle = '#F5C542'; cc.lineWidth = 14; cc.setLineDash([]); cc.beginPath(); cc.moveTo(sx, sy); cc.lineTo(x + w - 80, sy); cc.lineTo(x + w - 80, ey + 40); cc.lineTo(ex, ey + 40); cc.stroke();
-    fillRR(cc, x + w - 300, y + 640, 200, 70, 14, '#F5C542'); txt(cc, '15 min', x + w - 200, y + 665, 26, '#14161B', 900); txt(cc, 'światło, ludzie', x + w - 200, y + 695, 18, '#14161B', 800);
-    // skrót przez garaże: na skos, czerwony przerywany
-    cc.strokeStyle = '#E8343F'; cc.lineWidth = 14; cc.setLineDash([26, 18]); cc.beginPath(); cc.moveTo(sx, sy); cc.lineTo(ex, ey + 40); cc.stroke(); cc.setLineDash([]);
-    fillRR(cc, x + w / 2 - 150, y + 560, 200, 70, 14, '#E8343F'); txt(cc, '5 min', x + w / 2 - 50, y + 585, 26, '#fff', 900); txt(cc, 'GARAŻE · ciemno', x + w / 2 - 50, y + 615, 18, '#fff', 800);
-    if (pick) { const a = .5 + .5 * Math.sin(lt * 8); cc.strokeStyle = `rgba(255,255,255,${a})`; cc.lineWidth = 6; rr(cc, x + w / 2 - 160, y + 550, 220, 90, 18); cc.stroke(); }
-    // bateria
-    fillRR(cc, x + w - 130, y + 40, 90, 40, 8, '#2A2D36'); fillRR(cc, x + w - 126, y + 44, 10, 32, 4, '#E8343F'); txt(cc, '4%', x + w - 70, y + 61, 22, '#E8343F', 900);
+    cc.save(); cc.beginPath(); cc.rect(x, y, w, h); cc.clip();
+    cc.fillStyle = '#E9E6DE'; cc.fillRect(x, y, w, h); // tło mapy (tryb dzienny aplikacji, ciemny kadr filmu)
+    const hh = h - 400, X = v => x + v * w, Y = v => y + 160 + v * hh;
+    // park
+    fillRR(cc, X(.05), Y(.36), w * .32, hh * .17, 18, '#BFD8B0'); for (let i = 0; i < 9; i++) circ(cc, X(.09 + (i % 3) * .1), Y(.39 + Math.floor(i / 3) * .05), 12, '#9CC48A'); txt(cc, 'Park', X(.21), Y(.445), 20, '#4F7A42', 800);
+    // kwartały bloków
+    const blocks = [[.05, .08, .26, .2], [.36, .08, .24, .12], [.65, .08, .3, .2], [.42, .36, .2, .17], [.68, .36, .27, .17], [.05, .6, .3, .16], [.68, .6, .27, .16], [.05, .82, .26, .12]];
+    for (const [bx, by, bw, bh] of blocks) { fillRR(cc, X(bx), Y(by), w * bw, hh * bh, 10, '#D7D2C6'); for (let i = 0; i < 3; i++) fillRR(cc, X(bx) + 14 + i * (w * bw - 28) / 3, Y(by) + 14, (w * bw - 28) / 3 - 10, hh * bh - 28, 6, '#CBC5B6'); }
+    // ulice (białe) z nazwami
+    cc.fillStyle = '#FFFFFF'; cc.fillRect(X(.31), y, w * .05, h); cc.fillRect(X(.62), y, w * .06, h); cc.fillRect(x, Y(.29), w, hh * .07); cc.fillRect(x, Y(.54), w, hh * .06); cc.fillRect(x, Y(.77), w, hh * .05);
+    cc.save(); cc.translate(X(.335), Y(.7)); cc.rotate(-Math.PI / 2); txt(cc, 'ul. Długa', 0, 0, 18, '#8A8F9A', 800); cc.restore();
+    txt(cc, 'ul. Kasztanowa', X(.82), Y(.325), 18, '#8A8F9A', 800); txt(cc, 'ul. Szkolna', X(.18), Y(.57), 18, '#8A8F9A', 800);
+    // rząd garaży między halą a domem
+    for (let i = 0; i < 7; i++) fillRR(cc, X(.4) + i * 30, Y(.62), 26, 40, 3, i === 3 ? '#C9A08A' : '#A9AEB8'); txt(cc, 'GARAŻE', X(.52), Y(.705), 18, '#6E7380', 900);
+    // hala, sklep, dom
+    fillRR(cc, X(.07), Y(.83), w * .22, hh * .09, 12, '#1E5AA8'); txt(cc, 'HALA', X(.18), Y(.875), 24, '#fff', 900);
+    fillRR(cc, X(.7), Y(.62), w * .14, hh * .06, 10, '#30A46C'); txt(cc, '24h', X(.77), Y(.65), 20, '#fff', 900);
+    fillRR(cc, X(.7), Y(.12), w * .22, hh * .1, 12, '#2E2E3A'); txt(cc, 'DOM', X(.81), Y(.17), 24, '#fff', 900);
+    const P = (a, b) => [X(a), Y(b)];
+    const street = [P(.18, .83), P(.18, .795), P(.65, .795), P(.65, .325), P(.81, .325), P(.81, .22)];
+    const cut = [P(.18, .83), P(.38, .68), P(.58, .6), P(.58, .42), P(.74, .24), P(.81, .22)];
+    function path(pts, prog, col, wdt, dash) { const L = []; let tot = 0; for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); L.push(d); tot += d; }
+      let left = tot * prog; cc.strokeStyle = col; cc.lineWidth = wdt; cc.lineCap = 'round'; cc.lineJoin = 'round'; cc.setLineDash(dash || []); cc.beginPath(); cc.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length && left > 0; i++) { const f = Math.min(1, left / L[i - 1]); cc.lineTo(lerp(pts[i - 1][0], pts[i][0], f), lerp(pts[i - 1][1], pts[i][1], f)); left -= L[i - 1]; } cc.stroke(); cc.setLineDash([]); }
+    const p1 = eio(clamp((lt - .3) / 2)), p2 = eio(clamp((lt - 2.8) / 1.6));
+    path(street, p1, 'rgba(0,0,0,.15)', 18); path(street, p1, '#2F7BF6', 12);
+    path(cut, p2, '#E8343F', 10, [18, 14]);
+    // latarnie: na ulicy świecą, przy garażach zepsute
+    if (p1 > .3) for (const [lx, ly] of [[.3, .79], [.5, .79], [.66, .65], [.66, .45], [.76, .32]]) { cc.save(); cc.globalAlpha = clamp((p1 - .3) * 3); circ(cc, X(lx), Y(ly), 14, 'rgba(255,200,80,.45)'); circ(cc, X(lx), Y(ly), 6, '#F5B82E'); cc.restore(); }
+    if (p2 > .3) for (const [lx, ly] of [[.45, .65], [.58, .5]]) { cc.save(); cc.globalAlpha = clamp((p2 - .3) * 3); circ(cc, X(lx), Y(ly), 8, '#8A8F9A'); cc.strokeStyle = '#E8343F'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(X(lx) - 7, Y(ly) - 7); cc.lineTo(X(lx) + 7, Y(ly) + 7); cc.moveTo(X(lx) + 7, Y(ly) - 7); cc.lineTo(X(lx) - 7, Y(ly) + 7); cc.stroke(); cc.restore(); }
+    // ludzie na ulicy
+    if (p1 > .6) for (const [px, py] of [[.42, .81], [.68, .5]]) { circ(cc, X(px), Y(py) - 10, 6, '#4A4F5C'); fillRR(cc, X(px) - 6, Y(py) - 4, 12, 16, 5, '#4A4F5C'); }
+    // niebieska kropka „Ty”
+    const pu = .5 + .5 * Math.sin(lt * 5); circ(cc, X(.18), Y(.83), 22 + pu * 10, 'rgba(47,123,246,.2)'); circ(cc, X(.18), Y(.83), 12, '#fff'); circ(cc, X(.18), Y(.83), 8, '#2F7BF6');
+    // pasek wyszukiwania i bateria
+    fillRR(cc, x + 24, y + 70, w - 48, 70, 35, '#FFFFFF'); txt(cc, '🔍  Dom · Kasztanowa 12', x + 60, y + 105, 24, '#2A2D36', 700, 'left');
+    txt(cc, '21:48', x + 40, y + 34, 22, '#2A2D36', 900, 'left'); fillRR(cc, x + w - 110, y + 20, 70, 28, 6, '#2A2D36'); fillRR(cc, x + w - 106, y + 24, 6, 20, 2, '#E8343F'); txt(cc, '4%', x + w - 64, y + 35, 18, '#E8343F', 900);
+    // karty wyboru trasy
+    const cy0 = y + h - 230; fillRR(cc, x, cy0, w, 230, 30, '#FFFFFF');
+    const opt = (ox, title, sub, col, sel) => { fillRR(cc, ox, cy0 + 30, w / 2 - 36, 170, 20, sel ? col : '#F1F2F5'); txt(cc, title, ox + (w / 2 - 36) / 2, cy0 + 90, 40, sel ? '#fff' : col, 900); txt(cc, sub, ox + (w / 2 - 36) / 2, cy0 + 140, 18, sel ? '#fff' : '#6E7380', 800); };
+    opt(x + 24, '15 min', 'ulicą · światło, ludzie', '#2F7BF6', false); opt(x + w / 2 + 12, '5 min', 'garaże · nieoświetlone', '#E8343F', pick);
+    if (lt > 3.8 && lt < 5.0) { const a = clamp((lt - 3.8) / .3), fx = x + w * .75, fy = cy0 + 120; cc.save(); cc.globalAlpha = a; circ(cc, fx, fy, 30 + (lt - 4.4 > 0 ? (lt - 4.4) * 60 : 0), 'rgba(0,0,0,.12)'); circ(cc, fx, fy, 18, 'rgba(40,40,50,.55)'); cc.restore(); }
+    if (pick) { fillRR(cc, x + 30, y + 150, w - 60, 60, 16, '#E8343F'); txt(cc, '⚠ Trasa przez nieoświetlony teren', x + w / 2, y + 180, 22, '#fff', 900); }
+    cc.restore();
   }, 1, 300);
 }
 // pokój Mai: okno na garaże, biurko z lampką, plakat koszykówki, łóżko, dywan, kaloryfer, torba sportowa
@@ -292,6 +322,8 @@ scene({
     person(c, 'maja', 320, 1660, 2.0, { t: lt, look: 1, talk: talking(sc, 'maja', lt), phone: lt > 8 ? 2 : 0, aR: lt > 8 ? 2.0 : null });
     person(c, 'zuzia', 780, 1660, 2.0, { t: lt, look: -1, talk: talking(sc, 'zuzia', lt), wide: lt > 5 });
     fillRR(c, 120, 1500, 220, 110, 30, '#1E5AA8'); txt(c, 'MAJA · 7', 230, 1560, 24, '#fff', 900); // torba
+    circ(c, 560, 1620, 40, '#E8833A'); c.strokeStyle = '#3A2010'; c.lineWidth = 4; c.beginPath(); c.arc(560, 1620, 40, 0, 7); c.moveTo(520, 1620); c.lineTo(600, 1620); c.moveTo(560, 1580); c.lineTo(560, 1660); c.stroke();
+    c.save(); c.globalAlpha = .45; person(c, 'kurier', 650, 1120, 1.0, { t: lt, still: true, aR: 2.3 + Math.sin(lt * 4) * .3 }); c.restore();
     night(c, .25, [{ x: 540, y: 800, r: 900, a: .7 }]);
     if (lt > 8.2) { const a = clamp((lt - 8.2) / .3); c.save(); c.globalAlpha = a; fillRR(c, 90, 300, 900, 150, 24, 'rgba(30,32,42,.96)'); txt(c, 'Bateria: 4%', 140, 350, 34, '#FF5A66', 900, 'left'); txt(c, 'Włącz tryb oszczędzania energii', 140, 405, 26, '#AEB0C2', 700, 'left'); c.restore(); }
   },
@@ -324,16 +356,16 @@ scene({
   cam: lt => { const sh = lt > 9.0 && lt < 9.6 ? (9.6 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   draw(c, lt) {
     garagesBg(c, lt, { first: 15, scroll: lt * 200, lampOff: lt > 6 });
-    const fx = lt > 2 ? lerp(-200, 120, clamp((lt - 2) / 6)) : -300;
+    const fx = lt > 2 ? lerp(-200, 120, clamp((lt - 2) / 6)) : -300, gone = lt > 10.4 ? clamp((lt - 10.4) / .8) : 0;
     // odbicie w kałuży: postać za Mają
     c.save(); c.translate(0, 3240); c.scale(1, -1); c.globalAlpha = .3; person(c, 'obcy', fx, 1620, 1.8, { t: lt, walk: lt * 9 }); c.restore();
-    person(c, 'obcy', fx, 1620, 1.8, { t: lt, walk: lt * 9, alpha: lt > 4 ? .9 : .0 });
-    person(c, 'maja', 620, 1700, 2.0, { t: lt, walk: lt * 14, look: lt > 4.2 && lt < 5.4 ? -1 : 1, wide: true, mouth: 'o', phone: 2, aR: 1.6 });
+    person(c, 'obcy', fx, 1620, 1.8, { t: lt, walk: lt * 9, alpha: lt > 4 ? .9 * (1 - gone) : .0 });
+    const back2 = lt > 10.4; person(c, 'maja', back2 ? lerp(620, -200, clamp((lt - 10.6) / 2.4)) : 620, 1700, 2.0, { t: lt, walk: lt * 14, look: back2 ? -1 : (lt > 4.2 && lt < 5.4 ? -1 : 1), wide: true, mouth: 'o', phone: back2 ? 0 : 2, aR: back2 ? null : 1.6 });
     // brama z kłódką na końcu
     if (lt > 8.2) { const a = clamp((lt - 8.2) / .4); c.save(); c.globalAlpha = a; c.strokeStyle = '#8A939E'; c.lineWidth = 10; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(780 + i * 34, 1000); c.lineTo(780 + i * 34, 1420); c.stroke(); } c.fillRect(770, 1000, 300, 12); fillRR(c, 900, 1180, 50, 60, 10, '#C9A15A'); c.restore(); }
     night(c, lt > 6 ? .82 : .6, [{ x: 620, y: 1300, r: 420, a: .8, tint: 'rgba(170,210,255,.08)' }]);
   },
-  post(c, lt) { if (lt > 0.4 && lt < 3.4) label(c, 'KROKI', 540, 300, 'dark', 48, lt - .4, 3.4 - lt); if (lt > 5.2 && lt < 7.6) label(c, 'TELEFON: 1% · WYŁĄCZA SIĘ', 540, 300, 'red', 40, lt - 5.2, 7.6 - lt); if (lt > 8.4) label(c, 'BRAMA ZAMKNIĘTA', 540, 300, 'red', 48, lt - 8.4, 14 - lt); },
+  post(c, lt) { if (lt > 0.4 && lt < 3.4) label(c, 'KROKI', 540, 300, 'dark', 48, lt - .4, 3.4 - lt); if (lt > 5.2 && lt < 7.6) label(c, 'TELEFON: 1% · WYŁĄCZA SIĘ', 540, 300, 'red', 40, lt - 5.2, 7.6 - lt); if (lt > 8.4 && lt < 10.4) label(c, 'BRAMA ZAMKNIĘTA', 540, 300, 'red', 48, lt - 8.4, 10.4 - lt); if (lt > 10.8) label(c, 'ZAWRACA. DO ŚWIATEŁ ULICY.', 540, 300, 'yellow', 42, lt - 10.8, 14 - lt); },
 });
 // 5. SKLEP: Maja wraca na oświetloną ulicę i wpada do sklepu 24h. Kasjerka dzwoni na 112. (ZASADA)
 scene({

@@ -1,13 +1,3 @@
-wydłużono x1.21: 97.6 s -> 118.0 s
-hook       6.0s ->   6.9s
-gym       12.0s ->  14.8s
-choice    10.0s ->  13.6s
-garages   16.0s ->  18.7s
-chase     14.0s ->  19.0s
-shop      14.0s ->  14.1s
-mama      12.0s ->  11.6s
-end       20.0s ->  19.2s
-RAZEM 118.0 s
 ok bed
 ok wind
 ok boom
@@ -27,18 +17,18 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3540 klatek, 14 s
-600/3540 klatek, 42 s
-900/3540 klatek, 68 s
-1200/3540 klatek, 97 s
-1500/3540 klatek, 132 s
-1800/3540 klatek, 167 s
-2100/3540 klatek, 196 s
-2400/3540 klatek, 224 s
-2700/3540 klatek, 253 s
-3000/3540 klatek, 285 s
-3300/3540 klatek, 315 s
-Gotowe w 355 s
+300/3540 klatek, 16 s
+600/3540 klatek, 44 s
+900/3540 klatek, 73 s
+1200/3540 klatek, 106 s
+1500/3540 klatek, 140 s
+1800/3540 klatek, 173 s
+2100/3540 klatek, 204 s
+2400/3540 klatek, 233 s
+2700/3540 klatek, 261 s
+3000/3540 klatek, 290 s
+3300/3540 klatek, 323 s
+Gotowe w 371 s
 audio.wav OK 118 s
 Gotowe: /home/user/TikTok-films/film/skrot1/out/final.mp4
 EXIT 0

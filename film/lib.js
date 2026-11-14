@@ -256,7 +256,10 @@ function person(c, kind, x, y, s, o = {}) {
     if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
     if (kind === 'zuzia') { circ(c, 0, hy - 4, 57, '#C2562B'); circ(c, 56, hy - 30, 22, '#C2562B'); circ(c, -56, hy - 30, 22, '#C2562B'); }
-    if (kind === 'maja') { circ(c, 0, hy - 4, 57, '#E2B84E'); fillRR(c, -56, hy - 10, 112, 64, 24, '#E2B84E'); c.save(); c.translate(back_ ? 0 : 50, hy - 50); c.rotate(-.7 + Math.sin(t * 3) * .12); fillRR(c, -15, -6, 30, 92, 15, '#D4A93F'); c.restore(); }
+    if (kind === 'maja') { // kucyk za głową: łezka od czubka w prawo i w dół, kołysze się
+      const sw = Math.sin(t * 3) * .1; c.save(); c.translate(back_ ? 0 : 30, hy - 52); c.rotate((back_ ? 0 : -.55) + sw);
+      c.fillStyle = '#D9AE45'; c.beginPath(); c.moveTo(-16, 0); c.bezierCurveTo(-30, 50, -18, 104, 0, 128); c.bezierCurveTo(18, 104, 30, 50, 16, 0); c.closePath(); c.fill();
+      c.strokeStyle = 'rgba(150,110,30,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(-4, 14); c.quadraticCurveTo(-10, 70, 0, 118); c.moveTo(6, 14); c.quadraticCurveTo(10, 70, 2, 112); c.stroke(); c.restore(); }
     if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
     if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina' && kind !== 'zuzia' && kind !== 'maja') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
     circ(c, 0, hy, 50, k.skin);
@@ -327,9 +330,15 @@ function person(c, kind, x, y, s, o = {}) {
     } else if (kind === 'zuzia') { // rude włosy z dwoma kokami i grzywką
       c.beginPath(); c.arc(0, hy - 24, 50, Math.PI, 0); c.fillStyle = '#C2562B'; c.fill(); fillRR(c, -48, hy - 34, 70, 18, 9, '#C2562B');
       circ(c, -40, hy - 66, 20, '#A8451F'); circ(c, 40, hy - 66, 20, '#A8451F');
-    } else if (kind === 'maja') { // blond włosy z grzywką i wysokim kucykiem, czerwona gumka
-      c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#E2B84E'; c.fill(); fillRR(c, -10, hy - 36, 62, 18, 9, '#E2B84E');
-      circ(c, back_ ? 0 : 44, hy - 58, 10, '#D7263D');
+    } else if (kind === 'maja') { // blond: czepek włosów, pasma do linii uszu, zaczesana na bok grzywka, czerwona gumka
+      if (back_) { circ(c, 0, hy - 2, 53, '#E2B84E'); c.strokeStyle = 'rgba(150,110,30,.3)'; c.lineWidth = 3; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(i * 14, hy - 50); c.quadraticCurveTo(i * 18, hy - 10, i * 16, hy + 30); c.stroke(); } circ(c, 0, hy - 52, 11, '#D7263D'); }
+      else {
+        c.fillStyle = '#E2B84E'; c.beginPath(); c.arc(0, hy - 6, 54, Math.PI * 1.02, Math.PI * 1.98); c.lineTo(52, hy + 14); c.lineTo(44, hy + 14); c.lineTo(42, hy - 10); c.lineTo(-42, hy - 10); c.lineTo(-44, hy + 14); c.lineTo(-52, hy + 14); c.closePath(); c.fill();
+        c.beginPath(); c.moveTo(-46, hy - 14); c.bezierCurveTo(-30, hy - 46, 10, hy - 52, 46, hy - 30); c.bezierCurveTo(30, hy - 30, 0, hy - 24, -22, hy - 8); c.closePath(); c.fill(); // grzywka
+        c.strokeStyle = 'rgba(150,110,30,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(-30, hy - 40); c.quadraticCurveTo(0, hy - 46, 30, hy - 36); c.moveTo(-36, hy - 30); c.quadraticCurveTo(-6, hy - 38, 26, hy - 30); c.stroke();
+        c.fillStyle = 'rgba(255,240,190,.35)'; c.beginPath(); c.ellipse(-18, hy - 44, 16, 6, -.3, 0, 7); c.fill(); // połysk
+        circ(c, 32, hy - 52, 10, '#D7263D');
+      }
     } else if (kind === 'obcy') { // czarna czapka z wywinięciem, zarost
       c.beginPath(); c.arc(0, hy - 14, 54, Math.PI, 0); c.fillStyle = '#151619'; c.fill(); fillRR(c, -56, hy - 24, 112, 22, 8, '#22242A');
       if (!back_) { c.fillStyle = 'rgba(40,30,25,.35)'; for (let i = 0; i < 26; i++) { const a2 = Math.PI * (.15 + .7 * hash(i)), r2 = 30 + hash(i + 3) * 16; c.fillRect(Math.cos(a2) * r2 - 1, hy + 6 + Math.sin(a2) * r2 * .8, 3, 3); } }
