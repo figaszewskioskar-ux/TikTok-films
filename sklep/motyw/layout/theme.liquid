@@ -8,7 +8,7 @@
   {%- if page_description != blank and request.page_type != 'index' -%}{%- assign b94_desc = page_description -%}{%- endif -%}
   <meta name="description" content="{{ b94_desc | escape }}">
   <link rel="canonical" href="{{ canonical_url }}">
-  {%- if settings.favicon != blank -%}<link rel="icon" href="{{ settings.favicon | image_url: width: 64 }}">{%- else -%}<link rel="icon" href="{{ 'logo_kwadrat.png' | asset_url }}">{%- endif -%}
+  <link rel="icon" type="image/png" href="{{ 'blok94-favicon.png' | asset_url }}"><link rel="apple-touch-icon" href="{{ 'blok94-apple-icon.png' | asset_url }}">
   {%- assign b94_title = page_title -%}{%- if request.page_type == 'index' -%}{%- assign b94_title = 'BLOK 94 · Kto tam? Nie otwieraj!' -%}{%- endif -%}
   <meta property="og:site_name" content="{{ shop.name | escape }}">
   <meta property="og:type" content="website">
@@ -35,6 +35,13 @@
     @media(max-width:420px){.po-sup{padding:9px 11px;font-size:13px}.po-play .pl-t{display:none}}
     /* nagłówek i stopka: spokojniej, jeden język przycisków */
     html body .po-sup{border-radius:10px;box-shadow:none;font-weight:700}
+    /* nowe logo: awatar Ola, Kuba i Kaptur */
+    html body .po-logo{display:inline-flex!important;align-items:center;gap:10px;text-decoration:none;background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+    html body .po-logo::before,html body .po-logo::after{display:none!important;content:none!important}
+    .po-av{width:46px;height:46px;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 2px #d7263d,0 4px 14px rgba(0,0,0,.5);flex:none}
+    .po-nm{font:400 19px/.95 Anton,Impact,sans-serif;color:#f3efe6;letter-spacing:.04em;text-transform:uppercase;display:flex;flex-direction:column}
+    .po-nm b{font:400 11px/1.2 Anton,Impact,sans-serif;color:#ff2a44;letter-spacing:.38em;margin-top:3px}
+    @media(max-width:599px){.po-nm{display:none}}
   </style>
   {{ content_for_header }}
 </head>
@@ -42,8 +49,7 @@
   <header class="po-head">
     <div class="po-w">
       <a class="po-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-        {%- if settings.logo != blank -%}<img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="160" height="64">
-        {%- else -%}<span class="po-lg">Protokół<b>Ocaleni</b></span>{%- endif -%}
+        <img class="po-av" src="{{ 'blok94-awatar.jpg' | asset_url }}" alt="" width="46" height="46"><span class="po-nm">Protokół<b>Ocaleni</b></span>
       </a>
       <nav class="po-nav" aria-label="Menu">
         {%- assign menu = linklists['main-menu'] -%}
