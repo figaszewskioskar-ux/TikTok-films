@@ -1,0 +1,45 @@
+wydłużono x1.16: 102.0 s -> 118.0 s
+hook       6.0s ->   5.3s
+recap      6.0s ->   5.3s
+bus       14.0s ->  13.9s
+walk      16.0s ->  18.1s
+entrance  12.0s ->  13.3s
+switch    14.0s ->  12.2s
+call      14.0s ->  16.2s
+police    14.0s ->  12.8s
+end       22.0s ->  20.9s
+RAZEM 118.0 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/3540 klatek, 17 s
+600/3540 klatek, 44 s
+900/3540 klatek, 72 s
+1200/3540 klatek, 103 s
+1500/3540 klatek, 137 s
+1800/3540 klatek, 169 s
+2100/3540 klatek, 197 s
+2400/3540 klatek, 231 s
+2700/3540 klatek, 266 s
+3000/3540 klatek, 305 s
+3300/3540 klatek, 338 s
+Gotowe w 387 s
+audio.wav OK 118 s
+Gotowe: /home/user/TikTok-films/film/n94e3/out/final.mp4
+EXIT 0
