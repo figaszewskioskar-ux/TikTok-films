@@ -1,0 +1,44 @@
+wydłużono x1.24: 94.9 s -> 118.0 s
+hook       6.0s ->   6.3s
+recap      6.0s ->   7.0s
+msg       14.0s ->  16.3s
+school    12.0s ->  12.6s
+garage    18.0s ->  21.3s
+police    16.0s ->  16.2s
+inside    14.0s ->  15.7s
+end       20.0s ->  22.7s
+RAZEM 118.0 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/3540 klatek, 13 s
+600/3540 klatek, 36 s
+900/3540 klatek, 62 s
+1200/3540 klatek, 88 s
+1500/3540 klatek, 113 s
+1800/3540 klatek, 139 s
+2100/3540 klatek, 168 s
+2400/3540 klatek, 192 s
+2700/3540 klatek, 216 s
+3000/3540 klatek, 243 s
+3300/3540 klatek, 269 s
+Gotowe w 302 s
+audio.wav OK 118 s
+Gotowe: /home/user/TikTok-films/film/skrot2/out/final.mp4
+EXIT 0
