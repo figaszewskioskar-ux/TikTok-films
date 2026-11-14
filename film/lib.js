@@ -206,6 +206,11 @@ function person(c, kind, x, y, s, o = {}) {
     circ(c, -78, -110, 13, k.skin); circ(c, 78, -110, 13, k.skin);
   }
   if (o.bag) { ell(c, hr[0] + 6, hr[1] + 40, 34, 42, '#121317'); c.fillStyle = '#121317'; c.fillRect(hr[0] - 4, hr[1], 12, 14); }
+  if (o.duffel) { // torba sportowa: niebieska, pasek w dłoni, napis klubu
+    c.save(); c.translate(hr[0], hr[1]); c.scale(.72, .72); c.translate(-hr[0], -hr[1]);
+    c.strokeStyle = '#16478A'; c.lineWidth = 7; c.beginPath(); c.moveTo(hr[0] - 30, hr[1] + 40); c.quadraticCurveTo(hr[0], hr[1] - 10, hr[0] + 34, hr[1] + 40); c.stroke();
+    fillRR(c, hr[0] - 70, hr[1] + 34, 150, 74, 32, '#1E5AA8'); fillRR(c, hr[0] - 70, hr[1] + 64, 150, 10, 4, '#16478A'); circ(c, hr[0] - 66, hr[1] + 70, 12, '#16478A'); circ(c, hr[0] + 76, hr[1] + 70, 12, '#16478A');
+    txt(c, 'KS SOKÓŁ', hr[0] + 5, hr[1] + 54, 13, '#FFFFFF', 900); fillRR(c, hr[0] + 40, hr[1] + 80, 26, 18, 3, '#F5C542'); c.restore(); }
   if (o.keys) {
     c.strokeStyle = '#CFD3D8'; c.lineWidth = 3; c.beginPath(); c.arc(hr[0], hr[1] + 16, 8, 0, 7); c.stroke();
     fillRR(c, hr[0] - 3, hr[1] + 22, 6, 18, 2, '#CFD3D8');
