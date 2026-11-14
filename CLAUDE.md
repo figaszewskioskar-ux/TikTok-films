@@ -55,5 +55,6 @@
 - Pliki generowane lokalnie (bez kredytów ElevenLabs), skrypt: patrz historia commitów „własny zestaw dźwięków grozy”.
 
 ## Wzór wirala (BLOK 94 odc. 2, 580+ tys.)
+- **Bez przypomnień z poprzedniego odcinka** (żadnych scen „Poprzednio…”). Każda część zaczyna się od haka i od razu jest kontynuacją historii.
 - Każdy nowy film budujemy według `film/WZOR_WIRALA.md`: hak z jednym przedmiotem z bliska i zakazem sprzecznym z intuicją, bez „Poprzednio” na starcie,
   jedna bohaterka i jedno miejsce, ujęcia z oczu bohaterki, nowa informacja co 5–8 s, zakończenie patrzy prosto w widza.
