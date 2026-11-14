@@ -194,10 +194,13 @@ function garagesBg(c, lt, o = {}) {
   for (let i = -1; i < 5; i++) {
     const gx = i * 300 - (off % 300), num = first + i + Math.floor(off / 300);
     c.fillStyle = '#3A404C'; c.fillRect(gx, 860, 300, 520);
-    const open = o.open13 && num === 13 ? o.open13 : 0;
+    const open = (o.open13 && num === 13 ? o.open13 : 0) || (o.openNum === num ? o.openAmt : 0), inside = num === 13 ? o.inside13 : o.insideN, darkIn = o.openNum === num && o.darkInside;
     // drzwi blaszane z przetłoczeniami
     const dh = 420 * (1 - open);
-    if (open > 0) { c.fillStyle = o.inside13 ? '#E8C27A' : '#05060A'; c.fillRect(gx + 30, 940, 240, 420); if (o.inside13) o.inside13(c, gx + 150, 1360); }
+    if (open > 0) { c.fillStyle = inside && !darkIn ? '#E8C27A' : '#07080C'; c.fillRect(gx + 30, 940, 240, 420);
+      if (inside && !darkIn) { for (let k = 0; k < 4; k++) fillRR(c, gx + 40 + k * 56, 960, 44, 20, 3, '#B89A60'); fillRR(c, gx + 200, 1180, 56, 180, 6, '#6A5640'); circ(c, gx + 228, 1220, 6, '#2A2D36'); c.strokeStyle = '#3A3020'; c.lineWidth = 3; c.beginPath(); c.moveTo(gx + 150, 940); c.lineTo(gx + 150, 990); c.stroke(); circ(c, gx + 150, 998, 12, '#FFF3C4');
+        const g = c.createRadialGradient(gx + 150, 1000, 6, gx + 150, 1200, 330); g.addColorStop(0, 'rgba(255,220,140,.6)'); g.addColorStop(1, 'rgba(255,220,140,0)'); c.fillStyle = g; c.fillRect(gx - 200, 900, 700, 700); }
+      if (inside) inside(c, gx + 150, 1360); }
     const dg = c.createLinearGradient(gx + 30, 0, gx + 270, 0); dg.addColorStop(0, num === 13 ? '#5E5248' : '#6E7682'); dg.addColorStop(1, num === 13 ? '#4A4038' : '#58606C');
     c.fillStyle = dg; c.fillRect(gx + 30, 940, 240, dh);
     c.fillStyle = 'rgba(0,0,0,.18)'; for (let k = 0; k < 8; k++) c.fillRect(gx + 30, 950 + k * 52, 240, 6);
@@ -298,14 +301,13 @@ function keyTag(c, x, y, s = 1, a = 1) { c.save(); c.globalAlpha = a; c.translat
   c.rotate(.5); fillRR(c, -90, -30, 70, 90, 10, '#E8343F'); txt(c, '13', -55, 15, 40, '#fff', 900); c.restore(); }
 
 // ===================== SCENY =====================
-// 0. HAK: w głębi garaży stoi ktoś. Maja idzie prosto na niego.
+// 0. HAK: w głębi garaży, w oświetlonym garażu 13, stoi ktoś i się uśmiecha. Maja idzie prosto tam.
 scene({
   name: 'hook', start: 0, end: 6,
   draw(c, lt) {
-    garagesBg(c, lt, { first: 11, open13: .35 });
-    person(c, 'obcy', 540, 1380, 1.4, { t: lt, mouth: 'grin', still: true, glow: 0 });
+    garagesBg(c, lt, { first: 11, open13: .9, noBin: true, inside13: (cc, gx, gy) => person(cc, 'obcy', gx, gy, 1.5, { t: lt, mouth: 'grin', still: true, aR: lt > 3 ? 2.3 + Math.sin(lt * 5) * .4 : null }) });
     person(c, 'maja', 300, 1760, 2.2, { t: lt, back: true, walk: lt * 8 });
-    night(c, .7, [{ x: 945, y: 1100, r: 420, a: .8 }, { x: 540, y: 1250, r: 180, a: .5 }]);
+    night(c, .7, [{ x: 750, y: 1150, r: 420, a: .95 }, { x: 945, y: 1100, r: 300, a: .6 }]);
     bigSign(c, lt, 'NIE IDŹ', 'NA SKRÓTY!', 420);
   },
   post(c, lt) { if (lt > 2.4) label(c, 'NOWA SERIA · SKRÓTEM', 540, 640, 'yellow', 40, lt - 2.4, 9); },
@@ -350,22 +352,54 @@ scene({
   },
   post(c, lt) { if (lt > 12.6 && lt < 14.6) label(c, 'SKĄD ZNA JEJ IMIĘ?', 540, 300, 'red', 44, lt - 12.6, 14.6 - lt); if (lt > 13.6) card(c, 70, 1460, 860, 'BŁĄD 2', 'nikt nie wiedział, którędy idzie,\na telefon miał 4% baterii', lt - 13.6, '#F39C12', 40); },
 });
-// 4. POŚCIG: kroki z tyłu, w kałuży odbicie, brama zamknięta. Telefon gaśnie.
+// 4. POŚCIG: Obcy idzie za nią — wolno, pewnie. Na końcu garaży brama na kłódkę. Maja szarpie, odwraca się:
+// on stoi i się uśmiecha. Wchodzi do ciemnego garażu 21. Maja przebiega obok — z ciemności patrzą jego oczy.
+function gate(c, lt, shake) {
+  const sx = Math.sin(lt * 60) * shake * 8;
+  c.save(); c.translate(sx, 0);
+  c.fillStyle = '#4A505C'; c.fillRect(760, 900, 22, 520); c.fillRect(1060, 900, 22, 520); // słupki
+  fillRR(c, 782, 930, 278, 16, 3, '#7E8794'); fillRR(c, 782, 1380, 278, 14, 3, '#7E8794'); fillRR(c, 782, 1150, 278, 12, 3, '#7E8794');
+  c.strokeStyle = '#8E97A4'; c.lineWidth = 9; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(800 + i * 31, 940); c.lineTo(800 + i * 31, 1386); c.stroke(); }
+  c.lineWidth = 12; c.beginPath(); c.moveTo(790, 1380); c.lineTo(1050, 940); c.stroke(); // ukośne wzmocnienie
+  c.strokeStyle = '#6E7682'; c.lineWidth = 3; for (let i = 0; i < 14; i++) { c.beginPath(); c.moveTo(770 + i * 22, 900); c.lineTo(780 + i * 22, 884); c.lineTo(790 + i * 22, 900); c.stroke(); } // drut kolczasty
+  c.strokeStyle = '#C9CDD2'; c.lineWidth = 6; for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(900 + i * 14, 1160 + (i % 2) * 6, 9, 6, .5, 0, 7); c.stroke(); } // łańcuch
+  fillRR(c, 930, 1170, 44, 54, 8, '#C9A15A'); c.strokeStyle = '#C9A15A'; c.lineWidth = 6; c.beginPath(); c.arc(952, 1170, 14, Math.PI, 0); c.stroke(); circ(c, 952, 1196, 5, '#2A2D36');
+  fillRR(c, 800, 990, 240, 80, 6, '#E8E4DA'); txt(c, 'TEREN PRYWATNY', 920, 1018, 22, '#D7263D', 900); txt(c, 'ZAKAZ PRZEJŚCIA', 920, 1048, 20, '#14161B', 900);
+  c.restore();
+}
 scene({
   name: 'chase', start: 44, end: 58,
-  cam: lt => { const sh = lt > 9.0 && lt < 9.6 ? (9.6 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
+  cam: lt => { const sh = lt > 9.4 && lt < 9.9 ? (9.9 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   draw(c, lt) {
-    garagesBg(c, lt, { first: 15, scroll: lt * 200, lampOff: lt > 6 });
-    const fx = lt > 2 ? lerp(-200, 120, clamp((lt - 2) / 6)) : -300, gone = lt > 10.4 ? clamp((lt - 10.4) / .8) : 0;
-    // odbicie w kałuży: postać za Mają
-    c.save(); c.translate(0, 3240); c.scale(1, -1); c.globalAlpha = .3; person(c, 'obcy', fx, 1620, 1.8, { t: lt, walk: lt * 9 }); c.restore();
-    person(c, 'obcy', fx, 1620, 1.8, { t: lt, walk: lt * 9, alpha: lt > 4 ? .9 * (1 - gone) : .0 });
-    const back2 = lt > 10.4; person(c, 'maja', back2 ? lerp(620, -200, clamp((lt - 10.6) / 2.4)) : 620, 1700, 2.0, { t: lt, walk: lt * 14, look: back2 ? -1 : (lt > 4.2 && lt < 5.4 ? -1 : 1), wide: true, mouth: 'o', phone: back2 ? 0 : 2, aR: back2 ? null : 1.6 });
-    // brama z kłódką na końcu
-    if (lt > 8.2) { const a = clamp((lt - 8.2) / .4); c.save(); c.globalAlpha = a; c.strokeStyle = '#8A939E'; c.lineWidth = 10; for (let i = 0; i < 9; i++) { c.beginPath(); c.moveTo(780 + i * 34, 1000); c.lineTo(780 + i * 34, 1420); c.stroke(); } c.fillRect(770, 1000, 300, 12); fillRR(c, 900, 1180, 50, 60, 10, '#C9A15A'); c.restore(); }
-    night(c, lt > 6 ? .82 : .6, [{ x: 620, y: 1300, r: 420, a: .8, tint: 'rgba(170,210,255,.08)' }]);
+    const stop = 7.0, scroll = Math.min(lt, stop) * 200;
+    const intoGarage = lt > 10.6 ? clamp((lt - 10.6) / 1.0) : 0;
+    garagesBg(c, lt, { first: 15, scroll, lampOff: lt > 5.2, noBin: true, openNum: 21, openAmt: lt > 9.8 ? clamp((lt - 9.8) / .8) * .92 : 0, darkInside: true,
+      insideN: (cc, gx, gy) => { if (intoGarage >= 1) { cc.save(); cc.shadowColor = 'rgba(255,255,255,.9)'; cc.shadowBlur = 24; ell(cc, gx - 18, gy - 330, 9, 6, '#F4F1EA'); ell(cc, gx + 18, gy - 330, 9, 6, '#F4F1EA'); cc.restore(); circ(cc, gx - 18, gy - 330, 3.5, '#111'); circ(cc, gx + 18, gy - 330, 3.5, '#111');
+        cc.fillStyle = '#0E0809'; cc.beginPath(); cc.moveTo(gx - 34, gy - 290); cc.quadraticCurveTo(gx, gy - 262, gx + 34, gy - 290); cc.quadraticCurveTo(gx, gy - 274, gx - 34, gy - 290); cc.fill(); } } });
+    if (lt > 6.4) gate(c, lt, lt > 8.4 && lt < 9.6 ? 1 : 0);
+    // Obcy: wolno, pewnie, cały czas widoczny; po odwróceniu Mai stoi, potem wchodzi w ciemny garaż 21 (x≈430)
+    let fx, fy = 1620, walkO = lt * 10;
+    if (lt < 7.0) fx = lerp(-160, 180, clamp((lt - .6) / 6.4)); else if (lt < 10.6) { fx = lerp(180, 260, clamp((lt - 7) / 2)); walkO = lt < 9 ? lt * 10 : null; } else fx = lerp(260, 430, intoGarage);
+    if (intoGarage < 1) {
+      c.save(); c.translate(0, 3240); c.scale(1, -1); c.globalAlpha = .28; person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO }); c.restore(); // odbicie w kałuży
+      person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO, look: 1, mouth: lt > 9.6 ? 'grin' : null, alpha: lt > 10.6 ? 1 - intoGarage * .9 : 1, still: lt > 9 });
+    }
+    // Maja: biegnie w prawo → brama (stoi, szarpie) → odwraca się → czeka, aż on wejdzie do garażu → biegnie w lewo obok
+    let mx = 620, look = 1, walkM = lt * 14, aR = 1.6, phone = 2;
+    if (lt > 7.0 && lt < 8.4) { mx = lerp(620, 720, (lt - 7) / 1.4); }
+    else if (lt >= 8.4 && lt < 9.6) { mx = 720; walkM = null; aR = 2.6 + Math.sin(lt * 30) * .2; phone = 0; }
+    else if (lt >= 9.6 && lt < 11.6) { mx = 720; walkM = null; look = -1; aR = null; phone = 0; }
+    else if (lt >= 11.6) { mx = lerp(720, -220, clamp((lt - 11.6) / 2.2)); look = -1; aR = null; phone = 0; walkM = lt * 16; }
+    person(c, 'maja', mx, 1700, 2.0, { t: lt, walk: walkM, look, wide: true, mouth: 'o', phone, aR });
+    night(c, lt > 5.2 ? .8 : .6, [{ x: mx, y: 1300, r: 420, a: .85, tint: 'rgba(170,210,255,.08)' }, { x: fx, y: 1250, r: 360, a: intoGarage < 1 ? .8 : 0, tint: 'rgba(255,120,120,.06)' }, { x: 920, y: 1100, r: 300, a: lt > 6.4 ? .7 : 0 }]);
   },
-  post(c, lt) { if (lt > 0.4 && lt < 3.4) label(c, 'KROKI', 540, 300, 'dark', 48, lt - .4, 3.4 - lt); if (lt > 5.2 && lt < 7.6) label(c, 'TELEFON: 1% · WYŁĄCZA SIĘ', 540, 300, 'red', 40, lt - 5.2, 7.6 - lt); if (lt > 8.4 && lt < 10.4) label(c, 'BRAMA ZAMKNIĘTA', 540, 300, 'red', 48, lt - 8.4, 10.4 - lt); if (lt > 10.8) label(c, 'ZAWRACA. DO ŚWIATEŁ ULICY.', 540, 300, 'yellow', 42, lt - 10.8, 14 - lt); },
+  post(c, lt) {
+    if (lt > 0.4 && lt < 3.4) label(c, 'KROKI', 540, 300, 'dark', 48, lt - .4, 3.4 - lt);
+    if (lt > 4.6 && lt < 6.8) label(c, 'TELEFON: 1% · WYŁĄCZA SIĘ', 540, 300, 'red', 40, lt - 4.6, 6.8 - lt);
+    if (lt > 8.4 && lt < 9.8) label(c, 'BRAMA ZAMKNIĘTA', 540, 300, 'red', 48, lt - 8.4, 9.8 - lt);
+    if (lt > 9.8 && lt < 11.6) label(c, 'ON STOI. I SIĘ UŚMIECHA.', 540, 300, 'dark', 42, lt - 9.8, 11.6 - lt);
+    if (lt > 11.8) label(c, 'BIEGNIE Z POWROTEM. DO ŚWIATEŁ ULICY.', 540, 300, 'yellow', 36, lt - 11.8, 14 - lt);
+  },
 });
 // 5. SKLEP: Maja wraca na oświetloną ulicę i wpada do sklepu 24h. Kasjerka dzwoni na 112. (ZASADA)
 scene({
