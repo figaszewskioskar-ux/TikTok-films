@@ -1,4 +1,4 @@
-{%- comment -%} Gra BLOK 94 v2: „Kto tam?” i „Noc w bloku 94”. Sytuacje ze spoilerami pokazują się dopiero po premierze części (ustawienie „Ile części wyszło”). {%- endcomment -%}
+{%- comment -%} Gra BLOK 94 v3: „Telefon o 2:00” i „Noc w bloku 94” („Kto tam?” usunięta z menu). Sytuacje ze spoilerami pokazują się dopiero po premierze części (ustawienie „Ile części wyszło”). {%- endcomment -%}
 <style>
 /* Gra BLOK 94 v2: drzwi mieszkania 94 jako plansza; dwa tryby, poziomy trudności, trzy noce. Jeden, nocny wygląd. */
 #b94g{--night:#0a0c14;--stair:#131726;--wall:#1b2034;--ink:#f3efe6;--muted:#aeb0c2;--sign:#d7263d;--hat:#f39c12;--ok:#30a46c;--door:#5e4029;--door2:#4d3420;--gold:#c9a15a;--led:#ff3b30;
@@ -128,6 +128,17 @@
 #b94g.gshake{animation:gsh .45s}
 @keyframes gsh{15%{transform:translate(-8px,3px)}30%{transform:translate(7px,-4px)}45%{transform:translate(-5px,2px)}60%{transform:translate(4px,-2px)}80%{transform:translate(-2px,1px)}}
 @media(prefers-reduced-motion:reduce){#b94g.gshake{animation:none}}
+
+#b94g .pic.ph{display:grid;place-items:center;background:#1B2133}#b94g .phic{font-size:40px}#b94g .new{font-style:normal;font-size:11px;background:#d7263d;color:#fff;padding:3px 7px;border-radius:6px;margin-left:6px;vertical-align:middle;letter-spacing:.08em}
+#b94g .tel{position:relative;max-width:360px;margin:6px auto 0;background:linear-gradient(#232a42,#0e1018);border:8px solid #0e0f12;border-radius:42px;padding:18px 20px 22px;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#b94g .tel-top{display:flex;justify-content:space-between;font:700 14px/1 Inter,sans-serif;opacity:.8;margin-bottom:18px}
+#b94g .tel-call{text-align:center}#b94g .tel-call .av{width:90px;height:90px;border-radius:50%;margin:6px auto 10px;display:grid;place-items:center;font:900 40px/1 Inter,sans-serif;background:#7a2e52}
+#b94g .tel-call b{display:block;font:900 26px/1.1 Inter,sans-serif}#b94g .tel-call small,#b94g .tel-msg small{display:block;opacity:.6;margin:4px 0 12px}
+#b94g .tel .say{background:rgba(255,255,255,.08);border-radius:16px;padding:12px;font-style:italic}
+#b94g .tel .btns{display:flex;justify-content:space-around;margin-top:16px}#b94g .tel .btns i{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:26px}#b94g .tel .btns .no{background:#e8343f}#b94g .tel .btns .yes{background:#30a46c}
+#b94g .tel-msg b{font:900 22px/1.1 Inter,sans-serif}#b94g .tel-msg .bub{background:#2a2c38;border-radius:20px 20px 20px 6px;padding:14px 16px;font-size:17px;line-height:1.35}
+#b94g .tel .note{display:block;margin-top:14px;font-size:14px;opacity:.75}
+#b94g .tel.ring{animation:telring .5s 3}@keyframes telring{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
 </style>
 
 <div id="b94g" data-kuba="{{ 'blok94-kuba.png' | asset_url }}" data-ola="{{ 'blok94-ola.png' | asset_url }}" data-kaptur="{{ 'blok94-kaptur.png' | asset_url }}" data-zdzisiek="{{ 'blok94-zdzisiek.png' | asset_url }}" data-kurier="{{ 'blok94-kurier.png' | asset_url }}" data-policjant="{{ 'blok94-policjant.png' | asset_url }}" data-kobieta="{{ 'blok94-kobieta.png' | asset_url }}" data-halina="{{ 'blok94-halina.png' | asset_url }}" data-tiktok="{{ section.settings.tiktok }}" data-parts="{{ section.settings.parts }}">
@@ -161,16 +172,15 @@
   function menu() {
     var unlocked = store('unlocked') || 1;
     h('<span class="eyebrow">Gra · BLOK 94</span><h2 style="margin-top:12px">Co zrobisz, gdy <span class="sign">ktoś puka?</span></h2>' +
-      '<p style="color:var(--muted);margin:10px 0 0">Wybierz tryb. Każda decyzja to prawdziwa zasada z serii „Kto tam?”.</p>' +
+      '<p style="color:var(--muted);margin:10px 0 0">Wybierz grę. Każda decyzja to prawdziwa zasada bezpieczeństwa z naszych serii.</p>' +
       '<div class="modes">' +
-      '<button class="mode" id="m1"><span class="pic"><img src="' + IMG('kaptur') + '" alt=""></span><span><h3>Kto tam?</h3><p>Dziesięć osób puka do drzwi. Patrzysz przez wizjer i decydujesz. Nie każdy gość to zagrożenie.</p><small>Rekord: ' + store('best1') + '/10</small></span></button>' +
-      '<div class="chips" role="group" aria-label="Poziom trudności"><button class="chip" data-d="0" aria-pressed="' + (diff == 0) + '">Spokojnie: bez limitu czasu</button><button class="chip" data-d="1" aria-pressed="' + (diff == 1) + '">Trudny: 10 sekund</button></div>' +
+      '<button class="mode" id="m3"><span class="pic ph"><span class="phic">📱</span></span><span><h3>Telefon o 2:00 <em class="new">NOWOŚĆ</em></h3><p>Dzwoni „mama” z płaczem, przychodzi SMS o dopłacie, „koleżanka” prosi o BLIK. Odbierasz, klikasz czy się rozłączasz?</p><small>Rekord: ' + store('best3') + '/10</small></span></button>' +
       '<button class="mode" id="m2" style="margin-top:8px"><span class="pic"><img src="' + IMG('ola') + '" alt=""></span><span><h3>Noc w bloku 94</h3><p>Przetrwaj od północy do szóstej. Szybkie decyzje na czas, a strach rośnie z każdym błędem.</p><small>Odblokowane noce: ' + unlocked + '/3</small></span></button>' +
       '<div class="chips" role="group" aria-label="Wybór nocy">' + [1, 2, 3].map(function (n) { return '<button class="chip" data-n="' + n + '" aria-pressed="' + (night == n) + '"' + (n > unlocked ? ' disabled' : '') + '>Noc ' + n + (n > unlocked ? ' (zamknięta)' : '') + '</button>'; }).join('') + '</div>' +
       '<p class="hint">Kolejną noc odblokujesz, gdy przetrwasz poprzednią do 6:00. Każda kolejna jest ciemniejsza i szybsza.</p>' +
       '<a class="mode" href="/pages/wizjer" style="margin-top:8px;text-decoration:none;color:inherit"><span class="pic"><img src="' + IMG('policjant') + '" alt=""></span><span><h3>Wizjer: 3 sekundy</h3><p>Nowość! Refleks: ktoś puka, a ty masz chwilę. Otwierasz, nie otwierasz czy dzwonisz na 112?</p><small>NOWA GRA →</small></span></a>' +
       '</div><button class="chip" id="g-mute" style="margin-top:18px">' + (muted ? 'Dźwięk: wyłączony' : 'Dźwięk: włączony') + '</button>');
-    $('m1').onclick = function () { game1(); top(); };
+    $('m3').onclick = function () { game3(); top(); };
     $('m2').onclick = function () { game2(night); top(); };
     [].forEach.call(box.querySelectorAll('[data-d]'), function (b) { b.onclick = function () { diff = +b.getAttribute('data-d'); store('diff', diff); menu(); }; });
     [].forEach.call(box.querySelectorAll('[data-n]'), function (b) { b.onclick = function () { night = +b.getAttribute('data-n'); store('night', night); menu(); }; });
@@ -276,6 +286,90 @@
   var SE = { 'Prąd gaśnie': 3, 'Kuba chce wyjść': 3, 'Metal w zamku': 4, 'Klamka idzie w dół': 2, 'Wiadomość od k4ptur_94': 2, '„Policja! Otwierać!”': 2, 'Kusi cię relacja': 2 };
   E = E.filter(function (e) { return (SE[e.h] || 0) <= PARTS; });
   var NIGHTS = { 1: { start: 6.5, min: 4.2, pen: 26, dark: .78, name: 'Noc 1' }, 2: { start: 5.5, min: 3.6, pen: 30, dark: .84, name: 'Noc 2' }, 3: { start: 4.6, min: 3.0, pen: 34, dark: .9, name: 'Noc 3' } };
+
+  var P = [
+    { t: '00:48', kind: 'call', who: 'Mama ❤', say: '(płacz) Córcia… miałam wypadek… pan policjant ci wszystko wytłumaczy…', note: 'Rodzice są na weselu. Głos podobny, ale płacz zagłusza słowa.', o: [['Słucham „policjanta” i szykuję pieniądze', 0, 'To oszustwo „na wypadek”. Numer na ekranie można podszyć.'], ['Rozłączam się i sama dzwonię na zapisany numer mamy', 1, 'Tak! Oddzwoń sama na numer, który znasz.'], ['Pytam, ile potrzeba, i czekam na kuriera', 0, 'Policja nigdy nie odbiera pieniędzy przez kuriera.']], rule: 'Ktoś bliski dzwoni i prosi o pieniądze? Rozłącz się i oddzwoń sam na zapisany numer.' },
+    { t: '17:20', kind: 'sms', who: 'InPost-Info', say: 'Twoja paczka czeka. Dopłać 1,99 zł do wysyłki: inpost-dopłata.pl/94', note: 'Nie pamiętasz, żebyś coś zamawiał.', o: [['Klikam i dopłacam, to tylko 2 zł', 0, 'Fałszywa strona wyłudza dane karty i logowanie do banku.'], ['Ignoruję i sprawdzam paczki w oficjalnej aplikacji', 1, 'Tak! Statusy paczek sprawdzaj tylko w oficjalnej aplikacji.'], ['Odpisuję „STOP”', 0, 'Odpowiedź potwierdza, że numer jest aktywny.']], rule: 'Nie klikaj linków z SMS-ów o dopłatach. Sprawdź w oficjalnej aplikacji.' },
+    { t: '23:40', kind: 'chat', who: 'Szymek_14 (gra)', say: 'u mnie pada śnieg ❄ pokaż jak u ciebie z okna :)', note: 'Znasz go tylko z gry online.', o: [['Wysyłam zdjęcie z okna', 0, 'Na zdjęciu z okna widać szyldy, przystanki i numery bloków. Łatwo znaleźć adres.'], ['Nie wysyłam żadnych zdjęć z domu', 1, 'Tak! Obcym z internetu nie wysyłasz zdjęć z okna ani z domu.'], ['Wysyłam tylko zdjęcie pokoju', 0, 'Zdjęcie pokoju też zdradza dużo o tobie i domu.']], rule: 'Nie wysyłaj obcym z internetu zdjęć z okna ani z domu.' },
+    { t: '11:05', kind: 'call', who: 'Bank — Dział Bezpieczeństwa', say: 'Wykryliśmy podejrzaną transakcję. Proszę podać kod, który zaraz przyjdzie SMS-em.', note: 'Dzwonią na telefon mamy, który masz w ręce.', o: [['Podaję kod, żeby zablokować transakcję', 0, 'Bank nigdy nie prosi o kody z SMS-ów. Z kodem oszust zatwierdza przelew.'], ['Rozłączam się i mówię mamie, a ona dzwoni na numer z karty', 1, 'Tak! Do banku dzwoni się samemu, na numer z karty lub strony banku.'], ['Pytam, jak się nazywa konsultant', 0, 'Oszust poda dowolne nazwisko.']], rule: 'Bank nigdy nie prosi o kody z SMS-ów ani o hasła.' },
+    { t: '01:12', kind: 'sms', who: 'Nieznany numer', say: 'Nie śpisz?', note: 'Jest środek nocy. Nie znasz tego numeru.', o: [['Odpisuję „kto to?”', 0, 'Odpowiedź mówi mu, że nie śpisz i czytasz.'], ['Nie odpisuję, robię zrzut i rano mówię rodzicom', 1, 'Tak! Nie odpisuj, zachowaj wiadomość jako dowód.'], ['Kasuję wszystko i blokuję', 0, 'Blokada jest dobra, ale skasowana wiadomość to utracony dowód. Najpierw zrzut ekranu.']], rule: 'Obcy pisze w nocy? Nie odpisuj i nie kasuj. Zrób zrzut ekranu i powiedz rodzicom.' },
+    { t: '20:15', kind: 'chat', who: 'Zuzia', say: 'hej, pilne! pożycz 200 zł, podaj kod BLIK, oddam jutro', note: 'Zuzia nigdy nie pisała do ciebie o pieniądze.', o: [['Podaję BLIK, to przecież Zuzia', 0, 'Konta przejmują oszuści i piszą do znajomych po BLIK.'], ['Dzwonię do Zuzi głosowo i pytam', 1, 'Tak! Zadzwoń i usłysz jej głos, zanim cokolwiek wyślesz.'], ['Wysyłam połowę', 0, 'Każda kwota trafi do oszusta.']], rule: 'Prośba o BLIK na czacie? Najpierw zadzwoń do tej osoby.' },
+    { t: '15:30', kind: 'call', who: 'Mama ❤', say: 'Kochanie, kupisz chleb, jak będziesz wracać? Pa!', note: 'Zwykły dzień, mama dzwoni ze swojego numeru jak zawsze.', o: [['Rozmawiam normalnie', 1, 'Tak! Nie każdy telefon to zagrożenie. Nic tu nie budzi podejrzeń.'], ['Rozłączam się, to na pewno oszust', 0, 'Mama nie prosi o pieniądze ani o tajemnice. To zwykła rozmowa.'], ['Pytam o hasło rodzinne', 0, 'Hasło jest potrzebne, gdy coś budzi niepokój. Tu nic nie budzi.']], rule: 'Ostrożność, nie panika: niepokój budzą prośby o pieniądze, kody i sekrety.' },
+    { t: '22:05', kind: 'chat', who: 'Szymek_14 (gra)', say: 'starzy w domu? możemy pogadać na kamerce', note: 'Gracie razem od tygodnia.', o: [['Piszę, że jestem sam, i włączam kamerkę', 0, 'Zdradzasz, że jesteś sam, i pokazujesz dom obcemu.'], ['Nie mówię, kto jest w domu, i nie włączam kamerki', 1, 'Tak! Obcy z internetu nie musi wiedzieć, kiedy jesteś sam.'], ['Włączam kamerkę, ale bez dźwięku', 0, 'Obraz też dużo zdradza.']], rule: 'Nie mów obcym w internecie, kiedy jesteś sam, i nie włączaj z nimi kamerki.' },
+    { t: '19:00', kind: 'sms', who: 'Wygrana!', say: 'Gratulacje! Wygrałeś iPhone 16. Podaj adres i imię, żeby odebrać.', note: 'Nie brałeś udziału w żadnym konkursie.', o: [['Podaję adres, to darmowy telefon', 0, 'Nie ma nagrody za konkurs, w którym nie brałeś udziału.'], ['Ignoruję i usuwam', 1, 'Tak! To wyłudzenie danych.'], ['Pytam, czy to na pewno prawda', 0, 'Każda odpowiedź zachęca oszusta.']], rule: 'Nagroda z konkursu, w którym nie brałeś udziału, to oszustwo.' },
+    { t: '02:10', kind: 'call', who: 'Komisarz Nowak', say: 'Twój tata jest zatrzymany. Kaucja 5000 zł. Nikomu nie mów, to sprawa w toku.', note: 'Tata jest w pracy na nocnej zmianie.', o: [['Szukam pieniędzy w domu', 0, 'Prawdziwa policja nigdy nie żąda kaucji przez telefon.'], ['Rozłączam się i dzwonię do taty i na 112', 1, 'Tak! Rozłącz się i sprawdź sam.'], ['Nikomu nie mówię, jak prosił', 0, '„Nikomu nie mów” to znak oszustwa.']], rule: '„Nikomu nie mów” i prośba o pieniądze to zawsze znak oszustwa.' },
+    { t: '16:40', kind: 'sms', who: 'Kurier', say: 'Paczka dla Ciebie w paczkomacie przy szkole. Kod odbioru: 482 913', note: 'Wczoraj zamówiłeś słuchawki i dostałeś potwierdzenie w aplikacji.', o: [['Odbieram paczkę z kodem', 1, 'Tak! Spodziewana paczka i zgodne powiadomienie w aplikacji.'], ['Ignoruję, to na pewno oszustwo', 0, 'Nie ma tu linku ani prośby o pieniądze. Paczka się zgadza.'], ['Wysyłam kod koledze, żeby odebrał', 0, 'Kodu odbioru nie dajesz nikomu.']], rule: 'Spodziewane powiadomienie bez linków i dopłat jest w porządku. Kodu nie dawaj innym.' },
+    { t: '21:50', kind: 'chat', who: 'Nowy obserwujący', say: 'ale fajny filmik z balkonu! na którym piętrze mieszkasz?', note: 'Konto bez zdjęć, założone wczoraj.', o: [['Odpowiadam, to tylko piętro', 0, 'Piętro, szkoła, przystanek… z małych informacji powstaje adres.'], ['Nie odpowiadam i ustawiam konto prywatne', 1, 'Tak! Obcy nie musi wiedzieć, gdzie mieszkasz.'], ['Wysyłam zdjęcie widoku', 0, 'Widok z okna zdradza adres.']], rule: 'Nie podawaj obcym w internecie piętra, adresu ani szkoły.' }
+  ];
+  function phoneHTML(c) { return '<div class="tel" id="g-door"><div class="tel-top"><span>' + c.t + '</span><span>▮▮▮ 4G</span></div>' +
+    (c.kind === 'call' ? '<div class="tel-call"><div class="av">' + esc(c.who.charAt(0)) + '</div><b>' + esc(c.who) + '</b><small>połączenie przychodzące</small><div class="say">' + esc(c.say) + '</div><div class="btns"><i class="no">✆</i><i class="yes">✆</i></div></div>'
+      : '<div class="tel-msg"><b>' + esc(c.who) + '</b><small>' + (c.kind === 'sms' ? 'SMS' : 'wiadomość') + '</small><div class="bub">' + esc(c.say) + '</div></div>') +
+    '<span class="note">' + esc(c.note) + '</span>' + (diff ? '<div class="tbar"><i id="g-t"></i></div>' : '') + '</div>'; }
+  function game3() {
+    var list = shuffle(P).slice(0, 10), i = 0, score = 0, lives = 3, learned = [], streak = 0, bestStreak = 0, tm = null, tmi = null, LIMIT = 10;
+    function round() {
+      var c = list[i];
+      h('<div class="bar"><button class="back" id="g-back">← Menu</button><div class="lives" aria-label="Zamki: ' + lives + ' z 3">' + [0, 1, 2].map(function (k) { return '<span class="' + (k < lives ? '' : 'off') + '"></span>'; }).join('') + '</div><span class="led">' + (i + 1) + '/10</span></div>' +
+        '<div class="prog"><i style="width:' + (i * 10) + '%"></i></div><div class="streak">' + (streak >= 2 ? 'Seria: ' + streak + ' dobre decyzje z rzędu' : '') + '</div>' +
+        phoneHTML(c) +
+        '<div class="opts">' + shuffle([0, 1, 2]).map(function (k) { return '<button class="opt" data-k="' + k + '">' + esc(c.o[k][0]) + '</button>'; }).join('') + '</div><div id="g-fb"></div>');
+      $('g-back').onclick = function () { clearTimeout(tm); clearInterval(tmi); menu(); };
+      if (c.kind === 'call') { $('g-door').classList.add('ring'); [0, 400, 800].forEach(function (t) { setTimeout(function () { beep(988, .12, 'sine', .06); setTimeout(function () { beep(784, .12, 'sine', .06); }, 130); }, t); }); } else beep(1320, .1, 'sine', .05);
+      [].forEach.call(box.querySelectorAll('.opt'), function (b) { b.onclick = function () { pick(+b.getAttribute('data-k'), b); }; });
+      if (diff) { var t0 = Date.now(); tmi = setInterval(function () { var l = 1 - (Date.now() - t0) / (LIMIT * 1000), bar = $('g-t'); if (bar) bar.style.width = Math.max(0, l * 100) + '%'; }, 60); tm = setTimeout(function () { pick(-1); }, LIMIT * 1000); }
+    }
+    function pick(k, btn) {
+      clearTimeout(tm); clearInterval(tmi);
+      var c = list[i], ok = k >= 0 && c.o[k][1] === 1;
+      [].forEach.call(box.querySelectorAll('.opt'), function (x) { x.disabled = true; if (c.o[+x.getAttribute('data-k')][1]) x.classList.add('ok'); });
+      if (!ok) { if (btn) btn.classList.add('bad'); lives--; streak = 0; bad(); } else { score++; streak++; bestStreak = Math.max(bestStreak, streak); good(); }
+      learned.push(c.rule);
+      var last = i === list.length - 1 || lives <= 0;
+      var why = k < 0 ? 'Czas minął. W prawdziwej sytuacji też trzeba zdecydować szybko.' : c.o[k][2];
+      $('g-fb').innerHTML = '<div class="fb ' + (ok ? '' : 'bad') + '"><b>' + (ok ? (streak >= 3 ? 'Świetnie! Seria ' + streak : 'Dobrze!') : 'Błąd') + '</b><p>' + esc(why) + '</p><div class="rule">Zasada: ' + esc(c.rule) + '</div><button class="btn red" id="g-next">' + (last ? 'Zobacz wynik' : 'Następna wiadomość') + '</button></div>';
+      $('g-next').onclick = function () { i++; if (last) end3(); else { round(); top(); } };
+      $('g-fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function end3() {
+      var best = Math.max(store('best3'), score); store('best3', best);
+      var lost = lives <= 0, medal = lost ? null : score >= 9 ? ['', 'ZŁOTY<br>ZAMEK'] : score >= 7 ? ['silver', 'SREBRNY<br>ZAMEK'] : ['bronze', 'BRĄZOWY<br>ZAMEK'];
+      var title = lost ? 'Oszust cię przechytrzył.' : score >= 9 ? 'Żaden oszust cię nie złapie.' : score >= 7 ? 'Prawie bez błędów.' : 'Oszuści jeszcze zadzwonią.';
+      var txt = 'Mój wynik w grze „Telefon o 2:00”: ' + score + '/10' + (diff ? ' (tryb trudny)' : '') + '. Zagraj: ' + URL_GRA;
+      h('<div class="end"><span class="eyebrow">Koniec gry</span><div class="big" style="margin-top:14px">' + score + '/10</div>' + (medal ? '<div class="medal ' + medal[0] + '">' + medal[1] + '</div>' : '') +
+        '<h2 style="font-size:36px;margin-top:12px">' + title + '</h2><p style="color:var(--muted)">Rekord: ' + best + '/10 · Najdłuższa seria: ' + bestStreak + '</p>' +
+        '<ul>' + learned.filter(function (r, k, a) { return a.indexOf(r) === k; }).slice(0, 6).map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' +
+        '<div class="acts"><button class="btn gold" id="g-share">Skopiuj wynik do komentarza</button><button class="btn red" id="g-again">Zagraj jeszcze raz</button><button class="btn line" id="g-other">Spróbuj „Noc w bloku 94”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
+      $('g-share').onclick = function () { share(txt, this); };
+      $('g-again').onclick = function () { game3(); top(); };
+      $('g-other').onclick = function () { game2(night); top(); };
+      if (score >= 9 && !lost) confetti();
+      top();
+    }
+    round();
+  }
+
+  function fmtClock(min) { var hh = Math.floor(min / 60), mm = Math.floor(min % 60); return String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0'); }
+  var E = [
+    { h: 'Prąd gaśnie', p: 'Tylko u ciebie. Na klatce jest jasno.', fx: 'off', o: [['Zostaję w środku', 1], ['Idę do licznika', 0], ['Otwieram drzwi, żeby sprawdzić klatkę', 0]] },
+    { h: 'Klamka idzie w dół', p: 'Ktoś sprawdza, czy drzwi są zamknięte.', fx: 'handle', o: [['Dzwonię na 112', 1], ['Pytam: kto tam?', 0], ['Otwieram gwałtownie, żeby go wystraszyć', 0]] },
+    { h: 'Wiadomość od k4ptur_94', p: '„ładny widok z dziewiątego.”', fx: 'phone', o: [['Zrzut ekranu, blokuję, zgłaszam', 1], ['Odpisuję: kim jesteś?', 0], ['Wysyłam mu zdjęcie, że mam psa', 0]] },
+    { h: 'Dwa cienie pod drzwiami', p: 'Ktoś stoi tuż za drzwiami. Cisza.', fx: 'shadow', o: [['Nie odzywam się, dzwonię na 112', 1], ['Krzyczę, żeby sobie poszedł', 0], ['Zaglądam przez szparę pod drzwiami', 0]] },
+    { h: 'Puk. Puk. Puk.', p: 'Nikt nie dzwonił domofonem.', fx: 'knock', o: [['Nie odzywam się', 1], ['Pytam: kto tam?', 0], ['Otwieram na łańcuch', 0]] },
+    { h: '„Policja! Otwierać!”', p: 'Wizjer jest zaklejony.', fx: 'knock', o: [['Pytam 112 o patrol pod moim adresem', 1], ['Otwieram', 0], ['Proszę o legitymację przez szparę', 0]] },
+    { h: 'Kartka pod drzwiami', p: '„WIEMY, ŻE JESTEŚ SAMA.”', fx: 'shadow', o: [['Robię zdjęcie kartki i dzwonię na 112', 1], ['Wyrzucam kartkę', 0], ['Odpisuję na kartce i wsuwam ją z powrotem', 0]] },
+    { h: 'Kuba chce wyjść', p: '„Zgaszę światło na klatce i zobaczę, kto tam jest.”', fx: 'knock', o: [['Zatrzymuję go w domu', 1], ['Idę z nim', 0], ['Daję mu latarkę', 0]] },
+    { h: 'Metal w zamku', p: 'Ktoś przekręca klucz w twoich drzwiach.', fx: 'handle', o: [['Dociskam drzwi i dzwonię na 112', 1], ['Pytam, kto ma mój klucz', 0], ['Chowam się w szafie', 0]] },
+    { h: 'Nieznany numer dzwoni', p: 'O 3:00. Trzeci raz z rzędu.', fx: 'phone', from: 'Nieznany numer', o: [['Nie odbieram i blokuję numer', 1], ['Odbieram i krzyczę', 0], ['Oddzwaniam', 0]] },
+    { h: 'Płacz na klatce', p: '„Pomocy… otwórz…”', fx: 'knock', o: [['Dzwonię na 112 i mówię przez drzwi', 1], ['Otwieram', 0], ['Otwieram na łańcuch', 0]] },
+    { h: 'Kusi cię relacja', p: 'Chcesz wrzucić: „sama na chacie do rana”.', fx: 'phone', from: 'Twoja relacja', o: [['Nie wrzucam', 1], ['Wrzucam z lokalizacją', 0], ['Wrzucam tylko dla znajomych znajomych', 0]] },
+    { h: 'Mama pisze', p: '„Śpisz? Wszystko ok?”', fx: 'phone', from: 'Mama', o: [['Odpisuję mamie, co się dzieje', 1], ['Nie odpisuję, żeby jej nie martwić', 0], ['Piszę, że wszystko super, choć nie jest', 0]] },
+    { h: 'Bateria: 5%', p: 'Telefon zaraz się wyłączy.', fx: 'phone', from: 'Telefon', o: [['Podłączam ładowarkę i trzymam telefon przy sobie', 1], ['Gram dalej, jakoś to będzie', 0], ['Wyłączam telefon, żeby oszczędzać', 0]] },
+    { h: 'Winda staje na 9. piętrze', p: 'Drzwi windy się otwierają. Nikt nie wysiada.', fx: 'shadow', o: [['Nie wychodzę sprawdzać', 1], ['Wychodzę zobaczyć, kto przyjechał', 0], ['Wołam przez drzwi: kto tam?', 0]] },
+    { h: 'Domofon o 2:00', p: '„Kurier, otwórz, pilna paczka.”', fx: 'knock', o: [['Nie otwieram. Żaden kurier nie przychodzi o 2:00', 1], ['Otwieram domofon', 0], ['Schodzę na dół odebrać', 0]] }
+  ];
+  var SE = { 'Prąd gaśnie': 3, 'Kuba chce wyjść': 3, 'Metal w zamku': 4, 'Klamka idzie w dół': 2, 'Wiadomość od k4ptur_94': 2, '„Policja! Otwierać!”': 2, 'Kusi cię relacja': 2 };
+  E = E.filter(function (e) { return (SE[e.h] || 0) <= PARTS; });
+  var NIGHTS = { 1: { start: 6.5, min: 4.2, pen: 26, dark: .78, name: 'Noc 1' }, 2: { start: 5.5, min: 3.6, pen: 30, dark: .84, name: 'Noc 2' }, 3: { start: 4.6, min: 3.0, pen: 34, dark: .9, name: 'Noc 3' } };
   function game2(nn) {
     var N = NIGHTS[nn] || NIGHTS[1];
     var fear = 0, clock = 0, alive = true, goodN = 0, combo = 0, ev = null, tmr = null, tick = null, evTimeout = null, bag = shuffle(E), bi = 0;
@@ -334,11 +428,11 @@
         '<h2 style="font-size:36px;margin-top:12px">' + (won ? 'Ola przetrwała noc.' : 'Ola nie wytrzymała do rana.') + '</h2>' +
         '<p style="color:var(--muted)">Dobre decyzje: ' + goodN + ' · Rekord tej nocy: ' + fmtClock(best) + (won && nn < 3 ? ' · Odblokowano: Noc ' + (nn + 1) : '') + '</p>' +
         '<div class="acts"><button class="btn gold" id="g-share">Skopiuj wynik do komentarza</button>' + (won && nn < 3 ? '<button class="btn red" id="g-nextn">Graj: Noc ' + (nn + 1) + '</button>' : '<button class="btn red" id="g-again">Jeszcze jedna noc</button>') +
-        '<button class="btn line" id="g-other">Zagraj w „Kto tam?”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
+        '<button class="btn line" id="g-other">Zagraj w „Telefon o 2:00”</button><a class="btn line" href="' + TT + '" target="_blank" rel="noopener">Oglądaj serię na TikToku</a></div></div>');
       $('g-share').onclick = function () { share(txt, this); };
       if ($('g-nextn')) $('g-nextn').onclick = function () { night = nn + 1; store('night', night); game2(night); top(); };
       if ($('g-again')) $('g-again').onclick = function () { game2(nn); top(); };
-      $('g-other').onclick = function () { game1(); top(); };
+      $('g-other').onclick = function () { game3(); top(); };
       if (won) confetti();
       top();
     }

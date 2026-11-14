@@ -89,6 +89,7 @@ function card(c, x, y, w, title, body, age, accent = '#F39C12', size = 42) {
 // ---------- postacie ----------
 const KINDS = {
   kuba: { jacket: '#6E7B3B', dark: '#5B672F', pants: '#2A2E3A', skin: '#F2B48A', shoes: '#1B1D22' },
+  kuba_home: { jacket: '#3E6E9E', dark: '#335C85', pants: '#3A3F52', skin: '#F2B48A', shoes: '#E8E4DA' },
   kaptur: { jacket: '#22242A', dark: '#17191E', pants: '#16181C', skin: '#45464E', shoes: '#0E0F12' },
   kurier: { jacket: '#46536A', dark: '#3A465A', pants: '#2A2E3A', skin: '#E3A47A', shoes: '#1B1D22' },
   zdzisiek: { jacket: '#A62B2E', dark: '#8A2326', pants: '#2B3550', skin: '#F0B08A', shoes: '#222428' },
@@ -114,7 +115,7 @@ function arm(c, sx, sy, a, side, k, len = 92) {
   return [sx + side * Math.sin(a) * (len + 2), sy + Math.cos(a) * (len + 2)];
 }
 function person(c, kind, x, y, s, o = {}) {
-  const k = KINDS[kind], t = o.t || 0;
+  const k = KINDS[o.home && KINDS[kind + '_home'] ? kind + '_home' : kind], t = o.t || 0;
   c.save();
   c.globalAlpha *= (o.alpha ?? 1);
   c.translate(x, y);
@@ -166,7 +167,13 @@ function person(c, kind, x, y, s, o = {}) {
     c.fillStyle = shade(k.jacket, -.22); c.fillRect(-45, -82, 90, 12);
     if (kind !== 'policjant' && kind !== 'kurier' && kind !== 'ola') { fillRR(c, -36, -112, 22, 4, 2, 'rgba(0,0,0,.2)'); fillRR(c, 14, -112, 22, 4, 2, 'rgba(0,0,0,.2)'); }
     c.restore();
-    if (kind === 'kuba') { c.fillStyle = k.dark; c.fillRect(-2, -180, 4, 104); }
+    if (kind === 'kuba' && !o.home && !back_) { // kurtka: suwak z zawieszką, kieszenie z klapkami, naszywka 94
+      c.fillStyle = k.dark; c.fillRect(-2, -180, 4, 104); fillRR(c, -5, -150, 10, 16, 3, '#C9CDD2');
+      for (const sx of [-1, 1]) { fillRR(c, sx * 24 - 15, -118, 30, 10, 4, k.dark); circ(c, sx * 24, -113, 3, '#C9A15A'); }
+      fillRR(c, -34, -170, 26, 18, 4, '#F39C12'); txt(c, '94', -21, -161, 12, '#14161B', 900); }
+    if (kind === 'kuba' && o.home && !back_) { // bluza: kieszeń-kangur, sznurki, nadruk
+      fillRR(c, -32, -118, 64, 32, 12, k.dark); c.strokeStyle = '#E8E4DA'; c.lineWidth = 3; c.beginPath(); c.moveTo(-10, -188); c.lineTo(-12, -152); c.moveTo(10, -188); c.lineTo(12, -152); c.stroke();
+      circ(c, -12, -150, 3, '#E8E4DA'); circ(c, 12, -150, 3, '#E8E4DA'); txt(c, 'GG', 0, -136, 16, '#F5C542', 900); }
     if (kind === 'kaptur' && !back_) { fillRR(c, -26, -128, 52, 30, 10, k.dark); }
     if (kind === 'kurier') {
       fillRR(c, -40, -186, 80, 104, 14, '#E8A33D');
@@ -226,7 +233,12 @@ function person(c, kind, x, y, s, o = {}) {
   }
   if (o.tool) { c.strokeStyle = '#D4D7DC'; c.lineWidth = 4; c.beginPath(); c.moveTo(hr[0], hr[1]); c.lineTo(hr[0] + 30, hr[1] - 26); c.stroke(); }
   // szalik / kołnierz
-  if (kind === 'kuba') { fillRR(c, -36, -202, 72, 24, 11, '#1BB0A3'); if (!back_) fillRR(c, 12, -192, 18, 52, 8, '#169A8F'); }
+  if (kind === 'kuba' && !o.home) { // szalik w paski z frędzlami
+    fillRR(c, -36, -202, 72, 24, 11, '#1BB0A3'); c.fillStyle = '#12877D'; for (let i = 0; i < 4; i++) c.fillRect(-26 + i * 16, -202, 6, 24);
+    if (!back_) { fillRR(c, 12, -192, 18, 52, 8, '#169A8F'); c.fillStyle = '#F5F0E6'; c.fillRect(12, -176, 18, 5); c.fillRect(12, -164, 18, 5); for (let i = 0; i < 4; i++) c.fillRect(13 + i * 4.5, -142, 2.5, 9); } }
+  if (kind === 'kuba' && o.home) { // kaptur bluzy z tyłu + słuchawki na szyi
+    fillRR(c, -42, -210, 84, 30, 14, k.dark); c.strokeStyle = '#15161A'; c.lineWidth = 9; c.beginPath(); c.arc(0, -196, 36, Math.PI * .1, Math.PI * .9); c.stroke();
+    fillRR(c, -46, -206, 18, 30, 8, '#15161A'); fillRR(c, 28, -206, 18, 30, 8, '#15161A'); fillRR(c, -43, -200, 5, 18, 2, '#3FD0FF'); fillRR(c, 38, -200, 5, 18, 2, '#3FD0FF'); }
   // głowa
   const hy = -242;
   if (kind !== 'kaptur') { fillRR(c, -14, hy + 34, 28, 28, 8, shade(k.skin, -.18)); }
@@ -282,6 +294,7 @@ function person(c, kind, x, y, s, o = {}) {
       if (kind !== 'zdzisiek' && kind !== 'halina' && kind !== 'pasazer') { c.strokeStyle = 'rgba(40,28,24,.75)'; c.lineWidth = 3.5; c.lineCap = 'round'; const br = o.mouth === 'angry' ? 6 : o.wide ? -5 : 0;
         for (const sd of [-1, 1]) { c.beginPath(); c.moveTo(sd * 25, hy - 17 + (o.mouth === 'angry' ? -3 : 0)); c.lineTo(sd * 10, hy - 18 + br); c.stroke(); } }
       if (kind !== 'zdzisiek') ell(c, 2, hy + 12, 5, 4, shade(k.skin, -.18));
+      if (kind === 'kuba') { for (const [fx, fy] of [[-30, 8], [-24, 12], [-34, 13], [26, 8], [32, 12], [22, 13], [-28, 4], [30, 4]]) circ(c, fx, hy + fy, 1.8, 'rgba(160,80,40,.55)'); }
       if (kind === 'zdzisiek') {
         c.strokeStyle = '#3A2A22'; c.lineWidth = 6;
         for (const sx of [-17, 17]) { c.beginPath(); c.moveTo(sx - 12, hy - 18 + (o.squint ? 4 : 0)); c.lineTo(sx + 12, hy - 16); c.stroke(); }
@@ -795,4 +808,21 @@ function bigPhone(c, fn, a = 1, y = 300) {
   c.save(); rr(c, x + 22, y + 22, w - 44, h - 44, 52); c.clip(); fn(c, x + 22, y + 22, w - 44, h - 44); c.restore();
   fillRR(c, x + w / 2 - 70, y + 36, 140, 30, 15, '#0E0F12');
   c.restore();
+}
+
+// charakterystyczne szarpnięcie ekranu (bez przybliżania): gwałtowny, rwany wstrząs + lekki obrót, gaśnie w ~0,6 s.
+// times: momenty (czas sceny) wstrząsów; base: opcjonalna funkcja kamery sceny.
+function jolt(times, base) {
+  return lt => {
+    const b = base ? base(lt) : { z: 1 }; let x = b.x || 0, y = b.y || 0, r = b.r || 0;
+    for (const t0 of times) { const d = lt - t0; if (d >= 0 && d < .6) { const k = Math.pow(1 - d / .6, 2.2), fr = Math.floor(d * 48);
+      x += ((hash(fr * 3 + 1) - .5) * 70 + Math.sin(d * 90) * 26) * k; y += ((hash(fr * 3 + 2) - .5) * 56 + Math.cos(d * 77) * 18) * k; r += (hash(fr * 3 + 3) - .5) * .07 * k; } }
+    return { z: b.z || 1, x, y, r };
+  };
+}
+// błysk/zakłócenie obrazu w momencie szarpnięcia (rysować w post)
+function joltFlash(c, lt, times) {
+  for (const t0 of times) { const d = lt - t0; if (d >= 0 && d < .35) { const k = 1 - d / .35;
+    c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = `rgba(255,40,50,${.18 * k})`; c.fillRect(-20, 0, W + 40, H); c.restore();
+    c.fillStyle = `rgba(0,0,0,${.35 * k})`; for (let i = 0; i < 7; i++) { const yy = hash(Math.floor(d * 40) * 7 + i) * H; c.fillRect(0, yy, W, 6 + hash(i + 3) * 26); } } }
 }

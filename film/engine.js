@@ -64,7 +64,7 @@ function drawAt(c, t, frame) {
   const lt = pw(sc.knots, t - sc.start, 1, 0);
   c.save();
   const cam = sc.cam ? sc.cam(lt) : { z: 1 };
-  c.translate(W / 2 + (cam.x || 0), H / 2 + (cam.y || 0)); c.scale(cam.z, cam.z); c.translate(-W / 2, -H / 2);
+  c.translate(W / 2 + (cam.x || 0), H / 2 + (cam.y || 0)); if (cam.r) c.rotate(cam.r); c.scale(cam.z, cam.z); c.translate(-W / 2, -H / 2);
   sc.draw(c, lt, sc);
   for (const L of sc.labels || []) { const [a, b, s, x, y, st, sz] = L; if (lt >= a && lt < b) label(c, s, x, y, st, sz, lt - a, b - lt); }
   for (const B of sc.bubbles || []) { const [a, b, s, x, y, tx, ty] = B; if (lt >= a && lt < b) bubble(c, s, x, y, tx, ty, lt - a, b - lt); }
