@@ -53,3 +53,7 @@
 - Mocne niskie uderzenia `hit_low` przy każdej zmianie sceny i ważnym momencie (co ok. 5–10 s), głośniej przy kartach BŁĄD i zwrotach.
 - Zakończenie: `riser` (4 s narastania) → `hit_low` + `sting` (dysonansowy akord) dokładnie na zwrocie → nagła cisza.
 - Pliki generowane lokalnie (bez kredytów ElevenLabs), skrypt: patrz historia commitów „własny zestaw dźwięków grozy”.
+
+## Wzór wirala (BLOK 94 odc. 2, 580+ tys.)
+- Każdy nowy film budujemy według `film/WZOR_WIRALA.md`: hak z jednym przedmiotem z bliska i zakazem sprzecznym z intuicją, bez „Poprzednio” na starcie,
+  jedna bohaterka i jedno miejsce, ujęcia z oczu bohaterki, nowa informacja co 5–8 s, zakończenie patrzy prosto w widza.
