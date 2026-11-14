@@ -99,6 +99,8 @@ const KINDS = {
   kobieta: { jacket: '#BFA27E', dark: '#A68A66', pants: '#BFA27E', skin: '#EDBE9C', shoes: '#2A2420' },
   zuzia: { jacket: '#2E8B7A', dark: '#236B5E', pants: '#3B3F5C', skin: '#F2C2A0', shoes: '#E8E4DA' },
   pasazer: { jacket: '#4E535B', dark: '#3E424A', pants: '#3A3E45', skin: '#CFC8BE', shoes: '#16171A' },
+  maja: { jacket: '#C23A3A', dark: '#9E2C2C', pants: '#3E5F96', skin: '#F4C7A4', shoes: '#F2F2EE' },
+  obcy: { jacket: '#3E4A3A', dark: '#2F392C', pants: '#22252B', skin: '#D9A47E', shoes: '#111214' },
 };
 function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const r = n >> 16, g = (n >> 8) & 255, b = n & 255; const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return '#' + ((1 << 24) + (m(r) << 16) + (m(g) << 8) + m(b)).toString(16).slice(1); }
 function arm(c, sx, sy, a, side, k, len = 92) {
@@ -254,15 +256,16 @@ function person(c, kind, x, y, s, o = {}) {
     if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
     if (kind === 'zuzia') { circ(c, 0, hy - 4, 57, '#C2562B'); circ(c, 56, hy - 30, 22, '#C2562B'); circ(c, -56, hy - 30, 22, '#C2562B'); }
+    if (kind === 'maja') { circ(c, 0, hy - 4, 57, '#E2B84E'); fillRR(c, -56, hy - 10, 112, 64, 24, '#E2B84E'); c.save(); c.translate(back_ ? 0 : 50, hy - 50); c.rotate(-.7 + Math.sin(t * 3) * .12); fillRR(c, -15, -6, 30, 92, 15, '#D4A93F'); c.restore(); }
     if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
-    if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina' && kind !== 'zuzia') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
+    if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina' && kind !== 'zuzia' && kind !== 'maja') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
     circ(c, 0, hy, 50, k.skin);
     c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(0,0,0,.08)'; c.beginPath(); c.arc(20, hy + 8, 50, 0, 7); c.fill(); c.restore();
     if (back_) { /* tył głowy */ }
     else {
       const lk = (o.look || 0) * 7 + (idle ? 2.5 * Math.sin(t * 0.45 + seed * 2) : 0), ly = (o.lookY || 0) * 5 + (idle ? 1.2 * Math.sin(t * 0.33 + seed) : 0);
       const blink = o.blink || ((t * 1000 + x * 37) % 3900) < 110;
-      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta' || kind === 'zuzia') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
+      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta' || kind === 'zuzia' || kind === 'maja') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
       if (kind === 'pasazer') { // zapadnięte, czarne oczy z małymi białymi punktami, cienie pod oczami, cień na połowie twarzy
         c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(20,18,24,.28)'; c.fillRect(4, hy - 60, 60, 120); c.restore();
         { const sg = c.createLinearGradient(0, hy - 50, 0, hy + 10); sg.addColorStop(0, 'rgba(8,8,12,.75)'); sg.addColorStop(1, 'rgba(8,8,12,0)'); c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = sg; c.fillRect(-60, hy - 60, 120, 70); c.restore(); }
@@ -324,6 +327,12 @@ function person(c, kind, x, y, s, o = {}) {
     } else if (kind === 'zuzia') { // rude włosy z dwoma kokami i grzywką
       c.beginPath(); c.arc(0, hy - 24, 50, Math.PI, 0); c.fillStyle = '#C2562B'; c.fill(); fillRR(c, -48, hy - 34, 70, 18, 9, '#C2562B');
       circ(c, -40, hy - 66, 20, '#A8451F'); circ(c, 40, hy - 66, 20, '#A8451F');
+    } else if (kind === 'maja') { // blond włosy z grzywką i wysokim kucykiem, czerwona gumka
+      c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#E2B84E'; c.fill(); fillRR(c, -10, hy - 36, 62, 18, 9, '#E2B84E');
+      circ(c, back_ ? 0 : 44, hy - 58, 10, '#D7263D');
+    } else if (kind === 'obcy') { // czarna czapka z wywinięciem, zarost
+      c.beginPath(); c.arc(0, hy - 14, 54, Math.PI, 0); c.fillStyle = '#151619'; c.fill(); fillRR(c, -56, hy - 24, 112, 22, 8, '#22242A');
+      if (!back_) { c.fillStyle = 'rgba(40,30,25,.35)'; for (let i = 0; i < 26; i++) { const a2 = Math.PI * (.15 + .7 * hash(i)), r2 = 30 + hash(i + 3) * 16; c.fillRect(Math.cos(a2) * r2 - 1, hy + 6 + Math.sin(a2) * r2 * .8, 3, 3); } }
     } else if (kind === 'ola') {
       c.beginPath(); c.arc(0, hy - 26, 50, Math.PI, 0); c.fillStyle = '#7B4FC9'; c.fill();
       fillRR(c, -50, hy - 34, 64, 18, 9, '#7B4FC9');
