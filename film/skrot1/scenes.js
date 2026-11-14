@@ -383,6 +383,15 @@ function alleyPOV(c, lt, o = {}) {
   for (const side of [-1, 1]) {
     for (let k = 9; k >= 0; k--) {
       const z0 = 1.3 + k * 1.1, z1 = z0 + 1.0, X = side * 1.7;
+      if (o.gapSide === side && o.gapK === k) { // przejście między garażami: na końcu jasna ulica, latarnia, strzałka
+        quad(c, pj(X, 0, z0), pj(X, 2.1, z0), pj(X, 2.1, z1 + .1), pj(X, 0, z1 + .1), '#0B0E16');
+        const gc = pj(X, 1.0, (z0 + z1) / 2), gw = 900 / z0; const lg = c.createRadialGradient(gc[0], gc[1], 6, gc[0], gc[1], gw); lg.addColorStop(0, 'rgba(255,225,160,1)'); lg.addColorStop(1, 'rgba(255,215,140,0)');
+        c.save(); c.beginPath(); const q1 = pj(X, 0, z0), q2 = pj(X, 2.1, z0), q3 = pj(X, 2.1, z1 + .1), q4 = pj(X, 0, z1 + .1); c.moveTo(q1[0], q1[1]); c.lineTo(q2[0], q2[1]); c.lineTo(q3[0], q3[1]); c.lineTo(q4[0], q4[1]); c.closePath(); c.clip();
+        c.fillStyle = lg; c.fillRect(gc[0] - gw, gc[1] - gw, gw * 2, gw * 2); const ls = pj(X, 1.6, (z0 + z1) / 2); c.fillStyle = '#20242F'; c.fillRect(ls[0] - 3, ls[1], 6, 260 / z0); c.restore();
+        quad(c, pj(X, 0, z0), pj(X * 1.6, 0, z0), pj(X * 1.6, 0, z1 + .1), pj(X, 0, z1 + .1), '#1B1F27'); // ścieżka
+        if (o.gapSign) { const sp = pj(X * .97, 1.75, z0 + .25), ss2 = 420 / z0; fillRR(c, sp[0] - ss2 * .9, sp[1] - ss2 * .28, ss2 * 1.1, ss2 * .45, 6, '#30A46C'); txt(c, '→ ULICA', sp[0] - ss2 * .35, sp[1] - ss2 * .05, ss2 * .2, '#fff', 900); }
+        continue;
+      }
       quad(c, pj(X, 0, z0), pj(X, 2.1, z0), pj(X, 2.1, z1 + .1), pj(X, 0, z1 + .1), '#3A404C'); // ściana
       const open = o.openSide === side && o.openK === k ? o.openAmt : 0;
       const dTop = 1.9, dBot = 0, dh = dTop - (dTop - dBot) * 0; // drzwi
@@ -422,21 +431,22 @@ scene({
   name: 'chase', start: 44, end: 58,
   cam: lt => { const sh = lt > 9.4 && lt < 9.9 ? (9.9 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   draw(c, lt) {
-    if (lt >= 7.0) { // WIDOK ZZA BRAMY
-      const intoG = lt > 10.6 ? clamp((lt - 10.6) / .9) : 0, openA = lt > 9.8 ? clamp((lt - 9.8) / .8) : 0;
-      alleyPOV(c, lt, { lampOff: false, openSide: -1, openK: 3, openAmt: openA });
-      // Obcy: z głębi zbliża się, staje, uśmiecha się, wchodzi w lewy garaż (k=3 → z≈4.6–5.6)
-      { const oz = lt < 9.6 ? lerp(9, 5.2, clamp((lt - 7) / 2.6)) : 5.2, ox = lerp(-.3, -1.3, intoG), p = pj(ox, 0, oz), ss = 3.2 / oz;
-        person(c, 'obcy', p[0], p[1], ss, { t: lt, walk: (lt < 9.6 || (intoG > 0 && intoG < 1)) ? lt * 9 : null, look: intoG >= 1 ? .6 : (intoG > 0 ? -1 : 0), mouth: lt > 9.6 ? 'grin' : null, alpha: 1 - intoG * .35, still: lt > 9.6 });
-        if (intoG >= 1) { c.save(); c.globalCompositeOperation = 'lighter'; for (const dx of [-16, 16]) { const ex = p[0] + dx * ss, ey = p[1] - 232 * ss; const g = c.createRadialGradient(ex, ey, 0, ex, ey, 22 * ss); g.addColorStop(0, 'rgba(255,240,210,.55)'); g.addColorStop(1, 'rgba(255,240,210,0)'); c.fillStyle = g; c.fillRect(ex - 22 * ss, ey - 22 * ss, 44 * ss, 44 * ss); } c.restore(); } }
-      // Maja: biegnie do kamery → szarpie kraty → odwraca się → ucieka w głąb, obok garażu z oczami
-      let mz, back = false, walkM = lt * 14, aR = null, aL = null;
+    if (lt >= 7.0) { // WIDOK ZZA BRAMY: z prawej boczne przejście między garażami → ulica
+      alleyPOV(c, lt, { lampOff: false, gapSide: 1, gapK: 2, gapSign: lt > 10.2 });
+      // Obcy: z głębi zbliża się z uśmiechem; staje; gdy Maja ucieka, rusza powoli w stronę bramy
+      const oz = lt < 9.6 ? lerp(11, 6.6, clamp((lt - 7) / 2.6)) : lt < 11.8 ? 6.6 : lerp(6.6, 5.0, clamp((lt - 11.8) / 2.2)), op = pj(-.45, 0, oz), os = 4.4 / oz;
+      person(c, 'obcy', op[0], op[1], os, { t: lt, walk: lt < 9.6 || lt > 11.8 ? lt * 8 : null, look: lt > 11.4 ? .8 : 0, mouth: 'grin', still: lt >= 9.6 && lt <= 11.8 });
+      { c.save(); c.globalCompositeOperation = 'lighter'; for (const dx of [-16, 16]) { const ex = op[0] + dx * os, ey = op[1] - 232 * os; const g = c.createRadialGradient(ex, ey, 0, ex, ey, 20 * os); g.addColorStop(0, 'rgba(255,240,210,.45)'); g.addColorStop(1, 'rgba(255,240,210,0)'); c.fillStyle = g; c.fillRect(ex - 20 * os, ey - 20 * os, 40 * os, 40 * os); } c.restore(); }
+      // Maja: biegnie do kamery → szarpie kraty → odwraca się, widzi go → dostrzega przejście z prawej → ucieka tam
+      let mz = 1.7, mxw = .35, back = false, walkM = lt * 14, aR = null, aL = null, look = 0, ma = 1;
       if (lt < 8.4) mz = lerp(4.2, 1.7, (lt - 7) / 1.4);
-      else if (lt < 9.6) { mz = 1.7; walkM = null; aR = 2.9 + Math.sin(lt * 34) * .15; aL = 2.9 + Math.sin(lt * 34 + 1) * .15; }
-      else if (lt < 11.6) { mz = 1.7; walkM = null; back = true; }
-      else { mz = lerp(1.7, 9, clamp((lt - 11.6) / 2.4)); back = true; walkM = lt * 16; }
-      const mp = pj(.35, 0, mz); person(c, 'maja', mp[0], mp[1], 3.2 / mz, { t: lt, walk: walkM, back, wide: true, mouth: 'o', aR, aL });
-      const op = pj(-.3, 1.0, 5.2); night(c, .45, [{ x: VP[0], y: VP[1], r: 360, a: .8 }, { x: mp[0], y: mp[1] - 300, r: 460, a: .75, tint: 'rgba(170,210,255,.08)' }, { x: op[0], y: op[1], r: 260, a: .8, tint: 'rgba(255,140,120,.06)' }]);
+      else if (lt < 9.6) { walkM = null; aR = 2.9 + Math.sin(lt * 34) * .15; aL = 2.9 + Math.sin(lt * 34 + 1) * .15; }
+      else if (lt < 10.6) { walkM = null; back = true; }
+      else if (lt < 11.2) { walkM = null; look = 1; } // spojrzenie w prawo: przejście
+      else { const q = clamp((lt - 11.2) / 1.8); mz = lerp(1.7, 4.0, q); mxw = lerp(.35, 2.3, q); look = 1; walkM = lt * 16; ma = 1 - clamp((q - .7) / .3); }
+      const mp = pj(mxw, 0, mz); if (ma > 0) person(c, 'maja', mp[0], mp[1], 3.2 / mz, { t: lt, walk: walkM, back, look, wide: true, mouth: 'o', aR, aL, alpha: ma });
+      const gp = pj(1.7, 1.0, 4.0);
+      night(c, .45, [{ x: VP[0], y: VP[1], r: 360, a: .8 }, { x: mp[0], y: mp[1] - 300, r: 460, a: .75, tint: 'rgba(170,210,255,.08)' }, { x: op[0], y: op[1] - 300 * os, r: 300, a: .8, tint: 'rgba(255,140,120,.06)' }, { x: gp[0], y: gp[1], r: 300, a: .9 }]);
       gateFront(c, lt, lt > 8.4 && lt < 9.6 ? 1 : 0);
       return;
     }
@@ -450,8 +460,8 @@ scene({
     let fx, fy = 1620, walkO = lt * 10;
     if (lt < 7.0) fx = lerp(-160, 180, clamp((lt - .6) / 6.4)); else if (lt < 10.6) { fx = lerp(180, 260, clamp((lt - 7) / 2)); walkO = lt < 9 ? lt * 10 : null; } else fx = lerp(260, 430, intoGarage);
     if (intoGarage < 1) {
-      c.save(); c.translate(0, 3240); c.scale(1, -1); c.globalAlpha = .28; person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO }); c.restore(); // odbicie w kałuży
-      person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO, look: 1, mouth: lt > 9.6 ? 'grin' : null, alpha: lt > 10.6 ? 1 - intoGarage * .9 : 1, still: lt > 9 });
+      c.save(); c.translate(0, 3240); c.scale(1, -1); c.globalAlpha = .28; person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO, mouth: 'grin' }); c.restore(); // odbicie w kałuży
+      person(c, 'obcy', fx, fy, 1.8, { t: lt, walk: walkO, look: 1, mouth: 'grin', alpha: lt > 10.6 ? 1 - intoGarage * .9 : 1, still: lt > 9 });
     }
     // Maja: biegnie w prawo → brama (stoi, szarpie) → odwraca się → czeka, aż on wejdzie do garażu → biegnie w lewo obok
     let mx = 620, look = 1, walkM = lt * 14, aR = 1.6, phone = 2;
@@ -466,8 +476,8 @@ scene({
     if (lt > 0.4 && lt < 3.4) label(c, 'KROKI', 540, 300, 'dark', 48, lt - .4, 3.4 - lt);
     if (lt > 4.6 && lt < 6.8) label(c, 'TELEFON: 1% · WYŁĄCZA SIĘ', 540, 300, 'red', 40, lt - 4.6, 6.8 - lt);
     if (lt > 8.4 && lt < 9.8) label(c, 'BRAMA ZAMKNIĘTA', 540, 300, 'red', 48, lt - 8.4, 9.8 - lt);
-    if (lt > 9.8 && lt < 11.6) label(c, 'ON STOI. I SIĘ UŚMIECHA.', 540, 300, 'dark', 42, lt - 9.8, 11.6 - lt);
-    if (lt > 11.8) label(c, 'BIEGNIE Z POWROTEM. DO ŚWIATEŁ ULICY.', 540, 300, 'yellow', 36, lt - 11.8, 14 - lt);
+    if (lt > 9.8 && lt < 10.8) label(c, 'ON STOI. I SIĘ UŚMIECHA.', 540, 300, 'dark', 42, lt - 9.8, 10.8 - lt);
+    if (lt > 10.8) label(c, 'PRZEJŚCIE MIĘDZY GARAŻAMI → ULICA', 540, 300, 'yellow', 36, lt - 10.8, 14 - lt);
   },
 });
 // 5. SKLEP: Maja wraca na oświetloną ulicę i wpada do sklepu 24h. Kasjerka dzwoni na 112. (ZASADA)
