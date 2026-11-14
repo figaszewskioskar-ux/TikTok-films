@@ -41,7 +41,17 @@
     .po-av{width:46px;height:46px;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 2px #d7263d,0 4px 14px rgba(0,0,0,.5);flex:none}
     .po-nm{font:400 19px/.95 Anton,Impact,sans-serif;color:#f3efe6;letter-spacing:.04em;text-transform:uppercase;display:flex;flex-direction:column}
     .po-nm b{font:400 11px/1.2 Anton,Impact,sans-serif;color:#ff2a44;letter-spacing:.38em;margin-top:3px}
-    @media(max-width:599px){.po-nm{display:none}}
+    @media(max-width:599px){
+      .po-av{width:38px;height:38px}
+      html body .po-logo{gap:8px}
+      .po-nm{font-size:16px;letter-spacing:.05em}
+      .po-nm b{font-size:9px;letter-spacing:.42em;margin-top:2px}
+      html body .po-sup,html body .po-play{padding:8px 10px!important;font-size:13px!important;gap:5px!important}
+      html body .po-head .po-w{gap:8px}
+      html body .po-sup span{display:none}
+      html body .po-sup{padding:9px 11px!important}
+    }
+    @media(max-width:370px){.po-nm{font-size:14px}.po-nm b{font-size:8px}}
   </style>
   {{ content_for_header }}
 </head>
