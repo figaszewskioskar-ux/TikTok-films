@@ -1,12 +1,13 @@
-// SKRÓTEM · ODC. 2 — „Nie idź tam sama!”: wiadomość „Przynieś klucz do garażu 13. Sama. Nikomu nie mów.”
+// SKRÓTEM · ODC. 2 — „Nie odpisuj!” (wg wzoru wirala): 1:12, Maja sama, obcy numer pisze. Jedno miejsce, ujęcia z jej oczu.
 window.EP = {
   badge: 'SKRÓTEM · ODC. 2',
   loop: false,
   vignette: .84,
   cues(add) {
-    add(0.2, 'stab'); add(6.2, 'whoosh'); add(12.4, 'whoosh'); add(14.0, 'notif'); add(17.0, 'notif'); add(20.0, 'notif'); add(23.4, 'hit');
-    add(26.4, 'whoosh'); add(31.0, 'hit'); add(38.4, 'whoosh'); add(42.0, 'creak'); add(46.0, 'hit'); add(49.0, 'dial'); add(52.4, 'hit');
-    add(56.4, 'whoosh'); add(57.0, 'siren'); add(72.4, 'whoosh'); add(74.0, 'creak'); add(80.0, 'hit'); add(86.4, 'whoosh'); add(92.0, 'knock'); add(92.6, 'knock'); add(93.2, 'knock'); add(101.6, 'hit');
+    add(0.2, 'stab'); add(0.6, 'buzz'); add(2.4, 'buzz'); add(5.2, 'whoosh'); add(11.2, 'notif'); add(14.0, 'notif'); add(17.0, 'hit');
+    add(19.4, 'click'); add(21.0, 'notif'); add(23.0, 'hit'); add(27.4, 'whoosh'); add(31.0, 'hit'); add(35.4, 'notif'); add(38.0, 'notif'); add(42.0, 'hit');
+    add(47.4, 'dial'); add(55.0, 'hit'); add(60.4, 'whoosh'); add(66.0, 'hit'); add(72.4, 'notif'); add(76.0, 'buzz'); add(80.0, 'keys'); add(84.0, 'hit');
+    add(88.4, 'whoosh'); add(92.0, 'knock'); add(92.6, 'knock'); add(93.2, 'knock'); add(99.6, 'hit');
   },
 };
 const S = [];
@@ -346,139 +347,135 @@ function policeCar(c, lt, x, y, s = 1) {
   c.restore();
 }
 
+
+// ===== odc. 2 v2: pokój Mai nocą, telefon na szafce, drzwi mieszkania od środka =====
+function nightstandPhone(c, lt, o = {}) { // zbliżenie: szafka nocna, lampka, budzik 01:12, telefon wibruje
+  c.fillStyle = '#141A26'; c.fillRect(0, 0, W, H);
+  for (let r = 0; r < 20; r++) { c.fillStyle = 'rgba(255,255,255,.025)'; c.fillRect(0, r * 96, W, 3); }
+  fillRR(c, 60, 1160, 960, 760, 20, '#5A3D26'); fillRR(c, 60, 1160, 960, 40, 12, '#6B4A2F'); fillRR(c, 120, 1320, 840, 220, 10, '#4A3220'); fillRR(c, 500, 1410, 80, 20, 8, '#C9A15A');
+  fillRR(c, 120, 980, 200, 180, 30, '#1E1E24'); txt(c, '01:12', 220, 1070, 64, '#FF3B30', 900); // budzik
+  c.fillStyle = '#2A2D36'; c.fillRect(870, 900, 12, 260); c.beginPath(); c.moveTo(800, 900); c.lineTo(950, 900); c.lineTo(920, 820); c.lineTo(830, 820); c.fillStyle = '#5A4A2A'; c.fill(); // lampka zgaszona
+  const vib = o.vib ? Math.sin(lt * 70) * 6 : 0;
+  c.save(); c.translate(540 + vib, 1110); c.rotate(-.06); fillRR(c, -170, -300, 340, 600, 40, '#0E0F12'); fillRR(c, -156, -286, 312, 572, 30, o.screen ? '#1B2133' : '#05060A');
+  if (o.screen) { txt(c, '01:12', 0, -200, 64, '#FFFFFF', 300); fillRR(c, -140, -100, 280, 150, 22, 'rgba(255,255,255,.14)'); txt(c, 'Nieznany numer', -120, -60, 22, '#FFFFFF', 900, 'left'); txt(c, o.screen, -120, -10, 24, '#FFFFFF', 600, 'left'); }
+  c.restore();
+  if (o.screen) { const g = c.createRadialGradient(540, 1100, 20, 540, 1100, 600); g.addColorStop(0, 'rgba(160,190,255,.28)'); g.addColorStop(1, 'rgba(160,190,255,0)'); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = g; c.fillRect(0, 500, W, 1300); c.restore(); }
+}
+function flatDoorInside(c, lt, o = {}) { // przedpokój Mai: drzwi z zamkiem, łańcuchem i wizjerem, wieszak, buty, lustro, pasek światła pod drzwiami
+  c.fillStyle = '#2E3A44'; c.fillRect(0, 0, W, 1420); for (let r = 0; r < 18; r++) for (let q = 0; q < 9; q++) { c.fillStyle = 'rgba(255,255,255,.035)'; c.fillRect(q * 120 + (r % 2) * 60, r * 80, 50, 4); }
+  c.fillStyle = '#3A2A20'; c.fillRect(0, 1420, W, 500); for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(0, 1440 + i * 40, W, 3); }
+  quilted(c, 330, 520, 420, 900, '#6B4A2F', '#583B24', '#C9A15A', 64); c.strokeStyle = '#3A2818'; c.lineWidth = 14; c.strokeRect(330, 520, 420, 900);
+  circ(c, 540, 760, 18, '#1B1C22'); c.strokeStyle = '#C9A15A'; c.lineWidth = 6; c.beginPath(); c.arc(540, 760, 22, 0, 7); c.stroke(); // wizjer
+  fillRR(c, 680, 1000, 46, 90, 8, '#C9A15A'); circ(c, 703, 1060, 8, '#2A1A10'); // zamek
+  const kr = o.lockTurn || 0; c.save(); c.translate(703, 1060); c.rotate(kr * Math.PI / 2); fillRR(c, -4, -14, 8, 28, 3, '#2A1A10'); c.restore();
+  fillRR(c, 640, 1140, 90, 26, 10, '#C9A15A'); // klamka
+  c.strokeStyle = '#C9CDD2'; c.lineWidth = 6; for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(640 + i * 16, 900 + Math.sin(i / 5 * Math.PI) * 28, 9, 6, .3, 0, 7); c.stroke(); } fillRR(c, 720, 880, 26, 40, 6, '#C9CDD2'); // łańcuch założony
+  fillRR(c, 820, 560, 200, 18, 6, '#5A3D26'); for (let i = 0; i < 3; i++) { fillRR(c, 840 + i * 60, 578, 10, 40, 4, '#2A2D36'); } fillRR(c, 830, 610, 70, 220, 24, '#C23A3A'); fillRR(c, 910, 610, 70, 180, 24, '#1E5AA8'); // wieszak z kurtkami
+  fillRR(c, 60, 560, 200, 300, 12, '#9FB3C2'); fillRR(c, 72, 572, 176, 276, 8, '#C9D6E0'); // lustro
+  for (let i = 0; i < 3; i++) fillRR(c, 820 + i * 70, 1380, 60, 30, 10, ['#F2F2EE', '#2A2D36', '#C23A3A'][i]); // buty
+  if (o.underLight) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(0, 1400, 0, 1560); g.addColorStop(0, `rgba(255,220,150,${.75 * o.underLight})`); g.addColorStop(1, 'rgba(255,220,150,0)'); c.fillStyle = g; c.fillRect(330, 1400, 420, 160); c.restore();
+    if (o.feet) { fillRR(c, 460, 1404, 54, 14, 4, 'rgba(10,8,12,.92)'); fillRR(c, 560, 1404, 54, 14, 4, 'rgba(10,8,12,.92)'); } }
+}
+
 // ===================== SCENY =====================
-// 0. HAK: dłoń z kluczem 13 przed garażem. Uchylone drzwi, w środku ciemność.
+// 0. HAK: telefon na szafce wibruje. „Nie śpisz, Maja?”
 scene({
-  name: 'hook', start: 0, end: 6,
-  draw(c, lt) {
-    garagesBg(c, lt, { first: 11, noBin: true, openNum: 13, openAmt: .5 + .04 * Math.sin(lt * 2), darkInside: true, insideN: (cc, gx, gy) => { cc.save(); cc.shadowColor = 'rgba(255,255,255,.9)'; cc.shadowBlur = 24; ell(cc, gx - 22, gy - 120, 11, 7, '#F4F1EA'); ell(cc, gx + 22, gy - 120, 11, 7, '#F4F1EA'); cc.restore(); circ(cc, gx - 22, gy - 120, 4, '#111'); circ(cc, gx + 22, gy - 120, 4, '#111'); } });
-    night(c, .62, [{ x: 750, y: 1250, r: 360, a: .6 }, { x: 330, y: 1300, r: 420, a: .7 }]);
-    person(c, 'maja', 330, 1940, 2.4, { t: lt, back: true, aR: 2.5 + Math.sin(lt * 2) * .05, still: true });
-    keyTag(c, 575, 1265, 1.5, 1);
-    bigSign(c, lt, 'NIE IDŹ', 'TAM SAMA!', 420);
-  },
-  post(c, lt) { if (lt > 2.6) label(c, 'SKRÓTEM · ODC. 2', 540, 640, 'yellow', 40, lt - 2.6, 9); },
+  name: 'hook', start: 0, end: 5,
+  draw(c, lt) { nightstandPhone(c, lt, { vib: lt < 1.4 || (lt > 2.2 && lt < 3.4), screen: 'Nie śpisz, Maja?' }); night(c, .45, [{ x: 540, y: 1100, r: 640, a: .9 }]); bigSign(c, lt, 'NIE', 'ODPISUJ!', 400); },
+  post(c, lt) { if (lt > 1.0) label(c, 'BZZ. BZZ.', 540, 1560, 'dark', 44, lt - 1.0, 9); },
 });
-// 1. POPRZEDNIO: garaż 13 za oknem, klucz w torbie
+// 1. KONTEKST: 01:12, mama na nocnej zmianie, Maja sama. Za oknem garaże.
 scene({
-  name: 'recap', start: 6, end: 12,
-  labels: [[0.3, 5.5, 'POPRZEDNIO · SKRÓTEM · ODC. 1', 540, 1680, 'yellow', 38]],
-  draw(c, lt) {
-    majaRoom(c, lt, { open13: .8, dark: true, lampOff: true, inside13: (cc, gx, gy) => person(cc, 'obcy', gx, gy, 1.3, { t: lt, mouth: 'grin', aR: 2.4 + Math.sin(lt * 6) * .5, still: true }) });
-    person(c, 'maja', 230, 1700, 2.1, { t: lt, look: 1, wide: true, mouth: 'o', aR: 1.8 }); keyTag(c, 470, 1180, 1.4, 1);
-    night(c, .6, [{ x: 780, y: 660, r: 420, a: .9 }]);
-  },
+  name: 'ctx', start: 5, end: 11,
+  draw(c, lt) { majaRoom(c, lt, { dark: true, lampOff: true }); person(c, 'maja', 300, 1700, 2.1, { t: lt, look: 1, phone: 2, aR: 1.8 }); night(c, .78, [{ x: 400, y: 1250, r: 360, a: .9, tint: 'rgba(160,190,255,.12)' }, { x: 780, y: 660, r: 360, a: .6 }]); },
+  post(c, lt) { if (lt > .3) label(c, '01:12 · MAJA SAMA W DOMU', 540, 300, 'yellow', 40, lt - .3, 9); },
 });
-// 2. WIADOMOŚCI: „Przynieś klucz. Sama. Nikomu nie mów.” Skąd ma jej numer? Zawieszka na torbie. (BŁĄD 1)
+// 2. WIADOMOŚCI: „Masz coś mojego.” „Klucz z garażu 13.” Skąd wie?
 scene({
-  name: 'msg', start: 12, end: 26,
-  draw(c, lt) {
-    if (lt < 10.4) { c.fillStyle = '#07080C'; c.fillRect(0, 0, W, H);
-      chatPhone(c, lt, [[1.6, 'Masz coś mojego, Maja.'], [4.6, 'Przynieś klucz do garażu 13.\nJutro o 19:00.'], [7.6, 'Sama. Nikomu nie mów.']], { typing: 9.6 });
-      night(c, .3, [{ x: 540, y: 1000, r: 800, a: .85 }]); return; }
-    const l = lt - 10.4; majaRoom(c, lt, { dark: false, lampOff: true }); c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(0, 0, W, H);
-    bagTag(c, 540, 900, 1.1, .5 + .5 * Math.sin(lt * 6));
-  },
-  post(c, lt) { if (lt > 10.6 && lt < 12.6) label(c, 'SKĄD MA JEJ NUMER?', 540, 300, 'red', 44, lt - 10.6, 12.6 - lt); if (lt > 11.6) card(c, 70, 1460, 860, 'BŁĄD 1', 'imię i numer telefonu na zawieszce\ntorby — widzi je każdy obcy', lt - 11.6, '#F39C12', 40); },
+  name: 'msg', start: 11, end: 19,
+  draw(c, lt) { c.fillStyle = '#07080C'; c.fillRect(0, 0, W, H); chatPhone(c, lt, [[-1, 'Nie śpisz, Maja?'], [.2, 'Masz coś mojego.'], [3.0, 'Klucz. Z garażu 13.']], { typing: 5.6 }); night(c, .3, [{ x: 540, y: 1000, r: 800, a: .85 }]); },
+  post(c, lt) { if (lt > 6.0) label(c, 'SKĄD WIE O KLUCZU?', 540, 1640, 'red', 42, lt - 6.0, 9); },
 });
-// 3. SZKOŁA: Zuzia ostrzega. Maja chce iść sama i nic nie mówi mamie. (BŁĄD 2)
+// 3. ODPISUJE „Kto to?” — „Wyświetlono” — „Widzę, że nie śpisz.” (BŁĄD 1)
 scene({
-  name: 'school', start: 26, end: 38,
+  name: 'reply', start: 19, end: 27,
+  draw(c, lt) { c.fillStyle = '#07080C'; c.fillRect(0, 0, W, H); chatPhone(c, lt, [[-1, 'Masz coś mojego.'], [-1, 'Klucz. Z garażu 13.'], [.4, 'Kto to?', true], [2.2, 'Wiedziałem, że nie śpisz.'], [3.8, 'Widzę światło\nz twojego telefonu.']]); night(c, .3, [{ x: 540, y: 1000, r: 800, a: .85 }]); },
+  post(c, lt) { if (lt > 1.2 && lt < 2.2) label(c, 'WYŚWIETLONO · 01:13', 540, 1640, 'dark', 36, lt - 1.2, 2.2 - lt); if (lt > 4.6) card(c, 70, 1460, 860, 'BŁĄD 1', 'odpisała — teraz wie, że nie śpi\ni czyta jego wiadomości', lt - 4.6, '#F39C12', 40); },
+});
+// 4. OKNO (z jej oczu): w garażu 13 pali się światło. Ktoś macha telefonem.
+scene({
+  name: 'window', start: 27, end: 35,
+  draw(c, lt) {
+    c.fillStyle = '#05060B'; c.fillRect(0, 0, W, H);
+    c.save(); c.beginPath(); c.rect(120, 300, 840, 1100); c.clip(); c.translate(120, 300); c.scale(840 / W, 1100 / 1400);
+    garagesBg(c, lt, { first: 11, open13: .85, noBin: true, inside13: (cc, gx, gy) => { person(cc, 'obcy', gx, gy, 1.3, { t: lt, mouth: 'grin', still: true, aR: 2.5 + Math.sin(lt * 5) * .3 }); const hx = gx + 1.3 * 70, hy = gy - 1.3 * 300; c.save(); c.globalCompositeOperation = 'lighter'; const g = cc.createRadialGradient(hx, hy, 2, hx, hy, 90); g.addColorStop(0, 'rgba(200,220,255,.9)'); g.addColorStop(1, 'rgba(200,220,255,0)'); cc.fillStyle = g; cc.fillRect(hx - 90, hy - 90, 180, 180); c.restore(); } });
+    c.restore();
+    c.strokeStyle = '#E8E4DA'; c.lineWidth = 26; c.strokeRect(120, 300, 840, 1100); c.fillStyle = '#E8E4DA'; c.fillRect(527, 300, 26, 1100);
+    c.fillStyle = 'rgba(230,225,215,.22)'; for (let i = 0; i < 6; i++) c.fillRect(120 + i * 26 + Math.sin(lt + i) * 4, 300, 14, 1100); // firanka
+    fillRR(c, 80, 1400, 920, 40, 6, '#E8E4DA');
+    c.save(); c.globalAlpha = .1; person(c, 'maja', 540, 1500, 2.0, { t: lt, wide: true, mouth: 'o', still: true }); c.restore(); // odbicie w szybie
+    night(c, .55, [{ x: 600, y: 900, r: 420, a: .9 }]);
+  },
+  post(c, lt) { if (lt > .6) label(c, 'GARAŻ 13. PALI SIĘ ŚWIATŁO.', 540, 230, 'dark', 40, lt - .6, 9); },
+});
+// 5. PRZYNĘTA: „Mama prosiła, żebym cię odebrał. Zejdź z kluczem.” Maja sięga po kurtkę. (BŁĄD 2)
+scene({
+  name: 'bait', start: 35, end: 47,
+  draw(c, lt) {
+    if (lt < 6.0) { c.fillStyle = '#07080C'; c.fillRect(0, 0, W, H); chatPhone(c, lt, [[-1, 'Widzę światło\nz twojego telefonu.'], [.4, 'Twoja mama miała wypadek.'], [2.6, 'Prosiła, żebym cię odebrał.\nZejdź z kluczem. Szybko.']]); night(c, .3, [{ x: 540, y: 1000, r: 800, a: .85 }]); return; }
+    flatDoorInside(c, lt, {}); person(c, 'maja', lerp(140, 300, clamp((lt - 6) / 1.5)), 1700, 2.1, { t: lt, walk: lt < 7.5 ? lt * 10 : null, look: 1, wide: true, mouth: 'o', aR: lt > 7.6 ? 2.0 : null });
+    night(c, .7, [{ x: 540, y: 1000, r: 520, a: .7 }]);
+  },
+  post(c, lt) { if (lt > 2.8 && lt < 6.0) label(c, '„MAMA MIAŁA WYPADEK”', 540, 1640, 'red', 42, lt - 2.8, 6.0 - lt); if (lt > 8.0) card(c, 70, 300, 860, 'BŁĄD 2', 'uwierzyła obcemu, zamiast\nzadzwonić do mamy', lt - 8.0, '#F39C12', 40); },
+});
+// 6. TELEFON DO MAMY: „Nikogo nie wysyłałam! Nie otwieraj, nie odpisuj.” (ZASADA)
+scene({
+  name: 'call', start: 47, end: 60,
   bubbles: [
-    say(0.8, 3.4, 'Idziesz tam sama?\nZwariowałaś?!', 'zuzia', 780, 1700, 2.0, -40),
-    say(3.8, 6.6, 'Oddam klucz i będzie spokój.\nTylko nie mów mamie.', 'maja', 320, 1700, 2.0, 60),
+    sayAt(1.6, 3.6, 'Mamo? Miałaś wypadek?!', 'maja', 420, 1080, 0, 80),
+    sayAt(4.0, 7.4, 'Jestem w pracy! Nikogo nie wysyłałam.\nNie otwieraj i nie odpisuj!', 'mama', 700, 900, -60, 60),
+    sayAt(7.8, 9.8, 'Dzwonię na policję.', 'mama', 700, 900, -60, 60),
   ],
   draw(c, lt, sc) {
-    schoolBg(c, lt);
-    person(c, 'maja', 320, 1700, 2.0, { t: lt, look: 1, talk: talking(sc, 'maja', lt) });
-    person(c, 'zuzia', 780, 1700, 2.0, { t: lt, look: -1, wide: true, talk: talking(sc, 'zuzia', lt), mouth: lt > 6.6 ? 'o' : null });
-    c.save(); c.globalAlpha = .75; person(c, 'kobieta', 1010, 1480, 1.15, { t: lt, look: -1 }); c.restore(); // nauczycielka w tle
+    flatDoorInside(c, lt, {}); person(c, 'maja', 300, 1700, 2.1, { t: lt, look: 1, wide: true, phone: 2, aR: 2.0, talk: talking(sc, 'maja', lt) });
+    // wkładka: mama w pracy (szpital) w okienku
+    fillRR(c, 560, 360, 460, 520, 24, '#0E0F12'); c.save(); c.beginPath(); c.roundRect(574, 374, 432, 492, 16); c.clip(); c.fillStyle = '#DDE6EA'; c.fillRect(574, 374, 432, 492); c.fillStyle = '#8FB8C2'; c.fillRect(574, 760, 432, 120);
+    fillRR(c, 600, 410, 160, 40, 8, '#30A46C'); txt(c, 'SOR · NOCKA', 680, 430, 20, '#FFFFFF', 900); person(c, 'kobieta', 800, 1000, 1.2, { t: lt, look: -1, phone: 2, aR: 2.0, talk: talking(sc, 'mama', lt), wide: true }); c.restore();
+    night(c, .55, [{ x: 400, y: 1100, r: 520, a: .8 }, { x: 790, y: 620, r: 360, a: .9 }]);
   },
-  post(c, lt) { if (lt > 7.4) card(c, 70, 300, 860, 'BŁĄD 2', 'chce iść sama na spotkanie z obcym\ni ukrywa to przed dorosłymi', lt - 7.4, '#F39C12', 38); },
+  post(c, lt) { if (lt > 10.2) card(c, 60, 300, 900, 'ZASADA', 'Obcy pisze w nocy? Nie odpisuj i nie kasuj —\nzrób zrzut ekranu. Zadzwoń do rodzica\nalbo na 112.', lt - 10.2, '#F39C12', 36); },
 });
-// 4. GARAŻE 19:00: garaż 13 uchylony. Głos z ciemności. Telefon od Zuzi. Ręka z ciemności. Ucieczka.
+// 7. SKĄD ON WIE? Zawieszka na torbie: imię, numer, klub.
 scene({
-  name: 'garage', start: 38, end: 56,
-  cam: lt => { const sh = lt > 14.0 && lt < 14.6 ? (14.6 - lt) * 24 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
-  bubbles: [
-    sayAt(3.6, 6.4, 'Wejdź, Maja.\nPołóż klucz na stole.', 'obcy', 750, 1060, 0, 80),
-    sayAt(8.0, 11.0, 'Nie wchodź! Powiedziałam\ntwojej mamie. Jedzie z policją!', 'zuzia', 300, 920, 60, 80),
-  ],
-  draw(c, lt, sc) {
-    const sc2 = Math.min(lt, 2.4) * 40;
-    garagesBg(c, lt, { first: 11, scroll: sc2, noBin: true, openNum: 13, openAmt: .55, darkInside: true, insideN: (cc, gx, gy) => {
-      cc.save(); cc.shadowColor = 'rgba(255,255,255,.9)'; cc.shadowBlur = 24; ell(cc, gx - 22, gy - 300, 11, 7, '#F4F1EA'); ell(cc, gx + 22, gy - 300, 11, 7, '#F4F1EA'); cc.restore(); circ(cc, gx - 22, gy - 300, 4, '#111'); circ(cc, gx + 22, gy - 300, 4, '#111');
-      fillRR(cc, gx - 90, gy - 120, 180, 14, 4, '#3A2A1C'); } }); // stół w ciemności
-    // ręka z ciemności
-    const mx = lt < 2.4 ? lerp(120, 300, lt / 2.4) : lt < 14.4 ? (lt > 12 ? lerp(300, 240, clamp((lt - 12) / .6)) : 300) : lerp(240, -200, clamp((lt - 14.4) / 1.6));
-    person(c, 'maja', mx, 1700, 2.0, { t: lt, walk: lt < 2.4 || lt > 14.4 ? lt * 12 : null, look: lt > 14.4 ? -1 : 1, wide: lt > 3.6, mouth: lt > 12 ? 'o' : null, phone: lt > 7.6 && lt < 12 ? 2 : 0, aR: lt > 7.6 && lt < 12 ? 2.0 : (lt < 7.6 && lt > 2.4 ? 1.3 : null) });
-    if (lt > 2.4 && lt < 7.6) keyTag(c, mx + 150, 1330, .9, 1);
-    if (lt > 12.0) { const r = clamp((lt - 12.0) / .8) * (lt < 14.6 ? 1 : clamp(1 - (lt - 14.6) / .4)), hx = 620 - 150 * r;
-      fillRR(c, hx + 20, 1176, 240 * r + 40, 64, 24, '#3E4A3A'); fillRR(c, hx + 30, 1172, 26, 72, 8, '#2F392C'); // rękaw z mankietem
-      ell(c, hx, 1208, 34, 28, '#D9A47E'); for (let k = 0; k < 4; k++) fillRR(c, hx - 70, 1186 + k * 13, 44, 11, 5, '#CF9A74'); fillRR(c, hx - 24, 1226, 30, 12, 6, '#CF9A74'); }
-    night(c, .62, [{ x: 750, y: 1150, r: 320, a: .7 }, { x: 945, y: 1100, r: 380, a: .7 }, { x: mx, y: 1350, r: 380, a: .8, tint: 'rgba(170,210,255,.08)' }]);
-  },
-  post(c, lt) { if (lt > 0.2 && lt < 2.4) label(c, '19:00 · GARAŻ 13', 540, 300, 'dark', 44, lt - .2, 2.4 - lt); if (lt > 12.4 && lt < 14.6) label(c, 'RĘKA Z CIEMNOŚCI', 540, 300, 'red', 44, lt - 12.4, 14.6 - lt); if (lt > 14.8) label(c, 'UCIEKA DO ŚWIATEŁ ULICY', 540, 300, 'yellow', 40, lt - 14.8, 18 - lt); },
+  name: 'tag', start: 60, end: 72,
+  draw(c, lt) { majaRoom(c, lt, { dark: true, lampOff: true }); c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(0, 0, W, H); bagTag(c, 540, 820, 1.1, .5 + .5 * Math.sin(lt * 6)); if (lt > 5.0) { const a = clamp((lt - 5) / .4); c.save(); c.globalAlpha = a; chatPhone(c, lt, [[-1, 'Nie odpisujesz?'], [.0, 'Szkoda. Mam twój adres.']]); c.restore(); } },
+  post(c, lt) { if (lt > .4 && lt < 5.0) label(c, 'IMIĘ · NUMER · KLUB — NA TORBIE', 540, 300, 'red', 36, lt - .4, 5.0 - lt); },
 });
-// 5. POLICJA I MAMA: radiowóz na ulicy. „Dobrze, że nie weszłaś.” (ZASADA)
+// 8. CZEKANIE: domofon, światło pod drzwiami, cienie stóp, klucz w zamku obraca się.
 scene({
-  name: 'police', start: 56, end: 72,
-  bubbles: [
-    say(1.0, 3.6, 'Dobrze, że nie weszłaś.\nKlucz to dowód.', 'policjant', 240, 1700, 1.9, 60),
-    say(4.0, 6.6, 'Nigdy więcej takich\nsekretów. Obiecaj.', 'mama', 600, 1700, 1.9, 0),
-    say(7.0, 8.6, 'Obiecuję.', 'maja', 880, 1700, 1.9, -60),
-  ],
-  draw(c, lt, sc) {
-    streetBg(c, lt, { shop: false }); policeCar(c, lt, 820, 1240, .7); policeLights(c, lt, 400, 900);
-    person(c, 'policjant', 240, 1700, 1.9, { t: lt, look: 1, talk: talking(sc, 'policjant', lt), aR: lt > 1 && lt < 3.6 ? 1.4 : null });
-    person(c, 'kobieta', 600, 1700, 1.9, { t: lt, look: 1, talk: talking(sc, 'mama', lt) }); fillRR(c, 600 - 55, 1700 - 1.9 * 182, 110, 1.9 * 18, 10, '#7A2E52'); fillRR(c, 600 + 20, 1700 - 1.9 * 170, 26, 1.9 * 40, 8, '#7A2E52'); // szal mamy
-    person(c, 'maja', 880, 1700, 1.9, { t: lt, look: -1, talk: talking(sc, 'maja', lt) });
-    if (lt > 1 && lt < 3.6) keyTag(c, 360, 1330, .9, 1);
-    breathPuff(c, 260, 1700 - 1.9 * 250, lt); breathPuff(c, 620, 1700 - 1.9 * 250, lt + .4); breathPuff(c, 900, 1700 - 1.9 * 250, lt + .8);
-    snowfall(c, lt, 70, .75); night(c, .35, [{ x: 760, y: 1100, r: 620, a: .9 }, { x: 126, y: 1100, r: 420, a: .9 }]);
-  },
-  post(c, lt) { if (lt > 9.0) card(c, 60, 300, 900, 'ZASADA', 'Obcy każe ci przyjść samej i nikomu\nnie mówić? To pułapka. Powiedz dorosłemu,\nzachowaj wiadomości i dzwoń na 112.', lt - 9.0, '#F39C12', 36); },
-});
-// 6. GARAŻ 13 OD ŚRODKA: latarki policji. Na ścianie zawieszki z torb — wiele imion. Garaż należy do kogoś z jej bloku.
-scene({
-  name: 'inside', start: 72, end: 86,
-  bubbles: [
-    say(4.4, 7.2, 'Tu jest więcej imion.', 'policjant', 230, 1760, 1.9, 60),
-    say(8.4, 11.6, 'Garaż wynajmuje ktoś\nz bloku dwanaście.', 'policjant', 230, 1760, 1.9, 60),
-  ],
-  draw(c, lt, sc) {
-    c.fillStyle = '#121418'; c.fillRect(0, 0, W, H); c.fillStyle = '#1A1C21'; c.fillRect(0, 1420, W, 500);
-    // ściana z deskami, narzędzia, zawieszki
-    for (let i = 0; i < 12; i++) { c.fillStyle = i % 2 ? '#2A2622' : '#2F2A25'; c.fillRect(i * 90, 300, 90, 1120); }
-    const tags = [['MAJA · 7', '#F5C542'], ['OLEK · 9', '#9FD3F5'], ['NINA · 4', '#F28CB1'], ['IGA · 11', '#F5C542'], ['KAROL · 3', '#9FD3F5'], ['ZOSIA · 8', '#F28CB1']];
-    tags.forEach(([t, col], i) => { const tx = 380 + (i % 3) * 220, ty = 560 + Math.floor(i / 3) * 260; c.strokeStyle = '#8A8F9A'; c.lineWidth = 3; c.beginPath(); c.moveTo(tx, ty - 70); c.lineTo(tx, ty - 40); c.stroke(); circ(c, tx, ty - 74, 6, '#8A8F9A');
-      c.save(); c.translate(tx, ty); c.rotate((hash(i) - .5) * .25); fillRR(c, -90, -40, 180, 90, 10, col); txt(c, t, 0, -6, 26, '#14161B', 900); txt(c, 'tel. ••• ••• •••', 0, 26, 16, '#14161B', 700); c.restore(); });
-    c.strokeStyle = '#D7263D'; c.lineWidth = 6; c.beginPath(); c.arc(380, 560, 110, 0, 7); c.stroke(); // MAJA zakreślona
-    fillRR(c, 100, 1060, 200, 300, 6, '#3A3530'); for (let i = 0; i < 4; i++) fillRR(c, 120, 1080 + i * 66, 160, 50, 4, '#2A2622'); // szafka
-    // latarki: dwa snopy
-    c.save(); c.globalCompositeOperation = 'lighter'; for (const [sx, ang] of [[150, -.5 + Math.sin(lt * .8) * .12], [930, -2.6 + Math.sin(lt * .7 + 1) * .12]]) { c.save(); c.translate(sx, 1500); c.rotate(ang); const g = c.createLinearGradient(0, 0, 900, 0); g.addColorStop(0, 'rgba(255,250,220,.4)'); g.addColorStop(1, 'rgba(255,250,220,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(0, 0); c.lineTo(900, -180); c.lineTo(900, 180); c.closePath(); c.fill(); c.restore(); } c.restore();
-    person(c, 'policjant', 230, 1760, 1.9, { t: lt, look: 1, talk: talking(sc, 'policjant', lt), aR: 1.2 });
-    night(c, .6, [{ x: 520, y: 700, r: 520, a: .9 }, { x: 230, y: 1300, r: 320, a: .6 }]);
-  },
-  post(c, lt) { if (lt > 0.4 && lt < 4.2) label(c, 'GARAŻ 13 · ŚRODEK', 540, 260, 'dark', 40, lt - .4, 4.2 - lt); },
-});
-// 7. ZAKOŃCZENIE: noc w domu. Pukanie. Wizjer: uśmiechnięty sąsiad w kapciach z pękiem kluczy. Światło gaśnie.
-scene({
-  name: 'end', start: 86, end: 106,
-  cam: lt => { const sh = lt > 15.6 && lt < 16.2 ? (16.2 - lt) * 30 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
-  labels: [[17.0, 20, 'ODC. 3 ↓', 540, 1650, 'red', 64]],
+  name: 'wait', start: 72, end: 88,
+  cam: lt => { const sh = lt > 12.0 && lt < 12.5 ? (12.5 - lt) * 20 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   draw(c, lt) {
-    if (lt < 6.0) { majaRoom(c, lt, { dark: false, lampOff: true }); person(c, 'maja', 300, 1700, 2.1, { t: lt, look: 1, walk: lt < 2 ? lt * 9 : null, wide: lt > 4 });
-      // torba bez zawieszki
-      night(c, .5, [{ x: 390, y: 1000, r: 600, a: .9 }]); return; }
-    const l = lt - 6.0;
+    flatDoorInside(c, lt, { underLight: lt > 5.6 ? 1 : 0, feet: lt > 7.4, lockTurn: lt > 9.6 ? clamp((lt - 9.6) / 2.4) * .9 : 0 });
+    person(c, 'maja', 160, 1700, 2.1, { t: lt, look: 1, wide: true, mouth: 'o', phone: 2, aR: 1.4 });
+    night(c, .82, [{ x: 540, y: 1420, r: lt > 5.6 ? 480 : 1, a: .9 }, { x: 700, y: 1060, r: lt > 9.6 ? 160 : 1, a: .8 }]);
+  },
+  post(c, lt) { if (lt > .4 && lt < 4.4) label(c, 'POLICJA: 8 MINUT', 540, 300, 'yellow', 44, lt - .4, 4.4 - lt); if (lt > 5.6 && lt < 9.4) label(c, 'ŚWIATŁO NA KLATCE', 540, 300, 'dark', 44, lt - 5.6, 9.4 - lt); if (lt > 9.6) label(c, 'KLUCZ W ZAMKU SIĘ OBRACA', 540, 300, 'red', 42, lt - 9.6, 16 - lt); },
+});
+// 9. ZAKOŃCZENIE: wizjer. Uśmiechnięty sąsiad z pękiem kluczy. Patrzy prosto w kamerę. Szept.
+scene({
+  name: 'end', start: 88, end: 104,
+  cam: lt => { const sh = lt > 11.6 && lt < 12.2 ? (12.2 - lt) * 30 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
+  labels: [[13.2, 16, 'ODC. 3 ↓', 540, 1650, 'red', 64]],
+  draw(c, lt) {
     peepPOV(c, lt, (cc, cx, cy, r) => {
       cc.fillStyle = '#B9B6A6'; cc.fillRect(cx - r, cy - r, 2 * r, 2 * r); cc.fillStyle = '#3F5E4A'; cc.fillRect(cx - r, cy + r * .25, 2 * r, r);
-      person(cc, 'obcy', cx + 10, cy + 680, 2.3, { t: lt, mouth: 'grin', still: true, aR: l > 4 ? 1.6 : null });
-      if (l > 4) { cc.save(); cc.translate(cx + 170, cy + 140); cc.strokeStyle = '#C9CDD2'; cc.lineWidth = 8; cc.beginPath(); cc.arc(0, 0, 28, 0, 7); cc.stroke(); for (let k = 0; k < 4; k++) { cc.save(); cc.rotate(-.6 + k * .4); fillRR(cc, 20, -6, 90, 12, 4, '#C9CDD2'); cc.restore(); } cc.restore(); }
+      const z = lt > 5 ? lerp(2.3, 3.2, clamp((lt - 5) / 4)) : 2.3;
+      person(cc, 'obcy', cx + 10, cy + 300 * z, z, { t: lt, mouth: 'grin', still: true, look: 0, aR: lt > 2.4 ? 1.6 : null });
+      if (lt > 2.4) { cc.save(); cc.translate(cx + 190, cy + 160); cc.strokeStyle = '#C9CDD2'; cc.lineWidth = 8; cc.beginPath(); cc.arc(0, 0, 28, 0, 7); cc.stroke(); for (let k = 0; k < 4; k++) { cc.save(); cc.rotate(-.6 + k * .4); fillRR(cc, 20, -6, 90, 12, 4, '#C9CDD2'); cc.restore(); } cc.restore(); }
     });
-    if (l > 9.6 && l < 9.85) { c.fillStyle = 'rgba(255,255,255,.55)'; c.fillRect(0, 0, W, H); }
-    if (l > 10.6) { c.fillStyle = `rgba(0,0,0,${clamp((l - 10.6) / 1.0) * .9})`; c.fillRect(0, 0, W, H); }
+    if (lt > 11.6 && lt < 11.85) { c.fillStyle = 'rgba(255,255,255,.55)'; c.fillRect(0, 0, W, H); }
+    if (lt > 12.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 12.4) / 1.0) * .9})`; c.fillRect(0, 0, W, H); }
   },
-  post(c, lt) { const l = lt - 6.0; if (lt < 6 && lt > 2.4) label(c, 'ZAWIESZKA ZDJĘTA. WIADOMOŚCI ZGŁOSZONE.', 540, 300, 'dark', 32, lt - 2.4, 6 - lt); if (l > 0 && l < 3) label(c, 'PUK. PUK. PUK.', 540, 300, 'dark', 48, l, 3 - l); if (l > 3.2 && l < 9.6) label(c, 'SĄSIAD Z TRZECIEGO PIĘTRA', 540, 300, 'red', 40, l - 3.2, 9.6 - l); },
+  post(c, lt) { if (lt > 0.3 && lt < 2.4) label(c, 'WIZJER', 540, 300, 'dark', 44, lt - .3, 2.4 - lt); if (lt > 2.6 && lt < 11.6) label(c, 'SĄSIAD Z TRZECIEGO PIĘTRA', 540, 300, 'red', 40, lt - 2.6, 11.6 - lt); },
 });
