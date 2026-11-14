@@ -200,7 +200,7 @@ function garagesBg(c, lt, o = {}) {
     if (open > 0) { c.fillStyle = inside && !darkIn ? '#E8C27A' : '#07080C'; c.fillRect(gx + 30, 940, 240, 420);
       if (inside && !darkIn) { for (let k = 0; k < 4; k++) fillRR(c, gx + 40 + k * 56, 960, 44, 20, 3, '#B89A60'); fillRR(c, gx + 200, 1180, 56, 180, 6, '#6A5640'); circ(c, gx + 228, 1220, 6, '#2A2D36'); c.strokeStyle = '#3A3020'; c.lineWidth = 3; c.beginPath(); c.moveTo(gx + 150, 940); c.lineTo(gx + 150, 990); c.stroke(); circ(c, gx + 150, 998, 12, '#FFF3C4');
         const g = c.createRadialGradient(gx + 150, 1000, 6, gx + 150, 1200, 330); g.addColorStop(0, 'rgba(255,220,140,.6)'); g.addColorStop(1, 'rgba(255,220,140,0)'); c.fillStyle = g; c.fillRect(gx - 200, 900, 700, 700); }
-      if (inside) inside(c, gx + 150, 1360); }
+      if (inside) { c.save(); c.beginPath(); c.rect(gx + 30, 940, 240, 420); c.clip(); inside(c, gx + 150, 1360); c.restore(); } }
     const dg = c.createLinearGradient(gx + 30, 0, gx + 270, 0); dg.addColorStop(0, num === 13 ? '#5E5248' : '#6E7682'); dg.addColorStop(1, num === 13 ? '#4A4038' : '#58606C');
     c.fillStyle = dg; c.fillRect(gx + 30, 940, 240, dh);
     c.fillStyle = 'rgba(0,0,0,.18)'; for (let k = 0; k < 8; k++) c.fillRect(gx + 30, 950 + k * 52, 240, 6);
@@ -305,7 +305,7 @@ function keyTag(c, x, y, s = 1, a = 1) { c.save(); c.globalAlpha = a; c.translat
 scene({
   name: 'hook', start: 0, end: 6,
   draw(c, lt) {
-    garagesBg(c, lt, { first: 11, open13: .9, noBin: true, inside13: (cc, gx, gy) => person(cc, 'obcy', gx, gy, 1.5, { t: lt, mouth: 'grin', still: true, aR: lt > 3 ? 2.3 + Math.sin(lt * 5) * .4 : null }) });
+    garagesBg(c, lt, { first: 11, open13: .9, noBin: true, inside13: (cc, gx, gy) => person(cc, 'obcy', gx, gy, 1.3, { t: lt, mouth: 'grin', still: true, aR: lt > 3 ? 2.3 + Math.sin(lt * 5) * .4 : null }) });
     person(c, 'maja', 300, 1760, 2.2, { t: lt, back: true, walk: lt * 8 });
     night(c, .7, [{ x: 750, y: 1150, r: 420, a: .95 }, { x: 945, y: 1100, r: 300, a: .6 }]);
     bigSign(c, lt, 'NIE IDŹ', 'NA SKRÓTY!', 420);
@@ -346,7 +346,7 @@ scene({
   ],
   draw(c, lt, sc) {
     const sc2 = Math.min(lt, 3.6) * 40;
-    garagesBg(c, lt, { first: 11, scroll: sc2, noBin: true, open13: lt > 3.0 ? clamp((lt - 3.0) / 1.2) * .9 : .1, inside13(cc, gx, gy) { person(cc, 'obcy', gx, gy, 1.45, { t: lt, look: -1, mouth: lt > 9 ? 'grin' : null, talk: talking(sc, 'obcy', lt), still: true }); fillRR(cc, gx - 120, gy - 140, 70, 140, 6, '#5A4A3A'); } });
+    garagesBg(c, lt, { first: 11, scroll: sc2, noBin: true, open13: lt > 3.0 ? clamp((lt - 3.0) / 1.2) * .9 : .1, inside13(cc, gx, gy) { person(cc, 'obcy', gx, gy, 1.3, { t: lt, look: -1, mouth: lt > 9 ? 'grin' : null, talk: talking(sc, 'obcy', lt), still: true }); fillRR(cc, gx - 120, gy - 140, 70, 140, 6, '#5A4A3A'); } });
     person(c, 'maja', 200, 1700, 2.0, { t: lt, walk: lt < 3.6 || lt > 12.4 ? lt * 9 : null, look: lt > 3.6 ? 1 : 1, wide: lt > 9, talk: talking(sc, 'maja', lt), mouth: lt > 12 ? 'o' : null });
     night(c, .55, [{ x: 945, y: 1100, r: 420, a: .8 }, { x: 760, y: 1150, r: 380, a: .9 }]);
   },
@@ -367,10 +367,79 @@ function gate(c, lt, shake) {
   fillRR(c, 800, 990, 240, 80, 6, '#E8E4DA'); txt(c, 'TEREN PRYWATNY', 920, 1018, 22, '#D7263D', 900); txt(c, 'ZAKAZ PRZEJŚCIA', 920, 1048, 20, '#14161B', 900);
   c.restore();
 }
+// widok zza bramy: alejka garaży w perspektywie, na końcu jasna ulica
+const VP = [540, 860], FOC = 760, CAMH = 1.15;
+function pj(X, Y, Z) { return [VP[0] + X * FOC / Z, VP[1] + (CAMH - Y) * FOC / Z]; }
+function quad(c, a, b, d, e, col) { c.fillStyle = col; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(d[0], d[1]); c.lineTo(e[0], e[1]); c.closePath(); c.fill(); }
+function alleyPOV(c, lt, o = {}) {
+  const sky = c.createLinearGradient(0, 0, 0, VP[1]); sky.addColorStop(0, '#03050B'); sky.addColorStop(1, '#151B2C'); c.fillStyle = sky; c.fillRect(0, 0, W, H);
+  // jasna ulica na końcu alejki
+  const g = c.createRadialGradient(VP[0], VP[1] - 20, 4, VP[0], VP[1] - 20, 260); g.addColorStop(0, 'rgba(255,215,140,.9)'); g.addColorStop(1, 'rgba(255,215,140,0)'); c.fillStyle = g; c.fillRect(VP[0] - 260, VP[1] - 280, 520, 520);
+  fillRR(c, VP[0] - 40, VP[1] - 60, 80, 60, 4, '#F7D79A');
+  // asfalt
+  quad(c, pj(-1.7, 0, 1.0), pj(1.7, 0, 1.0), pj(1.7, 0, 30), pj(-1.7, 0, 30), '#15181E');
+  for (const [px, pz, pw] of [[-.6, 2.4, .8], [.5, 4.2, .9]]) { const a = pj(px, 0, pz), b = pj(px + pw, 0, pz + .6); c.save(); c.globalAlpha = .5; fillRR(c, a[0], b[1], b[0] - a[0], a[1] - b[1], 20, '#2A3550'); c.restore(); }
+  // ściany garaży po obu stronach, od najdalszych
+  for (const side of [-1, 1]) {
+    for (let k = 9; k >= 0; k--) {
+      const z0 = 1.3 + k * 1.1, z1 = z0 + 1.0, X = side * 1.7;
+      quad(c, pj(X, 0, z0), pj(X, 2.1, z0), pj(X, 2.1, z1 + .1), pj(X, 0, z1 + .1), '#3A404C'); // ściana
+      const open = o.openSide === side && o.openK === k ? o.openAmt : 0;
+      const dTop = 1.9, dBot = 0, dh = dTop - (dTop - dBot) * 0; // drzwi
+      quad(c, pj(X * .995, 0, z0 + .08), pj(X * .995, dTop, z0 + .08), pj(X * .995, dTop, z1 - .08), pj(X * .995, 0, z1 - .08), '#07080C');
+      const dy = dTop * open;
+      quad(c, pj(X * .99, dy, z0 + .08), pj(X * .99, dTop, z0 + .08), pj(X * .99, dTop, z1 - .08), pj(X * .99, dy, z1 - .08), k === 3 && side === -1 ? '#5E5248' : '#6A727E');
+      for (let r = 1; r < 6; r++) { const yy = dy + (dTop - dy) * r / 6; const a = pj(X * .985, yy, z0 + .08), b = pj(X * .985, yy, z1 - .08); c.strokeStyle = 'rgba(0,0,0,.2)'; c.lineWidth = Math.max(1, 6 / z0); c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke(); }
+      const n = pj(X * .98, 2.0, (z0 + z1) / 2); const sz = 120 / z0; fillRR(c, n[0] - sz * .5, n[1] - sz * .3, sz, sz * .55, 3, '#E8E4DA'); txt(c, String(side < 0 ? 26 - k * 2 : 25 - k * 2), n[0], n[1] - sz * .03, sz * .38, '#14161B', 900);
+      if (o.insideEyes && o.openSide === side && o.openK === k && open > .5) { const m = pj(X * .8, 1.5, (z0 + z1) / 2), es = 150 / ((z0 + z1) / 2);
+        c.save(); c.shadowColor = 'rgba(255,255,255,.9)'; c.shadowBlur = 20; ell(c, m[0] - es * .25, m[1], es * .13, es * .09, '#F4F1EA'); ell(c, m[0] + es * .25, m[1], es * .13, es * .09, '#F4F1EA'); c.restore(); circ(c, m[0] - es * .25, m[1], es * .05, '#111'); circ(c, m[0] + es * .25, m[1], es * .05, '#111');
+        c.fillStyle = '#0E0809'; c.beginPath(); c.moveTo(m[0] - es * .45, m[1] + es * .45); c.quadraticCurveTo(m[0], m[1] + es * .75, m[0] + es * .45, m[1] + es * .45); c.quadraticCurveTo(m[0], m[1] + es * .6, m[0] - es * .45, m[1] + es * .45); c.fill(); }
+    }
+    // dach
+    quad(c, pj(side * 1.7, 2.1, 1.3), pj(side * 2.4, 2.4, 1.3), pj(side * 2.4, 2.4, 13), pj(side * 1.7, 2.1, 13), '#2A2F3A');
+  }
+  // migająca latarnia w połowie alejki
+  const lp = pj(1.5, 3.0, 5.5), fl = o.lampOff ? 0 : (hash(Math.floor(lt * 9)) > .35 ? 1 : .15);
+  const lb = pj(1.5, 0, 5.5); c.strokeStyle = '#20242F'; c.lineWidth = 6; c.beginPath(); c.moveTo(lb[0], lb[1]); c.lineTo(lp[0], lp[1]); c.stroke();
+  if (fl > .2) { const lg = c.createRadialGradient(lp[0], lp[1], 4, lp[0], lb[1], 340); lg.addColorStop(0, `rgba(255,200,120,${.4 * fl})`); lg.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = lg; c.fillRect(lp[0] - 340, lp[1], 680, 600); }
+  for (let k = 0; k < 50; k++) circ(c, hash(k) * W, (hash(k + 9) * 1700 + lt * 70) % 1700 + 150, 1.6 + hash(k + 3) * 2.4, 'rgba(235,240,255,.55)');
+}
+// pierwszy plan: kraty bramy na całą szerokość (patrzymy zza bramy)
+function gateFront(c, lt, shake) {
+  const sx = Math.sin(lt * 60) * shake * 10;
+  c.save(); c.translate(sx, 0);
+  c.fillStyle = '#2E333C'; c.fillRect(0, 400, 46, 1520); c.fillRect(W - 46, 400, 46, 1520); // słupki
+  fillRR(c, 0, 420, W, 22, 4, '#59616E'); fillRR(c, 0, 1560, W, 22, 4, '#59616E');
+  for (let i = 0; i < 9; i++) { const x = 110 + i * 108; const g = c.createLinearGradient(x - 6, 0, x + 6, 0); g.addColorStop(0, '#3E4550'); g.addColorStop(.5, '#A3ACB7'); g.addColorStop(1, '#3E4550'); c.fillStyle = g; c.fillRect(x - 6, 430, 12, 1490); }
+  c.strokeStyle = 'rgba(89,97,110,.9)'; c.lineWidth = 12; c.beginPath(); c.moveTo(46, 1560); c.lineTo(W - 46, 440); c.stroke();
+  c.strokeStyle = '#7E8794'; c.lineWidth = 3; for (let i = 0; i < 26; i++) { c.beginPath(); c.moveTo(i * 44, 420); c.lineTo(i * 44 + 22, 392); c.lineTo(i * 44 + 44, 420); c.stroke(); } // drut kolczasty
+  c.strokeStyle = '#C9CDD2'; c.lineWidth = 9; for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(450 + i * 30, 1572 + (i % 2) * 10, 16, 10, .4, 0, 7); c.stroke(); }
+  fillRR(c, 500, 1590, 86, 100, 14, '#C9A15A'); c.strokeStyle = '#C9A15A'; c.lineWidth = 11; c.beginPath(); c.arc(543, 1592, 26, Math.PI, 0); c.stroke(); circ(c, 543, 1642, 9, '#2A2D36');
+  c.save(); c.translate(240, 1700); c.rotate(-.04); fillRR(c, -170, -56, 340, 112, 8, '#E8E4DA'); txt(c, 'TEREN PRYWATNY', 0, -18, 32, '#D7263D', 900); txt(c, 'ZAKAZ PRZEJŚCIA', 0, 24, 28, '#14161B', 900); c.restore();
+  c.restore();
+}
 scene({
   name: 'chase', start: 44, end: 58,
   cam: lt => { const sh = lt > 9.4 && lt < 9.9 ? (9.9 - lt) * 26 : 0; return { z: 1, x: Math.sin(lt * 90) * sh, y: 0 }; },
   draw(c, lt) {
+    if (lt >= 7.0) { // WIDOK ZZA BRAMY
+      const intoG = lt > 10.6 ? clamp((lt - 10.6) / .9) : 0, openA = lt > 9.8 ? clamp((lt - 9.8) / .8) : 0;
+      alleyPOV(c, lt, { lampOff: false, openSide: -1, openK: 3, openAmt: openA });
+      // Obcy: z głębi zbliża się, staje, uśmiecha się, wchodzi w lewy garaż (k=3 → z≈4.6–5.6)
+      { const oz = lt < 9.6 ? lerp(9, 5.2, clamp((lt - 7) / 2.6)) : 5.2, ox = lerp(-.3, -1.3, intoG), p = pj(ox, 0, oz), ss = 3.2 / oz;
+        person(c, 'obcy', p[0], p[1], ss, { t: lt, walk: (lt < 9.6 || (intoG > 0 && intoG < 1)) ? lt * 9 : null, look: intoG >= 1 ? .6 : (intoG > 0 ? -1 : 0), mouth: lt > 9.6 ? 'grin' : null, alpha: 1 - intoG * .35, still: lt > 9.6 });
+        if (intoG >= 1) { c.save(); c.globalCompositeOperation = 'lighter'; for (const dx of [-16, 16]) { const ex = p[0] + dx * ss, ey = p[1] - 232 * ss; const g = c.createRadialGradient(ex, ey, 0, ex, ey, 22 * ss); g.addColorStop(0, 'rgba(255,240,210,.55)'); g.addColorStop(1, 'rgba(255,240,210,0)'); c.fillStyle = g; c.fillRect(ex - 22 * ss, ey - 22 * ss, 44 * ss, 44 * ss); } c.restore(); } }
+      // Maja: biegnie do kamery → szarpie kraty → odwraca się → ucieka w głąb, obok garażu z oczami
+      let mz, back = false, walkM = lt * 14, aR = null, aL = null;
+      if (lt < 8.4) mz = lerp(4.2, 1.7, (lt - 7) / 1.4);
+      else if (lt < 9.6) { mz = 1.7; walkM = null; aR = 2.9 + Math.sin(lt * 34) * .15; aL = 2.9 + Math.sin(lt * 34 + 1) * .15; }
+      else if (lt < 11.6) { mz = 1.7; walkM = null; back = true; }
+      else { mz = lerp(1.7, 9, clamp((lt - 11.6) / 2.4)); back = true; walkM = lt * 16; }
+      const mp = pj(.35, 0, mz); person(c, 'maja', mp[0], mp[1], 3.2 / mz, { t: lt, walk: walkM, back, wide: true, mouth: 'o', aR, aL });
+      const op = pj(-.3, 1.0, 5.2); night(c, .45, [{ x: VP[0], y: VP[1], r: 360, a: .8 }, { x: mp[0], y: mp[1] - 300, r: 460, a: .75, tint: 'rgba(170,210,255,.08)' }, { x: op[0], y: op[1], r: 260, a: .8, tint: 'rgba(255,140,120,.06)' }]);
+      gateFront(c, lt, lt > 8.4 && lt < 9.6 ? 1 : 0);
+      return;
+    }
     const stop = 7.0, scroll = Math.min(lt, stop) * 200;
     const intoGarage = lt > 10.6 ? clamp((lt - 10.6) / 1.0) : 0;
     garagesBg(c, lt, { first: 15, scroll, lampOff: lt > 5.2, noBin: true, openNum: 21, openAmt: lt > 9.8 ? clamp((lt - 9.8) / .8) * .92 : 0, darkInside: true,
@@ -440,7 +509,7 @@ scene({
   labels: [[17.0, 20, 'ODC. 2 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
     const open = lt > 9.0 ? clamp((lt - 9.0) / 3) * .8 : 0, dark = lt > 13.4;
-    majaRoom(c, lt, { open13: open, dark, lampOff: true, inside13: (cc, gx, gy) => { person(cc, 'obcy', gx, gy, 1.7, { t: lt, mouth: 'grin', aR: lt > 12 ? 2.4 + Math.sin(lt * 6) * .5 : null, still: true }); } });
+    majaRoom(c, lt, { open13: open, dark, lampOff: true, inside13: (cc, gx, gy) => { person(cc, 'obcy', gx, gy, 1.3, { t: lt, mouth: 'grin', aR: lt > 12 ? 2.4 + Math.sin(lt * 6) * .5 : null, still: true }); } });
     person(c, 'maja', 230, 1700, 2.1, { t: lt, look: lt > 8.6 ? 1 : 0, wide: lt > 4, mouth: lt > 4 ? 'o' : null, aR: lt > 3 && lt < 9 ? 1.8 : null });
     if (lt > 3.0 && lt < 9.0) keyTag(c, 470, 1180, 1.4, clamp((lt - 3.0) / .3));
     night(c, dark ? .9 : .55, [{ x: 780, y: 660, r: dark ? 260 : 420, a: .9 }]);
