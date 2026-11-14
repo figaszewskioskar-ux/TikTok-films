@@ -56,5 +56,7 @@
 
 ## Wzór wirala (BLOK 94 odc. 2, 580+ tys.)
 - **Bez przypomnień z poprzedniego odcinka** (żadnych scen „Poprzednio…”). Każda część zaczyna się od haka i od razu jest kontynuacją historii.
+- **Historia, która mogła się przydarzyć każdemu.** Zwykła, codzienna sytuacja (pukanie w nocy, telefon od obcego, ktoś idzie za tobą),
+  a nie wymyślona intryga typu „przynieś klucz, masz przyjść”. Widz ma pomyśleć: „to mogło być u mnie”.
 - Każdy nowy film budujemy według `film/WZOR_WIRALA.md`: hak z jednym przedmiotem z bliska i zakazem sprzecznym z intuicją, bez „Poprzednio” na starcie,
   jedna bohaterka i jedno miejsce, ujęcia z oczu bohaterki, nowa informacja co 5–8 s, zakończenie patrzy prosto w widza.
