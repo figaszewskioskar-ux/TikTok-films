@@ -480,21 +480,82 @@ scene({
     if (lt > 10.8) label(c, 'PRZEJŚCIE MIĘDZY GARAŻAMI → ULICA', 540, 300, 'yellow', 36, lt - 10.8, 14 - lt);
   },
 });
-// 5. SKLEP: Maja wraca na oświetloną ulicę i wpada do sklepu 24h. Kasjerka dzwoni na 112. (ZASADA)
+// nocna pizzeria z zewnątrz: neon, witryna z ludźmi w środku, markiza, śnieg, latarnia
+function pizzeriaFront(c, lt) {
+  const sky = c.createLinearGradient(0, 0, 0, 1200); sky.addColorStop(0, '#04060D'); sky.addColorStop(1, '#151B2E'); c.fillStyle = sky; c.fillRect(0, 0, W, H);
+  fillRR(c, 0, 360, W, 1060, 0, '#5A3A2E'); for (let r = 0; r < 26; r++) for (let q = 0; q < 10; q++) { c.fillStyle = (r + q) % 2 ? 'rgba(0,0,0,.08)' : 'rgba(255,255,255,.03)'; c.fillRect(q * 120 - (r % 2) * 60, 360 + r * 40, 116, 36); } // cegła
+  // neon
+  const on = .85 + .15 * Math.sin(lt * 9) * (hash(Math.floor(lt * 6)) > .1 ? 1 : 0);
+  c.save(); c.shadowColor = `rgba(255,80,60,${on})`; c.shadowBlur = 40; fillRR(c, 160, 420, 760, 130, 20, '#1A0E0C'); txt(c, 'PIZZERIA NOCNA', 540, 486, 70, `rgba(255,110,90,${on})`, 900); c.restore();
+  txt(c, 'czynne do 2:00', 540, 580, 30, '#F5C542', 800);
+  // markiza w paski
+  for (let i = 0; i < 12; i++) { c.fillStyle = i % 2 ? '#E8E4DA' : '#C23A3A'; c.beginPath(); c.moveTo(100 + i * 73, 640); c.lineTo(173 + i * 73, 640); c.lineTo(173 + i * 73, 710); c.quadraticCurveTo(136 + i * 73, 740, 100 + i * 73, 710); c.fill(); }
+  // witryna: ciepłe wnętrze, ludzie przy stolikach
+  fillRR(c, 100, 740, 560, 520, 6, '#F6D08A'); c.save(); c.beginPath(); c.rect(100, 740, 560, 520); c.clip();
+  fillRR(c, 120, 1060, 200, 16, 4, '#6B4A2F'); fillRR(c, 420, 1060, 200, 16, 4, '#6B4A2F');
+  person(c, 'sasiad', 190, 1250, .9, { t: lt, look: 1, talk: Math.sin(lt * 2) > 0 }); person(c, 'kobieta', 290, 1250, .9, { t: lt, look: -1, mouth: 'smile' }); person(c, 'kurier', 520, 1250, .9, { t: lt, box: true, look: -1, boxNum: ' ' });
+  c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(100, 740, 560, 520); c.restore();
+  c.strokeStyle = '#2A1A14'; c.lineWidth = 14; c.strokeRect(100, 740, 560, 520);
+  // drzwi
+  fillRR(c, 720, 740, 260, 680, 6, '#2A1A14'); fillRR(c, 740, 760, 220, 400, 4, '#F6D08A'); fillRR(c, 930, 1180, 16, 60, 6, '#C9A15A'); txt(c, 'OTWARTE', 850, 1200, 26, '#30A46C', 900);
+  { const g = c.createRadialGradient(540, 1000, 40, 540, 1200, 700); g.addColorStop(0, 'rgba(255,200,120,.35)'); g.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = g; c.fillRect(0, 600, W, 1300); }
+  c.fillStyle = '#DDE2EC'; c.fillRect(0, 1420, W, 500); c.fillStyle = 'rgba(255,200,120,.25)'; c.fillRect(0, 1420, W, 160);
+  snowfall(c, lt, 80, .75);
+}
+// pizzeria w środku: piec z ogniem, tablica menu, lada z kasą i ladówką, stoliki, klienci, kurier z pudełkiem, para na szybie
+function pizzeriaIn(c, lt, o = {}) {
+  c.fillStyle = '#E9DFC9'; c.fillRect(0, 0, W, 1440);
+  for (let r = 0; r < 4; r++) for (let q = 0; q < 14; q++) { c.fillStyle = (r + q) % 2 ? '#1E6B4A' : '#F2EEE4'; c.fillRect(q * 80, 1300 + r * 36, 80, 36); } // kafelki
+  // tablica z menu
+  fillRR(c, 80, 280, 560, 330, 14, '#1E2228'); txt(c, 'MENU', 360, 330, 44, '#F5C542', 900);
+  [['Margherita', '24 zł'], ['Pepperoni', '29 zł'], ['Hawajska', '28 zł'], ['Kebab z frytkami', '22 zł']].forEach(([n, pz], i) => { txt(c, n, 120, 390 + i * 52, 30, '#FFFFFF', 700, 'left'); txt(c, pz, 600, 390 + i * 52, 30, '#F5C542', 900, 'right'); });
+  // piec z ogniem
+  fillRR(c, 700, 260, 340, 380, 170, '#8A3E2A'); for (let i = 0; i < 9; i++) for (let j = 0; j < 4; j++) fillRR(c, 720 + i * 36 - (j % 2) * 18, 300 + j * 40, 32, 34, 3, '#A04A32');
+  fillRR(c, 780, 480, 180, 130, 70, '#1A0A06'); for (let k = 0; k < 6; k++) { const fx = 800 + k * 26, fh = 50 + 30 * Math.abs(Math.sin(lt * 7 + k)); c.fillStyle = k % 2 ? '#FFB020' : '#FF6A2A'; c.beginPath(); c.moveTo(fx, 600); c.quadraticCurveTo(fx + 12, 600 - fh, fx + 24, 600); c.fill(); }
+  { const g = c.createRadialGradient(870, 560, 10, 870, 560, 420); g.addColorStop(0, 'rgba(255,150,60,.35)'); g.addColorStop(1, 'rgba(255,150,60,0)'); c.fillStyle = g; c.fillRect(450, 200, 830, 800); }
+  // witryna z parą na szybie i ulicą
+  fillRR(c, 0, 680, 300, 560, 0, '#0B0F1C'); c.save(); c.beginPath(); c.rect(0, 680, 300, 560); c.clip(); c.fillStyle = '#DDE2EC'; c.fillRect(0, 1100, 300, 140); c.fillStyle = '#2A2D36'; c.fillRect(210, 820, 8, 300);
+  { const lg = c.createRadialGradient(214, 840, 6, 214, 1000, 260); lg.addColorStop(0, 'rgba(255,190,110,.45)'); lg.addColorStop(1, 'rgba(255,190,110,0)'); c.fillStyle = lg; c.fillRect(0, 760, 300, 480); }
+  if (o.outside) { c.save(); c.globalAlpha = o.outside; person(c, 'obcy', 130, 1240, .75, { t: lt, mouth: 'grin', look: 1, still: true }); c.restore(); }
+  for (let k = 0; k < 16; k++) circ(c, hash(k) * 300, 690 + ((hash(k + 5) * 540 + lt * 60) % 540), 2.4, 'rgba(235,240,255,.7)');
+  c.fillStyle = 'rgba(230,236,245,.22)'; c.fillRect(0, 680, 300, 560); for (let k = 0; k < 12; k++) { c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(20 + hash(k) * 260, 700 + hash(k + 3) * 200, 3, 60 + hash(k + 7) * 160); } c.restore();
+  c.strokeStyle = '#5A3D26'; c.lineWidth = 16; c.strokeRect(0, 680, 300, 560);
+  // lada z kasą, ladówka z napojami, pudełka po pizzy
+  fillRR(c, 560, 1040, 520, 270, 10, '#6B4A2F'); fillRR(c, 560, 1030, 520, 24, 6, '#8C6B4B');
+  fillRR(c, 600, 960, 110, 74, 8, '#2A2D36'); fillRR(c, 610, 970, 90, 40, 4, '#5FD0FF'); txt(c, '24,00', 655, 990, 18, '#0B2030', 900);
+  for (let i = 0; i < 3; i++) fillRR(c, 900, 1010 - i * 22, 150, 20, 4, ['#F2EEE4', '#E8DFC8', '#F2EEE4'][i]);
+  // stolik z klientami po lewej
+  fillRR(c, 330, 1180, 220, 18, 4, '#5A3D26'); c.fillStyle = '#4A3424'; c.fillRect(430, 1198, 18, 120);
+  circ(c, 400, 1170, 30, '#F2C14E'); for (let i = 0; i < 5; i++) circ(c, 388 + (i % 3) * 12, 1160 + Math.floor(i / 3) * 14, 4, '#C23A3A'); // pizza
+  // lampy wiszące
+  for (const lx of [400, 820]) { c.fillStyle = '#2A2D36'; c.fillRect(lx - 2, 0, 4, 200); c.beginPath(); c.moveTo(lx - 60, 240); c.lineTo(lx + 60, 240); c.lineTo(lx + 30, 200); c.lineTo(lx - 30, 200); c.fillStyle = '#1E6B4A'; c.fill();
+    const g = c.createRadialGradient(lx, 260, 6, lx, 600, 420); g.addColorStop(0, 'rgba(255,225,160,.35)'); g.addColorStop(1, 'rgba(255,225,160,0)'); c.fillStyle = g; c.fillRect(lx - 420, 240, 840, 900); }
+  c.fillStyle = '#B8A88A'; c.fillRect(0, 1440, W, 480); for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.05)'; c.fillRect(i * 90, 1440, 4, 480); }
+}
+// 5. PIZZERIA NOCNA: Maja wbiega z ulicy. W środku ludzie, ciepło, pracownica dzwoni na 112. (ZASADA)
 scene({
   name: 'shop', start: 58, end: 72,
   bubbles: [
-    say(1.6, 4.2, 'Ktoś szedł za mną\nprzez garaże!', 'maja', 600, 1640, 2.0, 0),
-    say(4.6, 7.2, 'Siadaj tu, przy ladzie.\nDzwonię na 112.', 'kasjerka', 940, 1640, 1.9, -120),
-    say(7.6, 9.6, 'I podłącz telefon.', 'kasjerka', 940, 1640, 1.9, -120),
+    say(1.6, 4.2, 'Ktoś szedł za mną\nprzez garaże!', 'maja', 600, 1700, 2.0, -40),
+    say(4.6, 7.2, 'Siadaj tu, przy ladzie.\nDzwonię na 112.', 'kasjerka', 940, 1700, 2.0, -120),
+    say(7.6, 9.6, 'I podłącz telefon.', 'kasjerka', 940, 1700, 2.0, -120),
   ],
   draw(c, lt, sc) {
-    shopBg(c, lt, { outside: lt > 9.6 && lt < 12 ? .9 : 0 });
-    person(c, 'maja', lt < 1.2 ? lerp(100, 600, lt / 1.2) : 600, 1640, 2.0, { t: lt, walk: lt < 1.2 ? lt * 12 : null, look: 1, wide: true, talk: talking(sc, 'maja', lt) });
-    person(c, 'kobieta', 940, 1640, 1.9, { t: lt, look: -1, talk: talking(sc, 'kasjerka', lt), phone: lt > 6 ? 2 : 0, aR: lt > 6 ? 2.0 : null }); fillRR(c, 940 - 70, 1640 - 1.9 * 175, 140, 1.9 * 95, 14, '#30A46C'); txt(c, '24h', 940, 1640 - 1.9 * 130, 34, '#FFFFFF', 900);
-    night(c, .1, []);
+    if (lt < 1.4) { // z zewnątrz: Maja wbiega do pizzerii
+      pizzeriaFront(c, lt); person(c, 'maja', lerp(-120, 850, lt / 1.4), 1640, 1.8, { t: lt, walk: lt * 16, look: 1, wide: true, mouth: 'o' });
+      night(c, .35, [{ x: 540, y: 1000, r: 800, a: .9 }]); return;
+    }
+    pizzeriaIn(c, lt, { outside: lt > 9.6 && lt < 12.2 ? clamp((lt - 9.6) / .4) * clamp((12.2 - lt) / .4) * .9 : 0 });
+    // klienci przy stoliku i kurier z pudełkiem — patrzą na Maję
+    person(c, 'sasiad', 380, 1500, 1.4, { t: lt, look: 1, mouth: lt > 2 ? 'o' : null });
+    person(c, 'kurier', 780, 1420, 1.25, { t: lt, box: true, boxNum: ' ', look: -1 });
+    person(c, 'maja', lt < 2.0 ? lerp(-100, 600, (lt - 1.4) / .6) : 600, 1700, 2.0, { t: lt, walk: lt < 2.0 ? lt * 14 : null, look: 1, wide: true, talk: talking(sc, 'maja', lt) });
+    person(c, 'kobieta', 940, 1700, 2.0, { t: lt, look: -1, talk: talking(sc, 'kasjerka', lt), phone: lt > 6 ? 2 : 0, aR: lt > 6 ? 2.0 : null });
+    fillRR(c, 940 - 72, 1700 - 2.0 * 175, 144, 2.0 * 95, 14, '#C23A3A'); txt(c, 'PIZZA', 940, 1700 - 2.0 * 130, 30, '#FFFFFF', 900); // fartuch
+    c.save(); c.translate(940, 1700 - 2.0 * 300); fillRR(c, -56, -30, 112, 26, 8, '#C23A3A'); c.restore(); // czapka
+    night(c, .08, []);
   },
-  post(c, lt) { if (lt > 10.0) card(c, 60, 300, 900, 'ZASADA', 'Wracasz po zmroku? Wybieraj oświetloną\ndrogę, gdzie są ludzie. Napisz komuś,\nktórędy idziesz, i naładuj telefon.', lt - 10.0, '#F39C12', 36); },
+  post(c, lt) { if (lt < 1.4) label(c, 'ŚWIATŁO. LUDZIE.', 540, 300, 'yellow', 44, lt, 1.4 - lt); if (lt > 9.6 && lt < 12.2) label(c, 'ZA SZYBĄ', 150, 640, 'red', 32, lt - 9.6, 12.2 - lt); if (lt > 10.0) card(c, 60, 300, 900, 'ZASADA', 'Wracasz po zmroku? Wybieraj oświetloną\ndrogę, gdzie są ludzie. Napisz komuś,\nktórędy idziesz, i naładuj telefon.', lt - 10.0, '#F39C12', 36); },
 });
 // 6. MAMA: przyjeżdża po nią.
 scene({
