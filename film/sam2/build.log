@@ -17,18 +17,19 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3300 klatek, 14 s
-600/3300 klatek, 37 s
-900/3300 klatek, 66 s
-1200/3300 klatek, 98 s
-1500/3300 klatek, 126 s
-1800/3300 klatek, 149 s
-2100/3300 klatek, 176 s
-2400/3300 klatek, 203 s
-2700/3300 klatek, 230 s
-3000/3300 klatek, 257 s
-3300/3300 klatek, 292 s
-Gotowe w 296 s
-audio.wav OK 110 s
+300/3600 klatek, 16 s
+600/3600 klatek, 43 s
+900/3600 klatek, 67 s
+1200/3600 klatek, 95 s
+1500/3600 klatek, 119 s
+1800/3600 klatek, 148 s
+2100/3600 klatek, 175 s
+2400/3600 klatek, 207 s
+2700/3600 klatek, 235 s
+3000/3600 klatek, 261 s
+3300/3600 klatek, 288 s
+3600/3600 klatek, 328 s
+Gotowe w 333 s
+audio.wav OK 120 s
 Gotowe: /home/user/TikTok-films/film/sam2/out/final.mp4
 EXIT 0

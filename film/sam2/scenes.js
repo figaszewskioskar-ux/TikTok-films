@@ -7,8 +7,8 @@ window.EP = {
     add(0.1, 'stab'); add(0.6, 'chain'); add(2.6, 'jolt'); add(5.0, 'handle'); add(5.4, 'knock'); add(7.4, 'jolt');
     add(13.2, 'whoosh'); add(22.4, 'jolt'); add(26.2, 'hit'); add(30.2, 'dial'); add(46.0, 'creak');
     add(48.2, 'knock'); add(48.3, 'jolt'); add(58.6, 'lock'); add(59.0, 'chain'); add(60.6, 'jolt'); add(60.6, 'bang'); add(62.6, 'slam'); add(62.6, 'jolt'); add(63.6, 'hit');
-    add(68.1, 'lock'); add(72.6, 'hit'); add(78.0, 'siren'); add(81.8, 'unlock');
-    add(88.0, 'whoosh'); add(95.6, 'jolt'); add(100.0, 'notif'); add(100.0, 'jolt'); add(106.6, 'jolt');
+    add(68.1, 'lock'); add(72.6, 'hit'); add(78.2, 'creak'); add(88.0, 'siren'); add(91.8, 'unlock');
+    add(98.0, 'whoosh'); add(105.6, 'jolt'); add(110.0, 'notif'); add(110.0, 'jolt'); add(116.6, 'jolt');
   },
 };
 const S = [];
@@ -873,10 +873,88 @@ function lockClose(c, lt, l) {
 function shot(c, cx, cy, k, fn) { c.save(); c.translate(540, 960); c.scale(k, k); c.translate(-cx, -cy); fn(c); c.restore(); }
 
 
+
+// ===================== MIESZKANIE KUBY (dopracowane) =====================
+// przedpokój Kuby: tapeta w pasy z ornamentem, boazeria, lampa z kloszem, wieszak z kurtkami (mamy i Kuby), szafka na buty, lustro w ramie,
+// unifon na ścianie, kalendarz, zdjęcia rodzinne, kaloryfer, parkiet w jodełkę, chodnik we wzór, drzwi obite z dwoma zamkami, łańcuchem i wizjerem
+function kubaHall(c, lt, o = {}) {
+  c.fillStyle = '#B9A47E'; c.fillRect(0, 0, W, 1420);
+  for (let x = 0; x < W; x += 60) { c.fillStyle = 'rgba(120,90,50,.16)'; c.fillRect(x, 0, 22, 1100); for (let y = 30; y < 1100; y += 90) { c.fillStyle = 'rgba(255,240,210,.18)'; c.beginPath(); c.ellipse(x + 41, y + (x / 60 % 2) * 45, 7, 12, 0, 0, 7); c.fill(); } }
+  c.fillStyle = '#6B4A2F'; c.fillRect(0, 1100, W, 320); for (let x = 0; x < W; x += 90) { c.fillStyle = 'rgba(0,0,0,.15)'; c.fillRect(x, 1100, 4, 320); } c.fillStyle = '#4E3420'; c.fillRect(0, 1092, W, 16);
+  c.fillStyle = '#E8E0CC'; c.fillRect(0, 0, W, 50); c.fillStyle = 'rgba(0,0,0,.15)'; c.fillRect(0, 50, W, 6);
+  // lampa sufitowa z kloszem
+  c.fillStyle = '#3A2A1A'; c.fillRect(538, 50, 4, 70); c.fillStyle = o.lampOn ? '#F6D9A0' : '#C9B590'; c.beginPath(); c.moveTo(470, 190); c.lineTo(610, 190); c.lineTo(580, 120); c.lineTo(500, 120); c.fill(); fillRR(c, 470, 186, 140, 10, 4, '#8A6A3A');
+  if (o.lampOn) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 200, 10, 540, 500, 800); g.addColorStop(0, 'rgba(255,220,160,.35)'); g.addColorStop(1, 'rgba(255,220,160,0)'); c.fillStyle = g; c.fillRect(0, 0, W, 1420); c.restore(); }
+  // wieszak z kurtkami i szalikiem, szafka na buty, buty, klucze w misce
+  fillRR(c, 20, 470, 270, 26, 6, '#5A3D26'); for (let i = 0; i < 4; i++) fillRR(c, 45 + i * 66, 494, 12, 40, 4, '#C9A15A');
+  fillRR(c, 30, 520, 100, 380, 36, '#B03A3A'); fillRR(c, 44, 540, 72, 30, 10, '#8A2A2A'); fillRR(c, 140, 520, 90, 330, 32, '#4A6A3A'); fillRR(c, 168, 540, 30, 220, 8, '#C9CDD2');
+  for (let i = 0; i < 6; i++) fillRR(c, 235, 520 + i * 40, 40, 20, 4, i % 2 ? '#2CB5A8' : '#F2F2EE'); // szalik w paski
+  fillRR(c, 20, 1180, 290, 230, 8, '#7A5634'); fillRR(c, 32, 1196, 128, 200, 6, '#8A6440'); fillRR(c, 170, 1196, 128, 200, 6, '#8A6440'); circ(c, 148, 1296, 6, '#C9A15A'); circ(c, 182, 1296, 6, '#C9A15A');
+  ell(c, 230, 1170, 50, 14, '#D9D2C2'); fillRR(c, 210, 1150, 16, 20, 4, '#C9CDD2'); fillRR(c, 232, 1156, 20, 14, 4, '#2F5DA8');
+  for (const [x, col] of [[50, '#F2F2EE'], [120, '#2A2D36'], [190, '#C23A3A']]) { fillRR(c, x, 1150, 56, 26, 10, col); }
+  // zdjęcia rodzinne i kalendarz
+  for (const [x, y, w, h] of [[60, 230, 110, 140], [190, 260, 90, 110]]) { fillRR(c, x, y, w, h, 4, '#5A3D26'); fillRR(c, x + 10, y + 10, w - 20, h - 20, 2, '#9FB3C2'); circ(c, x + w / 2, y + h / 2 - 6, 16, '#E3AC88'); fillRR(c, x + w / 2 - 22, y + h / 2 + 10, 44, 30, 10, '#2F5DA8'); }
+  fillRR(c, 800, 170, 150, 200, 4, '#FFFFFF'); fillRR(c, 800, 170, 150, 46, 4, '#C23A3A'); txt(c, 'LISTOPAD', 875, 194, 18, '#FFFFFF', 900); for (let r = 0; r < 4; r++) for (let q = 0; q < 5; q++) txt(c, String(r * 5 + q + 3), 822 + q * 26, 240 + r * 32, 14, r === 2 && q === 2 ? '#C23A3A' : '#3A3F4C', 800);
+  // lustro w ramie, konsola z telefonem, unifon
+  fillRR(c, 790, 420, 230, 380, 16, '#6B4A2F'); fillRR(c, 806, 436, 198, 348, 10, '#B8C6D0'); c.fillStyle = 'rgba(255,255,255,.3)'; c.beginPath(); c.moveTo(830, 436); c.lineTo(880, 436); c.lineTo(830, 520); c.fill();
+  if (o.mirror) { c.save(); c.beginPath(); c.rect(806, 436, 198, 348); c.clip(); c.globalAlpha = .5; o.mirror(c); c.restore(); }
+  fillRR(c, 780, 860, 260, 26, 6, '#5A3D26'); fillRR(c, 800, 886, 14, 200, 4, '#4E3420'); fillRR(c, 1006, 886, 14, 200, 4, '#4E3420');
+  fillRR(c, 840, 820, 80, 40, 10, '#E8E4DA'); fillRR(c, 850, 806, 60, 20, 8, '#D6D1C2'); // telefon stacjonarny
+  fillRR(c, 960, 620, 70, 170, 12, '#E8E4DA'); fillRR(c, 970, 636, 50, 100, 8, '#D6D1C2'); circ(c, 995, 760, 10, '#3FA066'); c.strokeStyle = '#B8B2A2'; c.lineWidth = 4; c.beginPath(); c.moveTo(995, 736); c.quadraticCurveTo(1010, 790, 990, 820); c.stroke(); // unifon
+  // kaloryfer
+  fillRR(c, 800, 1130, 220, 170, 8, '#E8E4DA'); for (let i = 0; i < 8; i++) fillRR(c, 808 + i * 26, 1140, 18, 150, 6, '#D6D1C2');
+  // włącznik przy drzwiach
+  fillRR(c, 770, 960, 40, 60, 6, '#F2EEE4'); fillRR(c, 780, 972, 20, 36, 4, '#E0DACB');
+  // podłoga: parkiet w jodełkę + chodnik we wzór
+  c.fillStyle = '#7A5634'; c.fillRect(0, 1420, W, 500); for (let r = 0; r < 12; r++) for (let q = 0; q < 14; q++) { c.save(); c.translate(q * 80 + (r % 2) * 40, 1430 + r * 44); c.rotate(r % 2 ? .5 : -.5); fillRR(c, -36, -9, 72, 18, 2, (q + r) % 3 ? '#8A6440' : '#74522F'); c.restore(); }
+  fillRR(c, 260, 1470, 560, 420, 10, '#7A2A2A'); c.strokeStyle = '#D9B26A'; c.lineWidth = 8; c.strokeRect(290, 1500, 500, 360); c.lineWidth = 4; c.strokeRect(320, 1530, 440, 300);
+  for (let i = 0; i < 5; i++) { c.save(); c.translate(540, 1680); c.rotate(i * Math.PI / 5); c.strokeStyle = 'rgba(217,178,106,.7)'; c.beginPath(); c.ellipse(0, 0, 120, 40, 0, 0, 7); c.stroke(); c.restore(); }
+  for (let i = 0; i < 14; i++) { fillRR(c, 266 + i * 40, 1884, 8, 26, 3, '#D9B26A'); }
+  fillRR(c, 360, 1440, 70, 30, 12, '#2CB5A8'); fillRR(c, 440, 1446, 70, 30, 12, '#2CB5A8'); // kapcie Kuby
+  // drzwi: ościeżnica, obicie, dwa zamki, wizjer, łańcuch, klamka
+  fillRR(c, 300, 490, 480, 940, 6, '#3A2818'); fillRR(c, 312, 502, 456, 924, 4, '#5A3D26');
+  quilted(c, 330, 520, 420, 900, '#6B4A2F', '#583B24', '#C9A15A', 64); c.strokeStyle = '#3A2818'; c.lineWidth = 14; c.strokeRect(330, 520, 420, 900);
+  circ(c, 540, 760, 18, '#1B1C22'); c.strokeStyle = '#C9A15A'; c.lineWidth = 6; c.beginPath(); c.arc(540, 760, 22, 0, 7); c.stroke();
+  fillRR(c, 680, 840, 46, 70, 8, '#C9A15A'); circ(c, 703, 880, 7, '#2A1A10'); // górny zamek
+  fillRR(c, 680, 1000, 46, 90, 8, '#C9A15A'); circ(c, 703, 1060, 8, '#2A1A10'); const kr = o.lockTurn || 0; c.save(); c.translate(703, 1060); c.rotate(kr * Math.PI / 2); fillRR(c, -4, -14, 8, 28, 3, '#2A1A10'); c.restore();
+  c.save(); c.translate(700, 1153); c.rotate(o.handle || 0); fillRR(c, -60, -13, 90, 26, 10, '#C9A15A'); c.restore(); circ(c, 700, 1153, 16, '#B08A48');
+  if (!o.noChain) { c.strokeStyle = '#C9CDD2'; c.lineWidth = 6; for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(640 + i * 16, 920 + Math.sin(i / 5 * Math.PI) * 28, 9, 6, .3, 0, 7); c.stroke(); } fillRR(c, 720, 900, 26, 40, 6, '#C9CDD2'); }
+  if (o.underLight) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(0, 1410, 0, 1560); g.addColorStop(0, `rgba(255,220,150,${.75 * o.underLight})`); g.addColorStop(1, 'rgba(255,220,150,0)'); c.fillStyle = g; c.fillRect(330, 1410, 420, 150); c.restore();
+    if (o.feet) { fillRR(c, 460, 1414, 54, 14, 4, 'rgba(10,8,12,.92)'); fillRR(c, 560, 1414, 54, 14, 4, 'rgba(10,8,12,.92)'); } }
+}
+// pokój Kuby nocą (dopracowany): okno z widokiem, biurko z monitorem i klawiaturą RGB, fotel gamingowy, łóżko z kocem w kratę, plakaty, półka z figurkami, lampka nocna, dywan
+function kubaRoom2(c, lt, o = {}) {
+  c.fillStyle = '#2E3A52'; c.fillRect(0, 0, W, 1420); for (let x = 0; x < W; x += 80) { c.fillStyle = 'rgba(255,255,255,.03)'; c.fillRect(x, 0, 40, 1420); }
+  c.fillStyle = '#3A2A20'; c.fillRect(0, 1420, W, 500); for (let i = 0; i < 12; i++) { c.fillStyle = 'rgba(0,0,0,.1)'; c.fillRect(0, 1440 + i * 40, W, 3); }
+  // okno
+  fillRR(c, 360, 260, 380, 520, 6, '#E8E4DA'); fillRR(c, 380, 280, 340, 480, 2, '#0B1020'); for (let r = 0; r < 5; r++) for (let q = 0; q < 4; q++) fillRR(c, 400 + q * 80, 300 + r * 80, 40, 40, 2, hash(r * 4 + q) > .65 ? '#E8B860' : '#121A2C'); snowfall(c, lt, 0); for (let k = 0; k < 14; k++) circ(c, 380 + hash(k) * 340, 280 + ((hash(k + 3) * 480 + lt * 50) % 480), 2.4, 'rgba(235,240,255,.8)');
+  c.fillStyle = '#E8E4DA'; c.fillRect(544, 280, 12, 480); fillRR(c, 340, 780, 420, 26, 4, '#D6D1C2'); for (const x of [300, 740]) { c.fillStyle = 'rgba(70,90,140,.85)'; c.fillRect(x, 230, 60, 600); }
+  // plakaty i półka
+  fillRR(c, 60, 260, 220, 300, 6, '#1E1A2E'); c.fillStyle = '#8A5CF5'; c.beginPath(); c.moveTo(170, 300); c.lineTo(250, 500); c.lineTo(90, 500); c.fill(); txt(c, 'LEVEL 94', 170, 530, 26, '#F5C542', 900);
+  fillRR(c, 820, 260, 200, 260, 6, '#C23A3A'); txt(c, 'KS', 920, 340, 70, '#FFFFFF', 900); txt(c, 'SOKÓŁ', 920, 420, 46, '#FFFFFF', 900); txt(c, '#7', 920, 480, 36, '#F5C542', 900);
+  fillRR(c, 800, 600, 230, 16, 4, '#5A3D26'); for (let i = 0; i < 4; i++) { fillRR(c, 820 + i * 52, 560, 30, 40, 8, ['#D7263D', '#2F6FEB', '#F5C542', '#30A46C'][i]); circ(c, 835 + i * 52, 552, 12, ['#D7263D', '#2F6FEB', '#F5C542', '#30A46C'][i]); }
+  // biurko z monitorem, klawiatura RGB
+  fillRR(c, 40, 1000, 480, 26, 6, '#2A2D36'); fillRR(c, 60, 1026, 16, 300, 4, '#1E1E24'); fillRR(c, 480, 1026, 16, 300, 4, '#1E1E24');
+  fillRR(c, 110, 720, 340, 230, 12, '#14161B'); fillRR(c, 124, 734, 312, 200, 8, o.screen ? '#1A2C50' : '#0A0C12'); fillRR(c, 266, 950, 30, 50, 4, '#14161B');
+  for (let i = 0; i < 12; i++) fillRR(c, 130 + i * 24, 970, 18, 14, 3, `hsl(${(i * 30 + lt * 120) % 360},90%,60%)`);
+  // fotel gamingowy
+  fillRR(c, 200, 1040, 170, 300, 40, '#1E1E24'); fillRR(c, 230, 1060, 110, 40, 16, '#D7263D'); fillRR(c, 180, 1300, 210, 40, 16, '#1E1E24');
+  // łóżko z kocem w kratę, poduszka
+  fillRR(c, 600, 1180, 460, 220, 20, '#5A3D26'); fillRR(c, 610, 1140, 440, 140, 30, '#3A5A9A'); for (let i = 0; i < 6; i++) { c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(620 + i * 72, 1140, 14, 140); c.fillRect(610, 1150 + i * 22, 440, 6); }
+  fillRR(c, 900, 1100, 140, 70, 30, '#E8E4DA');
+  // lampka nocna
+  fillRR(c, 560, 1060, 30, 120, 6, '#2A2D36'); c.fillStyle = '#F6D9A0'; c.beginPath(); c.moveTo(530, 1060); c.lineTo(620, 1060); c.lineTo(600, 1010); c.lineTo(550, 1010); c.fill();
+  if (o.lamp) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(575, 1060, 10, 575, 1060, 420); g.addColorStop(0, 'rgba(255,210,140,.4)'); g.addColorStop(1, 'rgba(255,210,140,0)'); c.fillStyle = g; c.fillRect(150, 640, 860, 860); c.restore(); }
+  // dywan
+  ell(c, 540, 1660, 420, 150, '#3A4A7A'); c.strokeStyle = 'rgba(255,255,255,.18)'; c.lineWidth = 8; c.beginPath(); c.ellipse(540, 1660, 360, 120, 0, 0, 7); c.stroke();
+  // światło z okna (księżyc + latarnia)
+  c.save(); c.globalCompositeOperation = 'lighter'; const wg = c.createLinearGradient(550, 780, 550, 1700); wg.addColorStop(0, 'rgba(150,180,255,.22)'); wg.addColorStop(1, 'rgba(150,180,255,0)'); c.fillStyle = wg; c.beginPath(); c.moveTo(380, 800); c.lineTo(720, 800); c.lineTo(900, 1700); c.lineTo(200, 1700); c.fill(); c.restore();
+}
+
 // ===================== ODC. 2 (kontynuacja): tła =====================
 // przedpokój: drzwi uchylone na łańcuch — szpara z ciemnym korytarzem, łańcuch napięty
 function doorOnChain(c, lt, o = {}) {
-  flatDoorInside(c, lt, { underLight: 0 });
+  kubaHall(c, lt, { underLight: 0, noChain: true });
   const gap = o.gap ?? 60, gx = 750 - gap;
   c.fillStyle = '#05060A'; c.fillRect(gx, 520, gap + 4, 900); // ciemna szpara
   if (o.lit) { const g = c.createLinearGradient(gx, 0, gx + gap, 0); g.addColorStop(0, 'rgba(255,230,180,.25)'); g.addColorStop(1, 'rgba(255,230,180,.05)'); c.fillStyle = g; c.fillRect(gx, 520, gap, 900); }
@@ -919,8 +997,29 @@ function callOverlay(c, lt, who, sub, y = 1500) { fillRR(c, 140, y, 800, 150, 30
 // 0. HAK: drzwi uchylone na łańcuch — w szparę wsuwa się dłoń w rękawiczce i łapie łańcuch
 scene({
   name: 'hook', start: 0, end: 5, cam: jolt([2.6]),
-  draw(c, lt) { doorOnChain(c, lt, { gap: 70, grab: lt > 2.6 ? clamp((lt - 2.6) / .3) : 0, inGap: (cc, gx, gw) => { if (lt > 2.2) person(cc, 'obcy', gx + 30, 2000, 3.0, { t: lt, mouth: 'grin', look: -1, still: true, wide: true }); } });
-    night(c, .5, [{ x: 700, y: 950, r: 420, a: .9 }]); },
+  draw(c, lt) {
+    const gl = 560, gr = 720, fl = hash(Math.floor(lt * 11)) > .8 ? .5 : 1;
+    // szpara: korytarz z migającą lampą, twarz obcego tuż przy szparze, para z ust
+    c.save(); c.beginPath(); c.rect(gl, 0, gr - gl, H); c.clip();
+    c.fillStyle = '#D8D2BE'; c.fillRect(gl, 0, gr - gl, H); c.fillStyle = '#3F6B55'; c.fillRect(gl, 1000, gr - gl, 920);
+    if (lt > 1.4) person(c, 'obcy', 690, 1890, 5.5, { t: lt, mouth: lt > 2.2 ? 'grin' : null, look: -1, still: true, wide: true });
+    c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(640, 300, 10, 640, 600, 700); g.addColorStop(0, `rgba(255,230,170,${.35 * fl})`); g.addColorStop(1, 'rgba(255,230,170,0)'); c.fillStyle = g; c.fillRect(gl, 0, 200, H); c.restore();
+    if (lt > 1.4) for (let i = 0; i < 3; i++) { const p = (lt * .7 + i / 3) % 1; c.fillStyle = `rgba(230,235,245,${.25 * (1 - p)})`; c.beginPath(); c.arc(610 - p * 40, 760 - p * 60, 14 + p * 30, 0, 7); c.fill(); }
+    c.restore();
+    // skrzydło drzwi (lewo): obicie, krawędź, zamek, wizjer; ościeżnica i ściana przedpokoju (prawo)
+    quilted(c, -40, 0, gl - 30 + 40, H, '#6B4A2F', '#583B24', '#C9A15A', 120); c.fillStyle = '#4A3220'; c.fillRect(gl - 30, 0, 30, H); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(gl - 30, 0, 8, H);
+    fillRR(c, 380, 1120, 70, 130, 10, '#C9A15A'); circ(c, 415, 1200, 9, '#2A1A10'); circ(c, 300, 560, 28, '#1B1C22'); c.strokeStyle = '#C9A15A'; c.lineWidth = 8; c.beginPath(); c.arc(300, 560, 34, 0, 7); c.stroke();
+    fillRR(c, gr, 0, 70, H, 0, '#5A3D26'); c.fillStyle = '#3A2818'; c.fillRect(gr, 0, 10, H);
+    c.fillStyle = '#B9A47E'; c.fillRect(gr + 70, 0, W, H); for (let x = gr + 70; x < W; x += 60) { c.fillStyle = 'rgba(120,90,50,.16)'; c.fillRect(x, 0, 22, H); } fillRR(c, 860, 980, 60, 90, 8, '#F2EEE4'); fillRR(c, 874, 996, 32, 56, 6, '#E0DACB');
+    // łańcuch napięty przez szparę
+    fillRR(c, 440, 860, 50, 60, 8, '#C9CDD2'); fillRR(c, gr + 14, 860, 50, 60, 8, '#C9CDD2'); c.strokeStyle = '#D6DADF'; c.lineWidth = 10; for (let i = 0; i < 9; i++) { const x = 490 + i * ((gr + 14 - 490) / 8.5); c.beginPath(); c.ellipse(x, 890, 15, 9, 0, 0, 7); c.stroke(); }
+    // dłoń w rękawiczce wsuwa się w szparę i łapie łańcuch
+    if (lt > 2.6) { const k = eout(clamp((lt - 2.6) / .3)), hx = lerp(gr + 40, gl - 20, k);
+      fillRR(c, hx + 40, 860, gr + 60 - hx, 110, 40, '#141519'); // grzbiet dłoni wchodzący w szparę
+      for (let f = 0; f < 4; f++) { const fx = hx - 10 + f * 40; fillRR(c, fx, 846, 36, 104, 17, '#16171C'); ell(c, fx + 18, 868, 9, 6, 'rgba(255,255,255,.16)'); c.strokeStyle = 'rgba(255,255,255,.08)'; c.lineWidth = 2; c.beginPath(); c.moveTo(fx + 18, 880); c.lineTo(fx + 18, 940); c.stroke(); }
+      fillRR(c, hx + 30, 950, 90, 34, 16, '#16171C'); c.strokeStyle = 'rgba(255,255,255,.1)'; c.setLineDash([6, 6]); c.beginPath(); c.moveTo(hx + 60, 870); c.lineTo(gr + 40, 870); c.stroke(); c.setLineDash([]); }
+    night(c, .55, [{ x: 640, y: 800, r: 420, a: .95 }]);
+  },
   post(c, lt) { joltFlash(c, lt, [2.6]); if (lt > .3 && lt < 2.6) label(c, 'TYLKO ZERKNĄĆ. NA ŁAŃCUCH.', 540, 300, 'dark', 36, lt - .3, 2.6 - lt); bigSign(c, lt, 'NIE OTWIERAJ', 'NA ŁAŃCUCH!', 1640); },
 });
 // 1. TA SAMA NOC: klamka w dół, pukanie, cień stóp pod drzwiami. „Kuba… otwórz. To sąsiad.”
@@ -928,7 +1027,7 @@ scene({
   name: 'knock', start: 5, end: 13, cam: jolt([2.4]),
   bubbles: [sayAt(2.4, 5.6, 'Kuba… otwórz. To sąsiad.', 'obcy', 540, 760, 0, 80)],
   draw(c, lt) { const sh = [.4, .9, 1.4].some(k => lt > k && lt < k + .12) ? 8 : 0; c.save(); c.translate(sh, 0);
-    flatDoorInside(c, lt, { underLight: 1, feet: true, handle: lt < 1.6 ? -.55 * (1 - clamp(lt / 1.6)) : 0 }); c.restore();
+    kubaHall(c, lt, { underLight: 1, feet: true, handle: lt < 1.6 ? -.55 * (1 - clamp(lt / 1.6)) : 0 }); c.restore();
     person(c, 'kuba', 300, 1840, 2.1, { t: lt, look: 1, wide: true, mouth: 'o' }); night(c, .6, [{ x: 540, y: 1420, r: 320, a: .8 }]); },
   post(c, lt) { joltFlash(c, lt, [2.4]); if (lt < 2.2) label(c, '22:58 · TA SAMA NOC', 540, 300, 'yellow', 38, lt, 2.2 - lt); if (lt > 5.8) label(c, 'SKĄD ZNA JEGO IMIĘ?', 540, 300, 'red', 44, lt - 5.8, 9); },
 });
@@ -947,21 +1046,21 @@ scene({
 scene({
   name: 'speak', start: 19, end: 30, cam: jolt([3.4]),
   bubbles: [sayAt(.6, 3.0, 'Tata śpi! Niech pan idzie!', 'kuba', 330, 1180, 0, 60), sayAt(3.4, 7.0, 'Tata? Przecież\nw dziewięćdziesiątce czwórce nikogo nie ma.', 'obcy', 540, 760, 0, 80)],
-  draw(c, lt) { flatDoorInside(c, lt, { underLight: 1, feet: true }); person(c, 'kuba', 330, 1840, 2.1, { t: lt, look: 1, wide: true, mouth: lt > 3.4 ? 'o' : null, talk: lt > .6 && lt < 2.8 }); night(c, .55, [{ x: 540, y: 1420, r: 340, a: .8 }]); },
+  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: true }); person(c, 'kuba', 330, 1840, 2.1, { t: lt, look: 1, wide: true, mouth: lt > 3.4 ? 'o' : null, talk: lt > .6 && lt < 2.8 }); night(c, .55, [{ x: 540, y: 1420, r: 340, a: .8 }]); },
   post(c, lt) { joltFlash(c, lt, [3.4]); if (lt > 7.2) card(c, 70, 300, 860, 'BŁĄD 1', 'odezwał się przez drzwi —\nteraz obcy wie, że Kuba jest sam', lt - 7.2, '#F39C12', 36); },
 });
 // 4. 112: Kuba siedzi pod ścianą w ciemnym przedpokoju i szeptem dzwoni
 scene({
   name: 'call', start: 30, end: 41,
   bubbles: [sayAt(.6, 3.6, 'Numer alarmowy sto dwanaście.\nCo się stało?', 'op', 540, 1500, 0, 40), sayAt(3.8, 7.6, 'Ktoś dobija się do drzwi.\nBlok dwanaście, mieszkanie dziewięćdziesiąt cztery.', 'kuba', 400, 1160, 60, 60), sayAt(7.8, 10.8, 'Wysyłam patrol. Nie otwieraj nikomu.\nZostań na linii.', 'op', 540, 1500, 0, 40)],
-  draw(c, lt) { flatDoorInside(c, lt, { underLight: 1, feet: lt < 6 }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, sit: true, look: 1, wide: true, phone: true, talk: lt > 3.8 && lt < 7.4 });
+  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: lt < 6 }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, sit: true, look: 1, wide: true, phone: true, talk: lt > 3.8 && lt < 7.4 });
     night(c, .7, [{ x: 320, y: 1300, r: 260, a: .8 }]); callOverlay(c, lt, '112', 'połączono · ' + String(Math.floor(lt)).padStart(2, '0') + ' s', 1560); },
   post(c, lt) { if (lt < 2) label(c, 'KUBA DZWONI NA 112', 540, 300, 'yellow', 40, lt, 2 - lt); },
 });
 // 5. CISZA: cień stóp pod drzwiami znika. Trzy minuty później…
 scene({
   name: 'quiet', start: 41, end: 48,
-  draw(c, lt) { flatDoorInside(c, lt, { underLight: lt < 5 ? 1 : .6, feet: lt < 2.4 }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, sit: true, look: 1, wide: true, phone: true, lookY: 0 }); night(c, .72, [{ x: 540, y: 1420, r: 320, a: .8 }]); callOverlay(c, lt, '112', 'połączono · na linii', 1560); },
+  draw(c, lt) { kubaHall(c, lt, { underLight: lt < 5 ? 1 : .6, feet: lt < 2.4 }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, sit: true, look: 1, wide: true, phone: true, lookY: 0 }); night(c, .72, [{ x: 540, y: 1420, r: 320, a: .8 }]); callOverlay(c, lt, '112', 'połączono · na linii', 1560); },
   post(c, lt) { if (lt > 2.6 && lt < 4.8) label(c, 'CIEŃ POD DRZWIAMI ZNIKA', 540, 300, 'dark', 38, lt - 2.6, 4.8 - lt); if (lt > 5) label(c, 'TRZY MINUTY PÓŹNIEJ…', 540, 300, 'dark', 40, lt - 5, 9); },
 });
 // 6. „POLICJA!”: wizjer — ktoś pokazuje coś jak legitymację. Twarzy nie widać, korytarz ciemny.
@@ -977,7 +1076,7 @@ scene({
 scene({
   name: 'chain', start: 58, end: 68, cam: jolt([2.6, 4.6]),
   draw(c, lt) { const gap = lt < .6 ? 0 : lt < 4.6 ? 70 * clamp((lt - .6) / .6) : 70 * (1 - clamp((lt - 4.6) / .2));
-    if (gap < 2) { flatDoorInside(c, lt, { underLight: .6 }); } else doorOnChain(c, lt, { gap, grab: lt > 2.6 && lt < 4.8 ? clamp((lt - 2.6) / .25) : 0, inGap: (cc, gx) => { if (lt > 2.4) person(cc, 'obcy', gx + 30, 2000, 3.0, { t: lt, mouth: 'grin', look: -1, still: true, wide: true }); } });
+    if (gap < 2) { kubaHall(c, lt, { underLight: .6 }); } else doorOnChain(c, lt, { gap, grab: lt > 2.6 && lt < 4.8 ? clamp((lt - 2.6) / .25) : 0, inGap: (cc, gx) => { if (lt > 2.4) person(cc, 'obcy', gx + 30, 2000, 3.0, { t: lt, mouth: 'grin', look: -1, still: true, wide: true }); } });
     person(c, 'kuba', lt < 4.4 ? 470 : 560, 1840, 2.1, { t: lt, look: 1, back: lt < 2.6, wide: true, mouth: lt > 2.6 ? 'o' : null, aL: lt < 2.6 ? 1.4 : null });
     night(c, .5, [{ x: 700, y: 950, r: 420, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [2.6, 4.6]); if (lt > 4.8 && lt < 5.6) label(c, 'TRZASK!', 540, 300, 'red', 56, lt - 4.8, 5.6 - lt); if (lt > 5.6) card(c, 70, 300, 860, 'BŁĄD 2', 'uchylił drzwi na łańcuch —\nłańcuch nie zatrzyma dorosłego', lt - 5.6, '#F39C12', 36); },
@@ -986,15 +1085,27 @@ scene({
 scene({
   name: 'rule', start: 68, end: 78,
   bubbles: [sayAt(.8, 4.4, 'Patrol jeszcze nie dojechał!\nNie otwieraj nikomu!', 'op', 540, 1500, 0, 40)],
-  draw(c, lt) { flatDoorInside(c, lt, { lockTurn: clamp(lt / .6), underLight: .6 }); person(c, 'kuba', 540, 1840, 2.1, { t: lt, back: true, wide: true, aR: lt < .8 ? 1.3 : null }); night(c, .55, [{ x: 540, y: 1300, r: 420, a: .8 }]); callOverlay(c, lt, '112', 'na głośniku', 1560); },
+  draw(c, lt) { kubaHall(c, lt, { lockTurn: clamp(lt / .6), underLight: .6 }); person(c, 'kuba', 540, 1840, 2.1, { t: lt, back: true, wide: true, aR: lt < .8 ? 1.3 : null }); night(c, .55, [{ x: 540, y: 1300, r: 420, a: .8 }]); callOverlay(c, lt, '112', 'na głośniku', 1560); },
   post(c, lt) { if (lt > 4.6) card(c, 40, 300, 1000, 'ZASADA', 'Obcy pod drzwiami? Nie otwieraj i nie odzywaj się.\nDzwoń 112. „Policję” sprawdzisz u dyżurnego:\nzapytaj, czy patrol jest pod twoim adresem.', lt - 4.6, '#F39C12', 31); },
+});
+// 9. PAN ZDZISIEK z 95: słyszał hałas, wyszedł z latarką. Kuba widzi go przez wizjer — ale i tak nie otwiera, czeka na policję.
+const ZDB = [sayAt(.4, 4.4, 'Kuba? To ja, pan Zdzisiek\nz dziewięćdziesiątki piątki.\nKtoś tu był. Uciekł schodami.', 'zdzisiek', 540, 600, 0, 60),
+             sayAt(4.8, 7.0, 'Nie otworzę. Czekam na policję.', 'kuba', 540, 1500, 0, 40), sayAt(7.2, 9.8, 'Dobrze robisz, młody.\nPoczekam tu z tobą.', 'zdzisiek', 540, 600, 0, 60)];
+scene({
+  name: 'zdzis', start: 78, end: 88,
+  bubbles: ZDB,
+  draw(c, lt) { peepPOV(c, lt, (cc, cx, cy, r) => { cc.save(); cc.translate(cx, cy); cc.scale(.62, .62); cc.translate(-540, -1000); stairElev(cc, lt, 9, {});
+      person(cc, 'zdzisiek', 540, 2380, 5.0, { t: lt, look: 0, talk: talking({ bubbles: ZDB }, 'zdzisiek', lt), still: true });
+      cc.save(); cc.globalCompositeOperation = 'lighter'; const g = cc.createRadialGradient(760, 1500, 10, 760, 1500, 500); g.addColorStop(0, 'rgba(255,250,220,.35)'); g.addColorStop(1, 'rgba(255,250,220,0)'); cc.fillStyle = g; cc.fillRect(0, 0, W, 2200); cc.restore();
+      cc.restore(); }); },
+  post(c, lt) { if (lt < .4 || lt > 9.8) label(c, 'SĄSIAD Z 95', 540, 1500, 'yellow', 40, lt, 9); },
 });
 // 9. PRAWDZIWA POLICJA: niebieskie światła, dwaj policjanci na korytarzu, latarki. Klatka pusta.
 scene({
-  name: 'real', start: 78, end: 88,
+  name: 'real', start: 88, end: 98,
   bubbles: [sayAt(.4, 3.4, 'Patrol jest pod twoimi drzwiami.\nMożesz otworzyć.', 'op', 540, 1500, 0, 40), say(4.2, 7.6, 'Sprawdziliśmy klatkę.\nNikogo nie ma.', 'policjant', 820, 1760, 2.0, -60)],
   draw(c, lt) { landing9b(c, lt, { floor: 9, open94: lt > 3.8 }); policeLights(c, lt, 0, 1080);
-    person(c, 'policjant', 820, 1760, 2.0, { t: lt, look: -1, talk: lt > 4.2 && lt < 7.4 }); person(c, 'policjant', 1000, 1800, 2.05, { t: lt, look: -1, still: true });
+    person(c, 'policjant', 820, 1760, 2.0, { t: lt, look: -1, talk: lt > 4.2 && lt < 7.4 }); person(c, 'policjant', 1000, 1800, 2.05, { t: lt, look: -1, still: true }); person(c, 'zdzisiek', 300, 1820, 2.0, { t: lt, look: 1, still: true });
     if (lt > 3.8) person(c, 'kuba', 645, 1700, 1.9, { t: lt, look: 1, wide: true });
     c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(300, 900, 10, 300, 900, 360); g.addColorStop(0, 'rgba(255,255,230,.25)'); g.addColorStop(1, 'rgba(255,255,230,0)'); c.fillStyle = g; c.fillRect(0, 500, 800, 900); c.restore();
     night(c, .35, [{ x: 700, y: 1200, r: 600, a: .8 }]); if (lt < 3.8) callOverlay(c, lt, '112', 'na głośniku', 1560); },
@@ -1002,10 +1113,10 @@ scene({
 });
 // 10. ZAKOŃCZENIE: 01:30, Kuba nie śpi, podchodzi do okna. Pod drzewem stoi obcy i patrzy w górę. Macha. SMS: „Dobranoc, Kuba.” Pod drzewem pusto. Twarz.
 scene({
-  name: 'end', start: 88, end: 110, cam: jolt([7.6, 12.0, 18.6]),
+  name: 'end', start: 98, end: 120, cam: jolt([7.6, 12.0, 18.6]),
   labels: [[19.6, 22, 'ODC. 3 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
-    if (lt < 3.6) { kubaRoom(c, lt, {}); person(c, 'kuba', 540, 1780, 2.0, { t: lt, home: true, back: true, still: true }); night(c, .8, [{ x: 540, y: 700, r: 520, a: .7 }]); return; }
+    if (lt < 3.6) { kubaRoom2(c, lt, { lamp: true, screen: false }); person(c, 'kuba', 540, 1780, 2.0, { t: lt, home: true, back: true, still: true }); night(c, .8, [{ x: 540, y: 700, r: 520, a: .7 }]); return; }
     if (lt < 12.0) { yardFromWindow(c, lt, { fig: lt > 5.0 ? clamp((lt - 5) / .8) : 0, wave: lt > 7.6, grin: lt > 7.6 }); night(c, .3, []); return; }
     if (lt < 15.6) { yardFromWindow(c, lt, { fig: lt < 14 ? 1 : 0, grin: true }); c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(0, 0, W, H);
       fillRR(c, 140, 700, 800, 230, 34, 'rgba(20,22,30,.96)'); txt(c, 'Nieznany numer · teraz', 200, 760, 28, '#9AA2AB', 800, 'left'); txt(c, 'Dobranoc, Kuba.', 200, 850, 64, '#FFFFFF', 900, 'left'); return; }
