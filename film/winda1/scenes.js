@@ -959,14 +959,14 @@ scene({
     const peep = (inner) => { peepPOV(c, lt, (cc, cx, cy, r) => { cc.save(); cc.translate(cx, cy); cc.scale(.62, .62); cc.translate(-540, -1000); inner(cc); cc.restore(); }); };
     if (lt < 5.0) { flatDoorInside(c, lt, { lockTurn: clamp((lt - .6) / .6), underLight: 1 }); person(c, 'kuba', 540, 1780, 2.0, { t: lt, back: lt < 2.6, look: 1, duffel: true, wide: true, aR: lt > .4 && lt < 2.4 ? 1.3 : null });
       if (lt > 2.6) breathPuff(c, 560, 1780 - 2 * 250, lt); night(c, .55, [{ x: 540, y: 1400, r: 360, a: .7 }]); return; }
-    if (lt < 11.0) { peep((cc) => landing9b(cc, lt, { floor: 9, lightOff: lt > 8.0 })); return; }
-    if (lt < 14.2) { peep((cc) => { landing9b(cc, lt, { floor: 9 }); person(cc, 'obcy', 540, 3000, 6.2, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); }); return; }
+    if (lt < 11.0) { peep((cc) => stairElev(cc, lt, 9, { lightOff: lt > 8.0 })); return; }
+    if (lt < 14.2) { peep((cc) => { stairElev(cc, lt, 9, {}); person(cc, 'obcy', 540, 2480, 6.2, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); }); return; }
     if (lt < 18.6) { const l = lt - 14.2, shake = [.2, .8, 1.4].some(k => l > k && l < k + .12) ? 8 : 0; c.save(); c.translate(shake, 0);
       flatDoorInside(c, lt, { underLight: l < 3.8 ? 1 : 0, feet: true, handle: l > 2.4 ? -.55 * clamp((l - 2.4) / 1.2) : 0 }); c.restore();
       person(c, 'kuba', lerp(540, 300, clamp(l / 2)), 1840, 2.1, { t: lt, look: 1, wide: true, mouth: 'o', duffel: true });
       night(c, l < 3.8 ? .6 : .92, [{ x: 540, y: 1420, r: 300, a: .8 }]); return; }
     // ostatnie ujęcie: wizjer, oko i uśmiech patrzą prosto w widza
-    peep((cc) => { cc.fillStyle = '#05060A'; cc.fillRect(0, 0, W, H); person(cc, 'obcy', 540, 2600, 5.6, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); });
+    peep((cc) => { cc.fillStyle = '#05060A'; cc.fillRect(0, 0, W, H); person(cc, 'obcy', 540, 2350, 5.6, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); });
     if (lt > 19.2) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.2) / .4) * .85})`; c.fillRect(0, 0, W, H); }
   },
   post(c, lt) { joltFlash(c, lt, [11.0, 14.4, 18.6]);
