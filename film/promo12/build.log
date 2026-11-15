@@ -1,3 +1,7 @@
+s1         5.0s ->   8.7s
+s2         5.0s ->   4.3s
+s3         6.0s ->  10.4s
+RAZEM 23.3 s
 ok bed
 ok wind
 ok boom
@@ -17,8 +21,9 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/480 klatek, 15 s
-Gotowe w 41 s
-audio.wav OK 16 s
+300/699 klatek, 15 s
+600/699 klatek, 38 s
+Gotowe w 56 s
+audio.wav OK 23.316 s
 Gotowe: /home/user/TikTok-films/film/promo12/out/final.mp4
 EXIT 0
