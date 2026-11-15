@@ -1052,7 +1052,7 @@ scene({
 // 4. 112: Kuba siedzi pod ścianą w ciemnym przedpokoju i szeptem dzwoni
 scene({
   name: 'call', start: 30, end: 41,
-  bubbles: [sayAt(.6, 3.6, 'Numer alarmowy sto dwanaście.\nCo się stało?', 'op', 540, 1500, 0, 40), sayAt(3.8, 7.6, 'Ktoś dobija się do drzwi.\nBlok dwanaście, mieszkanie dziewięćdziesiąt cztery.', 'kuba', 400, 1160, 60, 60), sayAt(7.8, 10.8, 'Wysyłam patrol. Nie otwieraj nikomu.\nZostań na linii.', 'op', 540, 1500, 0, 40)],
+  bubbles: [sayAt(.6, 3.6, 'Numer alarmowy sto dwanaście.\nCo się stało?', 'op', 540, 1500, 0, 40), sayAt(3.8, 7.6, 'Ktoś dobija się do drzwi.\nBlok dwanaście,\nmieszkanie dziewięćdziesiąt cztery.', 'kuba', 400, 1160, 60, 60), sayAt(7.8, 10.8, 'Wysyłam patrol. Nie otwieraj nikomu.\nZostań na linii.', 'op', 540, 1500, 0, 40)],
   draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: lt < 6 }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, sit: true, look: 1, wide: true, phone: true, talk: lt > 3.8 && lt < 7.4 });
     night(c, .7, [{ x: 320, y: 1300, r: 260, a: .8 }]); callOverlay(c, lt, '112', 'połączono · ' + String(Math.floor(lt)).padStart(2, '0') + ' s', 1560); },
   post(c, lt) { if (lt < 2) label(c, 'KUBA DZWONI NA 112', 540, 300, 'yellow', 40, lt, 2 - lt); },
