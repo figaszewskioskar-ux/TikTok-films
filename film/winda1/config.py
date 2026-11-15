@@ -1,8 +1,59 @@
-"""SAM W DOMU · ODC. 1 — „Nie przytrzymuj drzwi!” (Kuba, v2). PODGLĄD BEZ LEKTORA do akceptacji."""
-PREVIEW_NO_VOICE = True
-TARGET = None
+"""SAM W DOMU · ODC. 1 — „Nie przytrzymuj drzwi!” (Kuba, v2). Lektor B + głosy postaci."""
+VOICE = 'eodmrbuYw8DsHyDR5b6f'   # lektor: Victor (ustawienia B)
+MODEL = 'eleven_multilingual_v2'
+SETTINGS = {'stability': 0.32, 'similarity_boost': 0.85, 'style': 0.55, 'use_speaker_boost': True, 'speed': 0.9}
+V3 = {'stability': 0.5, 'similarity_boost': 0.8}
+VOICES = {
+    'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3),
+    'obcy': ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
+}
+VFILTER = {'kuba': 'highpass=f=100', 'obcy': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
+VGAIN = {'obcy': 1.3}
+MAXK = 1.5
 SCENES = [('hook', 0, 5), ('ctx', 5, 12), ('code', 12, 20), ('ask', 20, 30), ('lobby', 30, 39), ('cab', 39, 49), ('ride', 49, 58), ('exit', 58, 67), ('stairs', 67, 80), ('landing', 80, 88), ('end', 88, 110)]
-SEG = []
+SEG = [
+    ['hook', 0.1, 'Jeśli w nocy ktoś prosi, żebyś przytrzymał drzwi do klatki…'],
+    ['hook', 3.1, 'nie przytrzymuj.'],
+    ['ctx', 0.3, 'Dwudziesta druga pięćdziesiąt. Kuba wraca z treningu.'],
+    ['ctx', 2.8, 'Okno na dziewiątym piętrze jest ciemne. W domu nikogo.'],
+    ['ctx', 5.0, 'Pod drzewem przy klatce ktoś stoi.'],
+    ['code', 0.4, 'Kuba wpisuje kod.'],
+    ['code', 4.3, 'Drzwi się otwierają.'],
+    ['code', 5.6, 'A w szybie… ktoś tuż za nim.'],
+    ['ask', 0.3, 'Ktoś idzie od strony drzewa.'],
+    ['ask', 2.2, '[friendly, warm] Przytrzymasz? Zapomniałem kluczy.', 'obcy'],
+    ['ask', 5.8, '[unsure] Eee… jasne.', 'kuba'],
+    ['ask', 7.6, 'Na jego kurtce ani płatka śniegu. Czekał.'],
+    ['lobby', 0.3, 'Obcy wchodzi za nim.'],
+    ['lobby', 1.8, 'Winda zjeżdża.'],
+    ['lobby', 3.2, 'On nie sprawdza skrzynki. Nie idzie schodami. Czeka.'],
+    ['lobby', 6.6, '[smiling] Ty pierwszy.', 'obcy'],
+    ['cab', 1.2, 'Kuba wciska dziewiątkę.'],
+    ['cab', 3.0, 'Obcy nie wciska nic.'],
+    ['cab', 5.4, '[smiling] Dziewiąte. Pasuje.', 'obcy'],
+    ['ride', 0.6, '[casual] Sam dziś wracasz?', 'obcy'],
+    ['ride', 3.2, '[nervous] Nie… tata czeka.', 'kuba'],
+    ['ride', 5.4, '[softly, slowly] W dziewięćdziesiątce czwórce światło się nie pali.', 'obcy'],
+    ['ride', 8.3, 'Skąd on to wie?'],
+    ['exit', 0.3, 'Kuba wciska piątkę.'],
+    ['exit', 2.2, 'Drzwi się otwierają. Kuba wyskakuje.'],
+    ['exit', 5.4, 'Obcy jedzie dalej. Na dziewiąte.'],
+    ['stairs', 0.3, 'Schodami. Szóste. Siódme.'],
+    ['stairs', 3.2, 'Kuba dzwoni do mamy.'],
+    ['stairs', 6.0, 'Nie odbiera.'],
+    ['stairs', 8.4, 'Światło gaśnie.'],
+    ['stairs', 11.0, 'I zapala się samo. Ktoś wyżej wcisnął włącznik.'],
+    ['landing', 0.4, 'Dziewiąte piętro. Pusto.'],
+    ['landing', 3.4, 'Klucz. Ręce się trzęsą.'],
+    ['landing', 6.8, 'W środku.'],
+    ['end', 0.4, 'Zamek. Łańcuch.'],
+    ['end', 2.8, 'Bezpieczny.'],
+    ['end', 5.2, 'Kuba patrzy przez wizjer. Korytarz pusty.'],
+    ['end', 8.0, 'Światło gaśnie.'],
+    ['end', 11.4, '[whispers] Dzięki, że przytrzymałeś.', 'obcy'],
+    ['end', 16.6, 'Klamka powoli idzie w dół.'],
+    ['end', 18.7, '[whispers] Otwórz.', 'obcy'],
+]
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 109.99], [-34, -34]),
