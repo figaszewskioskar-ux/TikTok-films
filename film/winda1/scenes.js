@@ -1,13 +1,19 @@
-// SAM W DOMU · ODC. 1 — „Nie wsiadaj do windy!”: 22:50, Kuba wraca z treningu. Winda zjeżdża z 9. piętra. W środku obcy.
+// SAM W DOMU · ODC. 1 — „Nie przytrzymuj drzwi!” (v2): 22:50, Kuba wraca z treningu. Obcy prosi o przytrzymanie drzwi do klatki,
+// wsiada z nim do windy i nie wciska żadnego piętra. Kuba ucieka schodami obok windy. Na końcu — twarz w wizjerze.
 window.EP = {
   badge: 'SAM W DOMU · ODC. 1',
   loop: false,
   vignette: .8,
   cues(add) {
-    add(0.2, 'stab'); add(1.0, 'click'); add(3.4, 'ding'); add(3.6, 'jolt'); add(5.2, 'whoosh'); add(5.6, 'door'); add(11.4, 'click'); add(17.6, 'ding');
-    add(19.2, 'jolt'); add(27.4, 'doors'); add(33.0, 'click'); add(37.4, 'jolt'); add(39.0, 'hit'); add(42.6, 'alarm'); add(44.2, 'ding'); add(45.4, 'doors');
-    add(55.4, 'whoosh'); add(57.0, 'run'); add(62.0, 'click'); add(64.6, 'jolt'); add(70.4, 'ding'); add(71.0, 'doors'); add(78.0, 'keys'); add(80.4, 'keys');
-    add(85.4, 'jolt'); add(92.0, 'click'); add(101.6, 'jolt');
+    add(0.2, 'stab'); add(3.0, 'door'); add(3.0, 'jolt'); add(5.0, 'whoosh');
+    add(13.0, 'beep'); add(13.8, 'beep'); add(14.6, 'beep'); add(15.4, 'beep'); add(16.2, 'alarm'); add(17.6, 'hit');
+    add(20.4, 'creak'); add(27.6, 'hit'); add(29.6, 'door');
+    add(31.0, 'click'); add(36.6, 'eding'); add(36.8, 'doors');
+    add(40.2, 'click'); add(41.0, 'doors'); add(46.8, 'hit'); add(57.2, 'jolt');
+    add(58.3, 'jolt'); add(58.6, 'click'); add(59.6, 'eding'); add(60.0, 'doors'); add(61.0, 'run'); add(62.4, 'doors');
+    add(67.2, 'run'); add(70.2, 'dial'); add(70.8, 'run'); add(74.4, 'run'); add(75.4, 'timer'); add(78.0, 'click'); add(78.0, 'jolt');
+    add(80.2, 'run'); add(83.6, 'keys'); add(85.6, 'lock'); add(86.6, 'door');
+    add(88.6, 'lock'); add(90.0, 'chain'); add(96.0, 'timer'); add(99.0, 'click'); add(99.0, 'jolt'); add(102.4, 'knock'); add(102.6, 'jolt'); add(105.0, 'handle'); add(106.6, 'jolt');
   },
 };
 const S = [];
@@ -369,7 +375,7 @@ function flatDoorInside(c, lt, o = {}) { // przedpokój Mai: drzwi z zamkiem, ł
   circ(c, 540, 760, 18, '#1B1C22'); c.strokeStyle = '#C9A15A'; c.lineWidth = 6; c.beginPath(); c.arc(540, 760, 22, 0, 7); c.stroke(); // wizjer
   fillRR(c, 680, 1000, 46, 90, 8, '#C9A15A'); circ(c, 703, 1060, 8, '#2A1A10'); // zamek
   const kr = o.lockTurn || 0; c.save(); c.translate(703, 1060); c.rotate(kr * Math.PI / 2); fillRR(c, -4, -14, 8, 28, 3, '#2A1A10'); c.restore();
-  fillRR(c, 640, 1140, 90, 26, 10, '#C9A15A'); // klamka
+  c.save(); c.translate(700, 1153); c.rotate(o.handle || 0); fillRR(c, -60, -13, 90, 26, 10, '#C9A15A'); c.restore(); circ(c, 700, 1153, 16, '#B08A48'); // klamka (o.handle = obrót)
   c.strokeStyle = '#C9CDD2'; c.lineWidth = 6; for (let i = 0; i < 6; i++) { c.beginPath(); c.ellipse(640 + i * 16, 900 + Math.sin(i / 5 * Math.PI) * 28, 9, 6, .3, 0, 7); c.stroke(); } fillRR(c, 720, 880, 26, 40, 6, '#C9CDD2'); // łańcuch założony
   fillRR(c, 820, 560, 200, 18, 6, '#5A3D26'); for (let i = 0; i < 3; i++) { fillRR(c, 840 + i * 60, 578, 10, 40, 4, '#2A2D36'); } fillRR(c, 830, 610, 70, 220, 24, '#C23A3A'); fillRR(c, 910, 610, 70, 180, 24, '#1E5AA8'); // wieszak z kurtkami
   fillRR(c, 60, 560, 200, 300, 12, '#9FB3C2'); fillRR(c, 72, 572, 176, 276, 8, '#C9D6E0'); // lustro
@@ -631,117 +637,341 @@ function landing9(c, lt, o = {}) {
 }
 
 function cabMini(c, x, y, w, h, lt, o = {}, who) { c.save(); c.translate(x + w / 2, y); c.scale(w / 760, h / 1560); c.translate(-540, -160); cabFull(c, lt, o); if (who) who(c); c.restore(); }
-// ===================== SCENY =====================
-// 0. HAK: przycisk wezwania świeci, wyświetlacz liczy w dół 9…0. Drzwi się otwierają — w środku obcy trzyma drzwi i się uśmiecha.
+
+// ===================== v2: „Nie przytrzymuj drzwi!” — nowe tła =====================
+function bricks(c, x, y, w, h) {
+  c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip(); c.fillStyle = '#4A2219'; c.fillRect(x, y, w, h);
+  const bw = 72, bh = 28; for (let r = 0; r * bh < h; r++) for (let q = -1; q * bw < w + bw; q++) { const bx = x + q * bw + (r % 2) * bw / 2, by = y + r * bh;
+    c.fillStyle = ['#7E3E2C', '#6C3324', '#8A4834', '#5E2B1F', '#764030'][Math.floor(hash(r * 31 + q * 7) * 5)]; c.fillRect(bx + 3, by + 3, bw - 6, bh - 6); }
+  c.restore();
+}
+// drzwi windy v2: ościeżnica w trzech warstwach, szczotkowana stal, refleks, odciski palców, naklejka, listwa, próg z rowkami,
+// wyświetlacz ze strzałką, panel wezwania ▲▼ z Braille’em, tabliczka pożarowa, udźwig
+function elevDoor2(c, lt, x, y, w, h, o = {}) {
+  fillRR(c, x - 64, y - 200, w + 128, h + 200, 4, '#B4AD9B');
+  for (let i = 1; i < 7; i++) { c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(x - 64, y - 200 + i * (h + 200) / 7, w + 128, 2); }
+  c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(x + w / 2 - 1, y - 200, 2, 180);
+  fillRR(c, x - 30, y - 30, w + 60, h + 30, 4, '#5E6670'); fillRR(c, x - 22, y - 22, w + 44, h + 22, 3, '#AEB6BF'); fillRR(c, x - 8, y - 8, w + 16, h + 8, 2, '#6E7680');
+  const p = o.open || 0, dw = w / 2 * (1 - p);
+  c.fillStyle = '#14161B'; c.fillRect(x, y, w, h);
+  if (p > 0) { c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip(); if (o.inCab) o.inCab(c, x, y, w, h); else { c.fillStyle = '#C8C4B4'; c.fillRect(x, y, w, h); } c.restore(); }
+  c.save(); c.beginPath(); c.rect(x, y, dw, h); c.rect(x + w - dw, y, dw, h); c.clip();
+  const g = c.createLinearGradient(x, 0, x + w, 0); g.addColorStop(0, '#949CA6'); g.addColorStop(.3, '#C6CDD4'); g.addColorStop(.5, '#D9DEE3'); g.addColorStop(.7, '#C0C7CE'); g.addColorStop(1, '#8E96A0');
+  c.fillStyle = g; c.fillRect(x, y, w, h);
+  c.strokeStyle = 'rgba(255,255,255,.09)'; c.lineWidth = 1; for (let k = 0; k < w; k += 4) { c.beginPath(); c.moveTo(x + k, y); c.lineTo(x + k, y + h); c.stroke(); }
+  c.fillStyle = 'rgba(255,255,255,.14)'; c.beginPath(); c.moveTo(x + w * .18, y); c.lineTo(x + w * .34, y); c.lineTo(x + w * .08, y + h); c.lineTo(x - w * .08, y + h); c.fill();
+  for (let i = 0; i < 9; i++) ell(c, x + w / 2 + (hash(i + 11) - .5) * w * .7, y + h * .42 + hash(i + 12) * h * .22, 9, 13, 'rgba(80,70,60,.13)');
+  c.strokeStyle = 'rgba(70,76,86,.35)'; c.lineWidth = 2; for (let i = 0; i < 6; i++) { const sx = x + hash(i + 70) * w, sy = y + h * .6 + hash(i) * h * .3; c.beginPath(); c.moveTo(sx, sy); c.lineTo(sx + 22, sy + 30); c.stroke(); }
+  c.restore();
+  if (dw > 60) { const sx = x + dw - 50; c.fillStyle = '#F5C542'; c.beginPath(); c.moveTo(sx, y + 360); c.lineTo(sx + 36, y + 360); c.lineTo(sx + 18, y + 328); c.fill(); txt(c, '!', sx + 18, y + 350, 18, '#14161B', 900); }
+  if (dw > 2) { c.fillStyle = '#23262E'; c.fillRect(x + dw - 6, y, 6, h); c.fillRect(x + w - dw, y, 6, h); }
+  // próg z rowkami
+  fillRR(c, x - 24, y + h - 6, w + 48, 24, 2, '#B8BEC5'); c.fillStyle = '#7D858E'; for (let i = 0; i < (w + 40) / 12; i++) c.fillRect(x - 18 + i * 12, y + h + 2, 5, 12);
+  if (p > 0 && !o.dark) { c.save(); c.globalCompositeOperation = 'lighter'; c.globalAlpha = .5 * p; const lg = c.createLinearGradient(0, y + h, 0, y + h + 360); lg.addColorStop(0, 'rgba(255,248,225,.55)'); lg.addColorStop(1, 'rgba(255,248,225,0)'); c.fillStyle = lg; c.beginPath(); c.moveTo(x, y + h + 10); c.lineTo(x + w, y + h + 10); c.lineTo(x + w + 140, y + h + 360); c.lineTo(x - 140, y + h + 360); c.fill(); c.restore(); }
+  // wyświetlacz nad drzwiami
+  const dx = x + w / 2; fillRR(c, dx - 92, y - 156, 184, 96, 10, '#3A3F4C'); fillRR(c, dx - 82, y - 146, 164, 76, 6, '#07080B');
+  c.save(); c.shadowColor = '#FF3B30'; c.shadowBlur = 16; txt(c, String(o.floor ?? 0), dx + 24, y - 106, 54, '#FF3B30', 900);
+  if (o.dir) { c.fillStyle = '#FF3B30'; c.beginPath(); if (o.dir < 0) { c.moveTo(dx - 58, y - 122); c.lineTo(dx - 26, y - 122); c.lineTo(dx - 42, y - 92); } else { c.moveTo(dx - 58, y - 94); c.lineTo(dx - 26, y - 94); c.lineTo(dx - 42, y - 124); } c.fill(); }
+  c.restore();
+  // tabliczka udźwigu na ościeżnicy
+  fillRR(c, dx - 60, y - 52, 120, 26, 3, '#E8E4DA'); txt(c, 'UDŹWIG 630 kg · 8 OSÓB', dx, y - 39, 11, '#14161B', 900);
+  // panel wezwania
+  const px = o.panelLeft ? x - 64 - 40 : x + w + 64 + 40, py = y + 300;
+  fillRR(c, px - 34, py, 68, 190, 8, '#6E7680'); fillRR(c, px - 27, py + 7, 54, 176, 6, '#B3BAC2');
+  for (const [k, dir] of [[0, 1], [1, -1]]) { const by = py + 50 + k * 80, lit = o.called && (o.called === dir || o.called === true);
+    c.save(); if (lit) { c.shadowColor = '#FFB020'; c.shadowBlur = 22; } circ(c, px, by, 20, lit ? '#FFB020' : '#8C939C'); c.restore(); circ(c, px, by, 15, lit ? '#FFD27A' : '#D4D7DC');
+    c.fillStyle = '#2A2D36'; c.beginPath(); if (dir > 0) { c.moveTo(px - 7, by + 5); c.lineTo(px + 7, by + 5); c.lineTo(px, by - 7); } else { c.moveTo(px - 7, by - 5); c.lineTo(px + 7, by - 5); c.lineTo(px, by + 7); } c.fill();
+    for (let d = 0; d < 3; d++) circ(c, px + 22, by - 6 + d * 6, 1.6, '#2A2D36'); }
+  fillRR(c, px - 30, py - 130, 60, 112, 4, '#FFFFFF'); c.strokeStyle = '#C23A3A'; c.lineWidth = 4; c.strokeRect(px - 26, py - 126, 52, 104);
+  txt(c, 'W RAZIE', px, py - 106, 9, '#C23A3A', 900); txt(c, 'POŻARU', px, py - 92, 9, '#C23A3A', 900); txt(c, '🔥', px, py - 66, 20, '#C23A3A', 900); txt(c, 'NIE UŻYWAĆ', px, py - 38, 8, '#14161B', 900);
+}
+// okno nocą z widokiem na blok naprzeciwko i śnieg
+function nightWindow(c, lt, x, y, w, h, seed = 0) {
+  fillRR(c, x - 16, y - 16, w + 32, h + 32, 4, '#E8E4DA'); c.fillStyle = '#081022'; c.fillRect(x, y, w, h);
+  c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip();
+  c.fillStyle = '#1A2238'; c.fillRect(x + w * .12, y + h * .25, w * .8, h); for (let r = 0; r < 6; r++) for (let q = 0; q < 5; q++) fillRR(c, x + w * .16 + q * w * .15, y + h * .3 + r * h * .13, w * .09, h * .07, 2, hash(r * 5 + q + seed) > .62 ? '#E8B860' : '#121A2C');
+  for (let k = 0; k < 16; k++) circ(c, x + hash(k + seed) * w, y + ((hash(k + 3) * h + lt * 55) % h), 2.2, 'rgba(235,240,255,.8)');
+  c.restore(); c.strokeStyle = '#E8E4DA'; c.lineWidth = 12; c.beginPath(); c.moveTo(x + w / 2, y); c.lineTo(x + w / 2, y + h); c.moveTo(x, y + h * .32); c.lineTo(x + w, y + h * .32); c.stroke();
+  fillRR(c, x - 30, y + h + 14, w + 60, 18, 4, '#CFC8B4'); for (let i = 0; i < 3; i++) ell(c, x + w * (.2 + i * .3), y + h + 10, 30, 8, 'rgba(255,255,255,.9)');
+}
+function timerSwitch(c, x, y, glow = 1) { fillRR(c, x, y, 58, 78, 8, '#E8E4DA'); fillRR(c, x + 12, y + 12, 34, 54, 6, '#D6D1C2'); c.save(); c.shadowColor = '#FF9A2A'; c.shadowBlur = 18 * glow; circ(c, x + 29, y + 52, 6, glow ? '#FF9A2A' : '#7A4A20'); c.restore(); txt(c, '⏱', x + 29, y + 30, 16, '#8C8676', 900); }
+// KLATKA: winda tuż obok schodów, w jednym kadrze. Schody z lastryka, poręcz z tralkami, lamperia po skosie, okno na półpiętrze,
+// hydrant pod biegiem, skrzynka elektryczna, wyłącznik czasowy, numer piętra na ścianie
+const SFY = 1400, SX0 = 440, SRUN = 60, SRISE = 64, SN = 10;
+function stairFootY(x) { const i = clamp(Math.floor((x - SX0) / SRUN), -1, SN - 1); return i < 0 ? SFY : SFY - (i + 1) * SRISE; }
+function stairElev(c, lt, floor, o = {}) {
+  const sl = SRISE / SRUN, topX = SX0 + SN * SRUN, topY = SFY - SN * SRISE;
+  c.fillStyle = '#D8D2BE'; c.fillRect(0, 0, W, SFY);
+  c.fillStyle = '#C6BFA8'; c.fillRect(0, 0, W, 54); c.fillStyle = 'rgba(0,0,0,.12)'; c.fillRect(0, 54, W, 4);
+  // lamperia: pozioma przy windzie, ukośna wzdłuż schodów
+  const LH = 560; c.fillStyle = '#3F6B55'; c.beginPath(); c.moveTo(0, SFY - LH); c.lineTo(SX0, SFY - LH); c.lineTo(topX, topY - LH); c.lineTo(W, topY - LH); c.lineTo(W, SFY); c.lineTo(0, SFY); c.fill();
+  c.strokeStyle = '#2C4F3E'; c.lineWidth = 10; c.beginPath(); c.moveTo(0, SFY - LH); c.lineTo(SX0, SFY - LH); c.lineTo(topX, topY - LH); c.lineTo(W, topY - LH); c.stroke();
+  for (let i = 0; i < 22; i++) { const px = hash(i + 3) * W, py = SFY - 60 - hash(i + 7) * 420; c.fillStyle = 'rgba(230,225,210,.3)'; c.beginPath(); c.ellipse(px, py, 4 + hash(i) * 10, 3 + hash(i + 1) * 6, hash(i + 2), 0, 7); c.fill(); }
+  c.strokeStyle = 'rgba(60,50,40,.16)'; c.lineWidth = 2; for (let i = 0; i < 8; i++) { const px = hash(i + 40) * W, py = 90 + hash(i + 50) * 400; c.beginPath(); c.moveTo(px, py); c.lineTo(px + 30 + hash(i) * 50, py + hash(i + 9) * 14); c.lineTo(px + 50 + hash(i) * 60, py + 20); c.stroke(); }
+  // numer piętra malowany na ścianie
+  txt(c, floor === 0 ? 'P' : String(floor), 160, 370, 100, 'rgba(40,60,50,.55)', 900); txt(c, floor === 0 ? 'PARTER' : 'PIĘTRO', 160, 440, 26, 'rgba(40,60,50,.55)', 900);
+  // okno na półpiętrze
+  nightWindow(c, lt, 770, 150, 250, 330, floor);
+  // skrzynka elektryczna nad poręczą
+  fillRR(c, 520, 470, 150, 190, 6, '#8C939C'); fillRR(c, 530, 480, 130, 170, 4, '#9EA5AD'); txt(c, '⚡', 595, 540, 40, '#F5C542', 900); fillRR(c, 640, 560, 10, 30, 3, '#5E6670'); txt(c, 'NIE DOTYKAĆ', 595, 620, 11, '#C23A3A', 900);
+  // bieg schodów: bryła, spód, stopnie
+  c.fillStyle = '#B3AC97'; c.beginPath(); c.moveTo(SX0, SFY);
+  for (let i = 0; i < SN; i++) { c.lineTo(SX0 + i * SRUN, SFY - (i + 1) * SRISE); c.lineTo(SX0 + (i + 1) * SRUN, SFY - (i + 1) * SRISE); }
+  c.lineTo(W, topY); c.lineTo(W, topY + 150); const uy = (x) => SFY + 150 - (x - SX0) * sl; c.lineTo(W, Math.max(topY + 150, uy(W))); c.lineTo(SX0 + 150 / sl, SFY); c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 8; c.beginPath(); c.moveTo(SX0 + 150 / sl, SFY); c.lineTo(topX, uy(topX)); c.lineTo(W, uy(topX)); c.stroke();
+  for (let i = 0; i < SN; i++) { const sx = SX0 + i * SRUN, sy = SFY - (i + 1) * SRISE;
+    fillRR(c, sx - 4, sy - 12, SRUN + 8, 16, 3, '#A49C88'); for (let k = 0; k < 5; k++) circ(c, sx + hash(i * 9 + k) * SRUN, sy - 6 + hash(k + i) * 6, 2, ['#D1C7B0', '#6E6658'][k % 2]);
+    c.fillStyle = '#4E4A40'; c.fillRect(sx - 4, sy + 2, SRUN + 8, 5); c.fillStyle = 'rgba(0,0,0,.14)'; c.fillRect(sx, sy + 7, 10, SRISE - 7); }
+  fillRR(c, topX - 4, topY - 12, W - topX + 10, 16, 3, '#A49C88');
+  // hydrant pod biegiem
+  fillRR(c, 860, 1160, 150, 220, 6, '#C23A3A'); fillRR(c, 872, 1172, 126, 196, 4, '#D94A4A'); c.strokeStyle = '#F2F2EE'; c.lineWidth = 5; c.beginPath(); c.arc(935, 1270, 38, 0, 7); c.stroke(); c.beginPath(); c.arc(935, 1270, 22, 0, 7); c.stroke();
+  txt(c, 'HYDRANT', 935, 1195, 16, '#FFFFFF', 900); fillRR(c, 980, 1250, 10, 40, 3, '#8A2020');
+  // poręcz: tralki + drewniany pochwyt + słupek z zawijasem
+  c.strokeStyle = '#23262E'; c.lineWidth = 6; for (let i = 0; i < SN; i++) { const bx = SX0 + i * SRUN + SRUN / 2, by = SFY - (i + 1) * SRISE - 8; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx, by - 230); c.stroke(); }
+  for (let bx = topX + 30; bx < W; bx += 60) { c.beginPath(); c.moveTo(bx, topY - 8); c.lineTo(bx, topY - 238); c.stroke(); }
+  c.lineWidth = 4; c.beginPath(); c.moveTo(SX0, SFY - 100); c.lineTo(topX, topY - 100); c.lineTo(W, topY - 100); c.stroke();
+  c.strokeStyle = '#6B4A2F'; c.lineWidth = 18; c.lineCap = 'round'; c.beginPath(); c.moveTo(SX0 - 10, SFY - 250); c.lineTo(topX, topY - 246); c.lineTo(W + 20, topY - 246); c.stroke();
+  c.strokeStyle = 'rgba(255,220,170,.25)'; c.lineWidth = 5; c.beginPath(); c.moveTo(SX0 - 10, SFY - 256); c.lineTo(topX, topY - 252); c.lineTo(W + 20, topY - 252); c.stroke(); c.lineCap = 'butt';
+  fillRR(c, SX0 - 22, SFY - 270, 22, 270, 4, '#23262E'); c.strokeStyle = '#6B4A2F'; c.lineWidth = 14; c.beginPath(); c.arc(SX0 - 26, SFY - 238, 16, -1.6, 2.6); c.stroke();
+  // podłoga
+  terrazzo(c, 0, SFY, W, H - SFY); c.fillStyle = '#3A3A34'; c.fillRect(0, SFY - 14, SX0, 14);
+  // winda — tuż obok schodów
+  elevDoor2(c, lt, 50, 640, 220, 760, { open: o.elevOpen || 0, floor: o.elevFloor ?? floor, dir: o.dir, called: o.called, inCab: o.inCab });
+  timerSwitch(c, 6, 980, o.switchGlow ?? 1);
+  if (o.lightOff) { c.fillStyle = 'rgba(2,3,8,.88)'; c.fillRect(0, 0, W, H);
+    c.save(); c.shadowColor = '#FF9A2A'; c.shadowBlur = 30; circ(c, 35, 1032, 7, '#FF9A2A'); c.shadowColor = '#FF3B30'; c.shadowBlur = 24; txt(c, String(o.elevFloor ?? floor), 184, 534, 54, '#FF3B30', 900); c.restore();
+    c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(160, 520, 10, 160, 520, 320); g.addColorStop(0, 'rgba(255,60,40,.22)'); g.addColorStop(1, 'rgba(255,60,40,0)'); c.fillStyle = g; c.fillRect(0, 200, 600, 700); c.restore();
+    const wg = c.createRadialGradient(895, 315, 20, 895, 315, 300); wg.addColorStop(0, 'rgba(120,150,210,.18)'); wg.addColorStop(1, 'rgba(120,150,210,0)'); c.fillStyle = wg; c.fillRect(600, 0, 480, 700);
+  } else cageLamp(c, 540, 40, lt, 1, o.flick);
+}
+// PARTER: winda obok schodów + skrzynki pocztowe, tablica ogłoszeń, drzwi wejściowe z boku
+function lobbyStairs(c, lt, o = {}) {
+  stairElev(c, lt, 0, Object.assign({ lightOff: false }, o));
+  // tablica ogłoszeń nad skrzynką elektryczną zamiast niej
+  fillRR(c, 500, 420, 200, 250, 6, '#B8875A'); [['PRZEGLĄD WINDY', '12.11'], ['ZAGINĄŁ KOT', '„Pączek”'], ['ZEBRANIE', '20.11'], ['NIE WPUSZCZAĆ', 'OBCYCH!']].forEach(([a, b], i) => {
+    c.save(); c.translate(512 + (i % 2) * 94, 434 + Math.floor(i / 2) * 116); c.rotate((hash(i + 5) - .5) * .14); fillRR(c, 0, 0, 86, 100, 3, ['#FFFFFF', '#F5E07A', '#CDE6F5', '#FFD0D0'][i]); txt(c, a, 43, 34, 9, i === 3 ? '#C23A3A' : '#14161B', 900); txt(c, b, 43, 60, 10, '#3A3F4C', 800); circ(c, 43, 7, 4, '#D7263D'); c.restore(); });
+  if (o.lightOff) { c.fillStyle = 'rgba(2,3,8,.88)'; c.fillRect(0, 0, W, H); }
+}
+// WEJŚCIE DO BLOKU z bliska: cegła, daszek ze śniegiem, drzwi z siatką w szybie (otwierane do nas), domofon z klawiaturą, numer, stopnie, ślady
+function entranceFull(c, lt, o = {}) {
+  c.fillStyle = '#2E3550'; c.fillRect(0, 0, W, 560);
+  for (const [wx, on] of [[40, 1], [820, 0]]) { fillRR(c, wx, 110, 220, 300, 4, '#D8D2BE'); fillRR(c, wx + 14, 124, 192, 272, 2, on ? '#E8B860' : '#121A2C'); if (on) { c.fillStyle = 'rgba(160,60,50,.55)'; c.fillRect(wx + 14, 124, 50, 272); c.fillRect(wx + 156, 124, 50, 272); } c.fillStyle = '#D8D2BE'; c.fillRect(wx + 106, 124, 8, 272); fillRR(c, wx - 10, 404, 240, 16, 3, '#CFC8B4'); ell(c, wx + 110, 400, 100, 9, 'rgba(255,255,255,.9)'); }
+  bricks(c, 0, 560, W, 900);
+  // daszek ze śniegiem i lampą
+  fillRR(c, 200, 560, 680, 70, 4, '#9A9484'); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(200, 626, 680, 8); for (let i = 0; i < 14; i++) ell(c, 210 + i * 50, 556, 34, 16, '#EEF2F8');
+  fillRR(c, 500, 640, 80, 26, 8, '#DDE3E8'); c.save(); c.globalCompositeOperation = 'lighter'; const lg = c.createRadialGradient(540, 660, 10, 540, 1000, 700); lg.addColorStop(0, 'rgba(255,236,190,.5)'); lg.addColorStop(1, 'rgba(255,236,190,0)'); c.fillStyle = lg; c.fillRect(0, 600, W, 1300); c.restore();
+  // drzwi: rama aluminiowa, skrzydło z siatką w szybie, naświetle
+  const dx = 300, dy = 690, dw = 300, dh = 770; fillRR(c, dx - 26, dy - 26, 460, dh + 26, 4, '#2E3440');
+  const inside = (cc, x0, y0, w0, h0) => { cc.save(); cc.beginPath(); cc.rect(x0, y0, w0, h0); cc.clip(); cc.fillStyle = '#D8D2BE'; cc.fillRect(x0, y0, w0, h0); cc.fillStyle = '#3F6B55'; cc.fillRect(x0, y0 + h0 * .55, w0, h0); fillRR(cc, x0 + 30, y0 + h0 * .2, 160, 150, 4, '#6E7680'); for (let r = 0; r < 3; r++) for (let q = 0; q < 3; q++) fillRR(cc, x0 + 38 + q * 50, y0 + h0 * .2 + 8 + r * 46, 44, 40, 2, '#8C939C'); cc.fillStyle = '#8E8676'; cc.fillRect(x0, y0 + h0 * .9, w0, h0); cc.restore(); };
+  inside(c, dx, dy, 410, dh);
+  const p = o.doorOpen || 0, th = p * 1.25, L = dw * Math.cos(th), e = 70 * Math.sin(th);
+  c.fillStyle = '#3A4150'; c.beginPath(); c.moveTo(dx, dy); c.lineTo(dx + L, dy - e); c.lineTo(dx + L, dy + dh + e); c.lineTo(dx, dy + dh); c.fill();
+  if (L > 40) { const gx = dx + L * .1, gw = L * .8, gy = dy + 50, gh = dh * .55;
+    c.save(); c.beginPath(); c.moveTo(gx, gy - e * .1); c.lineTo(gx + gw, gy - e * .9); c.lineTo(gx + gw, gy + gh + e * .9); c.lineTo(gx, gy + gh + e * .1); c.clip();
+    if (p < .05) inside(c, gx, gy, gw, gh); else { c.fillStyle = 'rgba(40,46,66,.9)'; c.fillRect(gx, gy - e, gw, gh + 2 * e); }
+    if (o.reflect) { c.globalAlpha = o.reflect; person(c, 'obcy', gx + gw * .7, gy + gh + 80, 1.1, { t: lt, still: true, mouth: 'grin' }); c.globalAlpha = 1; }
+    c.strokeStyle = 'rgba(200,210,220,.4)'; c.lineWidth = 2; for (let i = -12; i < 14; i++) { c.beginPath(); c.moveTo(gx + i * 22, gy - e); c.lineTo(gx + i * 22 + gh, gy + gh + e); c.moveTo(gx + i * 22, gy - e); c.lineTo(gx + i * 22 - gh, gy + gh + e); c.stroke(); }
+    c.restore(); fillRR(c, dx + L - 40, dy + dh * .58, 16, 120, 8, '#C9CDD2'); }
+  // stałe skrzydło boczne
+  fillRR(c, dx + 310, dy, 100, dh, 2, '#3A4150'); c.save(); c.beginPath(); c.rect(dx + 322, dy + 50, 76, dh * .55); c.clip(); inside(c, dx + 322, dy + 50, 76, dh * .55); c.strokeStyle = 'rgba(200,210,220,.4)'; c.lineWidth = 2; for (let i = -6; i < 8; i++) { c.beginPath(); c.moveTo(dx + 322 + i * 22, dy + 50); c.lineTo(dx + 322 + i * 22 + 400, dy + 450); c.stroke(); } c.restore();
+  // numer i tabliczka klatki
+  fillRR(c, 720, 720, 120, 60, 6, '#2F5DA8'); txt(c, '12', 780, 750, 34, '#FFFFFF', 900); fillRR(c, 720, 790, 120, 40, 4, '#E8E4DA'); txt(c, 'm. 81–120', 780, 810, 16, '#14161B', 900);
+  // domofon z klawiaturą
+  const ix = 790, iy = 900; fillRR(c, ix - 6, iy - 6, 132, 262, 10, '#5E6670'); fillRR(c, ix, iy, 120, 250, 8, '#B3BAC2'); fillRR(c, ix + 12, iy + 12, 96, 40, 4, '#0E2A1A'); txt(c, o.lcd || 'KOD', ix + 60, iy + 33, 18, '#6CFF9A', 900);
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '🔔']; keys.forEach((k, i) => { const kx = ix + 24 + (i % 3) * 36, ky = iy + 76 + Math.floor(i / 3) * 34; circ(c, kx, ky, 14, o.press === k ? '#6CFF9A' : '#D4D7DC'); txt(c, k, kx, ky + 1, 13, '#14161B', 900); });
+  circ(c, ix + 60, iy + 222, 14, '#2A2D36'); c.strokeStyle = '#6CFF9A'; c.lineWidth = 2; c.beginPath(); c.arc(ix + 60, iy + 222, 9, 0, 7); c.stroke();
+  // stopnie, śnieg, ślady butów, rower, kosze
+  fillRR(c, 220, 1460, 640, 40, 3, '#8C8676'); fillRR(c, 180, 1500, 720, 44, 3, '#7A7466'); c.fillStyle = '#E4EAF2'; c.fillRect(0, 1544, W, H - 1544); for (let i = 0; i < 16; i++) ell(c, hash(i + 70) * W, 1550, 50 + hash(i) * 60, 12, '#F2F5FA');
+  for (let i = 0; i < 8; i++) ell(c, 520 + (i % 2) * 50 + Math.sin(i) * 20, 1880 - i * 46, 18, 9, 'rgba(90,100,130,.35)');
+  c.strokeStyle = '#1E222C'; c.lineWidth = 8; c.beginPath(); c.arc(80, 1600, 60, 0, 7); c.stroke(); c.beginPath(); c.arc(230, 1600, 60, 0, 7); c.stroke(); c.beginPath(); c.moveTo(80, 1600); c.lineTo(150, 1520); c.lineTo(230, 1600); c.moveTo(150, 1520); c.lineTo(200, 1510); c.stroke(); ell(c, 150, 1500, 30, 8, '#F2F5FA');
+  fillRR(c, 930, 1330, 140, 220, 10, '#2E6B3F'); fillRR(c, 920, 1310, 160, 30, 8, '#245633'); ell(c, 1000, 1306, 76, 12, '#F2F5FA');
+}
+// zbliżenie: domofon z klawiaturą zajmuje kadr, z lewej szyba drzwi — odbija się w niej sylwetka za plecami
+function keypadClose(c, lt, o = {}) {
+  bricks(c, 0, 0, W, H);
+  c.fillStyle = '#2E3440'; c.fillRect(0, 0, 300, H); c.fillStyle = '#1A2034'; c.fillRect(30, 0, 250, H);
+  c.save(); c.beginPath(); c.rect(30, 0, 250, H); c.clip();
+  if (o.fig) { c.globalAlpha = o.fig * .7; person(c, 'obcy', 150, 1900, 3.2 + o.fig * .6, { t: lt, still: true, mouth: o.grin ? 'grin' : null }); c.globalAlpha = 1; }
+  c.fillStyle = 'rgba(140,160,200,.12)'; c.beginPath(); c.moveTo(60, 0); c.lineTo(160, 0); c.lineTo(40, H); c.lineTo(-60, H); c.fill();
+  c.strokeStyle = 'rgba(200,210,220,.35)'; c.lineWidth = 3; for (let i = -40; i < 40; i++) { c.beginPath(); c.moveTo(30 + i * 40, 0); c.lineTo(30 + i * 40 + H, H); c.moveTo(30 + i * 40, 0); c.lineTo(30 + i * 40 - H, H); c.stroke(); }
+  c.restore();
+  const ix = 400, iy = 260, iw = 560, ih = 1340; fillRR(c, ix - 20, iy - 20, iw + 40, ih + 40, 30, '#5E6670'); fillRR(c, ix, iy, iw, ih, 24, '#B3BAC2');
+  c.strokeStyle = 'rgba(255,255,255,.12)'; c.lineWidth = 1; for (let k = 0; k < iw; k += 5) { c.beginPath(); c.moveTo(ix + k, iy); c.lineTo(ix + k, iy + ih); c.stroke(); }
+  for (let i = 0; i < 5; i++) for (let j = 0; j < 9; j++) circ(c, ix + 120 + j * 40, iy + 70 + i * 30, 6, '#5E6670');
+  fillRR(c, ix + 60, iy + 240, iw - 120, 160, 12, '#0E2A1A'); c.save(); c.shadowColor = '#6CFF9A'; c.shadowBlur = 18; txt(c, o.lcd || 'WPISZ KOD', ix + iw / 2, iy + 320, 60, '#6CFF9A', 900); c.restore();
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '🔔']; keys.forEach((k, i) => { const kx = ix + 130 + (i % 3) * 150, ky = iy + 520 + Math.floor(i / 3) * 150, pr = o.press === k;
+    circ(c, kx, ky + 6, 58, '#6E7680'); circ(c, kx, ky + (pr ? 6 : 0), 54, pr ? '#9CFFBE' : '#E2E5E9'); txt(c, k, kx, ky + (pr ? 7 : 1), 50, '#14161B', 900); });
+  circ(c, ix + iw / 2, iy + 1200, 60, '#2A2D36'); c.strokeStyle = '#6CFF9A'; c.lineWidth = 6; c.beginPath(); c.arc(ix + iw / 2, iy + 1200, 38, 0, 7); c.stroke(); txt(c, 'BRELOK', ix + iw / 2, iy + 1290, 22, '#3A3F4C', 900);
+  txt(c, 'DOMOFON · KLATKA 12', ix + iw / 2, iy + 200, 26, '#3A3F4C', 900);
+}
+// 9. PIĘTRO v2: winda (lewo), drzwi 94 z wycieraczką, 95, schody w dół przy prawej krawędzi, okienko, włącznik
+function landing9b(c, lt, o = {}) {
+  c.fillStyle = '#D8D2BE'; c.fillRect(0, 0, W, 1400); c.fillStyle = '#C6BFA8'; c.fillRect(0, 0, W, 54);
+  c.fillStyle = '#3F6B55'; c.fillRect(0, 840, W, 560); c.fillStyle = '#2C4F3E'; c.fillRect(0, 840, W, 10);
+  for (let i = 0; i < 18; i++) { c.fillStyle = 'rgba(230,225,210,.3)'; c.beginPath(); c.ellipse(hash(i + 3) * W, 880 + hash(i + 7) * 480, 4 + hash(i) * 9, 3 + hash(i + 1) * 5, hash(i + 2), 0, 7); c.fill(); }
+  txt(c, '9', 540, 210, 120, 'rgba(40,60,50,.55)', 900); txt(c, 'PIĘTRO', 540, 300, 28, 'rgba(40,60,50,.55)', 900);
+  terrazzo(c, 0, 1400, W, 520);
+  elevDoor2(c, lt, 50, 640, 220, 760, { open: o.elevOpen || 0, floor: o.floor ?? 9, inCab: o.inCab, dark: o.cabDark });
+  timerSwitch(c, 6, 980, o.switchGlow ?? 1);
+  quilted(c, 500, 560, 290, 840, '#6B4A2F', '#583B24', '#C9A15A', 60); c.strokeStyle = '#3A2818'; c.lineWidth = 12; c.strokeRect(500, 560, 290, 840);
+  fillRR(c, 605, 600, 80, 44, 22, '#C9A15A'); txt(c, '94', 645, 623, 26, '#3A2A1A', 900); circ(c, 645, 720, 12, '#1B1C22'); c.strokeStyle = '#C9A15A'; c.lineWidth = 4; c.beginPath(); c.arc(645, 720, 16, 0, 7); c.stroke();
+  fillRR(c, 730, 980, 38, 70, 6, '#C9A15A'); circ(c, 749, 1030, 6, '#2A1A10'); fillRR(c, 720, 1090, 60, 18, 8, '#C9A15A');
+  fillRR(c, 500, 1404, 290, 46, 8, '#7A5634'); txt(c, 'WITAMY', 645, 1428, 22, '#C9A15A', 900);
+  fillRR(c, 820, 700, 70, 90, 4, '#FFFFFF'); txt(c, 'DZWONEK', 855, 724, 10, '#14161B', 900); circ(c, 855, 760, 12, '#E8E4DA');
+  // schody w dół przy prawej krawędzi
+  c.fillStyle = '#8E8676'; c.fillRect(900, 1400, 180, 520); for (let i = 0; i < 8; i++) { const sy = 1400 + i * 64, sx = 900 + i * 40; fillRR(c, sx, sy, W - sx, 14, 3, '#A49C88'); c.fillStyle = '#6E6658'; c.fillRect(sx, sy + 14, W - sx, 50); }
+  c.strokeStyle = '#23262E'; c.lineWidth = 6; for (let i = 0; i < 6; i++) { const bx = 920 + i * 40, by = 1400 + i * 64; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx, by - 230); c.stroke(); }
+  c.strokeStyle = '#6B4A2F'; c.lineWidth = 18; c.lineCap = 'round'; c.beginPath(); c.moveTo(880, 1150); c.lineTo(1120, 1150 + 240 * 1.6); c.stroke(); c.lineCap = 'butt';
+  fillRR(c, 870, 1150, 20, 250, 4, '#23262E');
+  if (o.lightOff) { c.fillStyle = 'rgba(2,3,8,.9)'; c.fillRect(0, 0, W, H); c.save(); c.shadowColor = '#FF9A2A'; c.shadowBlur = 30; circ(c, 35, 1032, 7, '#FF9A2A'); c.shadowColor = '#FF3B30'; c.shadowBlur = 24; txt(c, String(o.floor ?? 9), 184, 534, 54, '#FF3B30', 900); c.restore(); }
+  else cageLamp(c, 540, 40, lt, 1, o.flick);
+}
+
+// ===================== SCENY v2 =====================
+// 0. HAK: od środka klatki — drzwi wejściowe się domykają, w szparze pojawia się czyjaś dłoń i blokuje je. W szparze uśmiech.
 scene({
-  name: 'hook', start: 0, end: 5, cam: jolt([3.6]),
+  name: 'hook', start: 0, end: 5, cam: jolt([3.0]),
   draw(c, lt) {
-    const fl = Math.max(0, 9 - Math.floor(lt / 3.3 * 10));
-    stairWall(c, 0, 0, W, H, 1100); terrazzo(c, 0, 1500, W, 420);
-    c.save(); c.translate(540, 1000); c.scale(1.35, 1.35); c.translate(-540, -1000);
-    elevDoor(c, lt, 390, 520, 300, 880, { open: lt > 3.4 ? clamp((lt - 3.4) / .5) : 0, floor: fl, dir: lt < 3.3 ? -1 : 0, called: lt > .9, inCab: (cc, x, y, w, h) => { cabMini(cc, x, y, w, h, lt, { floor: 0 }); person(cc, 'sasiad', x + w / 2, y + h - 10, 2.2, { t: lt, mouth: 'grin', look: 0, aR: 1.5, still: true }); } });
-    c.restore();
-    night(c, .5, [{ x: 540, y: 1000, r: 620, a: .9 }]);
-    bigSign(c, lt, 'NIE WSIADAJ', 'DO WINDY!', 1640);
+    const gap = lt < 3.0 ? lerp(330, 96, eout(clamp(lt / 3.0))) : 96 + Math.sin(lt * 30) * 3 * clamp(1 - (lt - 3) * 2), gl = 380, gr = gl + gap;
+    // zewnątrz za drzwiami: noc, śnieg, lampa nad wejściem
+    c.fillStyle = '#0E1428'; c.fillRect(380, 260, 560, 1460); c.save(); c.beginPath(); c.rect(380, 260, 560, 1460); c.clip(); snowfall(c, lt, 60, .8); c.fillStyle = '#DCE4EE'; c.fillRect(380, 1560, 560, 160);
+    if (lt > 2.6) person(c, 'obcy', gl + 60, 2050, 3.4, { t: lt, mouth: 'grin', look: -1, still: true, wide: true });
+    hand(c, gl + 8, 1020, 0.08, KINDS.obcy); c.restore();
+    // wnętrze: ściana klatki z lamperią, kaloryfer, skrzynki
+    stairWall(c, 0, 0, 380, H, 1000); stairWall(c, 940, 0, 140, H, 1000); fillRR(c, 40, 1200, 260, 200, 8, '#E8E4DA'); for (let i = 0; i < 8; i++) fillRR(c, 50 + i * 30, 1210, 20, 180, 6, '#D6D1C2');
+    fillRR(c, 360, 240, 600, 30, 2, '#2E3440'); fillRR(c, 360, 240, 22, 1500, 2, '#2E3440'); fillRR(c, 938, 240, 22, 1500, 2, '#2E3440');
+    // skrzydło drzwi (zawiasy z prawej), siatka w szybie, pochwyt
+    c.fillStyle = '#3A4150'; c.fillRect(gr, 270, 940 - gr, 1450); c.fillStyle = '#20263A'; c.fillRect(gr, 270, 10, 1450);
+    c.save(); c.beginPath(); c.rect(gr + 40, 340, 940 - gr - 80, 760); c.clip(); c.fillStyle = '#12182C'; c.fillRect(gr, 340, 600, 760); snowfall(c, lt + 3, 20, .5); c.strokeStyle = 'rgba(200,210,220,.4)'; c.lineWidth = 3; for (let i = -20; i < 30; i++) { c.beginPath(); c.moveTo(gr + i * 34, 340); c.lineTo(gr + i * 34 + 760, 1100); c.moveTo(gr + i * 34, 340); c.lineTo(gr + i * 34 - 760, 1100); c.stroke(); } c.restore();
+    fillRR(c, gr + 30, 1140, 22, 220, 10, '#C9CDD2'); fillRR(c, 890, 300, 40, 80, 6, '#1E222C'); // samozamykacz
+    night(c, .35, [{ x: 640, y: 900, r: 700, a: .9 }]);
+    bigSign(c, lt, 'NIE PRZYTRZYMUJ', 'DRZWI!', 1640);
   },
-  post(c, lt) { joltFlash(c, lt, [3.6]); if (lt > .9 && lt < 3.4) label(c, 'WINDA ZJEŻDŻA Z 9. PIĘTRA', 540, 300, 'dark', 36, lt - .9, 3.4 - lt); },
+  post(c, lt) { joltFlash(c, lt, [3.0]); if (lt > .5 && lt < 2.9) label(c, 'DRZWI DO KLATKI SIĘ ZAMYKAJĄ…', 540, 300, 'dark', 38, lt - .5, 2.9 - lt); if (lt > 3.1) label(c, '…I KTOŚ JE ŁAPIE', 540, 300, 'red', 44, lt - 3.1, 9); },
 });
-// 1. PARTER, 22:50: Kuba wchodzi z mrozu, śnieg na ramionach, torba sportowa.
+// 1. BLOK NOCĄ, 22:50: Kuba wraca z treningu przez śnieg. Okno 94 ciemne. Pod drzewem przy wejściu ktoś stoi.
 scene({
-  name: 'ctx', start: 5, end: 11,
-  draw(c, lt) { lobbyFull(c, lt, { doorOpen: lt < 1.2, prints: lt > 1, floor: 9 }); const kx = lerp(120, 470, clamp(lt / 2.6));
-    person(c, 'kuba', kx, 1720, 2.0, { t: lt, walk: lt < 2.6 ? lt * 10 : null, look: 1, duffel: true }); if (lt < 4) breathPuff(c, kx + 30, 1720 - 2.0 * 250, lt);
-    for (let k = 0; k < 6; k++) circ(c, kx - 40 + hash(k) * 80, 1720 - 2.0 * 190 + hash(k + 3) * 20, 4, 'rgba(240,245,255,.9)'); // śnieg na ramionach
-    night(c, .3, [{ x: 540, y: 600, r: 900, a: .9 }]); },
-  post(c, lt) { if (lt > .3) label(c, '22:50 · KUBA WRACA Z TRENINGU', 540, 300, 'yellow', 38, lt - .3, 9); if (lt > 2.4) label(c, 'MIESZKA NA 9. PIĘTRZE', 540, 410, 'dark', 32, lt - 2.4, 9); },
+  name: 'ctx', start: 5, end: 12,
+  draw(c, lt) { blockBg(c, lt, { night: true, off94: true }); snow(c, lt, 90, .8);
+    c.save(); c.globalAlpha = .55; person(c, 'obcy', 930, 1505, .62, { t: lt, still: true }); c.restore();
+    const kx = lerp(80, 470, clamp(lt / 6.6)); person(c, 'kuba', kx, 1512, .66, { t: lt, walk: lt * 10, look: 1, duffel: true }); breathPuff(c, kx + 12, 1512 - .66 * 250, lt);
+    if (lt > 3.0) { c.save(); c.strokeStyle = '#FF3B30'; c.lineWidth = 6; c.setLineDash([14, 10]); c.beginPath(); c.arc(703, 560, 62, 0, 7); c.stroke(); c.restore(); }
+    if (lt > 5.0) { c.save(); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 4; c.setLineDash([10, 10]); c.beginPath(); c.arc(930, 1440, 70, 0, 7); c.stroke(); c.restore(); }
+    night(c, .2, [{ x: 540, y: 1400, r: 700, a: .9 }]); },
+  post(c, lt) { if (lt > .3) label(c, '22:50 · KUBA WRACA Z TRENINGU', 540, 300, 'yellow', 38, lt - .3, 9); if (lt > 3.0 && lt < 5.0) label(c, '94 · 9. PIĘTRO · W DOMU NIKOGO', 540, 410, 'dark', 32, lt - 3, 5 - lt); if (lt > 5.0) label(c, 'POD DRZEWEM KTOŚ STOI', 540, 410, 'red', 34, lt - 5, 9); },
 });
-// 2. WEZWANIE: Kuba wciska przycisk. Na wyświetlaczu winda zjeżdża… z jego piętra.
+// 2. DOMOFON z bliska: Kuba wpisuje kod. W szybie drzwi za jego plecami rośnie odbicie sylwetki.
+const CODE = [[1.0, '1'], [1.8, '9'], [2.6, '9'], [3.4, '4']];
 scene({
-  name: 'call', start: 11, end: 19,
-  draw(c, lt) { const fl = lt < 1 ? 9 : Math.max(0, 9 - Math.floor((lt - 1) / 6.4 * 10));
-    lobbyFull(c, lt, { called: lt > .6, floor: fl, dir: fl > 0 ? -1 : 0, prints: true });
-    person(c, 'kuba', 470, 1720, 2.0, { t: lt, look: 1, duffel: true, aR: lt > .3 && lt < 1.2 ? 1.5 : null, lookY: lt > 2 ? -1 : 0 });
-    night(c, .3, [{ x: 540, y: 600, r: 900, a: .9 }]); },
-  post(c, lt) { if (lt > 1.4) label(c, 'SKĄD ZJEŻDŻA? Z 9. PIĘTRA. Z JEGO PIĘTRA.', 540, 300, 'red', 32, lt - 1.4, 9); },
+  name: 'code', start: 12, end: 20,
+  draw(c, lt) { const n = CODE.filter(k => lt > k[0]).length, cur = CODE.find(k => lt > k[0] && lt < k[0] + .35), open = lt > 4.2;
+    keypadClose(c, lt, { lcd: open ? 'OTWARTE' : n ? '•'.repeat(n) : 'WPISZ KOD', press: cur ? cur[1] : null, fig: clamp((lt - 2.0) / 4), grin: lt > 5.6 });
+    const keyPos = (k) => { const i = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '🔔'].indexOf(k); return [400 + 130 + (i % 3) * 150, 260 + 520 + Math.floor(i / 3) * 150]; };
+    const tgt = lt < 4.2 ? (CODE.find(k => lt < k[0] + .5) || CODE[3])[1] : '0'; const [fx, fy] = keyPos(tgt); const lift = cur ? 0 : 40;
+    hand(c, fx + 20, fy + lift + (lt > 4.2 ? 300 : 0), .95, KINDS.kuba);
+    if (open) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(680, 580, 20, 680, 580, 500); g.addColorStop(0, 'rgba(100,255,150,.25)'); g.addColorStop(1, 'rgba(100,255,150,0)'); c.fillStyle = g; c.fillRect(0, 0, W, 1200); c.restore(); }
+    night(c, .25, [{ x: 680, y: 900, r: 800, a: .9 }]); },
+  post(c, lt) { if (lt > .3 && lt < 4.2) label(c, 'KOD DO KLATKI', 540, 1760, 'dark', 36, lt - .3, 4.2 - lt); if (lt > 4.2 && lt < 5.4) label(c, 'BZZZ · OTWARTE', 540, 1760, 'yellow', 40, lt - 4.2, 5.4 - lt); if (lt > 5.6) label(c, 'W SZYBIE: KTOŚ ZA NIM', 540, 1760, 'red', 40, lt - 5.6, 9); },
 });
-// 3. DRZWI SIĘ OTWIERAJĄ: obcy w środku, trzyma drzwi. „Wsiadasz? Na które?”
+// 3. „PRZYTRZYMASZ?”: obcy podchodzi, prosi. Na jego kurtce ani płatka śniegu (czekał pod daszkiem). Kuba trzyma drzwi (BŁĄD 1).
 scene({
-  name: 'open', start: 19, end: 27, cam: jolt([.2]),
-  bubbles: [say(1.6, 4.6, 'Wsiadasz? Na które?', 'obcy', 790, 1440, 2.0, -40)],
-  draw(c, lt) { lobbyFull(c, lt, { elevOpen: 1, floor: 0, prints: true, inCab: (cc, x, y, w, h) => { cabMini(cc, x, y, w, h, lt, { floor: 0 }); } });
-    person(c, 'sasiad', 790, 1440, 2.0, { t: lt, mouth: lt > 4.6 ? 'grin' : null, talk: lt > 1.6 && lt < 4.4, look: -1, aR: 1.5 });
-    person(c, 'kuba', 380, 1720, 2.1, { t: lt, look: 1, duffel: true, wide: true, mouth: lt > 4.6 ? 'o' : null });
-    night(c, .3, [{ x: 790, y: 1000, r: 520, a: .9 }, { x: 380, y: 1300, r: 400, a: .8 }]); },
-  post(c, lt) { joltFlash(c, lt, [.2]); if (lt > 5.0) label(c, 'COŚ JEST NIE TAK', 540, 300, 'dark', 44, lt - 5, 9); },
+  name: 'ask', start: 20, end: 30,
+  bubbles: [say(2.2, 5.4, 'Przytrzymasz?\nZapomniałem kluczy.', 'obcy', 790, 1560, 1.95, -40), say(5.8, 7.4, 'Eee… jasne.', 'kuba', 450, 1500, 1.9, 30)],
+  draw(c, lt) { entranceFull(c, lt, { doorOpen: clamp((lt - .4) / .8) * (lt < 9.6 ? 1 : clamp(1 - (lt - 9.6) / .4)), lcd: 'OTWARTE' }); snow(c, lt, 70, .75);
+    const ox = lt < 2 ? lerp(1180, 790, eout(clamp(lt / 2))) : lt < 8.2 ? 790 : lerp(790, 520, clamp((lt - 8.2) / 1.2)), oa = lt < 8.8 ? 1 : clamp(1 - (lt - 8.8) / .6);
+    person(c, 'kuba', 450, 1500, 1.9, { t: lt, look: 1, duffel: true, aL: lt > .4 ? 1.2 : null, talk: lt > 5.8 && lt < 7.2, wide: lt > 7.6 });
+    for (let k = 0; k < 7; k++) circ(c, 450 - 46 + hash(k) * 92, 1500 - 1.9 * 196 + hash(k + 3) * 16, 4, 'rgba(240,245,255,.95)'); // śnieg na ramionach Kuby
+    c.save(); c.globalAlpha = oa; person(c, 'obcy', ox, 1560, 1.95, { t: lt, walk: (lt < 2 || lt > 8.2) ? lt * 10 : null, look: -1, talk: lt > 2.2 && lt < 5.2, mouth: lt > 5.4 ? 'grin' : 'smile' }); c.restore();
+    if (lt > 5.6 && lt < 7.6) { c.save(); c.strokeStyle = '#FF3B30'; c.lineWidth = 5; c.setLineDash([12, 8]); c.beginPath(); c.ellipse(790, 1560 - 1.95 * 200, 110, 70, 0, 0, 7); c.stroke(); c.restore(); }
+    night(c, .25, [{ x: 540, y: 1000, r: 760, a: .9 }]); },
+  post(c, lt) { if (lt > 5.6 && lt < 7.6) label(c, 'NA KURTCE ANI PŁATKA ŚNIEGU', 540, 300, 'red', 36, lt - 5.6, 7.6 - lt); if (lt > 7.6) card(c, 70, 300, 860, 'BŁĄD 1', 'przytrzymał drzwi obcemu\ni wpuścił go do klatki', lt - 7.6, '#F39C12', 38); },
 });
-// 4. W KABINIE: Kuba jednak wsiada (BŁĄD 1). Obcy stoi przy panelu. „Dziewiąte” (BŁĄD 2).
+// 4. PARTER: winda tuż obok schodów. Obcy nie sprawdza skrzynki, nie idzie schodami — staje za Kubą. Winda zjeżdża. „Ty pierwszy.”
 scene({
-  name: 'cab', start: 27, end: 37,
-  bubbles: [say(3.6, 5.6, 'Dziewiąte.', 'kuba', 320, 1720, 2.1, 40), say(6.0, 8.6, 'Dziewiąte. Jak ja.', 'obcy', 760, 1720, 2.1, -60)],
-  draw(c, lt) { const fl = lt < 7 ? 0 : Math.min(2, Math.floor((lt - 7) * .8));
-    cabFull(c, lt, { floor: fl, lit: lt > 6 ? [9] : [], mirror: (cc) => { person(cc, 'kuba', 240, 1200, 1.3, { t: lt, look: 1, duffel: true }); } });
-    person(c, 'kuba', 320, 1720, 2.1, { t: lt, look: 1, duffel: true, wide: lt > 6, talk: lt > 3.6 && lt < 5.4 });
-    person(c, 'sasiad', 760, 1720, 2.1, { t: lt, look: -1, mouth: lt > 8.6 ? 'grin' : null, talk: lt > 6 && lt < 8.4, aR: lt > 5.6 && lt < 6.4 ? 1.9 : null });
+  name: 'lobby', start: 30, end: 39,
+  bubbles: [say(6.6, 8.8, 'Ty pierwszy.', 'obcy', 600, 1780, 2.05, -40)],
+  draw(c, lt) { const fl = lt < 1.2 ? 7 : Math.max(0, 7 - Math.floor((lt - 1.2) / 5.2 * 8)), op = lt > 6.6 ? clamp((lt - 6.6) / .7) : 0;
+    lobbyStairs(c, lt, { called: lt > 1.0 && op < 1 ? -1 : false, elevFloor: fl, dir: fl > 0 ? -1 : 0, elevOpen: op, inCab: (cc, x, y, w, h) => cabMini(cc, x, y, w, h, lt, { floor: 0 }) });
+    person(c, 'kuba', 230, 1720, 2.0, { t: lt, look: lt > 3 && lt < 5.6 ? 1 : -1, duffel: true, aL: lt > .8 && lt < 1.6 ? 1.5 : null, wide: lt > 3, lookY: lt > 1.6 && lt < 3 ? -1 : 0 });
+    person(c, 'obcy', 600, 1780, 2.05, { t: lt, look: -1, still: true, mouth: lt > 8.8 ? 'grin' : 'smile', talk: lt > 6.6 && lt < 8.4 });
+    night(c, .25, [{ x: 400, y: 1100, r: 800, a: .9 }]); },
+  post(c, lt) { if (lt > 1.6 && lt < 3.2) label(c, 'WINDA ZJEŻDŻA Z 7. PIĘTRA', 540, 300, 'dark', 36, lt - 1.6, 3.2 - lt); if (lt > 3.2 && lt < 6.4) label(c, 'NIE SPRAWDZA SKRZYNKI.\nNIE IDZIE SCHODAMI.', 540, 300, 'red', 36, lt - 3.2, 6.4 - lt); },
+});
+// 5. KABINA: Kuba wciska 9. Obcy nie wciska nic — ręce w kieszeniach, patrzy na przycisk (BŁĄD 2).
+scene({
+  name: 'cab', start: 39, end: 49,
+  bubbles: [say(5.4, 7.6, 'Dziewiąte. Pasuje.', 'obcy', 760, 1720, 2.1, -60)],
+  draw(c, lt) { cabFull(c, lt, { floor: lt < 4 ? 0 : 1, lit: lt > 1.6 ? [9] : [], mirror: (cc) => { person(cc, 'obcy', 300, 1200, 1.3, { t: lt, mouth: 'grin', look: -1, still: true }); person(cc, 'kuba', 170, 1210, 1.25, { t: lt, back: true, duffel: true }); } });
+    person(c, 'kuba', 320, 1720, 2.1, { t: lt, look: 1, duffel: true, aR: lt > 1 && lt < 2 ? 1.7 : null, wide: lt > 3 });
+    person(c, 'obcy', 760, 1720, 2.1, { t: lt, look: -1, still: true, mouth: lt > 7.6 ? 'grin' : 'smile', talk: lt > 5.4 && lt < 7.4, lookY: lt > 2 && lt < 5 ? -1 : 0 });
+    if (lt > 2.4 && lt < 5.2) { c.save(); c.strokeStyle = '#FFB020'; c.lineWidth = 6; c.setLineDash([12, 8]); c.beginPath(); c.arc(920, 852, 44, 0, 7); c.stroke(); c.restore(); }
     night(c, .1, []); },
-  post(c, lt) { if (lt > .6 && lt < 3.4) card(c, 70, 300, 860, 'BŁĄD 1', 'wsiadł z obcym, choć czuł,\nże coś jest nie tak', lt - .6, '#F39C12', 38); if (lt > 6.4) card(c, 70, 300, 860, 'BŁĄD 2', 'powiedział obcemu,\nna którym piętrze mieszka', lt - 6.4, '#F39C12', 38); },
+  post(c, lt) { if (lt > 2.4 && lt < 5.2) label(c, 'ON NIE WCISKA ŻADNEGO PIĘTRA', 540, 300, 'red', 36, lt - 2.4, 5.2 - lt); if (lt > 7.8) card(c, 70, 300, 860, 'BŁĄD 2', 'pojechał sam z obcym\ni pokazał mu swoje piętro', lt - 7.8, '#F39C12', 38); },
 });
-// 5. STOP między 2. a 3. piętrem. Światło miga. „Ładna torba. KS Sokół?” Kuba wciska ALARM. Winda rusza, drzwi na 3.
+// 6. JAZDA: 1… 2… 3… 4. „Sam dziś wracasz?” — „Tata czeka.” — „W dziewięćdziesiątce czwórce światło się nie pali.”
 scene({
-  name: 'stop', start: 37, end: 47, cam: jolt([.4, 5.6]),
-  bubbles: [say(1.4, 4.2, 'Ups. Ładna torba.\nKS Sokół, numer siedem?', 'obcy', 760, 1720, 2.1, -80)],
-  draw(c, lt) { cabFull(c, lt, { floor: lt < 7 ? '2' : '3', lit: [9], stop: lt > .3 && lt < 7, flicker: lt > .3 && lt < 7, alarm: lt > 5.4 && lt < 7.2 });
-    person(c, 'kuba', 300, 1720, 2.1, { t: lt, look: 1, duffel: true, wide: true, mouth: 'o', aR: lt > 5.2 && lt < 6.4 ? 1.6 : null, walk: lt > 8 ? lt * 14 : null });
-    person(c, 'sasiad', 760, 1720, 2.1, { t: lt, look: -1, mouth: 'grin', talk: lt > 1.4 && lt < 4.0, aL: lt < .8 ? 1.6 : null });
-    if (lt > 7.6) { c.fillStyle = '#C9D0D8'; const op = clamp((lt - 7.6) / .6); c.fillRect(0, 0, 20 + 0 * op, H); }
-    night(c, lt > .3 && lt < 7 ? .45 : .1, [{ x: 540, y: 90, r: 700, a: .7 }]); },
-  post(c, lt) { joltFlash(c, lt, [.4, 5.6]); if (lt > .4 && lt < 1.4) label(c, 'STOP. MIĘDZY 2. A 3. PIĘTREM', 540, 300, 'red', 38, lt - .4, 1.4 - lt); if (lt > 5.4 && lt < 7.2) label(c, 'KUBA WCISKA ALARM', 540, 300, 'yellow', 44, lt - 5.4, 7.2 - lt); if (lt > 7.4) label(c, '3. PIĘTRO · DRZWI SIĘ OTWIERAJĄ', 540, 300, 'dark', 38, lt - 7.4, 10 - lt); },
+  name: 'ride', start: 49, end: 58, cam: jolt([8.2]),
+  bubbles: [say(.6, 2.8, 'Sam dziś wracasz?', 'obcy', 760, 1720, 2.1, -60), say(3.2, 5.0, 'Nie… tata czeka.', 'kuba', 320, 1720, 2.1, 40), say(5.4, 8.2, 'W dziewięćdziesiątce czwórce\nświatło się nie pali.', 'obcy', 760, 1720, 2.1, -120)],
+  draw(c, lt) { cabFull(c, lt, { floor: Math.min(4, 1 + Math.floor(lt / 2.4)), lit: [9], flicker: lt > 8.2 });
+    person(c, 'kuba', 320, 1720, 2.1, { t: lt, look: 1, duffel: true, wide: true, talk: lt > 3.2 && lt < 4.8, mouth: lt > 8.2 ? 'o' : null });
+    person(c, 'obcy', 760, 1720, 2.1, { t: lt, look: -1, still: true, mouth: lt > 8.2 ? 'grin' : null, talk: (lt > .6 && lt < 2.6) || (lt > 5.4 && lt < 8.0) });
+    night(c, lt > 8.2 ? .35 : .1, [{ x: 540, y: 90, r: 700, a: .7 }]); },
+  post(c, lt) { joltFlash(c, lt, [8.2]); if (lt > 8.3) label(c, 'SKĄD ON TO WIE?', 540, 300, 'red', 46, lt - 8.3, 9); },
 });
-// 6. KUBA WYBIEGA NA 3. PIĘTRZE (ZASADA). Drzwi windy zamykają się za nim. Obcy jedzie dalej.
+// 7. Kuba wciska 5, wyskakuje na 5. piętrze, biegnie na schody tuż obok windy. Drzwi zamykają się z uśmiechem w środku. ZASADA.
 scene({
-  name: 'out', start: 47, end: 55,
-  draw(c, lt) { stairFull(c, lt, 3, {}); c.save(); c.translate(600, 0); elevDoor(c, lt, 0, 600, 260, 840, { open: lt < 2 ? 1 - clamp(lt / 2) * 0 : clamp(1 - (lt - 2) / .8), floor: 3, inCab: (cc, x, y, w, h) => { cabMini(cc, x, y, w, h, lt, { floor: 3, lit: [9] }); person(cc, 'sasiad', x + w / 2, y + h - 10, 1.9, { t: lt, mouth: 'grin', look: -1, still: true }); } }); c.restore();
-    person(c, 'kuba', lerp(560, 300, clamp(lt / 1.4)), 1740, 2.1, { t: lt, walk: lt < 1.4 ? lt * 14 : null, look: 1, duffel: true, wide: true, mouth: 'o' }); night(c, .2, []); },
-  post(c, lt) { if (lt > 1.6) card(c, 60, 300, 900, 'ZASADA', 'Źle się czujesz z kimś przy windzie?\nNie wsiadaj — poczekaj albo idź schodami.\nJuż jedziesz? Wciśnij ALARM i wysiądź.', lt - 1.6, '#F39C12', 34); },
-});
-// 7. SCHODY: Kuba biegnie w górę, piętro po piętrze. Światło na czasowy wyłącznik gaśnie. Na wyświetlaczu winda stoi na 9.
-scene({
-  name: 'stairs', start: 55, end: 70, cam: jolt([9.6]),
-  draw(c, lt) { const f = Math.min(8, 4 + Math.floor(lt / 2.6)), ph = (lt % 2.6) / 2.6, off = lt > 7.0 && lt < 9.4;
-    stairFull(c, lt, f, { lightOff: off, switchGlow: 1 });
-    person(c, 'kuba', lerp(170, 790, ph), lerp(1462, 840, ph), 1.6, { t: lt, walk: lt * 16, look: 1, duffel: true, wide: true, mouth: 'o' });
-    fillRR(c, 880, 900, 160, 70, 8, '#101216'); txt(c, '9', 960, 936, 46, '#FF3B30', 900); txt(c, 'WINDA', 960, 990, 20, 'rgba(40,40,40,.6)', 900);
-    if (off) { c.fillStyle = 'rgba(2,3,8,.86)'; c.fillRect(0, 0, W, H); c.save(); c.shadowColor = '#FF9A2A'; c.shadowBlur = 24; circ(c, 67, 812, 7, '#FF9A2A'); c.restore(); }
-    night(c, off ? .9 : .2, off ? [{ x: 67, y: 812, r: 120, a: .9 }] : []); },
-  post(c, lt) { joltFlash(c, lt, [9.6]); if (lt < 7) label(c, 'SCHODAMI. 4… 5… 6…', 540, 300, 'yellow', 40, lt, 7 - lt); if (lt > 7.0 && lt < 9.4) label(c, 'ŚWIATŁO GAŚNIE', 540, 300, 'dark', 44, lt - 7, 9.4 - lt); if (lt > 9.6) label(c, 'WINDA CZEKA NA 9. PIĘTRZE', 540, 300, 'red', 40, lt - 9.6, 15 - lt); },
-});
-// 8. 9. PIĘTRO: drzwi windy otwarte, kabina pusta. Kuba przy drzwiach 94, klucze wypadają z ręki.
-scene({
-  name: 'landing', start: 70, end: 85,
-  draw(c, lt) { landing9(c, lt, { elevOpen: lt > .6 ? clamp((lt - .6) / .7) : 0, floor: 9, inCab: (cc, x, y, w, h) => { cabMini(cc, x, y, w, h, lt, { floor: 9, lit: [], flicker: true }); } });
-    const kx = lt < 4 ? lerp(-100, 640, clamp(lt / 4)) : 640; person(c, 'kuba', kx, 1760, 2.0, { t: lt, walk: lt < 4 ? lt * 12 : null, look: lt > 4 && lt < 7 ? -1 : 1, duffel: true, wide: true, keys: lt > 6 && lt < 10.2, aR: lt > 6 && lt < 10.2 ? 1.2 : null });
-    if (lt > 10.4) { c.save(); c.translate(720, 1700); c.rotate(.4); c.strokeStyle = '#D6DADF'; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 18, 0, 7); c.stroke(); fillRR(c, 14, -5, 70, 10, 4, '#CFD3D8'); c.restore(); }
-    night(c, .3, [{ x: 200, y: 1000, r: 420, a: .9 }, { x: 640, y: 1300, r: 420, a: .8 }]); },
-  post(c, lt) { if (lt > 1.2 && lt < 4.4) label(c, 'KABINA PUSTA', 540, 300, 'dark', 44, lt - 1.2, 4.4 - lt); if (lt > 6 && lt < 10.2) label(c, 'RĘCE SIĘ TRZĘSĄ', 540, 300, 'dark', 40, lt - 6, 10.2 - lt); if (lt > 10.4) label(c, 'KLUCZE WYPADAJĄ', 540, 300, 'red', 44, lt - 10.4, 15 - lt); },
-});
-// 9. ZAKOŃCZENIE: w lustrze pustej kabiny widać, że ktoś stoi tuż za Kubą. Światło gaśnie. Szept. Twarz obcego w kamerę.
-scene({
-  name: 'end', start: 85, end: 108, cam: jolt([.4, 13.0, 16.6]),
-  labels: [[19.4, 23, 'ODC. 2 ↓', 540, 1650, 'red', 64]],
+  name: 'exit', start: 58, end: 67, cam: jolt([.3]),
   draw(c, lt) {
-    if (lt < 7.0) { cabFull(c, lt, { floor: 9, flicker: true, mirror: (cc) => { person(cc, 'kuba', 180, 1200, 1.3, { t: lt, back: true, duffel: true }); person(cc, 'sasiad', 310, 1170, 1.4, { t: lt, mouth: 'grin', look: 0, still: true }); } });
-      night(c, .35, [{ x: 240, y: 760, r: 420, a: .9 }]); return; }
-    const l = lt - 7.0;
-    if (l < 6.0) { landing9(c, lt, { floor: 9, switchGlow: 1 }); person(c, 'kuba', 640, 1760, 2.0, { t: lt, look: -1, wide: true, mouth: 'o', still: true, duffel: true });
-      if (l > 1.2) person(c, 'sasiad', 330, 1760, 2.1, { t: lt, mouth: 'grin', look: 1, still: true, alpha: clamp((l - 1.2) / .6) });
-      if (l > 3) { c.fillStyle = 'rgba(2,3,8,.9)'; c.fillRect(0, 0, W, H); c.save(); c.shadowColor = '#FF9A2A'; c.shadowBlur = 30; circ(c, 47, 812, 8, '#FF9A2A'); c.restore();
-        c.save(); c.globalAlpha = .55; person(c, 'sasiad', 330, 1760, 2.1, { t: lt, mouth: 'grin', look: 1, still: true }); c.restore();
-        c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(47, 812, 4, 47, 812, 520); g.addColorStop(0, 'rgba(255,140,40,.35)'); g.addColorStop(1, 'rgba(255,140,40,0)'); c.fillStyle = g; c.fillRect(0, 300, 700, 1100); c.restore(); }
-      else night(c, .4, [{ x: 540, y: 1100, r: 600, a: .9 }]); return; }
-    // twarz obcego w kamerę, w pomarańczowym świetle włącznika
-    c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); person(c, 'sasiad', 540, 2700, 5.2, { t: lt, mouth: 'grin', look: 0, wide: true, still: true });
-    c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(200, 1000, 20, 200, 1000, 900); g.addColorStop(0, 'rgba(255,150,60,.35)'); g.addColorStop(1, 'rgba(255,150,60,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore();
-    night(c, .5, [{ x: 400, y: 1100, r: 640, a: .9 }]);
-    if (l > 10.6) { c.fillStyle = `rgba(0,0,0,${clamp((l - 10.6) / .6)})`; c.fillRect(0, 0, W, H); }
+    if (lt < 2.2) { cabFull(c, lt, { floor: lt < 1.4 ? 4 : 5, lit: lt > .5 ? [5, 9] : [9] }); person(c, 'kuba', lerp(320, 640, clamp((lt - .2) / .5)), 1720, 2.1, { t: lt, look: 1, duffel: true, wide: true, mouth: 'o', aR: lt > .3 && lt < 1 ? 1.7 : null });
+      person(c, 'obcy', 760 + (lt > .6 ? 80 : 0), 1720, 2.1, { t: lt, look: -1, still: true, mouth: 'grin' }); night(c, .1, []); return; }
+    const l = lt - 2.2, cl = l > 1.6 ? clamp(1 - (l - 1.6) / .8) : 1;
+    stairElev(c, lt, 5, { elevOpen: cl, elevFloor: l < 3 ? 5 : Math.min(9, 5 + Math.floor((l - 3) / 1.1)), dir: l > 3 ? 1 : 0, inCab: (cc, x, y, w, h) => { cabMini(cc, x, y, w, h, lt, { floor: 5, lit: [9] }); person(cc, 'obcy', x + w / 2, y + h - 6, 1.75, { t: lt, mouth: 'grin', look: 1, still: true }); } });
+    const kx = lerp(170, 520, clamp(l / 1.6)); person(c, 'kuba', kx, l < 1.6 ? 1700 : stairFootY(kx), 1.9, { t: lt, walk: lt * 16, look: 1, duffel: true, wide: true, mouth: 'o' });
+    night(c, .2, []); },
+  post(c, lt) { joltFlash(c, lt, [.3]); if (lt < 2.2) label(c, 'KUBA WCISKA 5', 540, 300, 'yellow', 44, lt, 2.2 - lt); if (lt > 3.0) card(c, 50, 300, 920, 'ZASADA', 'Nie przytrzymuj drzwi obcym —\nniech dzwonią domofonem.\nObcy wsiada z tobą? Wysiądź.\nI nie mów, gdzie mieszkasz.', lt - 3.0, '#F39C12', 34); },
+});
+// 8. SCHODY obok windy: 6… 7… 8. Kuba dzwoni do mamy — nie odbiera. Światło gaśnie. I zapala się samo: ktoś wyżej wcisnął włącznik.
+scene({
+  name: 'stairs', start: 67, end: 80, cam: jolt([11.0]),
+  draw(c, lt) { const f = Math.min(8, 6 + Math.floor(lt / 3.6)), ph = (lt % 3.6) / 3.6, off = lt > 8.4 && lt < 11.0, up = lt > 11;
+    stairElev(c, lt, up ? 8 : f, { lightOff: off, elevFloor: 9, flick: up && lt < 11.8 });
+    const kx = up ? 760 : lerp(SX0 - 60, 1060, ph); person(c, 'kuba', kx, stairFootY(kx), 1.7, { t: lt, walk: up ? null : lt * 16, look: 1, duffel: true, wide: true, mouth: 'o', phone: lt > 3 && lt < 8.2, lookY: up ? -1 : 0, still: up });
+    if (off) { c.save(); c.globalAlpha = .35; person(c, 'kuba', kx, stairFootY(kx), 1.7, { t: lt, walk: lt * 16, look: 1, duffel: true }); c.restore(); }
+    if (lt > 3 && lt < 8.2) { fillRR(c, 300, 1500, 480, 150, 24, 'rgba(14,16,22,.9)'); txt(c, 'MAMA 📞', 540, 1550, 40, '#FFFFFF', 900); txt(c, lt < 6 ? 'łączenie…' : 'nie odbiera', 540, 1605, 30, lt < 6 ? '#9AA2AB' : '#FF3B30', 800); }
+    night(c, off ? .5 : .2, []); },
+  post(c, lt) { joltFlash(c, lt, [11.0]); if (lt < 3) label(c, 'SCHODAMI. 6… 7…', 540, 300, 'yellow', 40, lt, 3 - lt); if (lt > 3 && lt < 8.2) label(c, 'MAMA NA NOCNEJ ZMIANIE', 540, 300, 'dark', 36, lt - 3, 8.2 - lt); if (lt > 8.4 && lt < 11) label(c, 'ŚWIATŁO GAŚNIE', 540, 300, 'dark', 44, lt - 8.4, 11 - lt); if (lt > 11) label(c, 'ZAPALA SIĘ SAMO.\nKTOŚ WYŻEJ WCISNĄŁ WŁĄCZNIK', 540, 300, 'red', 36, lt - 11, 9); },
+});
+// 9. 9. PIĘTRO: pusto. Winda zamknięta, stoi na 9. Kuba wbiega ze schodów, klucze, drzwi 94.
+scene({
+  name: 'landing', start: 80, end: 88,
+  draw(c, lt) { landing9b(c, lt, { floor: 9, flick: lt > 2 && lt < 3 });
+    const kx = lt < 2.4 ? lerp(1040, 650, eout(clamp(lt / 2.4))) : 650, ka = lt < 6.6 ? 1 : clamp(1 - (lt - 6.6) / .6);
+    c.save(); c.globalAlpha = ka; person(c, 'kuba', kx, 1760, 2.0, { t: lt, walk: lt < 2.4 ? lt * 14 : null, look: lt > 2.4 && lt < 3.6 ? -1 : 1, back: lt > 3.6, duffel: true, wide: true, keys: lt > 3.6, aR: lt > 3.6 ? 1.1 : null }); c.restore();
+    night(c, .3, [{ x: 160, y: 1000, r: 420, a: .8 }, { x: 645, y: 1100, r: 500, a: .9 }]); },
+  post(c, lt) { if (lt > .4 && lt < 3.4) label(c, 'PUSTO. WINDA STOI NA 9.', 540, 400, 'dark', 38, lt - .4, 3.4 - lt); if (lt > 3.6) label(c, 'KLUCZ… SZYBCIEJ', 540, 400, 'red', 40, lt - 3.6, 9); },
+});
+// 10. ZAKOŃCZENIE: w domu, zamek i łańcuch. Wizjer: korytarz pusty… światło gaśnie… zapala się — twarz tuż przy wizjerze.
+// Szept. Pukanie. Cień stóp pod drzwiami. Klamka powoli w dół. Ciemność. Oko w wizjerze patrzy na widza. ODC. 2 ↓
+scene({
+  name: 'end', start: 88, end: 110, cam: jolt([11.0, 14.4, 18.6]),
+  labels: [[19.6, 22, 'ODC. 2 ↓', 540, 1650, 'red', 64]],
+  draw(c, lt) {
+    const peep = (inner) => { peepPOV(c, lt, (cc, cx, cy, r) => { cc.save(); cc.translate(cx, cy); cc.scale(.62, .62); cc.translate(-540, -1000); inner(cc); cc.restore(); }); };
+    if (lt < 5.0) { flatDoorInside(c, lt, { lockTurn: clamp((lt - .6) / .6), underLight: 1 }); person(c, 'kuba', 540, 1780, 2.0, { t: lt, back: lt < 2.6, look: 1, duffel: true, wide: true, aR: lt > .4 && lt < 2.4 ? 1.3 : null });
+      if (lt > 2.6) breathPuff(c, 560, 1780 - 2 * 250, lt); night(c, .55, [{ x: 540, y: 1400, r: 360, a: .7 }]); return; }
+    if (lt < 11.0) { peep((cc) => landing9b(cc, lt, { floor: 9, lightOff: lt > 8.0 })); return; }
+    if (lt < 14.2) { peep((cc) => { landing9b(cc, lt, { floor: 9 }); person(cc, 'obcy', 540, 3000, 6.2, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); }); return; }
+    if (lt < 18.6) { const l = lt - 14.2, shake = [.2, .8, 1.4].some(k => l > k && l < k + .12) ? 8 : 0; c.save(); c.translate(shake, 0);
+      flatDoorInside(c, lt, { underLight: l < 3.8 ? 1 : 0, feet: true, handle: l > 2.4 ? -.55 * clamp((l - 2.4) / 1.2) : 0 }); c.restore();
+      person(c, 'kuba', lerp(540, 300, clamp(l / 2)), 1840, 2.1, { t: lt, look: 1, wide: true, mouth: 'o', duffel: true });
+      night(c, l < 3.8 ? .6 : .92, [{ x: 540, y: 1420, r: 300, a: .8 }]); return; }
+    // ostatnie ujęcie: wizjer, oko i uśmiech patrzą prosto w widza
+    peep((cc) => { cc.fillStyle = '#05060A'; cc.fillRect(0, 0, W, H); person(cc, 'obcy', 540, 2600, 5.6, { t: lt, mouth: 'grin', look: 0, wide: true, still: true }); });
+    if (lt > 19.2) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.2) / .4) * .85})`; c.fillRect(0, 0, W, H); }
   },
-  post(c, lt) { joltFlash(c, lt, [.4, 13.0, 16.6]); if (lt > .6 && lt < 7) label(c, 'LUSTRO W KABINIE', 540, 300, 'red', 44, lt - .6, 7 - lt); const l = lt - 7; if (l > 1.4 && l < 3) label(c, 'ZA NIM', 540, 300, 'red', 48, l - 1.4, 3 - l); if (l > 3.2 && l < 6) label(c, 'ŚWIATŁO GAŚNIE', 540, 300, 'dark', 44, l - 3.2, 6 - l); if (l > 6.4 && l < 10.6) label(c, '„DZIEWIĄTE. JAK JA.”', 540, 300, 'red', 44, l - 6.4, 10.6 - l); },
+  post(c, lt) { joltFlash(c, lt, [11.0, 14.4, 18.6]);
+    if (lt > .4 && lt < 2.6) label(c, 'ZAMEK. ŁAŃCUCH.', 540, 300, 'dark', 44, lt - .4, 2.6 - lt); if (lt > 2.6 && lt < 5) label(c, 'BEZPIECZNY…?', 540, 300, 'dark', 44, lt - 2.6, 5 - lt);
+    if (lt > 5.2 && lt < 8) label(c, 'KORYTARZ PUSTY', 540, 1500, 'dark', 40, lt - 5.2, 8 - lt); if (lt > 8.0 && lt < 11) label(c, 'ŚWIATŁO GAŚNIE', 540, 1500, 'dark', 40, lt - 8, 11 - lt);
+    if (lt > 11.6 && lt < 14.2) label(c, '„DZIĘKI, ŻE PRZYTRZYMAŁEŚ.”', 540, 1500, 'red', 40, lt - 11.6, 14.2 - lt);
+    if (lt > 14.4 && lt < 16.6) label(c, 'PUK. PUK. PUK.', 540, 300, 'red', 44, lt - 14.4, 16.6 - lt); if (lt > 16.6 && lt < 18.6) label(c, 'KLAMKA…', 540, 300, 'red', 48, lt - 16.6, 18.6 - lt); },
 });
