@@ -1,13 +1,13 @@
 """SAM W DOMU · ODC. 1 — „Nie przytrzymuj drzwi!” (Kuba, v2). Lektor B + głosy postaci."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'   # lektor: Victor (ustawienia B)
-MODEL = 'eleven_multilingual_v2'
-SETTINGS = {'stability': 0.32, 'similarity_boost': 0.85, 'style': 0.55, 'use_speaker_boost': True, 'speed': 0.9}
+MODEL = 'eleven_v3'   # przerażający lektor: niski, złowrogi, powolny (v3 + tagi), do tego filtr: niżej + pogłos klatki
+SETTINGS = {'stability': 0.5, 'similarity_boost': 0.85}
 V3 = {'stability': 0.5, 'similarity_boost': 0.8}
 VOICES = {
     'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3),
     'obcy': ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
 }
-VFILTER = {'kuba': 'highpass=f=100', 'obcy': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
+VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f=7500,highpass=f=60,acompressor=threshold=-22dB:ratio=3,aecho=0.7:0.5:70|140:0.22|0.12', 'kuba': 'highpass=f=100', 'obcy': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2'}
 VGAIN = {'obcy': 1.3}
 MAXK = 1.5
 SCENES = [('hook', 0, 5), ('ctx', 5, 12), ('code', 12, 20), ('ask', 20, 30), ('lobby', 30, 39), ('cab', 39, 49), ('ride', 49, 58), ('exit', 58, 67), ('stairs', 67, 80), ('landing', 80, 88), ('end', 88, 110)]
@@ -54,6 +54,7 @@ SEG = [
     ['end', 16.6, 'Klamka powoli idzie w dół.'],
     ['end', 18.7, '[whispers] Otwórz.', 'obcy'],
 ]
+SEG = [x if len(x) > 3 else [x[0], x[1], ('[whispering, terrified] ' if x[0] == 'end' and x[1] > 5 else '[low, ominous voice, slowly] ') + x[2]] for x in SEG]
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 109.99], [-34, -34]),

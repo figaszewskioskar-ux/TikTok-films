@@ -1,16 +1,15 @@
-wydłużono x1.10: 107.3 s -> 118.0 s
-hook       5.0s ->   7.4s
-ctx        7.0s ->  11.9s
-code       8.0s ->   8.5s
-ask       10.0s ->  10.9s
-lobby      9.0s ->  10.0s
-cab       10.0s ->   8.9s
-ride       9.0s ->  10.4s
-exit       9.0s ->   8.6s
-stairs    13.0s ->  14.3s
-landing    8.0s ->   7.0s
-end       22.0s ->  20.0s
-RAZEM 118.0 s
+hook       5.0s ->   5.7s
+ctx        7.0s ->  14.5s
+code       8.0s ->   9.2s
+ask       10.0s ->  12.7s
+lobby      9.0s ->  11.3s
+cab       10.0s ->   8.7s
+ride       9.0s ->  10.0s
+exit       9.0s ->   8.5s
+stairs    13.0s ->  14.9s
+landing    8.0s ->  10.0s
+end       22.0s ->  19.9s
+RAZEM 125.4 s
 ok bed
 ok wind
 ok boom
@@ -30,18 +29,19 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3540 klatek, 15 s
-600/3540 klatek, 37 s
-900/3540 klatek, 59 s
-1200/3540 klatek, 85 s
-1500/3540 klatek, 108 s
-1800/3540 klatek, 130 s
-2100/3540 klatek, 152 s
-2400/3540 klatek, 176 s
-2700/3540 klatek, 200 s
-3000/3540 klatek, 223 s
-3300/3540 klatek, 248 s
-Gotowe w 281 s
-audio.wav OK 118 s
+300/3761 klatek, 14 s
+600/3761 klatek, 36 s
+900/3761 klatek, 59 s
+1200/3761 klatek, 87 s
+1500/3761 klatek, 114 s
+1800/3761 klatek, 140 s
+2100/3761 klatek, 163 s
+2400/3761 klatek, 185 s
+2700/3761 klatek, 209 s
+3000/3761 klatek, 238 s
+3300/3761 klatek, 265 s
+3600/3761 klatek, 295 s
+Gotowe w 322 s
+audio.wav OK 125.35 s
 Gotowe: /home/user/TikTok-films/film/winda1/out/final.mp4
 EXIT 0
