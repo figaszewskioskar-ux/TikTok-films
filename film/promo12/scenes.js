@@ -4,7 +4,7 @@ window.EP = {
   loop: false,
   vignette: .7,
   hideHud: () => true,
-  cues(add) { add(0.1, 'stab'); add(2.6, 'door'); add(2.6, 'jolt'); add(5.0, 'hit'); add(7.6, 'jolt'); add(10.0, 'hit'); add(10.4, 'knock'); add(13.8, 'notif'); },
+  cues(add) { add(0.1, 'stab'); add(2.6, 'door'); add(2.6, 'jolt'); add(5.0, 'hit'); add(7.6, 'jolt'); add(10.0, 'hit'); add(10.4, 'knock'); add(11.6, 'hit'); add(13.8, 'notif'); },
 };
 const S = [];
 function scene(o) { S.push(o); return o; }
@@ -899,7 +899,7 @@ scene({
   name: 's3', start: 10, end: 16,
   draw(c, lt) {
     c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H);
-    c.save(); c.globalAlpha = .18; stairElev(c, lt, 9, { lightOff: true }); c.restore();
+    c.save(); c.globalAlpha = .1; stairElev(c, lt, 9, { lightOff: true }); c.restore();
     c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 980, 40, 540, 980, 900); g.addColorStop(0, 'rgba(215,38,61,.35)'); g.addColorStop(1, 'rgba(215,38,61,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore();
   },
   post(c, lt) {
@@ -908,7 +908,8 @@ scene({
     txt(c, 'DZIŚ', 540, 600, 120, '#FFFFFF', 900);
     c.save(); c.shadowColor = '#FF3B30'; c.shadowBlur = 50 + Math.sin(lt * 4) * 20; txt(c, '17:00', 540, 860, 260, '#FF3B30', 900); c.restore();
     txt(c, 'SAM W DOMU · ODC. 1', 540, 1080, 52, '#FFFFFF', 900); txt(c, '„Nie przytrzymuj drzwi!”', 540, 1160, 50, '#C9CDD2', 800);
-    if (lt > 3.6) { const q = eout(clamp((lt - 3.6) / .4)); c.globalAlpha = q; fillRR(c, 190, 1330, 700, 110, 55, '#FE2C55'); txt(c, '🔔 Obserwuj, żeby nie przegapić', 540, 1387, 38, '#FFFFFF', 900); txt(c, '@protokolocaleni', 540, 1520, 44, '#FFFFFF', 900); }
+    if (lt > 1.6) { const q = eout(clamp((lt - 1.6) / .4)); c.save(); c.globalAlpha = q; c.translate(540, 1290); c.scale(.8 + .2 * q, .8 + .2 * q); c.rotate(-.02); fillRR(c, -420, -62, 840, 124, 22, '#F5C542'); txt(c, 'NOWE FILMY', 0, -20, 40, '#14161B', 900); txt(c, 'CODZIENNIE O 17:00', 0, 28, 50, '#14161B', 900); c.restore(); }
+    if (lt > 3.6) { const q = eout(clamp((lt - 3.6) / .4)); c.globalAlpha = q; fillRR(c, 190, 1450, 700, 110, 55, '#FE2C55'); txt(c, '🔔 Obserwuj, żeby nie przegapić', 540, 1507, 38, '#FFFFFF', 900); txt(c, '@protokolocaleni', 540, 1630, 44, '#FFFFFF', 900); }
     c.restore();
   },
 });
