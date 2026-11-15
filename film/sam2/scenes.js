@@ -8,7 +8,7 @@ window.EP = {
     add(19.0, 'notif'); add(21.8, 'tap'); add(22.2, 'hit'); add(24.8, 'notif'); add(27.8, 'tap'); add(28.2, 'hit');
     add(33.2, 'notif'); add(35.4, 'tap'); add(41.0, 'lock'); add(42.6, 'run'); add(48.0, 'whoosh'); add(49.6, 'notif'); add(51.8, 'notif'); add(51.8, 'jolt'); add(54.8, 'hit'); add(66.0, 'jolt');
     add(63.0, 'jolt'); add(63.0, 'hit'); add(69.0, 'run'); add(72.0, 'keys'); add(74.4, 'eding'); add(74.6, 'doors'); add(74.4, 'jolt'); add(78.0, 'keys');
-    add(84.0, 'notif'); add(84.0, 'jolt'); add(89.0, 'off'); add(89.0, 'jolt'); add(92.2, 'jolt'); add(96.6, 'slam'); add(96.6, 'jolt');
+    add(84.0, 'notif'); add(84.0, 'jolt'); add(89.0, 'off'); add(89.0, 'jolt'); add(92.2, 'jolt'); add(96.6, 'slam'); add(96.6, 'jolt'); add(98.2, 'creak'); add(103.2, 'jolt'); add(106.2, 'notif'); add(112.4, 'jolt');
   },
 };
 const S = [];
@@ -1113,16 +1113,28 @@ scene({
 });
 // 9. ZAKOŃCZENIE: zbliżenie na klucze. SMS: „Oddałem klucze. Swoje już mam. 🙂”. Światło w środku gaśnie. W ciemnej szparze — oczy i uśmiech.
 scene({
-  name: 'end', start: 78, end: 100, cam: jolt([6.0, 11.0, 14.2, 18.6]),
-  labels: [[19.6, 22, 'ODC. 3 ↓', 540, 1650, 'red', 64]],
+  name: 'end', start: 78, end: 114, cam: jolt([6.0, 11.0, 14.2, 18.6, 25.0, 34.4]),
+  bubbles: [sayAt(20.8, 24.6, 'Kuba? Co ty tu robisz\no tej porze?', 'zdzisiek', 890, 1100, -150, 60), sayAt(31.4, 34.2, 'Chodź do mnie.\nPoczekasz na mamę.', 'zdzisiek', 890, 1100, -150, 60)],
+  labels: [[35.0, 36, 'ODC. 3 ↓', 540, 1650, 'red', 64], [35.0, 36, 'Kto to był? Pisz w komentarzu 👇', 540, 1760, 'dark', 36]],
   draw(c, lt) {
     if (lt < 6.0) { keysDoor(c, lt, { ajar: .8, light: 1 }); night(c, .4, [{ x: 640, y: 900, r: 520, a: .95 }]); return; }
     if (lt < 11.0) { keysDoor(c, lt, { ajar: .8, light: 1 }); c.fillStyle = 'rgba(0,0,0,.55)'; c.fillRect(0, 0, W, H);
       fillRR(c, 120, 700, 840, 260, 34, 'rgba(20,22,30,.96)'); txt(c, 'Nieznany numer · teraz', 180, 762, 28, '#9AA2AB', 800, 'left'); txt(c, 'Oddałem klucze.', 180, 840, 52, '#FFFFFF', 900, 'left'); txt(c, 'Swoje już mam. 🙂', 180, 910, 52, '#FFFFFF', 900, 'left'); return; }
-    if (lt > 18.6) { keysDoor(c, lt, { ajar: 0, light: 0, swing: 2 }); night(c, .85, [{ x: 595, y: 900, r: 200, a: .6 }]); if (lt > 19.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.4) / .4) * .7})`; c.fillRect(0, 0, W, H); } return; }
+    if (lt > 18.6 && lt < 20.2) { keysDoor(c, lt, { ajar: 0, light: 0, swing: 2 }); night(c, .85, [{ x: 595, y: 900, r: 200, a: .6 }]); return; }
+    if (lt >= 20.2) { const l = lt - 20.2;
+      // drzwi 95 się otwierają: pan Zdzisiek w szlafroku, ciepłe światło z jego mieszkania
+      const zd = (cc) => { landing9b(cc, lt, { floor: 9, flick: true }); cc.fillStyle = '#FFE2A8'; cc.fillRect(956, 566, 124, 834); cc.save(); cc.globalCompositeOperation = 'lighter'; const g = cc.createLinearGradient(1080, 0, 700, 0); g.addColorStop(0, 'rgba(255,220,150,.45)'); g.addColorStop(1, 'rgba(255,220,150,0)'); cc.fillStyle = g; cc.beginPath(); cc.moveTo(956, 566); cc.lineTo(956, 1400); cc.lineTo(600, 1900); cc.lineTo(1080, 1900); cc.lineTo(1080, 566); cc.fill(); cc.restore();
+        person(cc, 'zdzisiek', 890, 1720, 2.0, { t: lt, look: -1, still: true, mouth: l > 11 ? 'grin' : null, talk: (l > .6 && l < 4.2) || (l > 11.2 && l < 13.8), aL: l > 11.2 ? 1.4 : null });
+        for (let i = 0; i < 5; i++) ell(cc, 830 + i * 30, 1738 + (i % 2) * 10, 20, 7, 'rgba(120,150,190,.55)'); for (let i = 0; i < 9; i++) ell(cc, 845 + hash(i) * 90, 1700 + hash(i + 4) * 22, 7, 4, 'rgba(245,248,255,.95)'); // mokro i śnieg na butach
+        person(cc, 'kuba', 560, 1760, 2.0, { t: lt, look: 1, wide: true, mouth: 'o' }); };
+      if (l < 4.8 || (l > 11 && l < 14.2)) { zd(c); night(c, .3, [{ x: 1000, y: 1100, r: 600, a: .9 }]); return; }
+      if (l < 8.0) { shot(c, 890, 1690, 3.2, (cc) => zd(cc)); night(c, .35, [{ x: 540, y: 960, r: 600, a: .9 }]); return; } // zbliżenie: mokre buty, topniejący śnieg
+      if (l < 11) { zd(c); c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(0, 0, W, H); chatCard(c, lt, 120, 760, 840, [[0, 'Zapasowe klucze są u pana Zdziśka 😉']], 28); return; }
+      shot(c, 890, 1180, 3.0, (cc) => zd(cc)); night(c, .55, [{ x: 540, y: 900, r: 520, a: .95 }]);
+      if (l > 15.0) { c.fillStyle = `rgba(0,0,0,${clamp((l - 15.0) / .4) * .8})`; c.fillRect(0, 0, W, H); } return; }
     keysDoor(c, lt, { ajar: .8 + (lt > 16 ? clamp((lt - 16) / 1.5) * .6 : 0), light: 0, eyes: lt > 14.2 ? clamp((lt - 14.2) / .4) : 0, swing: .4 }); night(c, .82, [{ x: 818, y: 790, r: 140, a: .7 }]);
     if (lt > 14.2) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(818, 790, 10, 818, 790, 200); g.addColorStop(0, 'rgba(255,255,255,.18)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(600, 580, 440, 440); c.restore(); }
     if (lt > 19.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.4) / .4) * .7})`; c.fillRect(0, 0, W, H); } },
   post(c, lt) { joltFlash(c, lt, [6.0, 11.0, 14.2]); if (lt > .4 && lt < 6) label(c, 'KTO MIAŁ JEGO KLUCZE…', 540, 300, 'dark', 40, lt - .4, 6 - lt);
-    if (lt > 11.2 && lt < 14.2) label(c, 'ŚWIATŁO W ŚRODKU GAŚNIE', 540, 300, 'red', 40, lt - 11.2, 14.2 - lt); if (lt > 14.6 && lt < 16.2) label(c, 'ON JEST W ŚRODKU', 540, 300, 'red', 46, lt - 14.6, 16.2 - lt); if (lt > 16.2 && lt < 18.6) label(c, '„WEJDŹ, KUBA.”', 540, 300, 'red', 50, lt - 16.2, 18.6 - lt); if (lt > 18.6 && lt < 19.6) label(c, 'TRZASK!', 540, 300, 'red', 60, lt - 18.6, 19.6 - lt); },
+    if (lt > 11.2 && lt < 14.2) label(c, 'ŚWIATŁO W ŚRODKU GAŚNIE', 540, 300, 'red', 40, lt - 11.2, 14.2 - lt); if (lt > 14.6 && lt < 16.2) label(c, 'ON JEST W ŚRODKU', 540, 300, 'red', 46, lt - 14.6, 16.2 - lt); if (lt > 16.2 && lt < 18.6) label(c, '„WEJDŹ, KUBA.”', 540, 300, 'red', 50, lt - 16.2, 18.6 - lt); if (lt > 18.6 && lt < 20.2) label(c, 'TRZASK!', 540, 300, 'red', 60, lt - 18.6, 20.2 - lt); const l = lt - 20.2; if (l > 0 && l < .8) label(c, 'SKRZYPIĄ DRZWI 95', 540, 300, 'dark', 40, l, .8 - l); if (l > 4.8 && l < 8) label(c, 'MOKRE BUTY. ŚNIEG NA PODESZWACH.', 540, 300, 'red', 34, l - 4.8, 8 - l); if (l > 8.2 && l < 11) label(c, 'SMS OD MAMY', 540, 300, 'yellow', 40, l - 8.2, 11 - l); if (l > 14.2 && l < 15.4) label(c, 'KOMU UFASZ?', 540, 300, 'red', 56, l - 14.2, 15.4 - l); },
 });
