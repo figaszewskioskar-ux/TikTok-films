@@ -1068,9 +1068,20 @@ scene({
   name: 'police', start: 48, end: 58, cam: jolt([.3]),
   bubbles: [sayAt(.3, 3.4, 'Policja! Proszę otworzyć!', 'obcy', 540, 600, 0, 60)],
   draw(c, lt) { peepPOV(c, lt, (cc, cx, cy, r) => { cc.save(); cc.translate(cx, cy); cc.scale(.62, .62); cc.translate(-540, -1000); stairElev(cc, lt, 9, { lightOff: true });
-      person(cc, 'obcy', 540, 2350, 4.6, { t: lt, still: true, look: 0 }); cc.fillStyle = '#000'; cc.fillRect(0, 0, W, 1420); // twarz w cieniu
-      cc.save(); cc.translate(600, 1000); cc.rotate(-.1); fillRR(cc, -110, -70, 220, 140, 14, '#1A1A22'); circ(cc, -40, 0, 34, '#C9A15A'); fillRR(cc, 10, -30, 80, 14, 4, '#9AA2AB'); fillRR(cc, 10, 0, 60, 10, 4, '#9AA2AB'); cc.restore(); cc.restore(); }); },
-  post(c, lt) { joltFlash(c, lt, [.3]); if (lt > 3.6) label(c, 'LEGITYMACJA? TWARZY NIE WIDAĆ.', 540, 1500, 'red', 36, lt - 3.6, 9); },
+      // sylwetka w ciemności: czapka, ramiona, tylko obrys od światła z dołu
+      cc.fillStyle = '#06070B'; cc.beginPath(); cc.ellipse(540, 560, 190, 220, 0, 0, 7); cc.fill(); cc.beginPath(); cc.moveTo(120, 2000); cc.quadraticCurveTo(160, 900, 540, 820); cc.quadraticCurveTo(920, 900, 960, 2000); cc.fill();
+      cc.strokeStyle = 'rgba(160,180,220,.25)'; cc.lineWidth = 6; cc.beginPath(); cc.ellipse(540, 560, 190, 220, 0, 3.4, 6.0); cc.stroke(); cc.beginPath(); cc.moveTo(170, 1500); cc.quadraticCurveTo(200, 920, 540, 840); cc.stroke();
+      // otwarta „legitymacja” tuż przy wizjerze, lekko drży, odblask latarki
+      const sh = Math.sin(lt * 23) * 6; cc.save(); cc.translate(540 + sh, 1020 + Math.cos(lt * 19) * 4); cc.rotate(-.06);
+      cc.fillStyle = '#16171C'; cc.beginPath(); cc.ellipse(0, 230, 150, 90, 0, 0, 7); cc.fill(); // dłoń w rękawiczce
+      fillRR(cc, -300, -190, 600, 380, 26, '#2A1C14'); fillRR(cc, -290, -180, 285, 360, 20, '#3A281C'); fillRR(cc, 5, -180, 285, 360, 20, '#3A281C');
+      cc.fillStyle = '#C9A15A'; cc.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr2 = k % 2 ? 50 : 110; cc.lineTo(-148 + Math.cos(a) * rr2, Math.sin(a) * rr2); } cc.closePath(); cc.fill();
+      circ(cc, -148, 0, 44, '#E8C870'); circ(cc, -148, 0, 30, '#B08A48'); txt(cc, '★', -148, 2, 34, '#E8C870', 900);
+      fillRR(cc, 30, -150, 230, 300, 10, '#E8E4DA'); fillRR(cc, 50, -120, 80, 100, 6, '#7A7E86'); txt(cc, 'LEGITYMACJA', 145, 30, 22, '#1E3A7A', 900); for (let k = 0; k < 4; k++) fillRR(cc, 50, 60 + k * 22, 180 - k * 30, 8, 3, '#9AA2AB');
+      fillRR(cc, 145, -120, 95, 14, 4, '#9AA2AB'); fillRR(cc, 145, -96, 70, 14, 4, '#9AA2AB');
+      cc.save(); cc.globalCompositeOperation = 'lighter'; const gl = cc.createRadialGradient(-120, -60, 10, -120, -60, 260); gl.addColorStop(0, 'rgba(255,250,220,.55)'); gl.addColorStop(1, 'rgba(255,250,220,0)'); cc.fillStyle = gl; cc.fillRect(-300, -190, 600, 380); cc.restore();
+      cc.restore(); cc.restore(); }); },
+  post(c, lt) { joltFlash(c, lt, [.3]); if (lt > 3.6) label(c, 'LEGITYMACJA? TWARZY NIE WIDAĆ.', 540, 1520, 'red', 36, lt - 3.6, 9); },
 });
 // 7. BŁĄD 2: Kuba uchyla drzwi na łańcuch. Dłoń w rękawiczce wsuwa się w szparę i chwyta łańcuch. Kuba zatrzaskuje drzwi barkiem.
 scene({
@@ -1116,14 +1127,29 @@ scene({
   name: 'end', start: 98, end: 120, cam: jolt([7.6, 12.0, 18.6]),
   labels: [[19.6, 22, 'ODC. 3 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
-    if (lt < 3.6) { kubaRoom2(c, lt, { lamp: true, screen: false }); person(c, 'kuba', 540, 1780, 2.0, { t: lt, home: true, back: true, still: true }); night(c, .8, [{ x: 540, y: 700, r: 520, a: .7 }]); return; }
+    if (lt < 3.6) { kubaRoom2(c, lt, { lamp: true, screen: false });
+      if (lt < 1.6) { person(c, 'kuba', 760, 1330, 1.7, { t: lt, home: true, sit: true, phone: true, look: -1, wide: true }); c.save(); c.globalCompositeOperation = 'lighter'; const pg = c.createRadialGradient(740, 980, 10, 740, 980, 220); pg.addColorStop(0, 'rgba(160,200,255,.45)'); pg.addColorStop(1, 'rgba(160,200,255,0)'); c.fillStyle = pg; c.fillRect(500, 760, 480, 480); c.restore(); }
+      else { const p = clamp((lt - 1.6) / 1.4); person(c, 'kuba', lerp(760, 560, p), lerp(1500, 1180, p), lerp(1.8, 1.55, p), { t: lt, home: true, walk: p < 1 ? lt * 10 : null, back: p > .6, look: -1, aR: p >= 1 ? 2.4 : null }); }
+      night(c, .7, [{ x: 575, y: 1060, r: 420, a: .8 }, { x: 550, y: 520, r: 380, a: .7 }]); return; }
     if (lt < 12.0) { yardFromWindow(c, lt, { fig: lt > 5.0 ? clamp((lt - 5) / .8) : 0, wave: lt > 7.6, grin: lt > 7.6 }); night(c, .3, []); return; }
     if (lt < 15.6) { yardFromWindow(c, lt, { fig: lt < 14 ? 1 : 0, grin: true }); c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(0, 0, W, H);
       fillRR(c, 140, 700, 800, 230, 34, 'rgba(20,22,30,.96)'); txt(c, 'Nieznany numer · teraz', 200, 760, 28, '#9AA2AB', 800, 'left'); txt(c, 'Dobranoc, Kuba.', 200, 850, 64, '#FFFFFF', 900, 'left'); return; }
     if (lt < 18.6) { yardFromWindow(c, lt, { fig: 0 }); night(c, .4, []); return; }
-    c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); person(c, 'obcy', 540, 2650, 5.4, { t: lt, mouth: 'grin', look: 0, wide: true, still: true });
-    c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 1100, 40, 540, 1100, 800); g.addColorStop(0, 'rgba(140,170,255,.25)'); g.addColorStop(1, 'rgba(140,170,255,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore(); night(c, .5, [{ x: 540, y: 1100, r: 620, a: .9 }]);
-    if (lt > 19.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.4) / .4) * .8})`; c.fillRect(0, 0, W, H); } },
+    // ostatni kadr: MMS — selfie obcego, za nim blok i oświetlone okno 94, w oknie sylwetka Kuby
+    c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H);
+    fillRR(c, 90, 150, 900, 1620, 70, '#16171C'); fillRR(c, 110, 170, 860, 1580, 56, '#0B0D14');
+    txt(c, 'Nieznany numer', 540, 260, 36, '#FFFFFF', 900); txt(c, 'teraz', 540, 304, 24, '#9AA2AB', 700);
+    c.save(); rr(c, 150, 350, 780, 1040, 30); c.clip();
+    const sky = c.createLinearGradient(0, 350, 0, 1390); sky.addColorStop(0, '#0A1022'); sky.addColorStop(1, '#1A2238'); c.fillStyle = sky; c.fillRect(150, 350, 780, 1040);
+    c.fillStyle = '#2A3350'; c.fillRect(200, 380, 680, 1010); for (let r = 0; r < 9; r++) for (let q = 0; q < 6; q++) { const is94 = r === 0 && q === 3; fillRR(c, 225 + q * 110, 400 + r * 110, 70, 64, 3, is94 ? '#FFD36A' : (hash(r * 6 + q) > .85 ? '#8A7440' : '#141A2C')); }
+    c.save(); c.shadowColor = '#FFB020'; c.shadowBlur = 40; fillRR(c, 555, 400, 70, 64, 3, '#FFD36A'); c.restore(); c.fillStyle = '#1A1206'; circ(c, 590, 420, 10, '#1A1206'); fillRR(c, 577, 430, 26, 30, 8, '#1A1206');
+    c.strokeStyle = 'rgba(255,59,48,.9)'; c.lineWidth = 5; c.beginPath(); c.arc(590, 432, 52, 0, 7); c.stroke();
+    snow(c, lt, 40, .6);
+    person(c, 'obcy', 470, 2180, 4.4, { t: lt, mouth: 'grin', look: 0, wide: true, still: true });
+    c.save(); c.globalCompositeOperation = 'lighter'; const fg = c.createRadialGradient(470, 1150, 30, 470, 1150, 520); fg.addColorStop(0, 'rgba(255,255,255,.28)'); fg.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = fg; c.fillRect(150, 350, 780, 1040); c.restore();
+    c.restore();
+    fillRR(c, 150, 1420, 560, 96, 30, '#2A2D36'); txt(c, 'Dobranoc, Kuba. 🙂', 430, 1468, 40, '#FFFFFF', 900);
+    if (lt > 19.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.4) / .4) * .75})`; c.fillRect(0, 0, W, H); } },
   post(c, lt) { joltFlash(c, lt, [7.6, 12.0, 18.6]);
     if (lt < 3.6) label(c, '01:30 · KUBA NIE MOŻE ZASNĄĆ', 540, 300, 'dark', 38, lt, 3.6 - lt);
     if (lt > 5.4 && lt < 7.6) label(c, 'POD DRZEWEM KTOŚ STOI', 540, 360, 'red', 36, lt - 5.4, 7.6 - lt); if (lt > 7.8 && lt < 12) label(c, 'I MACHA.', 540, 360, 'red', 44, lt - 7.8, 12 - lt);
