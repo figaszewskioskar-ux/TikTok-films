@@ -709,7 +709,7 @@ function stairElev(c, lt, floor, o = {}) {
   for (let i = 0; i < 22; i++) { const px = hash(i + 3) * W, py = SFY - 60 - hash(i + 7) * 420; c.fillStyle = 'rgba(230,225,210,.3)'; c.beginPath(); c.ellipse(px, py, 4 + hash(i) * 10, 3 + hash(i + 1) * 6, hash(i + 2), 0, 7); c.fill(); }
   c.strokeStyle = 'rgba(60,50,40,.16)'; c.lineWidth = 2; for (let i = 0; i < 8; i++) { const px = hash(i + 40) * W, py = 90 + hash(i + 50) * 400; c.beginPath(); c.moveTo(px, py); c.lineTo(px + 30 + hash(i) * 50, py + hash(i + 9) * 14); c.lineTo(px + 50 + hash(i) * 60, py + 20); c.stroke(); }
   // numer piętra malowany na ścianie
-  txt(c, floor === 0 ? 'P' : String(floor), 160, 370, 100, 'rgba(40,60,50,.55)', 900); txt(c, floor === 0 ? 'PARTER' : 'PIĘTRO', 160, 440, 26, 'rgba(40,60,50,.55)', 900);
+  txt(c, floor === 0 ? 'P' : String(floor), 160, 345, 96, 'rgba(40,60,50,.55)', 900); txt(c, floor === 0 ? 'PARTER' : 'PIĘTRO', 160, 418, 24, 'rgba(40,60,50,.55)', 900);
   // okno na półpiętrze
   nightWindow(c, lt, 770, 150, 250, 330, floor);
   // skrzynka elektryczna nad poręczą
@@ -726,6 +726,7 @@ function stairElev(c, lt, floor, o = {}) {
   // hydrant pod biegiem
   fillRR(c, 860, 1160, 150, 220, 6, '#C23A3A'); fillRR(c, 872, 1172, 126, 196, 4, '#D94A4A'); c.strokeStyle = '#F2F2EE'; c.lineWidth = 5; c.beginPath(); c.arc(935, 1270, 38, 0, 7); c.stroke(); c.beginPath(); c.arc(935, 1270, 22, 0, 7); c.stroke();
   txt(c, 'HYDRANT', 935, 1195, 16, '#FFFFFF', 900); fillRR(c, 980, 1250, 10, 40, 3, '#8A2020');
+  if (o.mid) o.mid(c); // postać na schodach — za poręczą
   // poręcz: tralki + drewniany pochwyt + słupek z zawijasem
   c.strokeStyle = '#23262E'; c.lineWidth = 6; for (let i = 0; i < SN; i++) { const bx = SX0 + i * SRUN + SRUN / 2, by = SFY - (i + 1) * SRISE - 8; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx, by - 230); c.stroke(); }
   for (let bx = topX + 30; bx < W; bx += 60) { c.beginPath(); c.moveTo(bx, topY - 8); c.lineTo(bx, topY - 238); c.stroke(); }
@@ -827,6 +828,52 @@ function landing9b(c, lt, o = {}) {
   else cageLamp(c, 540, 40, lt, 1, o.flick);
 }
 
+
+// ULICA PRZED BLOKIEM (bliżej): fasada z oknami (9. piętro u góry, okno 94 ciemne), parter z cegły, daszek klatki, latarnie, auta pod śniegiem, drzewo
+function streetBlock(c, lt, o = {}) {
+  const sky = c.createLinearGradient(0, 0, 0, 300); sky.addColorStop(0, '#05080F'); sky.addColorStop(1, '#141B2E'); c.fillStyle = sky; c.fillRect(0, 0, W, 300);
+  c.fillStyle = '#394157'; c.fillRect(0, 110, W, 1150); c.fillStyle = '#2E354A'; c.fillRect(0, 110, W, 14);
+  for (let i = 0; i < 9; i++) { c.fillStyle = 'rgba(0,0,0,.12)'; c.fillRect(0, 248 + i * 128, W, 3); } for (let q = 1; q < 6; q++) { c.fillStyle = 'rgba(0,0,0,.08)'; c.fillRect(q * 180 - 2, 110, 3, 1150); }
+  for (let r = 0; r < 8; r++) for (let q = 0; q < 6; q++) { const x = 36 + q * 180, y = 140 + r * 128, hv = hash(r * 7 + q * 13 + 3), is94 = r === 0 && q === 3, lit = !is94 && hv > .5;
+    fillRR(c, x - 6, y - 6, 120, 92, 3, '#C9C2A8'); fillRR(c, x, y, 108, 80, 2, lit ? (hv > .9 ? '#7FA8E0' : '#E8B860') : '#111827');
+    if (lit && hv <= .9) { c.fillStyle = 'rgba(150,60,50,.55)'; c.fillRect(x, y, 22, 80); c.fillRect(x + 86, y, 22, 80); if (hv > .75) { c.fillStyle = 'rgba(60,40,30,.6)'; fillRR(c, x + 40, y + 40, 26, 40, 8, 'rgba(50,35,30,.7)'); } }
+    if (lit && hv > .9) { c.fillStyle = `rgba(160,200,255,${.15 + .15 * Math.sin(lt * 9 + q)})`; c.fillRect(x, y, 108, 80); }
+    c.fillStyle = '#C9C2A8'; c.fillRect(x + 52, y, 4, 80); fillRR(c, x - 10, y + 80, 128, 9, 2, '#5A6278'); ell(c, x + 54, y + 79, 54, 6, 'rgba(240,245,255,.9)');
+    if (is94 && o.mark) { c.save(); c.strokeStyle = '#FF3B30'; c.lineWidth = 6; c.setLineDash([14, 10]); c.beginPath(); c.arc(x + 54, y + 40, 80, 0, 7); c.stroke(); c.restore(); } }
+  txt(c, '9 →', 0 + 18, 180, 22, 'rgba(255,255,255,.35)', 900, 'left');
+  bricks(c, 0, 1160, W, 360);
+  // daszek klatki 12 z lampą, drzwi z siatką
+  fillRR(c, 700, 1300, 300, 220, 2, '#2E3440'); fillRR(c, 720, 1320, 120, 200, 2, '#3A4150'); c.fillStyle = 'rgba(232,226,200,.75)'; c.fillRect(732, 1334, 96, 110); fillRR(c, 860, 1320, 120, 200, 2, '#3A4150');
+  fillRR(c, 660, 1270, 380, 40, 3, '#9A9484'); for (let i = 0; i < 8; i++) ell(c, 680 + i * 48, 1266, 30, 12, '#EEF2F8'); fillRR(c, 800, 1310, 60, 18, 6, '#DDE3E8'); fillRR(c, 1010, 1200, 60, 36, 4, '#2F5DA8'); txt(c, '12', 1040, 1218, 22, '#FFFFFF', 900);
+  c.save(); c.globalCompositeOperation = 'lighter'; const eg = c.createRadialGradient(830, 1320, 10, 830, 1500, 420); eg.addColorStop(0, 'rgba(255,236,190,.5)'); eg.addColorStop(1, 'rgba(255,236,190,0)'); c.fillStyle = eg; c.fillRect(380, 1200, 700, 600); c.restore();
+  // chodnik, krawężnik, śnieg, ślady
+  c.fillStyle = '#DCE3EC'; c.fillRect(0, 1520, W, 400); c.fillStyle = '#B8C2CF'; c.fillRect(0, 1760, W, 14); c.fillStyle = '#1A1E28'; c.fillRect(0, 1774, W, 146); for (let i = 0; i < 12; i++) ell(c, hash(i + 30) * W, 1525, 60, 10, '#F2F5FA');
+  for (let i = 0; i < 14; i++) ell(c, 40 + i * 52, 1690 + (i % 2) * 20, 15, 8, 'rgba(90,100,130,.3)');
+  // drzewo + ktoś pod nim
+  c.fillStyle = '#1A140F'; c.fillRect(560, 1180, 26, 360); for (const [tx, ty, r] of [[573, 1120, 120], [500, 1180, 80], [650, 1170, 90]]) { circ(c, tx, ty, r, '#0E1420'); ell(c, tx, ty - r * .6, r * .7, r * .25, 'rgba(235,240,250,.55)'); }
+  if (o.fig) { c.save(); c.globalAlpha = o.fig; person(c, 'obcy', 620, 1560, 1.0, { t: lt, still: true, look: -1 }); c.restore(); }
+  // latarnia
+  c.fillStyle = '#1E2330'; c.fillRect(140, 980, 14, 560); fillRR(c, 100, 970, 90, 22, 10, '#2E3446'); c.save(); c.globalCompositeOperation = 'lighter'; const lg = c.createRadialGradient(146, 990, 6, 146, 1300, 520); lg.addColorStop(0, 'rgba(255,214,140,.55)'); lg.addColorStop(1, 'rgba(255,214,140,0)'); c.fillStyle = lg; c.beginPath(); c.moveTo(130, 990); c.lineTo(160, 990); c.lineTo(420, 1600); c.lineTo(-140, 1600); c.fill(); c.restore();
+  // auto pod śniegiem na pierwszym planie
+  fillRR(c, 600, 1720, 520, 170, 50, '#5E2A2A'); fillRR(c, 700, 1640, 320, 110, 40, '#4A2222'); fillRR(c, 720, 1655, 130, 80, 16, '#121826'); fillRR(c, 870, 1655, 130, 80, 16, '#121826'); ell(c, 860, 1640, 170, 26, '#F2F5FA'); ell(c, 860, 1720, 260, 18, '#F2F5FA'); circ(c, 700, 1890, 44, '#0A0C12'); circ(c, 1010, 1890, 44, '#0A0C12'); fillRR(c, 1080, 1760, 30, 30, 8, '#FFB070');
+}
+// ZBLIŻENIE: zamek drzwi 94, klucz w drżącej dłoni trafia w zamek
+function lockClose(c, lt, l) {
+  quilted(c, 0, 0, W, H, '#6B4A2F', '#583B24', '#C9A15A', 120);
+  fillRR(c, 380, 520, 320, 760, 30, '#C9A15A'); fillRR(c, 400, 540, 280, 720, 24, '#B08A48'); c.strokeStyle = 'rgba(255,240,200,.35)'; c.lineWidth = 6; c.beginPath(); c.moveTo(420, 560); c.lineTo(420, 1240); c.stroke();
+  circ(c, 540, 760, 70, '#A07A3A'); circ(c, 540, 760, 56, '#C9A15A'); fillRR(c, 532, 720, 16, 80, 6, '#1B120A'); circ(c, 540, 726, 12, '#1B120A');
+  c.strokeStyle = 'rgba(60,40,20,.5)'; c.lineWidth = 3; for (let i = 0; i < 9; i++) { const a = hash(i) * 6.28; c.beginPath(); c.moveTo(540 + Math.cos(a) * 30, 760 + Math.sin(a) * 30); c.lineTo(540 + Math.cos(a) * (60 + hash(i + 4) * 40), 760 + Math.sin(a) * (60 + hash(i + 4) * 40)); c.stroke(); }
+  fillRR(c, 480, 1040, 120, 50, 20, '#D4AE62'); fillRR(c, 330, 1040, 200, 50, 22, '#D4AE62');
+  const ins = l > 2.0, miss = l < 2.0 ? [[-90, 60], [70, -40], [-30, 20]][Math.floor(l / .7) % 3] : [0, 0], sh = ins ? 0 : 1, jx = Math.sin(lt * 47) * 7 * sh, jy = Math.cos(lt * 39) * 6 * sh;
+  const kx = 540 + miss[0] * (ins ? 0 : 1) + jx, ky = 790 + miss[1] * (ins ? 0 : 1) + jy, rot = ins ? clamp((l - 2.4) / .5) * 1.4 : 0;
+  c.save(); c.translate(kx, ky); c.rotate(rot);
+  if (!ins) { c.fillStyle = '#D6DADF'; c.beginPath(); c.moveTo(-8, 0); c.lineTo(8, 0); c.lineTo(8, -70); c.lineTo(-2, -82); c.lineTo(-8, -70); c.fill(); for (let i = 0; i < 4; i++) c.fillRect(8, -20 - i * 14, 6, 8); }
+  fillRR(c, -36, 0, 72, 90, 30, '#C9CDD2'); circ(c, 0, 60, 12, '#6B4A2F'); c.restore();
+  c.strokeStyle = '#C9CDD2'; c.lineWidth = 8; c.beginPath(); c.arc(kx + 10, ky + 150, 46, 0, 7); c.stroke(); fillRR(c, kx + 40, ky + 170, 30, 110, 10, '#2F5DA8'); fillRR(c, kx - 30, ky + 180, 24, 90, 8, '#C23A3A');
+  hand(c, kx + 40, ky + 110, 1.15, KINDS.kuba);
+}
+function shot(c, cx, cy, k, fn) { c.save(); c.translate(540, 960); c.scale(k, k); c.translate(-cx, -cy); fn(c); c.restore(); }
+
 // ===================== SCENY v2 =====================
 // 0. HAK: od środka klatki — drzwi wejściowe się domykają, w szparze pojawia się czyjaś dłoń i blokuje je. W szparze uśmiech.
 scene({
@@ -843,6 +890,7 @@ scene({
     // skrzydło drzwi (zawiasy z prawej), siatka w szybie, pochwyt
     c.fillStyle = '#3A4150'; c.fillRect(gr, 270, 940 - gr, 1450); c.fillStyle = '#20263A'; c.fillRect(gr, 270, 10, 1450);
     c.save(); c.beginPath(); c.rect(gr + 40, 340, 940 - gr - 80, 760); c.clip(); c.fillStyle = '#12182C'; c.fillRect(gr, 340, 600, 760); snowfall(c, lt + 3, 20, .5); c.strokeStyle = 'rgba(200,210,220,.4)'; c.lineWidth = 3; for (let i = -20; i < 30; i++) { c.beginPath(); c.moveTo(gr + i * 34, 340); c.lineTo(gr + i * 34 + 760, 1100); c.moveTo(gr + i * 34, 340); c.lineTo(gr + i * 34 - 760, 1100); c.stroke(); } c.restore();
+    if (lt > 2.7) for (let f = 0; f < 4; f++) { const fy = 960 + f * 44; fillRR(c, gr - 4, fy, 52 - f * 4, 36, 16, '#1B1C22'); ell(c, gr + 30 - f * 3, fy + 10, 8, 5, 'rgba(255,255,255,.12)'); }
     fillRR(c, gr + 30, 1140, 22, 220, 10, '#C9CDD2'); fillRR(c, 890, 300, 40, 80, 6, '#1E222C'); // samozamykacz
     night(c, .35, [{ x: 640, y: 900, r: 700, a: .9 }]);
     bigSign(c, lt, 'NIE PRZYTRZYMUJ', 'DRZWI!', 1640);
@@ -852,13 +900,12 @@ scene({
 // 1. BLOK NOCĄ, 22:50: Kuba wraca z treningu przez śnieg. Okno 94 ciemne. Pod drzewem przy wejściu ktoś stoi.
 scene({
   name: 'ctx', start: 5, end: 12,
-  draw(c, lt) { blockBg(c, lt, { night: true, off94: true }); snow(c, lt, 90, .8);
-    c.save(); c.globalAlpha = .55; person(c, 'obcy', 930, 1505, .62, { t: lt, still: true }); c.restore();
-    const kx = lerp(80, 470, clamp(lt / 6.6)); person(c, 'kuba', kx, 1512, .66, { t: lt, walk: lt * 10, look: 1, duffel: true }); breathPuff(c, kx + 12, 1512 - .66 * 250, lt);
-    if (lt > 3.0) { c.save(); c.strokeStyle = '#FF3B30'; c.lineWidth = 6; c.setLineDash([14, 10]); c.beginPath(); c.arc(703, 560, 62, 0, 7); c.stroke(); c.restore(); }
-    if (lt > 5.0) { c.save(); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 4; c.setLineDash([10, 10]); c.beginPath(); c.arc(930, 1440, 70, 0, 7); c.stroke(); c.restore(); }
-    night(c, .2, [{ x: 540, y: 1400, r: 700, a: .9 }]); },
-  post(c, lt) { if (lt > .3) label(c, '22:50 · KUBA WRACA Z TRENINGU', 540, 300, 'yellow', 38, lt - .3, 9); if (lt > 3.0 && lt < 5.0) label(c, '94 · 9. PIĘTRO · W DOMU NIKOGO', 540, 410, 'dark', 32, lt - 3, 5 - lt); if (lt > 5.0) label(c, 'POD DRZEWEM KTOŚ STOI', 540, 410, 'red', 34, lt - 5, 9); },
+  draw(c, lt) { streetBlock(c, lt, { mark: lt > 2.6, fig: lt > 4.6 ? .75 : .35 }); snow(c, lt, 100, .8);
+    const kx = lerp(-60, 400, clamp(lt / 6.8)); person(c, 'kuba', kx, 1700, 1.3, { t: lt, walk: lt * 10, look: 1, duffel: true }); breathPuff(c, kx + 24, 1700 - 1.3 * 250, lt);
+    for (let k = 0; k < 6; k++) circ(c, kx - 30 + hash(k) * 60, 1700 - 1.3 * 196 + hash(k + 3) * 12, 3, 'rgba(240,245,255,.95)');
+    if (lt > 4.6) { c.save(); c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = 4; c.setLineDash([10, 10]); c.beginPath(); c.arc(620, 1430, 100, 0, 7); c.stroke(); c.restore(); }
+    night(c, .25, [{ x: 146, y: 1300, r: 420, a: .8 }, { x: 830, y: 1400, r: 420, a: .8 }, { x: 540, y: 600, r: 900, a: .5 }]); },
+  post(c, lt) { if (lt > .3) label(c, '22:50 · KUBA WRACA Z TRENINGU', 540, 300, 'yellow', 38, lt - .3, 9); if (lt > 2.6 && lt < 4.6) label(c, 'OKNO 94 · CIEMNO · W DOMU NIKOGO', 540, 410, 'dark', 30, lt - 2.6, 4.6 - lt); if (lt > 4.6) label(c, 'POD DRZEWEM KTOŚ STOI', 540, 410, 'red', 34, lt - 4.6, 9); },
 });
 // 2. DOMOFON z bliska: Kuba wpisuje kod. W szybie drzwi za jego plecami rośnie odbicie sylwetki.
 const CODE = [[1.0, '1'], [1.8, '9'], [2.6, '9'], [3.4, '4']];
@@ -889,33 +936,37 @@ scene({
 // 4. PARTER: winda tuż obok schodów. Obcy nie sprawdza skrzynki, nie idzie schodami — staje za Kubą. Winda zjeżdża. „Ty pierwszy.”
 scene({
   name: 'lobby', start: 30, end: 39,
-  bubbles: [say(6.6, 8.8, 'Ty pierwszy.', 'obcy', 600, 1780, 2.05, -40)],
+  bubbles: [say(6.6, 8.8, 'Ty pierwszy.', 'obcy', 880, 1780, 2.05, -40)],
   draw(c, lt) { const fl = lt < 1.2 ? 7 : Math.max(0, 7 - Math.floor((lt - 1.2) / 5.2 * 8)), op = lt > 6.6 ? clamp((lt - 6.6) / .7) : 0;
     lobbyStairs(c, lt, { called: lt > 1.0 && op < 1 ? -1 : false, elevFloor: fl, dir: fl > 0 ? -1 : 0, elevOpen: op, inCab: (cc, x, y, w, h) => cabMini(cc, x, y, w, h, lt, { floor: 0 }) });
-    person(c, 'kuba', 230, 1720, 2.0, { t: lt, look: lt > 3 && lt < 5.6 ? 1 : -1, duffel: true, aL: lt > .8 && lt < 1.6 ? 1.5 : null, wide: lt > 3, lookY: lt > 1.6 && lt < 3 ? -1 : 0 });
-    person(c, 'obcy', 600, 1780, 2.05, { t: lt, look: -1, still: true, mouth: lt > 8.8 ? 'grin' : 'smile', talk: lt > 6.6 && lt < 8.4 });
+    const mx = lt < 1.4 ? lerp(1180, 880, eout(clamp(lt / 1.4))) : 880;
+    person(c, 'kuba', 590, 1640, 2.0, { t: lt, look: lt > 3 && lt < 5.6 ? 1 : -1, duffel: true, aL: lt > .6 && lt < 1.6 ? 2.6 : null, wide: lt > 3, lookY: lt > 1.6 && lt < 3 ? -1 : 0 });
+    person(c, 'obcy', mx, 1780, 2.05, { t: lt, walk: lt < 1.4 ? lt * 10 : null, look: -1, still: lt > 1.4, mouth: lt > 8.8 ? 'grin' : 'smile', talk: lt > 6.6 && lt < 8.4 });
     night(c, .25, [{ x: 400, y: 1100, r: 800, a: .9 }]); },
   post(c, lt) { if (lt > 1.6 && lt < 3.2) label(c, 'WINDA ZJEŻDŻA Z 7. PIĘTRA', 540, 300, 'dark', 36, lt - 1.6, 3.2 - lt); if (lt > 3.2 && lt < 6.4) label(c, 'NIE SPRAWDZA SKRZYNKI.\nNIE IDZIE SCHODAMI.', 540, 300, 'red', 36, lt - 3.2, 6.4 - lt); },
 });
 // 5. KABINA: Kuba wciska 9. Obcy nie wciska nic — ręce w kieszeniach, patrzy na przycisk (BŁĄD 2).
+const cabTwo = (c, lt, o = {}) => { cabFull(c, lt, Object.assign({ mirror: (cc) => { person(cc, 'obcy', 300, 1200, 1.3, { t: lt, mouth: 'grin', look: -1, still: true }); person(cc, 'kuba', 170, 1210, 1.25, { t: lt, back: true, duffel: true }); } }, o.cab));
+  person(c, 'kuba', 320, 1720, 2.1, Object.assign({ t: lt, look: 1, duffel: true }, o.kuba)); person(c, 'obcy', 760, 1720, 2.1, Object.assign({ t: lt, look: -1, still: true }, o.obcy)); };
 scene({
   name: 'cab', start: 39, end: 49,
-  bubbles: [say(5.4, 7.6, 'Dziewiąte. Pasuje.', 'obcy', 760, 1720, 2.1, -60)],
-  draw(c, lt) { cabFull(c, lt, { floor: lt < 4 ? 0 : 1, lit: lt > 1.6 ? [9] : [], mirror: (cc) => { person(cc, 'obcy', 300, 1200, 1.3, { t: lt, mouth: 'grin', look: -1, still: true }); person(cc, 'kuba', 170, 1210, 1.25, { t: lt, back: true, duffel: true }); } });
-    person(c, 'kuba', 320, 1720, 2.1, { t: lt, look: 1, duffel: true, aR: lt > 1 && lt < 2 ? 1.7 : null, wide: lt > 3 });
-    person(c, 'obcy', 760, 1720, 2.1, { t: lt, look: -1, still: true, mouth: lt > 7.6 ? 'grin' : 'smile', talk: lt > 5.4 && lt < 7.4, lookY: lt > 2 && lt < 5 ? -1 : 0 });
-    if (lt > 2.4 && lt < 5.2) { c.save(); c.strokeStyle = '#FFB020'; c.lineWidth = 6; c.setLineDash([12, 8]); c.beginPath(); c.arc(920, 852, 44, 0, 7); c.stroke(); c.restore(); }
+  bubbles: [sayAt(5.4, 7.6, 'Dziewiąte. Pasuje.', 'obcy', 540, 420, 0, 40)],
+  draw(c, lt) { const lit = lt > 1.9 ? [9] : [];
+    if (lt > 1.0 && lt < 3.0) { shot(c, 880, 720, 2.3, (cc) => cabFull(cc, lt, { floor: 0, lit })); const pr = lt > 1.6 && lt < 2.2; hand(c, 640 - (pr ? 0 : 40), 1130 + (pr ? 0 : 60), 2.3, KINDS.kuba); night(c, .15, []); return; }
+    if (lt > 5.2 && lt < 7.8) { shot(c, 760, 1250, 2.4, (cc) => cabTwo(cc, lt, { cab: { floor: 1, lit }, obcy: { mouth: lt > 7.4 ? 'grin' : 'smile', talk: lt > 5.4 && lt < 7.4, look: -1 } })); night(c, .3, [{ x: 540, y: 900, r: 600, a: .9 }]); return; }
+    cabTwo(c, lt, { cab: { floor: lt < 4 ? 0 : 1, lit }, kuba: { wide: lt > 3 }, obcy: { mouth: lt > 7.6 ? 'grin' : 'smile', lookY: lt > 3 && lt < 5 ? -1 : 0 } });
+    if (lt > 3.0 && lt < 5.2) { c.save(); c.strokeStyle = '#FF3B30'; c.lineWidth = 5; c.setLineDash([12, 8]); c.beginPath(); c.ellipse(760, 1500, 150, 90, 0, 0, 7); c.stroke(); c.restore(); }
     night(c, .1, []); },
-  post(c, lt) { if (lt > 2.4 && lt < 5.2) label(c, 'ON NIE WCISKA ŻADNEGO PIĘTRA', 540, 300, 'red', 36, lt - 2.4, 5.2 - lt); if (lt > 7.8) card(c, 70, 300, 860, 'BŁĄD 2', 'pojechał sam z obcym\ni pokazał mu swoje piętro', lt - 7.8, '#F39C12', 38); },
+  post(c, lt) { if (lt > 1.2 && lt < 3.0) label(c, 'KUBA WCISKA 9', 540, 300, 'yellow', 44, lt - 1.2, 3 - lt); if (lt > 3.0 && lt < 5.2) label(c, 'ON NIE WCISKA ŻADNEGO PIĘTRA.\nRĘCE W KIESZENIACH.', 540, 300, 'red', 34, lt - 3, 5.2 - lt); if (lt > 7.8) card(c, 70, 300, 860, 'BŁĄD 2', 'pojechał sam z obcym\ni pokazał mu swoje piętro', lt - 7.8, '#F39C12', 38); },
 });
 // 6. JAZDA: 1… 2… 3… 4. „Sam dziś wracasz?” — „Tata czeka.” — „W dziewięćdziesiątce czwórce światło się nie pali.”
 scene({
   name: 'ride', start: 49, end: 58, cam: jolt([8.2]),
-  bubbles: [say(.6, 2.8, 'Sam dziś wracasz?', 'obcy', 760, 1720, 2.1, -60), say(3.2, 5.0, 'Nie… tata czeka.', 'kuba', 320, 1720, 2.1, 40), say(5.4, 8.2, 'W dziewięćdziesiątce czwórce\nświatło się nie pali.', 'obcy', 760, 1720, 2.1, -120)],
-  draw(c, lt) { cabFull(c, lt, { floor: Math.min(4, 1 + Math.floor(lt / 2.4)), lit: [9], flicker: lt > 8.2 });
-    person(c, 'kuba', 320, 1720, 2.1, { t: lt, look: 1, duffel: true, wide: true, talk: lt > 3.2 && lt < 4.8, mouth: lt > 8.2 ? 'o' : null });
-    person(c, 'obcy', 760, 1720, 2.1, { t: lt, look: -1, still: true, mouth: lt > 8.2 ? 'grin' : null, talk: (lt > .6 && lt < 2.6) || (lt > 5.4 && lt < 8.0) });
-    night(c, lt > 8.2 ? .35 : .1, [{ x: 540, y: 90, r: 700, a: .7 }]); },
+  bubbles: [say(.6, 2.8, 'Sam dziś wracasz?', 'obcy', 760, 1720, 2.1, -60), say(3.2, 5.0, 'Nie… tata czeka.', 'kuba', 320, 1720, 2.1, 40), sayAt(5.4, 8.2, 'W dziewięćdziesiątce czwórce\nświatło się nie pali.', 'obcy', 540, 400, 0, 40)],
+  draw(c, lt) { const fl = Math.min(4, 1 + Math.floor(lt / 2.4));
+    if (lt > 5.4 && lt < 8.2) { shot(c, 760, 1250, 2.4, (cc) => cabTwo(cc, lt, { cab: { floor: fl, lit: [9] }, obcy: { talk: lt < 8.0, mouth: lt > 7.6 ? 'grin' : null } })); night(c, .35, [{ x: 540, y: 900, r: 600, a: .9 }]); return; }
+    if (lt >= 8.2) { shot(c, 320, 1250, 2.4, (cc) => cabTwo(cc, lt, { cab: { floor: fl, lit: [9], flicker: true }, kuba: { wide: true, mouth: 'o' } })); for (let i = 0; i < 2; i++) ell(c, 420 + i * 220, 760 + ((lt * 60 + i * 30) % 90), 7, 11, 'rgba(180,220,255,.8)'); night(c, .4, [{ x: 540, y: 900, r: 600, a: .9 }]); return; }
+    cabTwo(c, lt, { cab: { floor: fl, lit: [9] }, kuba: { wide: true, talk: lt > 3.2 && lt < 4.8 }, obcy: { talk: lt > .6 && lt < 2.6 } }); night(c, .1, [{ x: 540, y: 90, r: 700, a: .7 }]); },
   post(c, lt) { joltFlash(c, lt, [8.2]); if (lt > 8.3) label(c, 'SKĄD ON TO WIE?', 540, 300, 'red', 46, lt - 8.3, 9); },
 });
 // 7. Kuba wciska 5, wyskakuje na 5. piętrze, biegnie na schody tuż obok windy. Drzwi zamykają się z uśmiechem w środku. ZASADA.
@@ -934,9 +985,9 @@ scene({
 scene({
   name: 'stairs', start: 67, end: 80, cam: jolt([11.0]),
   draw(c, lt) { const f = Math.min(8, 6 + Math.floor(lt / 3.6)), ph = (lt % 3.6) / 3.6, off = lt > 8.4 && lt < 11.0, up = lt > 11;
-    stairElev(c, lt, up ? 8 : f, { lightOff: off, elevFloor: 9, flick: up && lt < 11.8 });
-    const kx = up ? 760 : lerp(SX0 - 60, 1060, ph); person(c, 'kuba', kx, stairFootY(kx), 1.7, { t: lt, walk: up ? null : lt * 16, look: 1, duffel: true, wide: true, mouth: 'o', phone: lt > 3 && lt < 8.2, lookY: up ? -1 : 0, still: up });
-    if (off) { c.save(); c.globalAlpha = .35; person(c, 'kuba', kx, stairFootY(kx), 1.7, { t: lt, walk: lt * 16, look: 1, duffel: true }); c.restore(); }
+    const kx = up ? 760 : lerp(SX0 - 60, 1060, ph), ko = { t: lt, walk: up ? null : lt * 16, look: 1, duffel: true, wide: true, mouth: 'o', phone: lt > 3 && lt < 8.2, lookY: up ? -1 : 0, still: up };
+    stairElev(c, lt, up ? 8 : f, { lightOff: off, elevFloor: 9, flick: up && lt < 11.8, mid: (cc) => person(cc, 'kuba', kx, stairFootY(kx), 1.7, ko) });
+    if (off) { c.save(); c.globalAlpha = .35; person(c, 'kuba', kx, stairFootY(kx), 1.7, ko); c.restore(); }
     if (lt > 3 && lt < 8.2) { fillRR(c, 300, 1500, 480, 150, 24, 'rgba(14,16,22,.9)'); txt(c, 'MAMA 📞', 540, 1550, 40, '#FFFFFF', 900); txt(c, lt < 6 ? 'łączenie…' : 'nie odbiera', 540, 1605, 30, lt < 6 ? '#9AA2AB' : '#FF3B30', 800); }
     night(c, off ? .5 : .2, []); },
   post(c, lt) { joltFlash(c, lt, [11.0]); if (lt < 3) label(c, 'SCHODAMI. 6… 7…', 540, 300, 'yellow', 40, lt, 3 - lt); if (lt > 3 && lt < 8.2) label(c, 'MAMA NA NOCNEJ ZMIANIE', 540, 300, 'dark', 36, lt - 3, 8.2 - lt); if (lt > 8.4 && lt < 11) label(c, 'ŚWIATŁO GAŚNIE', 540, 300, 'dark', 44, lt - 8.4, 11 - lt); if (lt > 11) label(c, 'ZAPALA SIĘ SAMO.\nKTOŚ WYŻEJ WCISNĄŁ WŁĄCZNIK', 540, 300, 'red', 36, lt - 11, 9); },
@@ -944,11 +995,12 @@ scene({
 // 9. 9. PIĘTRO: pusto. Winda zamknięta, stoi na 9. Kuba wbiega ze schodów, klucze, drzwi 94.
 scene({
   name: 'landing', start: 80, end: 88,
-  draw(c, lt) { landing9b(c, lt, { floor: 9, flick: lt > 2 && lt < 3 });
-    const kx = lt < 2.4 ? lerp(1040, 650, eout(clamp(lt / 2.4))) : 650, ka = lt < 6.6 ? 1 : clamp(1 - (lt - 6.6) / .6);
-    c.save(); c.globalAlpha = ka; person(c, 'kuba', kx, 1760, 2.0, { t: lt, walk: lt < 2.4 ? lt * 14 : null, look: lt > 2.4 && lt < 3.6 ? -1 : 1, back: lt > 3.6, duffel: true, wide: true, keys: lt > 3.6, aR: lt > 3.6 ? 1.1 : null }); c.restore();
+  draw(c, lt) {
+    if (lt > 3.4 && lt < 6.8) { lockClose(c, lt, lt - 3.4); night(c, .35, [{ x: 540, y: 800, r: 600, a: .9 }]); return; }
+    landing9b(c, lt, { floor: 9, flick: lt > 2 && lt < 3 });
+    if (lt < 3.4) { const kx = lerp(1040, 650, eout(clamp(lt / 2.4))); person(c, 'kuba', kx, 1760, 2.0, { t: lt, walk: lt < 2.4 ? lt * 14 : null, look: lt > 2.4 ? -1 : -1, duffel: true, wide: true, mouth: 'o' }); }
     night(c, .3, [{ x: 160, y: 1000, r: 420, a: .8 }, { x: 645, y: 1100, r: 500, a: .9 }]); },
-  post(c, lt) { if (lt > .4 && lt < 3.4) label(c, 'PUSTO. WINDA STOI NA 9.', 540, 400, 'dark', 38, lt - .4, 3.4 - lt); if (lt > 3.6) label(c, 'KLUCZ… SZYBCIEJ', 540, 400, 'red', 40, lt - 3.6, 9); },
+  post(c, lt) { if (lt > .4 && lt < 3.4) label(c, 'PUSTO. WINDA STOI NA 9.', 540, 400, 'dark', 38, lt - .4, 3.4 - lt); if (lt > 3.4 && lt < 5.4) label(c, 'RĘCE SIĘ TRZĘSĄ', 540, 300, 'red', 40, lt - 3.4, 5.4 - lt); if (lt > 5.4 && lt < 6.8) label(c, 'JEST!', 540, 300, 'yellow', 44, lt - 5.4, 6.8 - lt); if (lt > 6.8) label(c, 'DO ŚRODKA', 540, 400, 'dark', 40, lt - 6.8, 9); },
 });
 // 10. ZAKOŃCZENIE: w domu, zamek i łańcuch. Wizjer: korytarz pusty… światło gaśnie… zapala się — twarz tuż przy wizjerze.
 // Szept. Pukanie. Cień stóp pod drzwiami. Klamka powoli w dół. Ciemność. Oko w wizjerze patrzy na widza. ODC. 2 ↓
