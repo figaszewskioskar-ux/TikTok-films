@@ -1,3 +1,14 @@
+wydłużono x1.07: 110.3 s -> 118.0 s
+hook       5.0s ->   5.5s
+morning    8.0s ->   8.1s
+bartek    11.0s ->  12.1s
+director  13.0s ->  14.3s
+parents   12.0s ->  17.1s
+delete     9.0s ->   7.9s
+lena      11.0s ->  10.3s
+rule      13.0s ->  12.6s
+end       26.0s ->  30.0s
+RAZEM 118.0 s
 ok bed
 ok wind
 ok boom
@@ -17,17 +28,18 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3240 klatek, 16 s
-600/3240 klatek, 39 s
-900/3240 klatek, 66 s
-1200/3240 klatek, 96 s
-1500/3240 klatek, 124 s
-1800/3240 klatek, 149 s
-2100/3240 klatek, 176 s
-2400/3240 klatek, 201 s
-2700/3240 klatek, 229 s
-3000/3240 klatek, 256 s
-Gotowe w 292 s
-audio.wav OK 108 s
+300/3540 klatek, 20 s
+600/3540 klatek, 44 s
+900/3540 klatek, 68 s
+1200/3540 klatek, 100 s
+1500/3540 klatek, 126 s
+1800/3540 klatek, 149 s
+2100/3540 klatek, 174 s
+2400/3540 klatek, 197 s
+2700/3540 klatek, 218 s
+3000/3540 klatek, 240 s
+3300/3540 klatek, 267 s
+Gotowe w 300 s
+audio.wav OK 118 s
 Gotowe: /home/user/TikTok-films/film/klasa2/out/final.mp4
 EXIT 0
