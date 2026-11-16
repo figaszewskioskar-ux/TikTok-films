@@ -121,12 +121,15 @@ window.B94next17=function(){var now=Date.now(),f=new Intl.DateTimeFormat('en-CA'
 <section class="fresh" id="nowe"><div class="wrap">
   <span class="eyebrow">Nowe na kanale</span><h2 style="margin-top:12px">Właśnie wyszły</h2>
   <div class="fr">
+    <a class="fi po3" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-samwdomu2.jpg' | asset_url }}" alt="Okładka: SAM W DOMU, odcinek 2, Nie odbieraj kluczy" loading="lazy" width="720" height="900"><span class="fb red">NOWY</span><span class="ft"><small>SAM W DOMU · odc. 2</small><b>Nie odbieraj kluczy!</b></span></a>
     <a class="fi po2" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-samwdomu1.jpg' | asset_url }}" alt="Okładka: SAM W DOMU, odcinek 1, Nie przytrzymuj drzwi" loading="lazy" width="720" height="900"><span class="fb red">NOWA SERIA</span><span class="ft"><small>SAM W DOMU · odc. 1</small><b>Nie przytrzymuj drzwi!</b></span></a>
     <a class="fi" href="{{ section.settings.tiktok }}" target="_blank" rel="noopener"><img src="{{ 'blok94-n94-1.jpg' | asset_url }}" alt="Okładka: NOCNY N94, odcinek 1, Nie siadaj z tyłu" loading="lazy" width="720" height="900"><span class="fb red">NOWA SERIA</span><span class="ft"><small>NOCNY N94 · odc. 1</small><b>Nie siadaj z tyłu!</b></span></a>
   </div>
   <p class="lead przed2" style="margin:14px 0 0">Nowa seria z Kubą: <b style="color:var(--ink)">SAM W DOMU · odc. 1</b>, dziś o 17:00. Od teraz nowe filmy <b style="color:var(--ink)">codziennie o 17:00</b>. Zwykły wieczór, zwykła klatka schodowa… i ktoś, kto prosi o przytrzymanie drzwi.</p>
-  <p class="lead po2" style="margin:14px 0 0">Nowa seria <b style="color:var(--ink)">SAM W DOMU</b> już na kanale. Kuba wraca wieczorem z treningu, a ktoś prosi go o przytrzymanie drzwi. Obejrzyj do końca. Nowe filmy <b style="color:var(--ink)">codziennie o 17:00</b>.</p>
-<style>#b94 .po{display:none!important}#b94.premiered .po{display:block!important}#b94.premiered .przed{display:none!important}#b94.premiered .part.po{display:flex!important}#b94:not(.sam) .po2{display:none!important}#b94.sam .przed2{display:none!important}</style>
+  <p class="lead przed3" style="margin:14px 0 0"><b style="color:var(--ink)">SAM W DOMU · część 2</b> dziś o 17:00 na TikToku. Nowe filmy codziennie o 17:00.</p>
+  <p class="lead po3" style="margin:14px 0 0"><b style="color:var(--ink)">SAM W DOMU · część 2</b> już na kanale. Kto miał klucze Kuby całą noc? Nowe filmy codziennie o 17:00.</p>
+<style>#b94 .po{display:none!important}#b94.premiered .po{display:block!important}#b94.premiered .przed{display:none!important}#b94.premiered .part.po{display:flex!important}#b94:not(.sam) .po2{display:none!important}#b94.sam .przed2{display:none!important}#b94:not(.sam2) .po3{display:none!important}#b94.sam2 .przed3{display:none!important}</style>
+<script>(function(){var r=document.getElementById('b94'),T=Date.parse('2026-11-16T16:00:00Z');if(!r)return;function g(){if(Date.now()>=T){r.classList.add('sam2');return true;}}if(!g()){var i=setInterval(function(){if(g())clearInterval(i);},1000);}})();</script>
 <script>(function(){var r=document.getElementById('b94'),T=Date.parse('{{ section.settings.premiere }}');if(!r||!T)return;function g(){if(Date.now()>=T){r.classList.add('sam');return true;}}if(!g()){var i=setInterval(function(){if(g())clearInterval(i);},1000);}})();</script>
 </div></section>
 <style>
