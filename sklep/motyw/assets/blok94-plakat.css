@@ -113,7 +113,9 @@ html body .po-head { background: rgba(0, 0, 0, .9) !important; border-bottom: 1p
 html body .po-nav a { text-transform: uppercase; letter-spacing: .06em; font-size: 12px !important; font-weight: 700; }
 html body .po-foot, html body .po-foot > * { background: #000 !important; }
 html body .po-foot { border-top: 1px solid var(--pl-line) !important; }
-@media (prefers-reduced-motion: reduce) { #b94 .hero h1 { animation: none !important; } }
+/* „Kto tam?” — neon miga cały czas (wejście b94up + plNeon); wcześniej nadpisywała go animacja wejścia */
+#b94 .hero .wrap > div:first-child > h1 { animation: b94up .9s cubic-bezier(.2,.8,.2,1) both, plNeon 6s 1s infinite !important; }
+@media (prefers-reduced-motion: reduce) { #b94 .hero h1, #b94 .hero .wrap > div:first-child > h1 { animation: none !important; } }
 
 /* ---------- NAPIWKI: kasa biletowa kina ---------- */
 #b94 .sup .w { grid-template-columns: 1fr !important; gap: 22px !important; }
