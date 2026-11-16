@@ -113,8 +113,12 @@ html body .po-head { background: rgba(0, 0, 0, .9) !important; border-bottom: 1p
 html body .po-nav a { text-transform: uppercase; letter-spacing: .06em; font-size: 12px !important; font-weight: 700; }
 html body .po-foot, html body .po-foot > * { background: #000 !important; }
 html body .po-foot { border-top: 1px solid var(--pl-line) !important; }
-/* „Kto tam?” — neon miga cały czas (wejście b94up + plNeon); wcześniej nadpisywała go animacja wejścia */
-#b94 .hero .wrap > div:first-child > h1 { animation: b94up .9s cubic-bezier(.2,.8,.2,1) both, plNeon 6s 1s infinite !important; }
+/* „Kto tam?” — żywy neon: stała czerwona poświata, oddychanie, podwójne mrugnięcie świetlówki i krótki glitch */
+#b94 .hero .wrap > div:first-child > h1 { animation: b94up .9s cubic-bezier(.2,.8,.2,1) both, plLive 5s 1s infinite, plGlitch 7.3s 2.2s infinite !important; text-shadow: 0 0 18px rgba(215,38,61,.65), 0 0 46px rgba(215,38,61,.35), 0 0 2px #fff; }
+@keyframes plLive { 0%, 100% { text-shadow: 0 0 16px rgba(215,38,61,.55), 0 0 40px rgba(215,38,61,.3), 0 0 2px #fff; opacity: 1; }
+  30% { text-shadow: 0 0 26px rgba(215,38,61,.85), 0 0 70px rgba(215,38,61,.45), 0 0 3px #fff; }
+  61% { opacity: 1; } 62% { opacity: .25; text-shadow: none; } 63.5% { opacity: 1; } 65% { opacity: .4; text-shadow: none; } 66.5% { opacity: 1; text-shadow: 0 0 30px rgba(215,38,61,.95), 0 0 80px rgba(215,38,61,.5), 0 0 3px #fff; } }
+@keyframes plGlitch { 0%, 90%, 100% { transform: none; } 91% { transform: translate(-4px, 0) skewX(-6deg); } 92% { transform: translate(5px, 1px) skewX(4deg); } 93% { transform: translate(-2px, 0); } 94% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { #b94 .hero h1, #b94 .hero .wrap > div:first-child > h1 { animation: none !important; } }
 
 /* ---------- NAPIWKI: kasa biletowa kina ---------- */

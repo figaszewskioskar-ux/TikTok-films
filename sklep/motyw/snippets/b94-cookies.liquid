@@ -4,7 +4,7 @@
   „Tylko niezbędne” jest tak samo łatwe jak „Akceptuję” (wymóg RODO). Test: dodaj ?cookies=1 do adresu.
 {%- endcomment -%}
 <style>
-#shopify-pc__banner,#shopify-pc__prefs,.shopify-pc__banner__dialog{display:none!important}
+#shopify-pc__banner,#shopify-pc__prefs,.shopify-pc__banner__dialog,[id^="shopify-pc__"],.shopify-pc__banner__wrapper{display:none!important}
 #b94ck{position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483000;max-width:560px;margin:0 auto;display:none;font-family:inherit}
 #b94ck.on{display:block;animation:b94ckIn .45s cubic-bezier(.2,.9,.25,1.2)}
 @keyframes b94ckIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
@@ -67,20 +67,20 @@
   function releaseWelcome(){ if(mo){mo.disconnect();mo=null;} if(held){ var d=held; held=null; setTimeout(function(){ try{d.showModal();}catch(e){d.setAttribute('open','');} },400); } }
   function show(){box.classList.add('on'); holdWelcome();}
   function hide(){box.classList.remove('on');box.classList.remove('set'); releaseWelcome();}
-  function save(c){ try{localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}
-    var api=window.Shopify&&window.Shopify.customerPrivacy;
-    if(api&&api.setTrackingConsent){ api.setTrackingConsent({analytics:c.a,marketing:c.m,preferences:c.p,sale_of_data:c.m},function(){}); }
-    hide(); }
+  function apply(c){ var api=window.Shopify&&window.Shopify.customerPrivacy; if(api&&api.setTrackingConsent){ try{ api.setTrackingConsent({analytics:c.a,marketing:c.m,preferences:c.p,sale_of_data:c.m},function(){}); }catch(e){} } }
+  function save(c){ try{localStorage.setItem(KEY,JSON.stringify(c));}catch(e){} try{document.cookie=KEY+'='+encodeURIComponent(JSON.stringify(c))+';path=/;max-age=31536000;SameSite=Lax';}catch(e){}
+    apply(c); hide(); }
   document.getElementById('b94ck-yes').onclick=function(){save({a:true,m:true,p:true});};
   document.getElementById('b94ck-no').onclick=function(){save({a:false,m:false,p:false});};
   document.getElementById('b94ck-more').onclick=function(){box.classList.add('set');};
   document.getElementById('b94ck-save').onclick=function(){save({a:document.getElementById('b94ck-a').checked,m:document.getElementById('b94ck-m').checked,p:document.getElementById('b94ck-p').checked});};
   window.b94Cookies=function(){box.classList.add('set');show();};
-  var force=/[?&]cookies=1/.test(location.search), stored=null; try{stored=localStorage.getItem(KEY);}catch(e){}
+  var force=/[?&]cookies=1/.test(location.search), stored=null; try{stored=localStorage.getItem(KEY);}catch(e){} if(!stored){ var mm=document.cookie.match(new RegExp('(?:^|; )'+KEY+'=([^;]*)')); if(mm) stored=decodeURIComponent(mm[1]); }
   function decide(){ var api=window.Shopify&&window.Shopify.customerPrivacy;
     if(force){show();return;}
+    if(stored){ try{ var c=JSON.parse(stored); if(api&&api.shouldShowBanner&&api.shouldShowBanner()) apply(c); }catch(e){} return; } // decyzja już podjęta: nie pokazuj ponownie
     if(api&&api.shouldShowBanner){ if(api.shouldShowBanner())show(); return; }
-    if(!stored)show(); }
+    show(); }
   if(window.Shopify&&window.Shopify.loadFeatures){ window.Shopify.loadFeatures([{name:'consent-tracking-api',version:'0.1'}],function(err){decide();}); }
   else { decide(); }
 })();
