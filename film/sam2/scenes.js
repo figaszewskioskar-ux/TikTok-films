@@ -1008,7 +1008,7 @@ function keysDoor(c, lt, o = {}) {
   const aj = o.ajar ?? 1; // szpara uchylenia
   c.fillStyle = '#05060A'; c.fillRect(760, 0, 40 + 120 * aj, H);
   if (o.light !== 0) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(760, 0, 900, 0); g.addColorStop(0, `rgba(255,220,150,${.55 * (o.light ?? 1)})`); g.addColorStop(1, 'rgba(255,220,150,0)'); c.fillStyle = g; c.fillRect(760, 0, 40 + 120 * aj, H); c.restore(); }
-  if (o.eyes) { c.save(); c.globalAlpha = o.eyes; c.shadowColor = '#FFFFFF'; c.shadowBlur = 20; ell(c, 800, 740, 13, 9, '#F4F1E8'); ell(c, 852, 742, 13, 9, '#F4F1E8'); circ(c, 802, 741, 4, '#000'); circ(c, 850, 743, 4, '#000'); c.fillStyle = '#F4F1E8'; c.beginPath(); c.moveTo(776, 800); c.quadraticCurveTo(826, 860, 876, 800); c.quadraticCurveTo(826, 828, 776, 800); c.fill(); c.strokeStyle = '#000'; c.lineWidth = 3; for (let k = 0; k < 7; k++) { c.beginPath(); c.moveTo(788 + k * 13, 806); c.lineTo(788 + k * 13, 832); c.stroke(); } c.restore(); }
+  if (o.eyes) creepyFace(c, 828, 800, .9 + .5 * (o.push || 0), o.eyes, lt);
   quilted(c, 0, 0, 760, H, '#6B4A2F', '#583B24', '#C9A15A', 120); c.fillStyle = '#4A3220'; c.fillRect(740, 0, 20, H);
   fillRR(c, 520, 700, 150, 330, 30, '#C9A15A'); fillRR(c, 534, 714, 122, 302, 24, '#B08A48'); circ(c, 595, 820, 52, '#A07A3A'); circ(c, 595, 820, 40, '#C9A15A');
   fillRR(c, 586, 790, 18, 60, 4, '#D6DADF'); fillRR(c, 572, 836, 46, 40, 14, '#C9CDD2'); // klucz w zamku
@@ -1016,6 +1016,18 @@ function keysDoor(c, lt, o = {}) {
   fillRR(c, 480, 1180, 260, 60, 26, '#D4AE62'); // klamka
   fillRR(c, 260, 260, 180, 90, 40, '#C9A15A'); txt(c, '94', 350, 306, 60, '#3A2A1A', 900);
 }
+
+// przerażająca twarz w szparze: blada, zapadnięte oczodoły, wytrzeszczone białka z maleńkimi źrenicami, nienaturalnie szeroki uśmiech
+function creepyFace(c, x, y, s, a, lt) { c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); c.rotate(-.12 + Math.sin(lt * .7) * .02);
+  const fg = c.createRadialGradient(-10, -20, 10, 0, 0, 170); fg.addColorStop(0, '#C9C6B4'); fg.addColorStop(.7, '#7E7C70'); fg.addColorStop(1, 'rgba(30,30,28,0)'); c.fillStyle = fg; c.beginPath(); c.ellipse(0, 0, 130, 170, 0, 0, 7); c.fill();
+  for (const ex of [-52, 52]) { const og = c.createRadialGradient(ex, -40, 4, ex, -40, 48); og.addColorStop(0, '#1A1814'); og.addColorStop(1, 'rgba(26,24,20,0)'); c.fillStyle = og; c.beginPath(); c.ellipse(ex, -40, 50, 40, 0, 0, 7); c.fill();
+    c.save(); c.shadowColor = '#FFFFFF'; c.shadowBlur = 14; ell(c, ex, -40, 26, 20, '#F2EFE2'); c.restore(); c.strokeStyle = 'rgba(160,40,40,.6)'; c.lineWidth = 1.5; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(ex + (k < 2 ? -24 : 24), -40 + (k % 2 ? 8 : -8)); c.lineTo(ex + (k < 2 ? -10 : 10), -40 + (k % 2 ? 3 : -3)); c.stroke(); }
+    const blink = (lt % 4.3) < .12; if (!blink) { circ(c, ex + 2, -38, 5, '#000'); } else { c.fillStyle = '#7E7C70'; c.fillRect(ex - 28, -62, 56, 40); } }
+  c.fillStyle = '#100C0A'; c.beginPath(); c.moveTo(-118, 34); c.quadraticCurveTo(0, 150, 118, 34); c.quadraticCurveTo(0, 74, -118, 34); c.fill();
+  c.fillStyle = '#EDE8D6'; for (let k = -9; k <= 9; k++) { const tx = k * 12, top = 44 + Math.abs(k) * -1.2 + (k * k) * .25; c.beginPath(); c.moveTo(tx - 5, top + 6); c.lineTo(tx + 5, top + 6); c.lineTo(tx, top + 28 - Math.abs(k) * .8); c.fill(); }
+  for (let k = -8; k <= 8; k++) { const tx = k * 13, bot = 112 - Math.abs(k) * 4.2; c.beginPath(); c.moveTo(tx - 5, bot); c.lineTo(tx + 5, bot); c.lineTo(tx, bot - 22 + Math.abs(k)); c.fill(); }
+  c.strokeStyle = 'rgba(30,26,22,.6)'; c.lineWidth = 3; for (const sx of [-1, 1]) { c.beginPath(); c.moveTo(sx * 118, 34); c.quadraticCurveTo(sx * 140, 10, sx * 132, -6); c.stroke(); }
+  c.restore(); }
 // czat SMS (pełny ekran telefonu)
 function smsScreen(c, lt, msgs, o = {}) {
   c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); fillRR(c, 90, 140, 900, 1660, 70, '#16171C'); fillRR(c, 110, 160, 860, 1620, 56, '#0E1018');
@@ -1036,8 +1048,8 @@ function chatCard(c, lt, x, y, w, rows, bat) { fillRR(c, x, y, w, 70 + rows.leng
 // 0. HAK: klucze Kuby wiszą w zamku drzwi 94. Od zewnątrz. Drzwi uchylone, w środku światło.
 scene({
   name: 'hook', start: 0, end: 5, cam: jolt([3.0]),
-  draw(c, lt) { keysDoor(c, lt, { ajar: .6 + .1 * clamp((lt - 2.6) / .4), light: 1 }); night(c, .45, [{ x: 640, y: 900, r: 520, a: .95 }]); },
-  post(c, lt) { joltFlash(c, lt, [3.0]); if (lt > .3 && lt < 3) label(c, 'TO SĄ KLUCZE KUBY', 540, 300, 'dark', 40, lt - .3, 3 - lt); if (lt > 3) label(c, 'W JEGO DRZWIACH. OD ZEWNĄTRZ.', 540, 300, 'red', 36, lt - 3, 9); bigSign(c, lt, 'NIE ODBIERAJ KLUCZY', 'OD OBCEGO!', 1640); },
+  draw(c, lt) { keysDoor(c, lt, { ajar: .6 + .1 * clamp((lt - 2.6) / .4), light: lt < 3 ? 1 : .2, eyes: lt > 3 ? .8 : 0 }); night(c, .45, [{ x: 640, y: 900, r: 520, a: .95 }]); },
+  post(c, lt) { joltFlash(c, lt, [3.0]); if (lt > .3 && lt < 3) label(c, 'TO SĄ KLUCZE KUBY', 540, 300, 'dark', 40, lt - .3, 3 - lt); if (lt > 3) label(c, 'W JEGO DRZWIACH. OD ZEWNĄTRZ.', 540, 300, 'red', 36, lt - 3, 9); bigSign(c, lt, 'NIE ODBIERAJ', 'KLUCZY!', 1640); },
 });
 // 1. RANO, 7:20: przedpokój. Kuba szuka kluczy: kieszenie, miska, torba. Nie ma.
 scene({
@@ -1109,12 +1121,12 @@ scene({
     keyRing(c, 749, 1046, .55, lt);
     const kx = lt < 2.6 ? lerp(1120, 960, eout(clamp(lt / 2.6))) : 960; person(c, 'kuba', kx, 1760, 2.0, { t: lt, walk: lt < 2.6 ? lt * 14 : null, look: -1, wide: true, mouth: 'o' });
     night(c, .35, [{ x: 760, y: 1000, r: 420, a: .9 }]); },
-  post(c, lt) { joltFlash(c, lt, [5.4]); if (lt > .4 && lt < 3) label(c, 'MOKRE ŚLADY. DO JEGO DRZWI.', 540, 400, 'red', 36, lt - .4, 3 - lt); if (lt > 3 && lt < 5.4) label(c, 'W ZAMKU — JEGO KLUCZE.', 540, 400, 'red', 38, lt - 3, 5.4 - lt); if (lt > 5.6) label(c, 'WINDA PRZYJECHAŁA SAMA. PUSTA.', 540, 400, 'dark', 34, lt - 5.6, 9); },
+  post(c, lt) { joltFlash(c, lt, [5.4]); if (lt > .4 && lt < 3) label(c, 'MOKRE ŚLADY. DO JEGO DRZWI.', 540, 400, 'red', 36, lt - .4, 3 - lt); if (lt > 3 && lt < 4.4) label(c, 'W ZAMKU — JEGO KLUCZE.', 540, 400, 'red', 38, lt - 3, 4.4 - lt); if (lt > 4.4 && lt < 5.4) label(c, 'Z ŚRODKA: „KUBA…”', 540, 400, 'red', 42, lt - 4.4, 5.4 - lt); if (lt > 5.6) label(c, 'WINDA PRZYJECHAŁA SAMA. PUSTA.', 540, 400, 'dark', 34, lt - 5.6, 9); },
 });
 // 9. ZAKOŃCZENIE: zbliżenie na klucze. SMS: „Oddałem klucze. Swoje już mam. 🙂”. Światło w środku gaśnie. W ciemnej szparze — oczy i uśmiech.
 scene({
   name: 'end', start: 78, end: 114, cam: jolt([6.0, 11.0, 14.2, 18.6, 25.0, 34.4]),
-  bubbles: [sayAt(20.8, 24.6, 'Kuba? Co ty tu robisz\no tej porze?', 'zdzisiek', 890, 1100, -150, 60), sayAt(31.4, 34.2, 'Chodź do mnie.\nPoczekasz na mamę.', 'zdzisiek', 890, 1100, -150, 60)],
+  bubbles: [sayAt(20.8, 24.6, 'Kuba? Co ty tu robisz\no tej porze?', 'zdzisiek', 890, 1100, -150, 60), sayAt(31.4, 34.2, 'Chodź. Poczekasz u mnie,\naż mama wróci.', 'zdzisiek', 890, 1100, -150, 60)],
   labels: [[35.0, 36, 'ODC. 3 ↓', 540, 1650, 'red', 64], [35.0, 36, 'Kto to był? Pisz w komentarzu 👇', 540, 1760, 'dark', 36]],
   draw(c, lt) {
     if (lt < 6.0) { keysDoor(c, lt, { ajar: .8, light: 1 }); night(c, .4, [{ x: 640, y: 900, r: 520, a: .95 }]); return; }
@@ -1132,7 +1144,7 @@ scene({
       if (l < 11) { zd(c); c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(0, 0, W, H); chatCard(c, lt, 120, 760, 840, [[0, 'Zapasowe klucze są u pana Zdziśka 😉']], 28); return; }
       shot(c, 890, 1180, 3.0, (cc) => zd(cc)); night(c, .55, [{ x: 540, y: 900, r: 520, a: .95 }]);
       if (l > 15.0) { c.fillStyle = `rgba(0,0,0,${clamp((l - 15.0) / .4) * .8})`; c.fillRect(0, 0, W, H); } return; }
-    keysDoor(c, lt, { ajar: .8 + (lt > 16 ? clamp((lt - 16) / 1.5) * .6 : 0), light: 0, eyes: lt > 14.2 ? clamp((lt - 14.2) / .4) : 0, swing: .4 }); night(c, .82, [{ x: 818, y: 790, r: 140, a: .7 }]);
+    keysDoor(c, lt, { ajar: .8 + (lt > 16 ? clamp((lt - 16) / 1.5) * .6 : 0), light: 0, eyes: lt > 14.2 ? clamp((lt - 14.2) / .4) : 0, push: lt > 16 ? clamp((lt - 16) / 2.4) : 0, swing: .4 }); night(c, .82, [{ x: 818, y: 790, r: 140, a: .7 }]);
     if (lt > 14.2) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(818, 790, 10, 818, 790, 200); g.addColorStop(0, 'rgba(255,255,255,.18)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(600, 580, 440, 440); c.restore(); }
     if (lt > 19.4) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 19.4) / .4) * .7})`; c.fillRect(0, 0, W, H); } },
   post(c, lt) { joltFlash(c, lt, [6.0, 11.0, 14.2]); if (lt > .4 && lt < 6) label(c, 'KTO MIAŁ JEGO KLUCZE…', 540, 300, 'dark', 40, lt - .4, 6 - lt);

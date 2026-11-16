@@ -1,8 +1,54 @@
-"""SAM W DOMU · ODC. 2 — „Nie odbieraj zgubionych kluczy!” (Kuba). PODGLĄD BEZ LEKTORA do akceptacji."""
-PREVIEW_NO_VOICE = True
-TARGET = None
+"""SAM W DOMU · ODC. 2 — „Nie odbieraj kluczy!” (Kuba). Przerażający lektor + głosy."""
+VOICE = 'eodmrbuYw8DsHyDR5b6f'
+MODEL = 'eleven_v3'
+SETTINGS = {'stability': 0.5, 'similarity_boost': 0.85}
+V3 = {'stability': 0.5, 'similarity_boost': 0.8}
+VOICES = {
+    'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3),
+    'obcy': ('rUOVqZ1ISbf2yl2Vbpwa', 'eleven_v3', V3),
+    'zdzisiek': ('xsSg7GkDPDhaGZpbKOLn', 'eleven_v3', V3),
+}
+VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f=7500,highpass=f=60,acompressor=threshold=-22dB:ratio=3,aecho=0.7:0.5:70|140:0.22|0.12',
+           'kuba': 'highpass=f=100', 'obcy': 'lowpass=f=5200,aecho=0.5:0.3:25:0.2', 'zdzisiek': 'highpass=f=80,aecho=0.5:0.3:30:0.15'}
+VGAIN = {'obcy': 1.3}
+MAXK = 1.6
 SCENES = [('hook', 0, 5), ('morning', 5, 13), ('search', 13, 19), ('sms', 19, 33), ('mama', 33, 39), ('out', 39, 48), ('bench', 48, 61), ('lit', 61, 69), ('up', 69, 78), ('end', 78, 114)]
-SEG = []
+SEG = [
+    ['hook', 0.1, '[low, ominous voice, slowly] Jeśli obcy pisze, że znalazł twoje klucze…'],
+    ['hook', 3.0, '[whispering] nie idź po nie.'],
+    ['morning', 0.3, '[low, ominous voice, slowly] Rano. Siódma dwadzieścia.'],
+    ['morning', 3.6, '[low, ominous voice, slowly] Kuba nie może znaleźć kluczy.'],
+    ['search', 0.4, '[low, ominous voice, slowly] Przy windzie też nic. Musiały wypaść w nocy.'],
+    ['search', 3.0, '[low, ominous voice, slowly] Kuba bierze zapasowe klucze mamy.'],
+    ['sms', 0.2, '[friendly, calm] Cześć. Znalazłem klucze z czerwonym breloczkiem dziewięćdziesiąt cztery. Twoje?', 'obcy'],
+    ['sms', 3.0, '[excited, relieved] Serio? Tak, moje! Dzięki!', 'kuba'],
+    ['sms', 6.0, '[softly] Oddam. Pod blokiem, przy ławce, dziś o dwudziestej pierwszej. Przyjdź sam.', 'obcy'],
+    ['sms', 9.0, '[quiet] Okej.', 'kuba'],
+    ['mama', 0.3, '[low, ominous voice, slowly] Mama pracuje do jedenastej.'],
+    ['mama', 2.6, '[low, ominous voice, slowly] O kluczach Kuba nie mówi jej ani słowa.'],
+    ['out', 0.3, '[low, ominous voice, slowly] Za cztery dziewiąta. Kuba zamyka drzwi na zapasowy klucz.'],
+    ['out', 3.8, '[low, ominous voice, slowly] Schodami. Nie windą.'],
+    ['bench', 0.3, '[low, ominous voice, slowly] Dwudziesta pierwsza. Pod blokiem nikogo.'],
+    ['bench', 3.8, '[whispers, amused] Ładna zielona kurtka.', 'obcy'],
+    ['bench', 5.2, '[whispering, terrified] On go widzi.'],
+    ['lit', 0.3, '[low, ominous voice, slowly] Kuba podnosi wzrok.'],
+    ['lit', 2.0, '[low, ominous voice, slowly] W jego oknie pali się światło.'],
+    ['lit', 5.0, '[whispering, terrified] A ktoś w nim stoi.'],
+    ['up', 0.3, '[low, ominous voice, slowly] Dziewiąte piętro. Mokre ślady prowadzą pod jego drzwi.'],
+    ['up', 3.0, '[low, ominous voice, slowly] W zamku wiszą jego klucze.'],
+    ['up', 4.4, '[whispers] Kuba…', 'obcy'],
+    ['up', 5.6, '[low, ominous voice, slowly] Winda przyjeżdża sama. Pusta.'],
+    ['end', 0.4, '[low, ominous voice, slowly] Kto miał jego klucze… całą noc?'],
+    ['end', 6.0, '[whispers, amused] Oddałem klucze. Swoje już mam.', 'obcy'],
+    ['end', 11.0, '[low, ominous voice, slowly] Światło w środku gaśnie.'],
+    ['end', 14.2, '[whispering, terrified] On jest w środku.'],
+    ['end', 16.2, '[whispers] Wejdź, Kuba.', 'obcy'],
+    ['end', 20.8, '[surprised, friendly] Kuba? Co ty tu robisz o tej porze?', 'zdzisiek'],
+    ['end', 25.0, '[low, ominous voice, slowly] Mokre buty. Śnieg na podeszwach.'],
+    ['end', 28.2, '[low, ominous voice, slowly] Esemes od mamy. Zapasowe klucze są u pana Zdziśka.'],
+    ['end', 31.4, '[warm, slightly creepy] Chodź. Poczekasz u mnie, aż mama wróci.', 'zdzisiek'],
+    ['end', 34.4, '[whispering] Komu ufasz?'],
+]
 SKIP = ['tik']
 AUDIO = dict(
     bed=([0, 113.99], [-34, -34]),

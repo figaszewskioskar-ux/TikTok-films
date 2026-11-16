@@ -1,3 +1,15 @@
+wydłużono x1.00: 117.4 s -> 118.0 s
+hook       5.0s ->   5.1s
+morning    8.0s ->   6.2s
+search     6.0s ->   6.9s
+sms       14.0s ->  20.3s
+mama       6.0s ->   6.5s
+out        9.0s ->  10.1s
+bench     13.0s ->  11.6s
+lit        8.0s ->   7.3s
+up         9.0s ->  11.4s
+end       36.0s ->  32.5s
+RAZEM 118.0 s
 ok bed
 ok wind
 ok boom
@@ -17,18 +29,18 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3420 klatek, 13 s
-600/3420 klatek, 34 s
-900/3420 klatek, 63 s
-1200/3420 klatek, 91 s
-1500/3420 klatek, 115 s
-1800/3420 klatek, 143 s
-2100/3420 klatek, 167 s
-2400/3420 klatek, 193 s
-2700/3420 klatek, 221 s
-3000/3420 klatek, 245 s
-3300/3420 klatek, 272 s
-Gotowe w 293 s
-audio.wav OK 114 s
+300/3540 klatek, 16 s
+600/3540 klatek, 41 s
+900/3540 klatek, 68 s
+1200/3540 klatek, 98 s
+1500/3540 klatek, 127 s
+1800/3540 klatek, 157 s
+2100/3540 klatek, 184 s
+2400/3540 klatek, 209 s
+2700/3540 klatek, 238 s
+3000/3540 klatek, 268 s
+3300/3540 klatek, 294 s
+Gotowe w 331 s
+audio.wav OK 118 s
 Gotowe: /home/user/TikTok-films/film/sam2/out/final.mp4
 EXIT 0
