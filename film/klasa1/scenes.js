@@ -6,7 +6,7 @@ window.EP = {
   cues(add) {
     add(0.1, 'stab'); add(1.2, 'notif'); add(2.4, 'jolt'); add(5.0, 'whoosh'); add(7.0, 'notif');
     for (const t of [15.2, 16.6, 18.0, 19.4, 20.8]) add(t, 'notif'); add(23.2, 'jolt'); add(23.2, 'notif'); add(27.0, 'whoosh');
-    add(32.2, 'notif'); add(33.2, 'hit'); add(36.2, 'notif'); for (const t of [40.5, 41.6, 42.7, 43.8]) add(t, 'notif'); add(45.4, 'whoosh');
+    add(32.2, 'notif'); add(33.2, 'hit'); add(36.2, 'notif'); add(37.8, 'whoosh'); add(38.6, 'hit'); for (const t of [40.5, 41.6, 42.7, 43.8]) add(t, 'notif'); add(45.4, 'whoosh');
     add(51.6, 'tap'); add(55.6, 'notif'); add(55.6, 'jolt'); add(52.0, 'hit'); add(60.0, 'whoosh'); add(66.6, 'hit');
     for (const t of [70.0, 71.6, 73.2, 74.8]) add(t, 'notif');
     add(78.0, 'notif'); add(80.4, 'notif'); add(82.6, 'notif'); add(82.6, 'jolt'); add(86.0, 'notif'); add(87.6, 'jolt'); add(90.0, 'notif'); add(93.6, 'notif'); add(93.6, 'jolt'); add(98.6, 'jolt');
@@ -1053,7 +1053,7 @@ function personB(c, x, y, s, o = {}) { person(c, 'bartek', x, y, s, o); if (o.al
   c.save(); if (o.alpha != null) c.globalAlpha = o.alpha;
   c.fillStyle = '#3A2414'; c.beginPath(); c.ellipse(x, hy - 22 * s, 54 * s, 38 * s, 0, Math.PI, 0); c.fill(); for (let i = -3; i <= 3; i++) { c.beginPath(); c.moveTo(x + i * 14 * s - 8 * s, hy - 30 * s); c.lineTo(x + i * 14 * s, hy - 6 * s); c.lineTo(x + i * 14 * s + 8 * s, hy - 30 * s); c.fill(); }
   c.fillStyle = '#C23A3A'; c.beginPath(); c.ellipse(x, hy - 40 * s, 50 * s, 26 * s, 0, Math.PI, 0); c.fill(); fillRR(c, x + 20 * s, hy - 46 * s, 50 * s, 12 * s, 6 * s, '#9A2A2A'); circ(c, x, hy - 66 * s, 5 * s, '#9A2A2A');
-  if (!o.back) { fillRR(c, x - 30 * s, y - 175 * s, 60 * s, 34 * s, 8 * s, '#F5C542'); txt(c, 'LOL', x, y - 157 * s, 20 * s, '#14161B', 900); }
+  if (!o.back) { const py = y - 130 * s + (o.sit ? 40 * s : 0); fillRR(c, x - 30 * s, py, 60 * s, 30 * s, 8 * s, '#F5C542'); txt(c, 'LOL', x, py + 16 * s, 18 * s, '#14161B', 900); }
   c.restore(); }
 // czat grupowy (pełny ekran): nagłówek grupy, wiadomości z imionami w kolorach, zdjęcia, wiadomości systemowe
 const NC = { Bartek: '#E0533A', Zuzia: '#1E9E8E', Lena: '#6A7FD6', Kuba: '#F2A51E', 'Nowy Uczeń': '#FF3B30', 'p. Wiśniewska': '#8A5CF5', Ty: '#2F6FEB' };
@@ -1062,16 +1062,19 @@ function groupChat(c, lt, title, msgs, o = {}) {
   txt(c, o.time || '20:14', 140, 178, 26, '#FFFFFF', 800, 'left'); fillRR(c, 880, 166, 56, 24, 7, '#FFFFFF');
   circ(c, 170, 250, 40, o.avatar || '#3A5AA8'); txt(c, o.ava || '8B', 170, 252, 30, '#FFFFFF', 900); txt(c, title, 230, 238, 34, '#FFFFFF', 900, 'left'); txt(c, o.sub || '27 członków', 230, 276, 22, '#9AA2AB', 700, 'left');
   c.fillStyle = '#23262E'; c.fillRect(90, 310, 900, 2);
-  let y = 340; const vis = msgs.slice(-(o.max || 9));
-  for (const m of vis) { const [who, text, kind] = m;
-    if (who === 'sys') { const red = kind === 'red'; font(c, 22, 800); const tw = c.measureText(text).width + 50; fillRR(c, 540 - tw / 2, y, tw, 46, 23, red ? 'rgba(255,59,48,.25)' : '#23262E'); txt(c, text, 540, y + 24, 22, red ? '#FF6B6B' : '#9AA2AB', 800); y += 66; continue; }
+  let y = 340; const vis = msgs.slice(-(o.max || 9)); const pop = o.pop ?? 1;
+  vis.forEach((m, mi) => { const [who, text, kind] = m; const last = mi === vis.length - 1 && pop < 1; if (last) { c.save(); c.globalAlpha = pop; c.translate(0, (1 - pop) * 40); }
+    if (who === 'sys') { const red = kind === 'red'; font(c, 22, 800); const tw = c.measureText(text).width + 50; fillRR(c, 540 - tw / 2, y, tw, 46, 23, red ? 'rgba(255,59,48,.25)' : '#23262E'); txt(c, text, 540, y + 24, 22, red ? '#FF6B6B' : '#9AA2AB', 800); y += 66; if (last) c.restore(); return; }
     const me = who === 'Ty'; const lines = text.split('\n'); font(c, 30, 700); const tw = Math.min(680, Math.max(...lines.map(l => c.measureText(l).width), kind === 'photo' ? 520 : 0) + 50);
-    const ph = kind === 'photo' ? 320 : 0, th = (me ? 24 : 58) + lines.length * 40 + ph;
+    const ph = kind === 'photo' ? 320 : 0, th = (me ? 24 : 58) + lines.length * 40 + ph + 16;
     if (!me) { circ(c, 140, y + 30, 26, NC[who] || '#666'); txt(c, who === 'Nowy Uczeń' ? '?' : who[0], 140, y + 32, 24, '#FFFFFF', 900); }
     const bx = me ? 950 - tw : 180; fillRR(c, bx, y, tw, th, 24, me ? '#2F6FEB' : (who === 'Nowy Uczeń' ? '#2A1416' : '#23262E'));
     if (!me) txt(c, who, bx + 22, y + 28, 22, NC[who] || '#AAA', 900, 'left');
     if (kind === 'photo' && m[3]) { c.save(); rr(c, bx + 14, y + (me ? 14 : 48), tw - 28, ph - 20, 16); c.clip(); m[3](c, bx + 14, y + (me ? 14 : 48), tw - 28, ph - 20); c.restore(); }
-    lines.forEach((l, i) => txt(c, l, bx + 22, y + (me ? 38 : 72) + ph + i * 40, 30, '#FFFFFF', 700, 'left')); y += th + 20; }
+    lines.forEach((l, i) => txt(c, l, bx + 22, y + (me ? 38 : 72) + ph + i * 40, 30, '#FFFFFF', 700, 'left'));
+    txt(c, (o.time || '20:14') + (me ? ' ✓✓' : ''), bx + tw - 16, y + th - 14, 16, me ? 'rgba(255,255,255,.7)' : '#6E7680', 700, 'right');
+    if (!me) circ(c, 160, y + 50, 7, who === 'Nowy Uczeń' ? '#FF3B30' : '#30A46C');
+    y += th + 20; if (last) c.restore(); });
   if (o.typing) { circ(c, 140, y + 30, 26, NC[o.typing] || '#666'); txt(c, o.typing === 'Nowy Uczeń' ? '?' : o.typing[0], 140, y + 32, 24, '#FFFFFF', 900); fillRR(c, 180, y + 4, 140, 56, 26, '#23262E'); for (let i = 0; i < 3; i++) circ(c, 220 + i * 30, y + 32, 8, `rgba(255,255,255,${.4 + .5 * ((Math.floor(lt * 4) + i) % 3 === 0)})`); }
   fillRR(c, 130, 1690, 820, 76, 38, '#1E2230'); txt(c, o.draft || 'Wiadomość', 180, 1728, 28, o.draft ? '#FFFFFF' : '#5E6670', 700, 'left');
 }
@@ -1089,6 +1092,7 @@ function splitRooms(c, lt, panels) { const n = panels.length, h = H / n;
     font(c, 30, 900); const tw = c.measureText(name).width + 40; fillRR(c, 30, i * h + (i ? 30 : 230), tw, 52, 26, col); txt(c, name, 30 + tw / 2, i * h + (i ? 56 : 256), 30, '#FFFFFF', 900);
     if (i) { c.fillStyle = '#05060A'; c.fillRect(0, i * h - 5, W, 10); } }); }
 
+function popT(lt, ts) { let last = -9; for (const t of ts) if (lt >= t) last = t; return clamp((lt - last) / .3); }
 // ===================== SCENY: GRUPA KLASOWA · ODC. 1 „Nie odpisuj Nowemu Uczniowi!” =====================
 const sitP = (kind, tint, o = {}) => (lt) => (c) => { if (kind === 'kuba') kubaRoom2(c, lt, { lamp: true, screen: true }); else teenRoom(c, lt, tint);
   const po = Object.assign({ t: lt, sit: true, phone: true, look: -1 }, o.p ? o.p(lt) : {}); if (kind === 'bartek') personB(c, 760, 1330, 1.7, po); else person(c, kind, 760, 1330, 1.7, Object.assign(kind === 'kuba' ? { home: true } : {}, po));
@@ -1097,7 +1101,7 @@ const PK = sitP('kuba'), PZ = sitP('zuzia', '#F6C9DA'), PB = sitP('bartek', '#F6
 // 0. HAK: Nowy Uczeń wysyła zdjęcie okna Kuby nocą. „Nie śpisz, Kuba? 🙂”
 scene({
   name: 'hook', start: 0, end: 5, cam: jolt([2.4]),
-  draw(c, lt) { groupChat(c, lt, '8B 🏫 klasa', [['sys', 'Nowy Uczeń dołączył do grupy', 'sys'], ['Nowy Uczeń', 'Nie śpisz, Kuba? 🙂', 'photo', photoWindow]].slice(0, lt < 1.2 ? 1 : 2), { time: '23:58', typing: lt < 1.2 ? 'Nowy Uczeń' : null }); night(c, .2, []); },
+  draw(c, lt) { groupChat(c, lt, '8B 🏫 klasa', [['sys', 'Nowy Uczeń dołączył do grupy', 'sys'], ['Nowy Uczeń', 'Nie śpisz, Kuba? 🙂', 'photo', photoWindow]].slice(0, lt < 1.2 ? 1 : 2), { time: '23:58', typing: lt < 1.2 ? 'Nowy Uczeń' : null, pop: popT(lt, [0, 1.2]) }); night(c, .2, []); },
   post(c, lt) { joltFlash(c, lt, [2.4]); bigSign(c, lt, 'NIE ODPISUJ', 'NOWEMU UCZNIOWI!', 1640); },
 });
 // 1. 20:14 — trzy pokoje naraz: Kuba gra, Zuzia odrabia lekcje, Bartek leży z telefonem. Wszyscy na grupie 8B.
@@ -1111,13 +1115,14 @@ scene({
   name: 'join', start: 12, end: 22,
   draw(c, lt) { const all = [['Bartek', 'xD patrzcie na wf-istę 😂'], ['Zuzia', 'kto ma zad 4 z matmy?'], ['Kuba', 'ja mam, zaraz wyśle'], ['sys', 'Nowy Uczeń dołączył do grupy', 'sys'],
       ['Nowy Uczeń', 'Hej 8B 🙂\nZnam was lepiej, niż myślicie.'], ['Bartek', 'kto to xd'], ['Zuzia', 'pani go dodała??']];
-    const n = Math.min(all.length, 3 + Math.floor(lt / 1.4)); groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '20:16', typing: n === 4 ? 'Nowy Uczeń' : null }); night(c, .15, []); },
-  post(c, lt) { if (lt > 3) label(c, 'KTO GO DODAŁ?', 540, 1600, 'red', 40, lt - 3, 9); },
+    if (lt > 8.6) { splitRooms(c, lt, [['KUBA', '#F2A51E', sitP('kuba', null, { p: () => ({ wide: true, mouth: 'o' }) })(lt)], ['ZUZIA', '#1E9E8E', sitP('zuzia', '#F6C9DA', { p: () => ({ wide: true }) })(lt)], ['BARTEK', '#E0533A', sitP('bartek', '#F6DDB8', { p: () => ({ mouth: 'grin' }) })(lt)]]); return; }
+    const n = Math.min(all.length, 3 + Math.floor(lt / 1.4)); groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '20:16', typing: n === 4 ? 'Nowy Uczeń' : null, pop: n < all.length || lt < 8.7 ? clamp((lt % 1.4) / .3) : 1 }); night(c, .15, []); },
+  post(c, lt) { if (lt > 3 && lt < 8.6) label(c, 'KTO GO DODAŁ?', 540, 1600, 'red', 40, lt - 3, 8.6 - lt); if (lt > 8.6) label(c, '„ZNAM WAS LEPIEJ, NIŻ MYŚLICIE”', 540, 960, 'red', 34, lt - 8.6, 9); },
 });
 // 3. ZUZIA: „Ładnie ci dziś było w czerwonej kurtce na przystanku 17.” + zdjęcie. Zuzia w pokoju zamiera, patrzy w okno.
 scene({
   name: 'zuzia', start: 22, end: 31, cam: jolt([1.2]),
-  draw(c, lt) { if (lt < 4.6) { groupChat(c, lt, '8B 🏫 klasa', [['Bartek', 'kto to xd'], ['Zuzia', 'pani go dodała??'], ['Nowy Uczeń', 'Zuzia, ładnie ci dziś było\nw czerwonej kurtce. Przystanek 17.', 'photo', photoStop]], { time: '20:19' }); night(c, .15, []); return; }
+  draw(c, lt) { if (lt < 4.6) { groupChat(c, lt, '8B 🏫 klasa', [['Bartek', 'kto to xd'], ['Zuzia', 'pani go dodała??'], ['Nowy Uczeń', 'Zuzia, ładnie ci dziś było\nw czerwonej kurtce. Przystanek 17.', 'photo', photoStop]], { time: '20:19', pop: clamp(lt / .3) }); night(c, .15, []); return; }
     shot(c, 700, 1060, 1.55, sitP('zuzia', '#F6C9DA', { p: (t) => ({ look: 1, wide: true, mouth: 'o', phone: t < 7 }) })(lt)); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = 'rgba(80,90,130,.18)'; c.fillRect(0, 0, W, H); c.restore(); },
   post(c, lt) { joltFlash(c, lt, [1.2]); if (lt > 1.4 && lt < 4.6) label(c, 'ON JĄ ŚLEDZIŁ', 540, 1600, 'red', 44, lt - 1.4, 4.6 - lt); if (lt > 5) label(c, 'ZUZIA BOI SIĘ PODEJŚĆ DO OKNA', 540, 300, 'dark', 38, lt - 5, 9); },
 });
@@ -1126,14 +1131,15 @@ scene({
   name: 'bartek', start: 31, end: 40,
   draw(c, lt) { const m = [['Nowy Uczeń', 'Zuzia, ładnie ci dziś było\nw czerwonej kurtce. Przystanek 17.'], ['Zuzia', 'to nie jest śmieszne 😭']];
     if (lt > 1.2) m.push(['Bartek', 'ja się nie boję xd\nKwiatowa 12, m. 3, wpadaj 😎']); if (lt > 5.2) m.push(['Nowy Uczeń', 'Wpadnę. 🙂']);
-    groupChat(c, lt, '8B 🏫 klasa', m, { time: '20:23', typing: lt > 3.8 && lt < 5.2 ? 'Nowy Uczeń' : null }); night(c, .15, []); },
-  post(c, lt) { if (lt > 2.2 && lt < 5.2) card(c, 70, 1300, 860, 'BŁĄD 1', 'Bartek podał na grupie\nswój adres i numer mieszkania', lt - 2.2, '#F39C12', 34); if (lt > 5.4) label(c, '„WPADNĘ.”', 540, 1600, 'red', 50, lt - 5.4, 9); },
+    if (lt > 6.8) { shot(c, 700, 1060, 1.55, sitP('bartek', '#F6DDB8', { p: (t) => ({ look: 1, mouth: t < 7.6 ? 'grin' : 'o', wide: t > 7.6 }) })(lt)); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = 'rgba(80,90,130,.18)'; c.fillRect(0, 0, W, H); c.restore(); return; }
+    groupChat(c, lt, '8B 🏫 klasa', m, { time: '20:23', typing: lt > 3.8 && lt < 5.2 ? 'Nowy Uczeń' : null, pop: popT(lt, [0, 1.2, 5.2]) }); night(c, .15, []); },
+  post(c, lt) { if (lt > 2.2 && lt < 5.2) card(c, 70, 1300, 860, 'BŁĄD 1', 'Bartek podał na grupie\nswój adres i numer mieszkania', lt - 2.2, '#F39C12', 34); if (lt > 5.4 && lt < 6.8) label(c, '„WPADNĘ.”', 540, 1600, 'red', 50, lt - 5.4, 6.8 - lt); if (lt > 7.6) label(c, 'BARTKOWI JUŻ NIE JEST DO ŚMIECHU', 540, 300, 'red', 34, lt - 7.6, 9); },
 });
 // 5. KLASA OSKARŻA NOWĄ: „to Lena, jest nowa i dziwna”. Lena płacze w swoim pokoju. Kontrowersja.
 scene({
   name: 'lena', start: 40, end: 50,
   draw(c, lt) { if (lt < 5.4) { const m = [['Bartek', 'to na 100% Lena 😂\njest nowa i dziwna'], ['Zuzia', 'Lena to ty??'], ['Bartek', 'przyznaj się LENA']]; if (lt > 3.2) m.push(['Lena', 'to nie ja!!! 😭\nja nawet nie wiem kto to']);
-      groupChat(c, lt, '8B 🏫 klasa', m.slice(0, 1 + Math.floor(lt / 1.1)), { time: '20:27' }); night(c, .15, []); return; }
+      groupChat(c, lt, '8B 🏫 klasa', m.slice(0, 1 + Math.floor(lt / 1.1)), { time: '20:27', pop: clamp((lt % 1.1) / .3) }); night(c, .15, []); return; }
     shot(c, 700, 1060, 1.55, (cc) => { sitP('nina', '#CFCBF6', { p: () => ({ look: 1, wide: true }) })(lt)(cc); for (const ex of [-1, 1]) ell(cc, 760 + ex * 22, 1000, 5, 9, 'rgba(160,210,255,.95)'); }); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = 'rgba(80,90,130,.18)'; c.fillRect(0, 0, W, H); c.restore(); },
   post(c, lt) { if (lt > 5.6) label(c, 'LENA JEST W KLASIE OD TYGODNIA', 540, 300, 'dark', 34, lt - 5.6, 9); if (lt > 7.6) label(c, 'A CO, JEŚLI TO NIE ONA?', 540, 410, 'red', 38, lt - 7.6, 9); },
 });
@@ -1141,7 +1147,7 @@ scene({
 scene({
   name: 'kuba', start: 50, end: 60, cam: jolt([5.6]),
   draw(c, lt) { const m = lt < 1.6 ? [] : [['Ty', 'kim jesteś?']]; if (lt > 5.6) m.push(['Nowy Uczeń', 'Kuba z dziewięćdziesiątki czwórki.\nKlucze już masz? 🙂']);
-    groupChat(c, lt, 'Nowy Uczeń', m, { time: '20:31', ava: '?', avatar: '#FF3B30', sub: 'rozmowa prywatna · nie macie wspólnych znajomych', typing: lt > 3.6 && lt < 5.6 ? 'Nowy Uczeń' : null, draft: lt < 1.6 ? 'kim jesteś?' : '' }); night(c, .15, []); },
+    groupChat(c, lt, 'Nowy Uczeń', m, { time: '20:31', ava: '?', avatar: '#FF3B30', sub: 'rozmowa prywatna · nie macie wspólnych znajomych', typing: lt > 3.6 && lt < 5.6 ? 'Nowy Uczeń' : null, draft: lt < 1.6 ? 'kim jesteś?' : '', pop: popT(lt, [1.6, 5.6]) }); night(c, .15, []); },
   post(c, lt) { joltFlash(c, lt, [5.6]); if (lt > 1.8 && lt < 5.4) card(c, 70, 1300, 860, 'BŁĄD 2', 'Kuba napisał do nieznajomego\nna prywatnym czacie', lt - 1.8, '#F39C12', 34); if (lt > 6) label(c, 'ON WIE O KLUCZACH', 540, 1600, 'red', 44, lt - 6, 9); },
 });
 // 7. ZASADA: Kuba robi zrzut ekranu i pokazuje mamie. „Piszę do wychowawczyni. Nie odpisuj mu.”
@@ -1155,7 +1161,7 @@ scene({
 scene({
   name: 'teacher', start: 70, end: 78,
   draw(c, lt) { const m = [['sys', 'p. Wiśniewska usunęła Nowego Ucznia', 'sys'], ['p. Wiśniewska', 'Nikt mu nie odpisuje. Zrzuty ekranu\nwysłałam na policję. Jutro rozmowa.'], ['Lena', 'dziękuję pani 😢'], ['Bartek', 'Lena sorki…']];
-    groupChat(c, lt, '8B 🏫 klasa', m.slice(0, 1 + Math.floor(lt / 1.6)), { time: '21:02' }); night(c, .1, []); },
+    groupChat(c, lt, '8B 🏫 klasa', m.slice(0, 1 + Math.floor(lt / 1.6)), { time: '21:02', pop: clamp((lt % 1.6) / .3) }); night(c, .1, []); },
   post(c, lt) { if (lt > 6.4) label(c, 'KONIEC?', 540, 1600, 'dark', 44, lt - 6.4, 9); },
 });
 // 9. ZAKOŃCZENIE: 23:40 — Bartek zakłada „8B BEZ PANI 😈”. „Nowy Uczeń dołączył do grupy”. Zdjęcie drzwi Bartka. „Bartek, otwórz.” Bartek offline. „Kuba, ty następny.” Twarz.
@@ -1166,8 +1172,8 @@ scene({
     if (lt < 15.6) { const m = [['sys', 'Bartek utworzył grupę „8B BEZ PANI 😈”', 'sys'], ['Bartek', 'tu pani nie ma xd gadamy normalnie']];
       if (lt > 2.4) m.push(['sys', 'Nowy Uczeń dołączył do grupy', 'red']); if (lt > 4.6) m.push(['Nowy Uczeń', 'Bartek, otwórz.\nPrzecież zapraszałeś. 🙂', 'photo', photoDoor3]);
       if (lt > 8.0) m.push(['Kuba', 'BARTEK NIE OTWIERAJ']); if (lt > 9.6) m.push(['sys', 'Bartek był aktywny 2 min temu', 'red']); if (lt > 12) m.push(['Zuzia', 'bartek??? odpisz']);
-      groupChat(c, lt, '8B BEZ PANI 😈', m, { time: '23:41', avatar: '#C23A3A', ava: '😈', sub: '24 członków · bez administratora', max: 6 }); night(c, .2, []); return; }
-    if (lt < 20.6) { groupChat(c, lt, 'Nowy Uczeń', [['Nowy Uczeń', 'Kuba, ty następny. 🙂']], { time: '23:47', ava: '?', avatar: '#FF3B30', sub: 'rozmowa prywatna', typing: lt > 18 ? 'Nowy Uczeń' : null }); night(c, .3, []); return; }
+      groupChat(c, lt, '8B BEZ PANI 😈', m, { time: '23:41', avatar: '#C23A3A', ava: '😈', sub: '24 członków · bez administratora', max: 6, pop: popT(lt, [0, 2.4, 4.6, 8.0, 9.6, 12]) }); night(c, .2, []); return; }
+    if (lt < 20.6) { groupChat(c, lt, 'Nowy Uczeń', [['Nowy Uczeń', 'Kuba, ty następny. 🙂']], { time: '23:47', ava: '?', avatar: '#FF3B30', sub: 'rozmowa prywatna', typing: lt > 18 ? 'Nowy Uczeń' : null, pop: clamp((lt - 15.6) / .3) }); night(c, .3, []); return; }
     c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); creepyFace(c, 540, 960, 3.4 + clamp((lt - 20.6) / 3) * .6, 1, lt); night(c, .3, [{ x: 540, y: 960, r: 620, a: .9 }]);
     if (lt > 22.8) { c.fillStyle = `rgba(0,0,0,${clamp((lt - 22.8) / .5) * .75})`; c.fillRect(0, 0, W, H); } },
   post(c, lt) { joltFlash(c, lt, [4.6, 9.6, 15.6, 20.6]); if (lt > 9.8 && lt < 15.6) label(c, 'BARTEK NIE ODPISUJE', 540, 1600, 'red', 40, lt - 9.8, 15.6 - lt); },
