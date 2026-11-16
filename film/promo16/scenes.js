@@ -876,7 +876,7 @@ scene({
   name: 's1', start: 0, end: 5, cam: jolt([3.0]),
   draw(c, lt) {
     c.fillStyle = '#04050A'; c.fillRect(0, 0, W, H);
-    c.save(); c.globalAlpha = .12; stairElev(c, lt, 9, { lightOff: true }); c.restore();
+    c.save(); c.globalAlpha = .26; streetBlock(c, lt, {}); snow(c, lt, 90, .8); c.restore();
     fillRR(c, 90, 700, 900, 460, 60, '#121318'); fillRR(c, 120, 730, 840, 400, 40, '#050507'); fillRR(c, 150, 1160, 120, 40, 12, '#121318'); fillRR(c, 810, 1160, 120, 40, 12, '#121318');
     const t = lt < 3.0 ? '1659' : '1700', col = '#FF2A2A'; c.save(); c.shadowColor = '#FF2A2A'; c.shadowBlur = 40;
     digit7(c, t[0], 190, 820, 1.95, col); digit7(c, t[1], 330, 820, 1.95, col); if (Math.floor(lt * 2) % 2 === 0) { fillRR(c, 488, 870, 26, 26, 6, col); fillRR(c, 488, 980, 26, 26, 6, col); } digit7(c, t[2], 550, 820, 1.95, col); digit7(c, t[3], 690, 820, 1.95, col); c.restore();
@@ -887,7 +887,7 @@ scene({
 // 2. plansza: codziennie o 17:00, obserwuj
 scene({
   name: 's2', start: 5, end: 11,
-  draw(c, lt) { c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); c.save(); c.globalAlpha = .1; stairElev(c, lt, 9, { lightOff: true }); c.restore();
+  draw(c, lt) { c.fillStyle = '#05060A'; c.fillRect(0, 0, W, H); c.save(); c.globalAlpha = .18; streetBlock(c, lt, {}); snow(c, lt, 90, .8); c.restore();
     c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 900, 40, 540, 900, 900); g.addColorStop(0, 'rgba(215,38,61,.35)'); g.addColorStop(1, 'rgba(215,38,61,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore(); },
   post(c, lt) { const p = eout(clamp(lt / .4)); c.save(); c.globalAlpha = p;
     fillRR(c, 300, 400, 480, 70, 35, '#F5C542'); txt(c, 'PROTOKÓŁ OCALENI', 540, 436, 34, '#14161B', 900);
