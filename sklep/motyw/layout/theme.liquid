@@ -81,11 +81,12 @@
     <div class="po-w" style="padding-bottom:18px">{% render 'blok94-social', title: 'Obserwuj BLOK 94' %}</div>
     <div class="po-w">
       <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · <a href="https://www.tiktok.com/@protokolocaleni" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.youtube.com/@protokolocaleni" target="_blank" rel="noopener">YouTube</a></span>
-      <span class="po-pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'po-pi' }}{%- endfor -%}</span><span class="po-pol">{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}</span>
+      <span class="po-pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'po-pi' }}{%- endfor -%}</span><span class="po-pol">{%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title | escape }}</a>{%- endfor -%}<button type="button" class="b94ck-link" onclick="window.b94Cookies&&b94Cookies()">Ustawienia cookies</button></span>
     </div>
   </footer>
   {{ 'po-design.css' | asset_url | stylesheet_tag }}
   {{ 'blok94-plakat.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'blok94-plakat.js' | asset_url }}" defer></script>
+  {%- render 'b94-cookies' -%}
 </body>
 </html>
