@@ -5,7 +5,7 @@ window.EP = {
   vignette: .7,
   cues(add) {
     add(0.1, 'stab'); add(1.2, 'notif'); add(2.4, 'jolt'); add(5.0, 'whoosh'); add(7.0, 'notif');
-    for (const t of [15.2, 16.6, 18.0, 19.4, 20.8]) add(t, 'notif'); add(23.2, 'jolt'); add(23.2, 'notif'); add(27.0, 'whoosh');
+    for (const t of [12.0, 13.1, 14.2, 15.3, 16.4, 17.5, 18.6]) add(t, 'notif'); add(7.0, 'notif'); add(9.4, 'notif'); add(27.8, 'notif'); add(29.4, 'notif'); add(46.0, 'notif'); add(47.8, 'notif'); add(62.6, 'notif'); add(23.2, 'jolt'); add(23.2, 'notif'); add(27.0, 'whoosh');
     add(32.2, 'notif'); add(33.2, 'hit'); add(36.2, 'notif'); add(37.8, 'whoosh'); add(38.6, 'hit'); for (const t of [40.5, 41.6, 42.7, 43.8]) add(t, 'notif'); add(45.4, 'whoosh');
     add(51.6, 'tap'); add(55.6, 'notif'); add(55.6, 'jolt'); add(52.0, 'hit'); add(60.0, 'whoosh'); add(66.6, 'hit');
     for (const t of [70.0, 71.6, 73.2, 74.8]) add(t, 'notif');
@@ -1092,6 +1092,9 @@ function splitRooms(c, lt, panels) { const n = panels.length, h = H / n;
     font(c, 30, 900); const tw = c.measureText(name).width + 40; fillRR(c, 30, i * h + (i ? 30 : 230), tw, 52, 26, col); txt(c, name, 30 + tw / 2, i * h + (i ? 56 : 256), 30, '#FFFFFF', 900);
     if (i) { c.fillStyle = '#05060A'; c.fillRect(0, i * h - 5, W, 10); } }); }
 
+function banner(c, lt, t0, app, title, text, y = 300) { if (lt < t0 || lt > t0 + 3.2) return; const p = eout(clamp((lt - t0) / .35)) * (1 - clamp((lt - t0 - 2.8) / .4)); c.save(); c.globalAlpha = p; c.translate(0, (1 - p) * -60);
+  c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 30; fillRR(c, 60, y, 960, 150, 34, 'rgba(240,242,245,.97)'); c.shadowColor = 'transparent'; fillRR(c, 90, y + 30, 90, 90, 22, title.startsWith('Nowy') ? '#FF3B30' : '#3A5AA8'); txt(c, title.startsWith('Nowy') ? '?' : '8B', 135, y + 76, 34, '#FFFFFF', 900);
+  txt(c, app, 205, y + 48, 24, '#65676B', 800, 'left'); txt(c, 'teraz', 990, y + 48, 22, '#65676B', 700, 'right'); txt(c, title, 205, y + 86, 28, '#14161B', 900, 'left'); txt(c, text, 205, y + 122, 28, '#14161B', 700, 'left'); c.restore(); }
 function popT(lt, ts) { let last = -9; for (const t of ts) if (lt >= t) last = t; return clamp((lt - last) / .3); }
 // ===================== SCENY: GRUPA KLASOWA · ODC. 1 „Nie odpisuj Nowemu Uczniowi!” =====================
 const sitP = (kind, tint, o = {}) => (lt) => (c) => { if (kind === 'kuba') kubaRoom2(c, lt, { lamp: true, screen: true }); else teenRoom(c, lt, tint);
@@ -1108,7 +1111,7 @@ scene({
 scene({
   name: 'rooms', start: 5, end: 12,
   draw(c, lt) { splitRooms(c, lt, [['KUBA', '#F2A51E', PK(lt)], ['ZUZIA', '#1E9E8E', PZ(lt)], ['BARTEK', '#E0533A', PB(lt)]]); },
-  post(c, lt) { label(c, '20:14 · GRUPA KLASY 8B', 540, 160, 'yellow', 36, lt, 9); },
+  post(c, lt) { label(c, '20:14 · GRUPA KLASY 8B', 540, 560, 'yellow', 36, lt, 9); banner(c, lt, 2.0, '💬 8B 🏫 klasa', 'Bartek', 'xD widzieliście wf-istę? 😂', 330); banner(c, lt, 4.4, '💬 8B 🏫 klasa', 'Zuzia', 'ktoś ma zad z matmy??', 330); },
 });
 // 2. CZAT: memy, zadanie z matmy… „Nowy Uczeń dołączył do grupy”. „Znam was lepiej, niż myślicie.”
 scene({
@@ -1116,15 +1119,15 @@ scene({
   draw(c, lt) { const all = [['Bartek', 'xD patrzcie na wf-istę 😂'], ['Zuzia', 'kto ma zad 4 z matmy?'], ['Kuba', 'ja mam, zaraz wyśle'], ['sys', 'Nowy Uczeń dołączył do grupy', 'sys'],
       ['Nowy Uczeń', 'Hej 8B 🙂\nZnam was lepiej, niż myślicie.'], ['Bartek', 'kto to xd'], ['Zuzia', 'pani go dodała??']];
     if (lt > 8.6) { splitRooms(c, lt, [['KUBA', '#F2A51E', sitP('kuba', null, { p: () => ({ wide: true, mouth: 'o' }) })(lt)], ['ZUZIA', '#1E9E8E', sitP('zuzia', '#F6C9DA', { p: () => ({ wide: true }) })(lt)], ['BARTEK', '#E0533A', sitP('bartek', '#F6DDB8', { p: () => ({ mouth: 'grin' }) })(lt)]]); return; }
-    const n = Math.min(all.length, 3 + Math.floor(lt / 1.4)); groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '20:16', typing: n === 4 ? 'Nowy Uczeń' : null, pop: n < all.length || lt < 8.7 ? clamp((lt % 1.4) / .3) : 1 }); night(c, .15, []); },
-  post(c, lt) { if (lt > 3 && lt < 8.6) label(c, 'KTO GO DODAŁ?', 540, 1600, 'red', 40, lt - 3, 8.6 - lt); if (lt > 8.6) label(c, '„ZNAM WAS LEPIEJ, NIŻ MYŚLICIE”', 540, 960, 'red', 34, lt - 8.6, 9); },
+    const n = Math.min(all.length, 1 + Math.floor(lt / 1.1)); groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '20:16', typing: n === 4 ? 'Nowy Uczeń' : null, pop: lt < 7.7 ? clamp((lt % 1.1) / .3) : 1 }); night(c, .15, []); },
+  post(c, lt) { if (lt > 4.6 && lt < 8.6) label(c, 'KTO GO DODAŁ?', 540, 1600, 'red', 40, lt - 3, 8.6 - lt); if (lt > 8.6) label(c, '„ZNAM WAS LEPIEJ, NIŻ MYŚLICIE”', 540, 960, 'red', 34, lt - 8.6, 9); },
 });
 // 3. ZUZIA: „Ładnie ci dziś było w czerwonej kurtce na przystanku 17.” + zdjęcie. Zuzia w pokoju zamiera, patrzy w okno.
 scene({
   name: 'zuzia', start: 22, end: 31, cam: jolt([1.2]),
   draw(c, lt) { if (lt < 4.6) { groupChat(c, lt, '8B 🏫 klasa', [['Bartek', 'kto to xd'], ['Zuzia', 'pani go dodała??'], ['Nowy Uczeń', 'Zuzia, ładnie ci dziś było\nw czerwonej kurtce. Przystanek 17.', 'photo', photoStop]], { time: '20:19', pop: clamp(lt / .3) }); night(c, .15, []); return; }
     shot(c, 700, 1060, 1.55, sitP('zuzia', '#F6C9DA', { p: (t) => ({ look: 1, wide: true, mouth: 'o', phone: t < 7 }) })(lt)); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = 'rgba(80,90,130,.18)'; c.fillRect(0, 0, W, H); c.restore(); },
-  post(c, lt) { joltFlash(c, lt, [1.2]); if (lt > 1.4 && lt < 4.6) label(c, 'ON JĄ ŚLEDZIŁ', 540, 1600, 'red', 44, lt - 1.4, 4.6 - lt); if (lt > 5) label(c, 'ZUZIA BOI SIĘ PODEJŚĆ DO OKNA', 540, 300, 'dark', 38, lt - 5, 9); },
+  post(c, lt) { joltFlash(c, lt, [1.2]); if (lt > 1.4 && lt < 4.6) label(c, 'ON JĄ ŚLEDZIŁ', 540, 1600, 'red', 44, lt - 1.4, 4.6 - lt); if (lt > 5) label(c, 'ZUZIA BOI SIĘ PODEJŚĆ DO OKNA', 540, 300, 'dark', 38, lt - 5, 9); banner(c, lt, 5.8, '💬 8B 🏫 klasa', 'Nowy Uczeń', '📷 Zdjęcie', 420); banner(c, lt, 7.4, '💬 8B 🏫 klasa', 'Nowy Uczeń', 'Zasłoń okno, Zuzia 🙂', 420); },
 });
 // 4. BARTEK się popisuje: „ja się nie boję xd Kwiatowa 12, m. 3, wpadaj” (BŁĄD 1). Nowy Uczeń: „Wpadnę. 🙂”
 scene({
@@ -1141,7 +1144,7 @@ scene({
   draw(c, lt) { if (lt < 5.4) { const m = [['Bartek', 'to na 100% Lena 😂\njest nowa i dziwna'], ['Zuzia', 'Lena to ty??'], ['Bartek', 'przyznaj się LENA']]; if (lt > 3.2) m.push(['Lena', 'to nie ja!!! 😭\nja nawet nie wiem kto to']);
       groupChat(c, lt, '8B 🏫 klasa', m.slice(0, 1 + Math.floor(lt / 1.1)), { time: '20:27', pop: clamp((lt % 1.1) / .3) }); night(c, .15, []); return; }
     shot(c, 700, 1060, 1.55, (cc) => { sitP('nina', '#CFCBF6', { p: () => ({ look: 1, wide: true }) })(lt)(cc); for (const ex of [-1, 1]) ell(cc, 760 + ex * 22, 1000, 5, 9, 'rgba(160,210,255,.95)'); }); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = 'rgba(80,90,130,.18)'; c.fillRect(0, 0, W, H); c.restore(); },
-  post(c, lt) { if (lt > 5.6) label(c, 'LENA JEST W KLASIE OD TYGODNIA', 540, 300, 'dark', 34, lt - 5.6, 9); if (lt > 7.6) label(c, 'A CO, JEŚLI TO NIE ONA?', 540, 410, 'red', 38, lt - 7.6, 9); },
+  post(c, lt) { if (lt > 5.6) label(c, 'LENA JEST W KLASIE OD TYGODNIA', 540, 300, 'dark', 34, lt - 5.6, 9); if (lt > 7.6) label(c, 'A CO, JEŚLI TO NIE ONA?', 540, 410, 'red', 38, lt - 7.6, 9); banner(c, lt, 6.0, '💬 8B 🏫 klasa', 'Bartek', 'LENA PRZYZNAJ SIĘ 😂😂', 1500); banner(c, lt, 7.8, '💬 8B 🏫 klasa', '8B 🏫 klasa', '14 nowych wiadomości', 1500); },
 });
 // 6. KUBA pisze do Nowego Ucznia prywatnie: „kim jesteś?” (BŁĄD 2). Odpowiedź: „Kuba z 94. Klucze już masz? 🙂”
 scene({
@@ -1155,7 +1158,7 @@ scene({
   name: 'mama', start: 60, end: 70,
   bubbles: [say(.6, 2.8, 'Mamo, zobacz.\nOn wie o kluczach.', 'kuba', 560, 1780, 2.0, 60), say(3.2, 6.4, 'Nie odpisuj mu.\nPiszę do wychowawczyni.', 'mama', 300, 1780, 2.0, 60)],
   draw(c, lt) { kubaHall(c, lt, { lampOn: true }); person(c, 'kobieta', 300, 1780, 2.0, { t: lt, look: 1, phone: lt > 3.2, talk: lt > 3.2 && lt < 6.2 }); person(c, 'kuba', 560, 1780, 2.0, { t: lt, home: true, look: -1, phone: true, talk: lt > .6 && lt < 2.6 }); night(c, .15, []); },
-  post(c, lt) { if (lt > 6.6) card(c, 40, 300, 1000, 'ZASADA', 'Obcy w grupie klasowej? Nie odpisuj, nie podawaj adresu.\nZrób zrzut ekranu i pokaż rodzicom i wychowawcy.\nAdmin usuwa konto i zgłasza je.', lt - 6.6, '#F39C12', 31); },
+  post(c, lt) { banner(c, lt, 2.6, '💬 Wiadomość prywatna', 'Nowy Uczeń', 'Nie pokazuj tego mamie 🙂', 420); if (lt > 6.6) card(c, 40, 300, 1000, 'ZASADA', 'Obcy w grupie klasowej? Nie odpisuj, nie podawaj adresu.\nZrób zrzut ekranu i pokaż rodzicom i wychowawcy.\nAdmin usuwa konto i zgłasza je.', lt - 6.6, '#F39C12', 31); },
 });
 // 8. WYCHOWAWCZYNI usuwa Nowego Ucznia. „Jutro rozmowa z policjantem.” Lena: „dziękuję pani”. Ulga.
 scene({

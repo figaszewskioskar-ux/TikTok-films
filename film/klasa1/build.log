@@ -1,14 +1,3 @@
-hook       5.0s ->   6.3s
-rooms      7.0s ->   9.4s
-join      10.0s ->  16.6s
-zuzia      9.0s ->  11.0s
-bartek     9.0s ->  12.2s
-lena      10.0s ->  14.1s
-kuba      10.0s ->   9.6s
-mama      10.0s ->   8.2s
-teacher    8.0s ->  13.7s
-end       28.0s ->  26.9s
-RAZEM 128.1 s
 ok bed
 ok wind
 ok boom
@@ -28,19 +17,19 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3844 klatek, 15 s
-600/3844 klatek, 39 s
-900/3844 klatek, 65 s
-1200/3844 klatek, 95 s
-1500/3844 klatek, 124 s
-1800/3844 klatek, 152 s
-2100/3844 klatek, 178 s
-2400/3844 klatek, 201 s
-2700/3844 klatek, 227 s
-3000/3844 klatek, 254 s
-3300/3844 klatek, 288 s
-3600/3844 klatek, 320 s
-Gotowe w 352 s
-audio.wav OK 128.147 s
+300/3826 klatek, 14 s
+600/3826 klatek, 37 s
+900/3826 klatek, 62 s
+1200/3826 klatek, 90 s
+1500/3826 klatek, 114 s
+1800/3826 klatek, 141 s
+2100/3826 klatek, 165 s
+2400/3826 klatek, 189 s
+2700/3826 klatek, 214 s
+3000/3826 klatek, 241 s
+3300/3826 klatek, 274 s
+3600/3826 klatek, 303 s
+Gotowe w 335 s
+audio.wav OK 127.547 s
 Gotowe: /home/user/TikTok-films/film/klasa1/out/final.mp4
 EXIT 0
