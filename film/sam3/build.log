@@ -1,0 +1,34 @@
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/3420 klatek, 14 s
+600/3420 klatek, 38 s
+900/3420 klatek, 63 s
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.evaluate: Target page, context or browser has been closed
+    at grab (/home/user/TikTok-films/film/render.js:21:47)
+    at /home/user/TikTok-films/film/render.js:55:39
+    at async /home/user/TikTok-films/film/render.js:49:5 {
+  log: []
+}
+
+Node.js v22.23.4
