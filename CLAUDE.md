@@ -61,7 +61,9 @@
 - Każdy nowy film budujemy według `film/WZOR_WIRALA.md`: hak z jednym przedmiotem z bliska i zakazem sprzecznym z intuicją, bez „Poprzednio” na starcie,
   jedna bohaterka i jedno miejsce, ujęcia z oczu bohaterki, nowa informacja co 5–8 s, zakończenie patrzy prosto w widza.
 
-## Dylemat na końcu (zawsze)
-- **Każdy film kończy się dylematem do komentarzy:** po strasznym zwrocie karta „CO TY BYŚ ZROBIŁ?” z jednym pytaniem i trzema odpowiedziami A/B/C
-  (np. odruch / właściwa reakcja / sprytny pomysł do dyskusji) oraz „👇 Napisz w komentarzu: A, B czy C”. Lektor czyta pytanie i prosi o odpowiedź.
-  Funkcja `dilemma(c, lt, pytanie, [[A,...],[B,...],[C,...]], t0)` w `film/klasa3/scenes.js`. Odpowiedzi tak dobrane, żeby ludzie się kłócili, a jedna była zgodna z zasadą bezpieczeństwa.
+## Pytanie-zagadka na końcu (zawsze)
+- **Każdy film kończy się niepokojącą zagadką do komentarzy, nie prostym quizem.** Po strasznym zwrocie karta „KTO TO JEST?” (albo „CO DALEJ?”):
+  jedno pytanie o tajemnicę, która zostaje otwarta (kto stoi za drzwiami, kto ma telefon, kto był w mieszkaniu), i trzy podejrzenia A/B/C,
+  każde wiarygodne i wskazujące na kogoś z obsady (np. kolega z klasy, sąsiad, obcy z poprzednich części). Pod spodem „👇 Typuj w komentarzu: A, B czy C”
+  i „Odpowiedź w odcinku N…”. Lektor szeptem czyta pytanie i podejrzenia, a na koniec „Typuj w komentarzu. Odpowiedź… w odcinku N.”
+- Cel: zaniepokoić i zaciekawić tak, żeby widz czekał na kolejną część i kłócił się w komentarzach. Funkcja `dilemma(...)` w `film/klasa3/scenes.js`.
