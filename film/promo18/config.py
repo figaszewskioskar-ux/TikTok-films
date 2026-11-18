@@ -1,4 +1,4 @@
-"""Zapowiedź: jutro 16:00 cała seria na YouTube, 17:00 nowy film na TikToku (bez spoilerów)."""
+"""Zapowiedź: dziś 16:00 cała seria na YouTube, 17:00 nowy film na TikToku (bez spoilerów)."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.5, 'similarity_boost': 0.85}
@@ -7,7 +7,7 @@ MAXK = 2.0
 TARGET = None
 SCENES = [('s1', 0, 5.5), ('s2', 5.5, 12.5)]
 SEG = [
-    ['s1', 0.3, '[low, ominous voice, slowly] Jutro… o szesnastej.'],
+    ['s1', 0.3, '[low, ominous voice, slowly] Dziś… o szesnastej.'],
     ['s1', 3.2, '[whispering] Cała seria… na YouTube.'],
     ['s2', 1.6, '[low, ominous voice, slowly] A o siedemnastej… nowy film na TikToku.'],
     ['s2', 5.0, '[whispering] Obserwuj… żeby nie przegapić.'],

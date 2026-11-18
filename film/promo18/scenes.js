@@ -1,4 +1,4 @@
-// Zapowiedź: jutro 16:00 cała seria na YouTube, 17:00 nowy film na TikToku (bez spoilerów)
+// Zapowiedź: dziś 16:00 cała seria na YouTube, 17:00 nowy film na TikToku (bez spoilerów)
 window.EP = {
   badge: 'PROTOKÓŁ OCALENI',
   loop: false,
@@ -886,7 +886,7 @@ scene({
     const t = lt < 3.0 ? '1559' : '1600', col = '#FF2A2A'; c.save(); c.shadowColor = col; c.shadowBlur = 40;
     digit7(c, t[0], 190, 820, 1.95, col); digit7(c, t[1], 330, 820, 1.95, col); if (Math.floor(lt * 2) % 2 === 0) { fillRR(c, 488, 870, 26, 26, 6, col); fillRR(c, 488, 980, 26, 26, 6, col); } digit7(c, t[2], 550, 820, 1.95, col); digit7(c, t[3], 690, 820, 1.95, col); c.restore();
     c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 930, 40, 540, 930, 800); g.addColorStop(0, `rgba(255,40,40,${lt > 3 ? .3 : .15})`); g.addColorStop(1, 'rgba(255,40,40,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore(); },
-  post(c, lt) { joltFlash(c, lt, [3.0]); if (lt > .2) { fillRR(c, 300, 380, 480, 70, 35, '#F5C542'); txt(c, 'PROTOKÓŁ OCALENI', 540, 416, 34, '#14161B', 900); } if (lt > 3.1) { storySign(c, lt - 3.1, 'CAŁA SERIA', 'JUTRO 16:00', 1460); if (lt > 3.4) ytBadge(c, 540, 1660, eout(clamp((lt - 3.4) / .3))); } },
+  post(c, lt) { joltFlash(c, lt, [3.0]); if (lt > .2) { fillRR(c, 300, 380, 480, 70, 35, '#F5C542'); txt(c, 'PROTOKÓŁ OCALENI', 540, 416, 34, '#14161B', 900); } if (lt > 3.1) { storySign(c, lt - 3.1, 'CAŁA SERIA', 'DZIŚ 16:00', 1460); if (lt > 3.4) ytBadge(c, 540, 1660, eout(clamp((lt - 3.4) / .3))); } },
 });
 // 2. plan na jutro: 16:00 YouTube, 17:00 TikTok
 scene({
@@ -894,7 +894,7 @@ scene({
   draw(c, lt) { darkLanding(c, lt + 5.5, .78); },
   post(c, lt) { const p = eout(clamp(lt / .4)); c.save(); c.globalAlpha = p;
     fillRR(c, 300, 300, 480, 70, 35, '#F5C542'); txt(c, 'PROTOKÓŁ OCALENI', 540, 336, 34, '#14161B', 900);
-    txt(c, 'JUTRO', 540, 500, 96, '#FFFFFF', 900);
+    txt(c, 'DZIŚ', 540, 500, 96, '#FFFFFF', 900);
     // 16:00 YouTube
     c.save(); c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 30; fillRR(c, 90, 600, 900, 260, 40, 'rgba(18,19,26,.95)'); c.restore(); c.strokeStyle = '#FF0033'; c.lineWidth = 5; rr(c, 90, 600, 900, 260, 40); c.stroke();
     ytBadge(c, 210, 730, 1.1); c.save(); c.shadowColor = '#FF0033'; c.shadowBlur = 30; txt(c, '16:00', 470, 690, 110, '#FF3355', 900, 'left'); c.restore();
