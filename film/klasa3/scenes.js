@@ -7,8 +7,12 @@ window.EP = {
     add(0.1, 'stab'); add(0.6, 'knock'); add(5.0, 'whoosh'); add(12.4, 'knock'); add(16.6, 'hit'); add(20.0, 'creak'); add(23.4, 'hit');
     add(27.4, 'whoosh'); add(34.0, 'hit'); add(38.2, 'dial'); add(41.4, 'ring'); add(41.4, 'jolt');
     add(47.0, 'lock'); add(48.6, 'hit'); add(52.6, 'jolt'); add(52.6, 'hit'); add(53.6, 'lock'); add(57.2, 'dial'); add(59.4, 'hit');
-    add(67.0, 'dial'); add(72.4, 'hit'); add(76.0, 'creak'); add(78.4, 'paper'); add(81.0, 'hit');
-    add(85.0, 'tape'); add(92.0, 'jolt'); add(98.6, 'jolt');
+    add(67.0, 'dial'); add(69.4, 'hit');
+    add(76.0, 'whoosh'); add(81.6, 'jolt'); add(85.4, 'hit'); add(86.0, 'jolt');
+    add(88.2, 'notif'); add(89.4, 'notif'); add(90.5, 'notif'); add(91.6, 'notif'); add(93.0, 'notif');
+    add(95.0, 'whoosh'); add(99.6, 'creak'); add(101.8, 'tape'); add(102.2, 'hit');
+    add(104.0, 'creak'); add(106.4, 'paper'); add(109.0, 'hit');
+    add(113.0, 'tape'); add(120.0, 'jolt'); add(126.6, 'jolt');
   },
 };
 const S = [];
@@ -1225,22 +1229,108 @@ scene({
   post(c, lt) { joltFlash(c, lt, [5.6]); if (lt > 1.4 && lt < 4.6) card(c, 70, 1300, 860, 'BŁĄD 2', 'zaczął otwierać,\nbo usłyszał znajomy głos', lt - 1.4, '#F39C12', 34);
     if (lt > 4.6 && lt < 6.6) label(c, 'TO SAMO ZDANIE. TA SAMA INTONACJA.', 540, 300, 'red', 32, lt - 4.6, 6.6 - lt); if (lt > 4.6) waveCompare(c, lt, 140, 520, 800); if (lt > 6.6) label(c, 'TO NAGRANIE', 540, 300, 'red', 50, lt - 6.6, 9); },
 });
-// 7. ZASADA + 112
+// 7. Najpierw MAMA LENY (sprawdzenie, czy to naprawdę Lena): „Lena śpi obok mnie. Telefon zgubiła wczoraj w szkole.”
 scene({
-  name: 'rule', start: 57, end: 67,
-  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: true }); person(c, 'kuba', 300, 1900, 2.0, { t: lt, home: true, sit: true, phone: true, look: 1, wide: true }); callOverlay(c, lt, '112', 'połączono · ' + String(Math.floor(lt)).padStart(2, '0') + ' s', 1560); night(c, .65, [{ x: 320, y: 1450, r: 320, a: .8 }]); },
-  post(c, lt) { if (lt < 2.4) label(c, 'KUBA DZWONI NA 112', 540, 300, 'yellow', 40, lt, 2.4 - lt); if (lt > 2.4) card(c, 40, 300, 1000, 'ZASADA', 'Znajomy głos za drzwiami w nocy? Nie otwieraj.\nZadzwoń do tej osoby albo jej rodziców,\nnie przez drzwi. Głos można nagrać i podrobić.', lt - 2.4, '#F39C12', 31); },
+  name: 'mom', start: 57, end: 67,
+  bubbles: [sayAt(2.4, 7.2, 'Lena śpi obok mnie.\nTelefon zgubiła wczoraj w szkole.', 'mleny', 540, 1540, 0, 60)],
+  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: true }); wallClock(c, 705, 130, 52, 1, 15); person(c, 'kuba', 300, 1900, 2.0, { t: lt, home: true, sit: true, phone: true, look: 1, wide: lt > 7.2 });
+    callOverlay(c, lt, 'Mama Leny', lt < 2.2 ? 'łączenie…' : 'połączenie · 00:' + String(Math.floor(lt - 2.2)).padStart(2, '0'), 1560); night(c, .6, [{ x: 320, y: 1450, r: 320, a: .8 }]); },
+  post(c, lt) { if (lt < 2.4) label(c, 'KUBA DZWONI DO MAMY LENY', 540, 300, 'yellow', 38, lt, 2.4 - lt); if (lt > 7.4) label(c, 'KTOŚ MA TELEFON LENY', 540, 300, 'red', 42, lt - 7.4, 9); },
 });
-// 8. MAMA LENY przez telefon: „Lena śpi obok mnie. Telefon zgubiła wczoraj w szkole.”
+// 8. Potem 112 + ZASADA
 scene({
-  name: 'mom', start: 67, end: 76,
-  bubbles: [sayAt(.4, 5.2, 'Lena śpi obok mnie.\nTelefon zgubiła wczoraj w szkole.', 'mleny', 540, 1540, 0, 60)],
-  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: lt < 6 }); wallClock(c, 705, 130, 52, 1, 21); person(c, 'kuba', 300, 1900, 2.0, { t: lt, home: true, sit: true, phone: true, look: 1 }); callOverlay(c, lt, 'Mama Leny', 'połączenie · 00:' + String(Math.floor(lt + 12)).padStart(2, '0'), 1560); night(c, .6, [{ x: 320, y: 1450, r: 320, a: .8 }]); },
-  post(c, lt) { if (lt > 5.4) label(c, 'KTOŚ MA TELEFON LENY', 540, 300, 'red', 42, lt - 5.4, 9); },
+  name: 'rule', start: 67, end: 76,
+  draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: true }); wallClock(c, 705, 130, 52, 1, 16); person(c, 'kuba', 300, 1900, 2.0, { t: lt, home: true, sit: true, phone: true, look: 1, wide: true }); callOverlay(c, lt, '112', 'połączono · ' + String(Math.floor(lt)).padStart(2, '0') + ' s', 1560); night(c, .65, [{ x: 320, y: 1450, r: 320, a: .8 }]); },
+  post(c, lt) { if (lt < 2.4) label(c, 'TERAZ KUBA DZWONI NA 112', 540, 300, 'yellow', 40, lt, 2.4 - lt); if (lt > 2.4) card(c, 40, 300, 1000, 'ZASADA', 'Znajomy głos za drzwiami w nocy? Nie otwieraj.\nZadzwoń do tej osoby albo jej rodziców,\na gdy coś się nie zgadza — na 112.', lt - 2.4, '#F39C12', 31); },
+});
+// rękawiczka (czarna, bez skóry) — ręka obcego
+const GLOVE = { jacket: '#1A1B22', dark: '#0E0F14', skin: '#24252C' };
+function glove(c, fx, fy, ang, s = 1) { c.save(); c.translate(fx, fy); c.scale(s, s); c.rotate(ang); fillRR(c, 170, -70, 700, 140, 50, GLOVE.jacket); fillRR(c, 150, -78, 60, 156, 20, GLOVE.dark); fillRR(c, 40, -56, 150, 112, 46, GLOVE.skin); fillRR(c, -6, -18, 90, 38, 19, GLOVE.skin); c.strokeStyle = 'rgba(255,255,255,.08)'; c.lineWidth = 3; for (let i = 0; i < 3; i++) { c.beginPath(); c.moveTo(60, -30 + i * 30); c.lineTo(170, -30 + i * 30); c.stroke(); } c.restore(); }
+// szkolna szatnia: kafelki, kraty boksów, wieszaki z kurtkami, ławka, buty, świetlówka, plan lekcji, zegar
+function szatnia(c, lt, o = {}) {
+  c.fillStyle = '#C9CFC4'; c.fillRect(0, 0, W, 1420); for (let r = 0; r < 24; r++) for (let q = 0; q < 14; q++) { c.strokeStyle = 'rgba(110,120,110,.22)'; c.lineWidth = 2; c.strokeRect(q * 80, r * 60, 80, 60); }
+  c.fillStyle = '#5E7F6A'; c.fillRect(0, 980, W, 440); c.fillStyle = '#4A6A56'; c.fillRect(0, 972, W, 12);
+  const fl = (o.flick && hash(Math.floor(lt * 9)) > .7) ? .25 : 1; fillRR(c, 300, 30, 480, 26, 6, `rgba(240,250,255,${fl})`); c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 60, 10, 540, 500, 900); g.addColorStop(0, `rgba(230,245,255,${.2 * fl})`); g.addColorStop(1, 'rgba(230,245,255,0)'); c.fillStyle = g; c.fillRect(0, 0, W, 1400); c.restore();
+  fillRR(c, 60, 140, 260, 70, 8, '#2F6FEB'); txt(c, 'SZATNIA 8B', 190, 176, 30, '#FFFFFF', 900);
+  fillRR(c, 380, 120, 220, 300, 6, '#F2EEE4'); txt(c, 'PLAN LEKCJI', 490, 150, 18, '#14161B', 900); for (let i = 0; i < 7; i++) { fillRR(c, 396, 172 + i * 34, 188, 24, 3, ['#CDE6F5', '#F5E07A', '#FFD0D0', '#D4F0D0'][i % 4]); }
+  wallClock(c, 700, 230, 60, 2, 20); fillRR(c, 820, 130, 160, 220, 6, '#FFFFFF'); txt(c, 'ZGUBIONE', 900, 160, 18, '#C23A3A', 900); txt(c, 'RZECZY', 900, 184, 18, '#C23A3A', 900); fillRR(c, 840, 210, 120, 120, 8, '#9AA2AB');
+  fillRR(c, 0, 610, W, 22, 4, '#8A6A40'); const jk = ['#C0392B', '#2E86C1', null, '#1E8449', '#B9770E', '#34495E'];
+  for (let i = 0; i < 6; i++) { const x = 90 + i * 180; fillRR(c, x - 6, 620, 12, 40, 4, '#9AA2AB'); if (!jk[i]) continue; c.save(); c.translate(x, 660); c.rotate((hash(i) - .5) * .06); fillRR(c, -70, 0, 140, 420, 30, jk[i]); fillRR(c, -40, -10, 80, 50, 20, 'rgba(0,0,0,.25)'); c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(-3, 40, 6, 370); for (let k = 0; k < 4; k++) circ(c, 14, 70 + k * 80, 6, 'rgba(255,255,255,.4)'); c.restore(); }
+  // kurtka Leny: fioletowa, brelok „L”, kieszeń
+  if (o.lenaJacket !== false) { c.save(); c.translate(450, 660); fillRR(c, -80, 0, 160, 450, 34, '#9B6BC9'); fillRR(c, -46, -10, 92, 56, 22, '#7E50A8'); c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(-3, 46, 6, 390); fillRR(c, -70, 270, 64, 90, 10, '#7E50A8'); circ(c, 50, 120, 14, '#F5C542'); txt(c, 'L', 50, 121, 16, '#14161B', 900); c.restore(); }
+  fillRR(c, 40, 1240, 1000, 40, 8, '#B08A58'); c.fillStyle = '#5A5E66'; c.fillRect(80, 1280, 14, 140); c.fillRect(986, 1280, 14, 140);
+  for (let i = 0; i < 4; i++) { const x = 220 + i * 230; fillRR(c, x - 46, 1130, 92, 110, 28, ['#2A2D36', '#C0392B', '#2E86C1', '#1E8449'][i]); c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = 3; c.beginPath(); c.moveTo(x - 20, 1130); c.lineTo(x, 1110); c.lineTo(x + 20, 1130); c.stroke(); }
+  c.strokeStyle = 'rgba(60,70,70,.7)'; c.lineWidth = 4; for (let x = 900; x < W; x += 34) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, 1420); c.stroke(); } for (let y = 0; y < 1420; y += 34) { c.beginPath(); c.moveTo(900, y); c.lineTo(W, y); c.stroke(); }
+  c.fillStyle = '#9AA6AE'; c.fillRect(0, 1420, W, 500); for (let r = 0; r < 8; r++) for (let q = 0; q < 14; q++) { c.strokeStyle = 'rgba(80,90,100,.25)'; c.strokeRect(q * 80 + (r % 2) * 40, 1420 + r * 64, 80, 64); }
+}
+// telefon Leny: ekran blokady
+function lenaLock(c, x, y, s, a = 0) { c.save(); c.translate(x, y); c.rotate(a); c.scale(s, s); fillRR(c, -60, -110, 120, 220, 18, '#16171C'); fillRR(c, -54, -104, 108, 208, 14, '#3B2A5A'); txt(c, '14:20', 0, -60, 26, '#FFFFFF', 900); fillRR(c, -44, -20, 88, 34, 8, 'rgba(255,255,255,.2)'); txt(c, '💬 8B klasa', 0, -3, 12, '#FFFFFF', 800); txt(c, 'Lena 💜', 0, 70, 14, '#FFFFFF', 800); c.restore(); }
+// czerwona czapka z daszkiem wystająca z kieszeni (trop A) i pęk kluczy z żółtym brelokiem (trop B)
+function capInPocket(c, x, y, s) { c.save(); c.translate(x, y); c.scale(s, s); c.rotate(-.3); c.fillStyle = '#C23A3A'; c.beginPath(); c.ellipse(0, 0, 44, 26, 0, Math.PI, 0); c.fill(); fillRR(c, 10, -6, 56, 14, 7, '#9A2A2A'); c.restore(); }
+// zakapturzony: postać bez twarzy (czarna plama w kapturze)
+function hooded(c, x, y, s, o = {}) { person(c, 'kaptur', x, y, s, Object.assign({ still: true }, o)); if (!o.back) { const hy = y - 238 * s; c.fillStyle = '#060608'; c.beginPath(); c.ellipse(x, hy + 4 * s, 40 * s, 46 * s, 0, 0, 7); c.fill(); if (o.eyes) { circ(c, x - 14 * s, hy, 3.5 * s, `rgba(255,255,255,${o.eyes})`); circ(c, x + 14 * s, hy, 3.5 * s, `rgba(255,255,255,${o.eyes})`); } } }
+// 9. WCZORAJ, SZATNIA: Lena wiesza kurtkę (telefon w kieszeni), Zuzia obok, Bartek nagrywa. Dzwonek. Wszyscy wychodzą.
+//    Ktoś zostaje: kaptur, bez twarzy. Z kieszeni wystaje czerwony daszek, u pasa klucze z żółtym brelokiem. Zabiera telefon.
+scene({
+  name: 'szatnia', start: 76, end: 88, cam: jolt([5.6, 9.4]),
+  draw(c, lt) { const late = lt > 5.6; szatnia(c, lt, { flick: late });
+    const take = clamp((lt - 8.8) / .6), away = clamp((lt - 10.0) / 1.6);
+    const px = 412 + away * 600, py = 990 - take * 40;
+    if (lt < 10.0) lenaLock(c, px, py, .9, -.15); 
+    if (!late) { const out = clamp((lt - 4.2) / 1.4), dx = -out * 900;
+      personB(c, 170 + dx * 1.2, 1820, 2.2, { t: lt, phone: true, look: 1, mouth: 'smile', walk: out > 0 ? lt * 10 : null });
+      person(c, 'nina', 640 + dx, 1820, 2.2, { t: lt, look: -1, talk: lt < 2.4, walk: out > 0 ? lt * 10 : null });
+      person(c, 'zuzia', 860 + dx, 1820, 2.2, { t: lt, look: -1, walk: out > 0 ? lt * 10 : null });
+      if (lt < 4) { c.strokeStyle = 'rgba(255,60,60,.8)'; c.lineWidth = 4; circ(c, 250 + dx, 1290, 8, '#FF3B30'); } }
+    else { const fx = lerp(1250, 640, clamp((lt - 6.0) / 2.2)) + away * 700, walk = (lt < 8.2 || lt > 10) ? lt * 9 : null;
+      if (lt > 8.2 && lt < 10.4) glove(c, lt < 10 ? 412 + 30 : px + 30, lt < 10 ? py + 10 : py, .95, .9);
+      hooded(c, fx, 1820, 2.3, { t: lt, walk, eyes: lt > 8.6 && lt < 9.6 ? .9 : 0 });
+      capInPocket(c, fx - 70, 1480, 1.0); keyRing(c, fx + 66, 1410, .75, lt, 1.4);
+      if (lt >= 10) lenaLock(c, px, py, .9, .2); }
+    c.save(); c.globalCompositeOperation = 'saturation'; c.fillStyle = 'rgba(128,128,128,.5)'; c.fillRect(0, 0, W, H); c.restore(); night(c, late ? .45 : .2, [{ x: 520, y: 1100, r: 640, a: .85 }]);
+    c.fillStyle = 'rgba(255,255,255,.04)'; for (let y = 0; y < H; y += 6) c.fillRect(0, y, W, 2); },
+  post(c, lt) { joltFlash(c, lt, [5.6, 9.4]); if (lt < 4.4) label(c, 'WCZORAJ · 14:20 · SZATNIA', 540, 300, 'yellow', 38, lt, 4.4 - lt);
+    if (lt > 1.2 && lt < 4.4) label(c, 'TELEFON W KIESZENI KURTKI', 540, 410, 'dark', 32, lt - 1.2, 4.4 - lt);
+    if (lt > 4.4 && lt < 6.0) label(c, '🔔 DZWONEK · WSZYSCY WYCHODZĄ', 540, 300, 'dark', 36, lt - 4.4, 6.0 - lt);
+    if (lt > 6.0 && lt < 8.8) label(c, 'KTOŚ ZOSTAŁ…', 540, 300, 'red', 46, lt - 6.0, 8.8 - lt);
+    if (lt > 8.8) label(c, 'CZERWONY DASZEK? KLUCZE?', 540, 300, 'red', 40, lt - 8.8, 9); },
+});
+// 10. 00:41 — z telefonu Leny ktoś pisze na grupie klasowej. Bartek, Zuzia… i Kuba odpisuje.
+scene({
+  name: 'czat', start: 88, end: 95,
+  draw(c, lt) { const all = [['Lena', 'ktoś jeszcze nie śpi? 🙂'], ['Bartek', 'lena?? myślałem że\nzgubiłaś telefon xd'], ['Zuzia', 'Lena… to na pewno ty?'], ['Lena', 'Kuba, jesteś sam w domu?'], ['Ty', 'ta, mama w pracy. czemu?']], ts = [0, 1.2, 2.3, 3.4, 4.8];
+    const n = ts.filter(t => lt >= t).length; groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '00:41', typing: lt > 4.0 && lt < 4.8 ? 'Ty' : null, pop: popT(lt, ts) }); night(c, .2, []); },
+  post(c, lt) { if (lt > 5.4) label(c, 'TERAZ WIEDZIAŁ, ŻE KUBA JEST SAM', 540, 1640, 'red', 34, lt - 5.4, 9); },
+});
+// ekran telefonu: wiadomości głosowe Leny pocięte i sklejone w jedno nagranie
+function spliceScreen(c, lt, x, y, s, a) { c.save(); c.translate(x, y); c.rotate(a); c.scale(s, s); c.shadowColor = 'rgba(120,150,255,.5)'; c.shadowBlur = 50; fillRR(c, -200, -340, 400, 680, 44, '#16171C'); c.shadowColor = 'transparent'; fillRR(c, -186, -326, 372, 652, 34, '#0B0D14');
+  txt(c, 'Lena 💜 · wiadomości głosowe', 0, -280, 20, '#C9CDD2', 800);
+  const msgs = [['„…Kuba!…”', '0:01'], ['„…to ja, Lena…”', '0:02'], ['„…uciekłam mu…”', '0:02'], ['„…otwórz, proszę…”', '0:02']];
+  msgs.forEach(([t, d], i) => { const yy = -220 + i * 86, on = lt > .6 + i * .5; fillRR(c, -160, yy, 320, 66, 20, on ? '#7E50A8' : '#2A2D36'); txt(c, '▶', -132, yy + 33, 22, '#FFFFFF', 900); txt(c, t, -104, yy + 33, 20, '#FFFFFF', 800, 'left'); txt(c, d, 146, yy + 33, 16, 'rgba(255,255,255,.7)', 800, 'right'); });
+  txt(c, '✂  ✂  ✂', 0, 150, 30, '#F5C542', 900); fillRR(c, -160, 190, 320, 90, 18, '#1E2230'); for (let k = 0; k < 40; k++) { const h = 8 + Math.abs(Math.sin(k * 1.7) * 30 + Math.sin(k * .5) * 10); fillRR(c, -150 + k * 7.5, 235 - h / 2, 4, h, 2, k / 40 < clamp(lt / 3.2) ? '#FF4D6D' : '#5A5E66'); }
+  txt(c, 'nagranie_kuba.m4a  0:07', 0, 300, 18, '#C9CDD2', 800); c.restore(); }
+// 11. 01:10 — KILKA MINUT PRZED PUKANIEM: zakapturzony idzie po schodach na klatce Kuby, w ręku sklejone nagranie, klucze dzwonią.
+//     Pod drzwiami Kuby (nr 3) zakleja wizjer taśmą.
+scene({
+  name: 'pov', start: 95, end: 104, cam: jolt([7.2]),
+  draw(c, lt) {
+    if (lt < 4.6) { stairElev(c, lt, 1, { flick: true }); const k = clamp(lt / 4.4); hooded(c, lerp(300, 620, k), 1880 - k * 260, 2.6 - k * .5, { t: lt, back: true, walk: lt * 9 });
+      keyRing(c, lerp(300, 620, k) + 70, 1880 - k * 260 - 360 * (2.6 - k * .5) / 2.6, .6, lt, 2);
+      night(c, .62, [{ x: 540, y: 900, r: 560, a: .85 }]); spliceScreen(c, lt, 800, 1420, .78, .06); }
+    else { const k = clamp((lt - 4.6) / 1.6), z = 1 + k * .25; c.save(); c.translate(540, 650); c.scale(z, z); c.translate(-540, -650); photoDoor3(c, 0, 0, W, H); fillRR(c, 700, 980, 40, 80, 8, '#C9A15A'); circ(c, 720, 1040, 7, '#2A1A10'); fillRR(c, 690, 1100, 90, 22, 10, '#C9A15A'); c.restore();
+      circ(c, 540, 650, 26 * z, '#C9A15A'); circ(c, 540, 650, 18 * z, '#1B1C22');
+      const tp = clamp((lt - 6.6) / .6); if (tp > 0) { c.save(); c.translate(540, 650); c.rotate(-.25); c.globalAlpha = tp; fillRR(c, -110, -34, 220, 68, 6, '#B7BCC2'); c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(-110, -34, 220, 10); c.restore(); }
+      const reach = clamp((lt - 5.6) / .9); glove(c, lerp(700, 560, reach), lerp(1200, 690, reach), 1.2, 1.0);
+      hooded(c, 600, 2150, 3.2, { t: lt, back: true }); keyRing(c, 700, 1560, .8, lt, 1.6);
+      // światło spod drzwi Kuby + jego cień w środku
+      c.save(); c.globalCompositeOperation = 'lighter'; const u = c.createLinearGradient(0, 1880, 0, 1920); u.addColorStop(0, 'rgba(255,200,120,0)'); u.addColorStop(1, 'rgba(255,200,120,.5)'); c.fillStyle = u; c.fillRect(270, 1880, 540, 40); c.restore();
+      night(c, .5, [{ x: 540, y: 800, r: 600, a: .85 }]); }
+  },
+  post(c, lt) { joltFlash(c, lt, [7.2]); if (lt < 4.6) label(c, '01:10 · KLATKA KUBY', 540, 300, 'yellow', 38, lt, 4.6 - lt); if (lt > 4.6) label(c, 'DRZWI KUBY · TAŚMA NA WIZJER', 540, 300, 'red', 38, lt - 4.6, 9); },
 });
 // 9. DRUGIE NAPIĘCIE: cienie pod drzwiami wracają. Pod drzwiami wsuwa się kartka: „WIEM, ŻE SŁUCHASZ.”
 scene({
-  name: 'note', start: 76, end: 85,
+  name: 'note', start: 104, end: 113,
   draw(c, lt) { kubaHall(c, lt, { underLight: 1, feet: true }); const p = clamp((lt - 2.4) / 2.2);
     if (lt > 2.4) { c.save(); c.translate(540, 1400 + p * 220); c.rotate(.05 * p); fillRR(c, -170, -20, 340, 220 * p + 20, 4, '#F2EEE4'); if (p > .6) { c.globalAlpha = clamp((p - .6) / .4); txt(c, 'WIEM, ŻE', 0, 80, 40, '#14161B', 900); txt(c, 'SŁUCHASZ.', 0, 140, 46, '#C23A3A', 900); } c.restore(); }
     person(c, 'kuba', 220, 1900, 2.0, { t: lt, home: true, sit: true, look: 1, wide: true, mouth: lt > 4.6 ? 'o' : null }); night(c, .6, [{ x: 540, y: 1500, r: 420, a: .85 }]); },
@@ -1248,7 +1338,7 @@ scene({
 });
 // 10. ZAKOŃCZENIE: wizjer jaśnieje — taśma schodzi. Oko i uśmiech tuż przy szkle. Głos Leny… który przechodzi w męski: „Dobranoc, Kuba.”
 scene({
-  name: 'end', start: 85, end: 116, cam: jolt([7.0, 13.6]),
+  name: 'end', start: 113, end: 144, cam: jolt([7.0, 13.6]),
   labels: [[27.4, 31, 'ODC. 4 ↓', 540, 1650, 'red', 64]],
   draw(c, lt) {
     if (lt < 7.0) { peepPOV(c, lt, (cc, cx, cy, r) => tapedPeep(cc, cx, cy, r, lt, { peel: clamp((lt - 1.4) / 4.4) })); return; }
