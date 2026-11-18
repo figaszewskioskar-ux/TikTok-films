@@ -1,18 +1,3 @@
-hook       5.0s ->   5.4s
-ctx        7.0s ->   7.1s
-knock      8.0s ->   6.0s
-peep       7.0s ->   5.9s
-voice     11.0s ->  11.9s
-call       9.0s ->   6.8s
-trap      10.0s ->  12.2s
-mom       10.0s ->   8.6s
-rule       9.0s ->   6.8s
-szatnia   12.0s ->  12.9s
-czat       7.0s ->   7.6s
-pov        9.0s ->  11.3s
-note       9.0s ->   7.8s
-end       31.0s ->  29.2s
-RAZEM 139.7 s
 ok bed
 ok wind
 ok boom
@@ -32,20 +17,18 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/4190 klatek, 14 s
-600/4190 klatek, 38 s
-900/4190 klatek, 63 s
-1200/4190 klatek, 92 s
-1500/4190 klatek, 116 s
-1800/4190 klatek, 140 s
-2100/4190 klatek, 166 s
-2400/4190 klatek, 194 s
-2700/4190 klatek, 219 s
-3000/4190 klatek, 242 s
-3300/4190 klatek, 265 s
-3600/4190 klatek, 289 s
-3900/4190 klatek, 313 s
-Gotowe w 347 s
+300/4190 klatek, 17 s
+600/4190 klatek, 45 s
+900/4190 klatek, 74 s
+1200/4190 klatek, 109 s
+1500/4190 klatek, 136 s
+1800/4190 klatek, 163 s
+2100/4190 klatek, 193 s
+2400/4190 klatek, 223 s
+2700/4190 klatek, 250 s
+3000/4190 klatek, 277 s
+3300/4190 klatek, 303 s
+3600/4190 klatek, 331 s
+3900/4190 klatek, 358 s
+Gotowe w 397 s
 audio.wav OK 139.66 s
-Gotowe: /home/user/TikTok-films/film/klasa3/out/final.mp4
-EXIT 0
