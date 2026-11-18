@@ -4,11 +4,13 @@ window.EP = {
   loop: false,
   vignette: .8,
   cues(add) {
-    add(0.1, 'stab'); add(0.6, 'hit'); add(5.0, 'whoosh'); add(12.0, 'whoosh'); add(15.2, 'hit'); add(21.2, 'buzz'); add(23.0, 'buzz'); add(25.0, 'notif');
-    add(29.0, 'creak'); add(31.0, 'keys'); add(38.6, 'hit'); add(43.0, 'whoosh'); add(45.0, 'keys'); add(47.0, 'hit');
-    add(51.6, 'hit'); add(56.6, 'switch'); add(56.7, 'jolt'); add(60.0, 'whoosh'); add(60.4, 'steps'); add(74.0, 'whoosh'); add(78.0, 'hit');
-    add(82.0, 'creak'); add(85.0, 'hit'); add(92.0, 'notif'); add(93.4, 'notif'); add(95.0, 'notif'); add(96.6, 'notif');
-    add(100.0, 'whoosh'); add(104.2, 'buzz'); add(106.6, 'hit'); add(108.6, 'jolt'); add(109.0, 'lock'); add(111.0, 'lock');
+    add(0.1, 'stab'); add(0.6, 'hit'); add(5.0, 'whoosh'); add(5.4, 'bell'); add(11.6, 'hit'); add(14.0, 'whoosh'); add(20.4, 'hit'); add(22.0, 'whoosh'); add(25.6, 'hit');
+    add(29.0, 'whoosh'); add(32.2, 'hit'); add(38.2, 'buzz'); add(41.2, 'buzz'); add(42.0, 'notif');
+    add(45.0, 'creak'); add(46.0, 'keys'); add(55.6, 'hit'); add(57.0, 'whoosh'); add(58.0, 'keys'); add(59.2, 'hit');
+    add(64.4, 'hit'); add(69.6, 'switch'); add(69.7, 'jolt'); add(73.0, 'whoosh'); add(73.4, 'steps');
+    add(87.0, 'siren'); add(91.0, 'hit'); add(94.0, 'jolt'); add(95.4, 'hit');
+    add(99.0, 'creak'); add(99.4, 'hit'); add(106.0, 'hit'); add(108.0, 'notif'); add(109.2, 'notif'); add(110.4, 'notif'); add(111.2, 'notif'); add(112.2, 'notif'); add(114.0, 'hit');
+    add(116.0, 'whoosh'); add(120.2, 'buzz'); add(122.6, 'hit'); add(124.6, 'jolt'); add(125.0, 'lock'); add(127.0, 'lock');
   },
 };
 const S = [];
@@ -1285,29 +1287,49 @@ scene({
   draw(c, lt) { shot(c, 540, 1100, 1.15, (cc) => lostBox(cc, lt, {})); night(c, .35, [{ x: 540, y: 1100, r: 600, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [.6, 2.0]); if (lt > .5 && lt < 3.4) label(c, 'TELEFON LENY?!', 540, 300, 'red', 48, lt - .5, 3.4 - lt); bigSign(c, lt, 'NIE ZOSTAWAJ', 'SAM W SZATNI!', 1640); },
 });
-// 1. Następny dzień, 14:35. Kuba ostatni w szatni.
+// 1. RANO W KLASIE: wszyscy patrzą na Bartka (czerwona czapka). Bartek się broni. Lena milczy. Maja… się uśmiecha.
 scene({
-  name: 'ctx', start: 5, end: 12,
-  draw(c, lt) { szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 35 }); person(c, 'kuba', lerp(240, 520, clamp(lt / 3)), 1820, 2.3, { t: lt, look: 1, walk: lt < 3 ? lt * 9 : null }); night(c, .25, [{ x: 520, y: 1200, r: 600, a: .8 }]); },
-  post(c, lt) { label(c, 'NASTĘPNY DZIEŃ · 14:35', 540, 300, 'yellow', 40, lt, 9); if (lt > 2.6) label(c, 'KUBA OSTATNI W SZATNI', 540, 410, 'dark', 36, lt - 2.6, 9); },
+  name: 'klasa', start: 5, end: 14,
+  bubbles: [sayAt(2.6, 5.4, 'Bartek, na zdjęciu była\ntwoja czerwona czapka!', 'zuzia', 900, 820, -120, 40), sayAt(5.6, 8.6, 'Zgubiłem ją miesiąc temu!\nTo nie ja!', 'bartek', 540, 1180, 0, 40)],
+  draw(c, lt) { classroom(c, lt, { board: 'Temat: Komu ufać w sieci?', board2: '1. Nie wysyłaj głosówek obcym' });
+    deskRow(c, lt, { y: 1180, s: .8, kids: [[180, 'maja', { mouth: lt > 7.4 ? 'smile' : null, look: 1 }], [540, 'nina', { look: 0, lookY: 1 }], [900, 'zuzia', { look: -1, talk: lt > 2.6 && lt < 5.2 }]] });
+    deskRow(c, lt, { y: 1560, s: 1.0, kids: [[180, 'kuba', { look: 1 }], [540, 'bartek', { look: -1, mouth: 'angry', talk: lt > 5.6 && lt < 8.4, still: false }], [900, null]] }); },
+  post(c, lt) { label(c, 'RANO · 8B · WSZYSCY PATRZĄ NA BARTKA', 540, 300, 'yellow', 34, lt, 9); if (lt > 7.6) label(c, '…A MAJA SIĘ UŚMIECHA?', 540, 1720, 'red', 38, lt - 7.6, 9); },
+});
+// 2. PRZERWA: Lena mówi Kubie prawdę — wysyłała „Nowemu Uczniowi” głosówki.
+scene({
+  name: 'lena', start: 14, end: 22,
+  bubbles: [say(2.0, 6.2, 'Wysyłałam mu głosówki…\nMyślałam, że to ktoś z klasy.', 'lena', 700, 1880, 2.0, -60)],
+  draw(c, lt) { schoolBg(c, lt); person(c, 'kuba', 330, 1880, 2.0, { t: lt, look: 1, wide: lt > 6.2 }); person(c, 'nina', 700, 1880, 2.0, { t: lt, look: -1, lookY: lt < 2 ? 1 : 0, talk: lt > 2.0 && lt < 6.0 });
+    if (lt > 2) for (let k = 0; k < 3; k++) circ(c, 668 + k * 4, 1880 - 312 * 2 + 70 + ((lt * 60 + k * 30) % 60), 4, 'rgba(120,180,255,.8)'); },
+  post(c, lt) { label(c, 'PRZERWA · LENA MÓWI PRAWDĘ', 540, 300, 'yellow', 36, lt, 9); if (lt > 6.4) label(c, 'Z JEJ GŁOSÓWEK SKLEIŁ NAGRANIE', 540, 410, 'red', 34, lt - 6.4, 9); },
+});
+// 3. ZUZIA COŚ WIDZIAŁA: zdjęcie z wczoraj — nowy pan z szatni fotografuje kurtki.
+scene({
+  name: 'zuzia', start: 22, end: 29, cam: jolt([3.6]),
+  bubbles: [sayAt(.8, 4.2, 'Ten nowy z szatni\nrobił zdjęcia waszym kurtkom.', 'zuzia', 760, 420, -80, 40)],
+  draw(c, lt) { splitRooms(c, lt, [
+      ['PRZERWA', '#2F6FEB', (cc) => { schoolBg(cc, lt); person(cc, 'kuba', 330, 1880, 2.0, { t: lt, look: 1, wide: lt > 3.6 }); person(cc, 'zuzia', 760, 1880, 2.0, { t: lt, look: -1, phone: true, talk: lt > .8 && lt < 4.0 }); }, 900],
+      ['ZDJĘCIE ZUZI · WCZORAJ', '#D7263D', (cc) => { szatnia(cc, lt, {}); szatniarz(cc, 640, 1820, 2.0, { t: lt, back: true, keys: false }); cc.save(); cc.globalCompositeOperation = 'lighter'; const g = cc.createRadialGradient(560, 1000, 10, 560, 1000, 160); g.addColorStop(0, `rgba(255,255,255,${.5 + .5 * Math.sin(lt * 5)})`); g.addColorStop(1, 'rgba(255,255,255,0)'); cc.fillStyle = g; cc.fillRect(380, 820, 360, 360); cc.restore(); fillRR(cc, 536, 960, 50, 84, 8, '#16171C'); }, 760]]); },
+  post(c, lt) { joltFlash(c, lt, [3.6]); if (lt > 4.2) label(c, 'ZDJĘCIA KURTEK. I KLUCZY W KIESZENIACH.', 540, 960, 'red', 32, lt - 4.2, 9); },
 });
 // 2. Pudło rzeczy znalezionych: telefon Leny i czapka Bartka.
 scene({
-  name: 'box', start: 12, end: 21, cam: jolt([3.2]),
+  name: 'box', start: 29, end: 38, cam: jolt([3.2]),
   bubbles: [sayAt(3.4, 5.6, 'Telefon Leny?!', 'kuba', 540, 1700, 0, 40)],
   draw(c, lt) { if (lt < 2.4) { szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 35 }); person(c, 'kuba', lerp(520, 820, clamp(lt / 2)), 1820, 2.3, { t: lt, look: 1, walk: lt * 9 }); fillRR(c, 820, 210, 150, 130, 10, '#B98A55'); night(c, .25, [{ x: 820, y: 900, r: 600, a: .8 }]); return; }
     lostBox(c, lt, {}); hand(c, lerp(1100, 620, clamp((lt - 2.6) / .8)), 1050, .25, KINDS.kuba); night(c, .3, [{ x: 540, y: 1050, r: 640, a: .9 }]); },
-  post(c, lt) { joltFlash(c, lt, [3.2]); if (lt > 2.4) label(c, 'ZGUBIONE RZECZY', 540, 300, 'dark', 40, lt - 2.4, 9); if (lt > 5.8) label(c, 'CZAPKA BARTKA?!', 540, 410, 'red', 44, lt - 5.8, 9); },
+  post(c, lt) { joltFlash(c, lt, [3.2]); if (lt < 2.4) label(c, '14:35 · KUBA OSTATNI W SZATNI', 540, 300, 'yellow', 38, lt, 2.4 - lt); if (lt > 2.4) label(c, 'ZGUBIONE RZECZY', 540, 300, 'dark', 40, lt - 2.4, 9); if (lt > 5.8) label(c, 'CZAPKA BARTKA?!', 540, 410, 'red', 44, lt - 5.8, 9); },
 });
 // 3. Telefon Leny się świeci: „Znalazłeś 🙂 Zostań tam. Zaraz przyjdę.”
 scene({
-  name: 'msg', start: 21, end: 29, cam: jolt([4.0]),
+  name: 'msg', start: 38, end: 45, cam: jolt([4.0]),
   draw(c, lt) { phoneBig(c, lt, [['Nowy Uczeń', 'Znalazłeś 🙂', null, 1.0], ['Nowy Uczeń', 'Zostań tam, Kuba.\nZaraz przyjdę.', null, 4.0]], { shake: (lt > .2 && lt < 1.4) || (lt > 3.2 && lt < 4.4) ? 4 : 0 }); night(c, .25, [{ x: 540, y: 980, r: 700, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [4.0]); if (lt > 5.2) label(c, 'SKĄD WIE, ŻE TU JEST?', 540, 1720, 'red', 40, lt - 5.2, 9); },
 });
 // 4. Pan z szatni: szeroki uśmiech, klucze u pasa. „Zgubiłeś coś, Kuba? Chodź na zaplecze.”
 scene({
-  name: 'pan', start: 29, end: 43, cam: jolt([10.6]),
+  name: 'pan', start: 45, end: 57, cam: jolt([10.6]),
   bubbles: [say(2.8, 7.8, 'Zgubiłeś coś, Kuba?\nChodź na zaplecze,\ntam jest więcej rzeczy.', 'obcy', 760, 1820, 2.4, -100), say(8.2, 10.4, 'Skąd pan zna\nmoje imię?', 'kuba', 300, 1820, 2.3, 60)],
   draw(c, lt) { szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 37 });
     const sx = lerp(1250, 760, clamp(lt / 2.4)); szatniarz(c, sx, 1820, 2.4, { t: lt, look: -1, mouth: 'grin', walk: lt < 2.4 ? lt * 8 : null, talk: lt > 2.8 && lt < 7.6 });
@@ -1318,7 +1340,7 @@ scene({
 });
 // 5. Te same klucze: teraz (pas pana z szatni) i wczoraj (zakapturzony w szatni).
 scene({
-  name: 'keys', start: 43, end: 51, cam: jolt([2.2]),
+  name: 'keys', start: 57, end: 64, cam: jolt([2.2]),
   draw(c, lt) {
     splitRooms(c, lt, [
       ['TERAZ', '#2F6FEB', (cc) => { cc.fillStyle = '#56606B'; cc.fillRect(0, 0, W, 960); cc.fillStyle = '#454E58'; cc.fillRect(500, 0, 80, 960); fillRR(cc, 0, 560, W, 70, 6, '#1A1A1A'); fillRR(cc, 500, 552, 90, 86, 10, '#9AA2AB'); fillRR(cc, 620, 200, 260, 150, 10, '#F2EEE4'); fillRR(cc, 620, 200, 260, 44, 8, '#2F6FEB'); txt(cc, 'PRACOWNIK', 750, 224, 24, '#FFFFFF', 900); txt(cc, 'SZATNIA', 750, 300, 34, '#14161B', 900); keyRing(cc, 300, 380, 1.5, lt, 1.2); night(cc, .2, []); }, 1e-6],
@@ -1327,7 +1349,7 @@ scene({
 });
 // 6. Kuba: „To pan zabrał telefon Leny!” Uśmiech znika. Światło gaśnie. „Nikt cię tu nie usłyszy, Kuba.”
 scene({
-  name: 'face', start: 51, end: 60, cam: jolt([5.6]),
+  name: 'face', start: 64, end: 73, cam: jolt([5.6]),
   bubbles: [say(.4, 2.8, 'To pan zabrał\ntelefon Leny!', 'kuba', 300, 1820, 2.3, 60), sayAt(6.4, 8.8, 'Nikt cię tu nie usłyszy,\nKuba.', 'obcy', 760, 900, -60, 40)],
   draw(c, lt) { const dark = lt > 5.6; szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 38, flick: lt > 4.4 && lt < 5.6 });
     if (lt < 5.6) { szatniarz(c, 760, 1820, 2.4, { t: lt, look: -1, mouth: lt < 2.8 ? 'grin' : null, still: true }); if (lt > 4.2) { const r = clamp((lt - 4.2) / 1.2); fillRR(c, 960, 900, 50, 80, 6, '#F2EEE4'); hand(c, lerp(1100, 990, r), 940, 2.9, KINDS.szatniarz); } }
@@ -1338,33 +1360,38 @@ scene({
 });
 // 7. Ucieczka na korytarz, do p. Wiśniewskiej. ZASADA.
 scene({
-  name: 'run', start: 60, end: 74,
+  name: 'run', start: 73, end: 87,
   bubbles: [say(2.6, 5.0, 'Proszę pani!\nPan z szatni!', 'kuba', 420, 1880, 2.1, 40), say(5.4, 8.6, 'Do pokoju nauczycielskiego.\nDzwonię na policję.', 'pani', 760, 1880, 2.1, -80)],
   draw(c, lt) { schoolBg(c, lt); const kx = lt < 2.4 ? lerp(-100, 420, lt / 2.4) : 420; person(c, 'kuba', kx, 1880, 2.1, { t: lt, look: 1, wide: true, walk: lt < 2.4 ? lt * 16 : null, talk: lt > 2.6 && lt < 4.8 });
     person(c, 'kobieta', 760, 1880, 2.1, { t: lt, look: -1, phone: lt > 5.4, talk: lt > 5.4 && lt < 8.4, wide: lt > 2.6 && lt < 5.4 });
     if (lt > 2) { person(c, 'zuzia', 980, 1880, 1.6, { t: lt, look: -1, still: true }); personB(c, 120, 1880, 1.6, { t: lt, look: 1, still: true }); } },
   post(c, lt) { if (lt < 2.6) label(c, 'KUBA UCIEKA DO LUDZI', 540, 300, 'yellow', 40, lt, 2.6 - lt); if (lt > 8.8) card(c, 40, 300, 1000, 'ZASADA', 'Dorosły chce, żebyś został z nim sam\nalbo poszedł z nim na zaplecze? Nie idź.\nWyjdź tam, gdzie są ludzie, i od razu\npowiedz nauczycielowi lub rodzicom.', lt - 8.8, '#F39C12', 31); },
 });
-// 8. Policja. Szatnia pusta. Pan z szatni zniknął.
+// 8. Policja. Szatnia pusta. Monitoring z klatki Kuby: ten sam człowiek. ODPOWIEDŹ Z ODC. 3: B.
 scene({
-  name: 'police', start: 74, end: 82, cam: jolt([4.0]),
+  name: 'police', start: 87, end: 99, cam: jolt([4.0, 7.0]),
   draw(c, lt) { if (lt < 4.0) { schoolOutside(c, lt); policeCar(c, lt, 540, 1500, 1.3); policeLights(c, lt, 120, 840); person(c, 'policjant', 900, 1700, 1.6, { t: lt, look: -1, still: true }); night(c, .3, [{ x: 540, y: 1200, r: 700, a: .7 }]); return; }
-    szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 58 }); c.fillStyle = 'rgba(2,3,8,.8)'; c.fillRect(0, 0, W, H); flashBeams(c, lt); },
-  post(c, lt) { joltFlash(c, lt, [4.0]); if (lt < 4.0) label(c, '14:52 · POLICJA POD SZKOŁĄ', 540, 300, 'yellow', 38, lt, 4 - lt); if (lt > 4.0) label(c, 'SZATNIA PUSTA', 540, 300, 'red', 46, lt - 4.0, 9); if (lt > 5.6) label(c, 'PAN Z SZATNI ZNIKNĄŁ', 540, 410, 'dark', 36, lt - 5.6, 9); },
+    if (lt < 7.0) { szatnia(c, lt, { lenaJacket: false, hh: 2, mm: 58 }); c.fillStyle = 'rgba(2,3,8,.8)'; c.fillRect(0, 0, W, H); flashBeams(c, lt); return; }
+    splitRooms(c, lt, [
+      ['MONITORING · KLATKA KUBY · 01:10', '#D7263D', (cc) => { stairElev(cc, lt, 1, { flick: true }); hooded(cc, 520, 1600, 2.2, { t: lt, still: true }); keyRing(cc, 590, 1290, .5, lt, 1); cctv(cc, lt, 'KAM 2 · KLATKA'); }, 700],
+      ['SZATNIA · DZIŚ 14:37', '#2F6FEB', (cc) => { szatnia(cc, lt, { lenaJacket: false }); szatniarz(cc, 560, 1820, 2.2, { t: lt, mouth: 'grin', look: 0 }); }, 760]]); },
+  post(c, lt) { joltFlash(c, lt, [4.0, 7.0]); if (lt < 4.0) label(c, '14:52 · POLICJA POD SZKOŁĄ', 540, 300, 'yellow', 38, lt, 4 - lt); if (lt > 4.0 && lt < 7.0) { label(c, 'SZATNIA PUSTA', 540, 300, 'red', 46, lt - 4.0, 7 - lt); if (lt > 5.4) label(c, 'PAN Z SZATNI ZNIKNĄŁ', 540, 410, 'dark', 36, lt - 5.4, 7 - lt); }
+    if (lt > 8.4) { const p = eout(clamp((lt - 8.4) / .4)); c.save(); c.globalAlpha = p; c.translate(540, 960); c.scale(.7 + .3 * p, .7 + .3 * p); c.rotate(-.03); c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 40; fillRR(c, -440, -150, 880, 300, 30, '#14161D'); c.shadowColor = 'transparent'; c.strokeStyle = '#F5C542'; c.lineWidth = 6; rr(c, -440, -150, 880, 300, 30); c.stroke();
+      txt(c, 'ODPOWIEDŹ Z ODC. 3', 0, -90, 34, '#F5C542', 900); circ(c, -300, 30, 70, '#30A46C'); txt(c, 'B', -300, 34, 80, '#FFFFFF', 900); txt(c, 'Obcy z klatki', 60, -10, 52, '#FFFFFF', 900); txt(c, '= pan z szatni', 60, 60, 44, '#FF6B6B', 900); c.restore(); } },
 });
 // 9. Zaplecze: tablica ze zdjęciami (drzwi Kuby, okno Leny, przystanek), lista klasy, dorobione klucze.
 scene({
-  name: 'wall', start: 82, end: 92, cam: jolt([.4, 7.0]),
+  name: 'wall', start: 99, end: 108, cam: jolt([.4, 7.0]),
   draw(c, lt) { if (lt < 7.0) { backWall(c, lt, { t0: .6 }); flashBeams(c, lt); night(c, .45, [{ x: 540, y: 700, r: 640, a: .9 }]); return; }
     shot(c, 600, 1680, 2.0, (cc) => backWall(cc, lt, { t0: -9 })); night(c, .3, [{ x: 540, y: 960, r: 700, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [.4, 7.0]); if (lt > .4 && lt < 7.0) label(c, 'ZAPLECZE SZATNI', 540, 1600, 'dark', 40, lt - .4, 7 - lt); if (lt > 7.0) label(c, 'NOWE KLUCZE. Z NUMEREM 3.', 540, 300, 'red', 40, lt - 7.0, 9); },
 });
-// 10. Grupa klasowa: Bartek niewinny, Lena dziękuje.
+// 10. Grupa klasowa: Bartek niewinny, Lena dziękuje, Zuzia przeprasza… a Maja wychodzi z grupy.
 scene({
-  name: 'chat', start: 92, end: 100,
-  draw(c, lt) { const all = [['p. Wiśniewska', 'Telefon Leny jest na policji.\nPan z szatni już tu nie pracuje.'], ['p. Wiśniewska', 'Bartek, przepraszamy.\nTwoją czapkę ktoś ukradł z szatni.'], ['Bartek', 'mówiłem że to nie ja 😤'], ['Lena', 'Kuba… dziękuję ❤️']], ts = [0, 1.4, 3.0, 4.6];
+  name: 'chat', start: 108, end: 116,
+  draw(c, lt) { const all = [['p. Wiśniewska', 'Telefon Leny jest na policji.\nPan z szatni już tu nie pracuje.'], ['p. Wiśniewska', 'Bartek, przepraszamy.\nTwoją czapkę ktoś ukradł z szatni.'], ['Zuzia', 'Bartek… sorry 😔'], ['Bartek', 'mówiłem że to nie ja 😤'], ['Lena', 'Kuba… dziękuję ❤️'], ['sys', 'Maja opuściła grupę', 'sys']], ts = [0, 1.2, 2.4, 3.2, 4.2, 6.0];
     const n = ts.filter(t => lt >= t).length; groupChat(c, lt, '8B 🏫 klasa', all.slice(0, n), { time: '19:20', pop: popT(lt, ts) }); night(c, .2, []); },
-  post(c, lt) { if (lt > 5.8) label(c, 'BARTEK BYŁ NIEWINNY', 540, 1640, 'yellow', 40, lt - 5.8, 9); },
+  post(c, lt) { if (lt > 3.4 && lt < 6.0) label(c, 'BARTEK BYŁ NIEWINNY', 540, 1640, 'yellow', 40, lt - 3.4, 6.0 - lt); if (lt > 6.2) label(c, 'DLACZEGO MAJA WYSZŁA?', 540, 1640, 'red', 42, lt - 6.2, 9); },
 });
 // pytanie-zagadka (wersja z własnym nagłówkiem i stopką)
 function dilemma4(c, lt, pill, q, opts, t0, foot) { if (lt < t0) return; const p = eout(clamp((lt - t0) / .5)); c.save(); c.globalAlpha = p; c.fillStyle = 'rgba(0,0,0,.6)'; c.fillRect(0, 0, W, H);
@@ -1377,7 +1404,7 @@ function dilemma4(c, lt, pill, q, opts, t0, foot) { if (lt < t0) return; const p
   const b = 1 + .05 * Math.sin(lt * 6); c.save(); c.translate(540, 1400); c.scale(b, b); txt(c, '👇 Typuj w komentarzu: A, B czy C', 0, -10, 38, '#F5C542', 900); txt(c, foot, 0, 44, 30, '#FF6B6B', 800); c.restore(); c.restore(); }
 // 11. ZAKOŃCZENIE: wieczór, mama w domu, spokój… SMS: zdjęcie okna Kuby. „Zgubiłem klucze 🙂 Ale dorobiłem zapasowe.” Zamek w drzwiach się przekręca. Ciemność.
 scene({
-  name: 'end', start: 100, end: 130, cam: jolt([6.6, 8.6, 12.4]),
+  name: 'end', start: 116, end: 144, cam: jolt([6.6, 8.6, 12.4]),
   labels: [[25.6, 30, 'CIĄG DALSZY…? ↓', 540, 1650, 'red', 60]],
   draw(c, lt) {
     if (lt < 4.2) { kubaRoom2(c, lt, { lamp: true }); wallClock(c, 900, 160, 50, 11, 48); person(c, 'kuba', 420, 1900, 2.1, { t: lt, home: true, sit: true, phone: lt > 2.6, look: 1 }); night(c, .5, [{ x: 420, y: 1400, r: 520, a: .8 }]); return; }
@@ -1386,5 +1413,5 @@ scene({
     c.fillStyle = '#000'; c.fillRect(0, 0, W, H); },
   post(c, lt) { joltFlash(c, lt, [6.6, 8.6, 12.4]); if (lt < 4.2) { label(c, '23:48 · MAMA JUŻ W DOMU', 540, 300, 'yellow', 38, lt, 4.2 - lt); }
     if (lt > 8.8 && lt < 12.4) label(c, 'ZAMEK SIĘ PRZEKRĘCA…', 540, 1600, 'red', 44, lt - 8.8, 12.4 - lt);
-    dilemma4(c, lt, 'CO DALEJ?', 'Ktoś ma zapasowe klucze\ndo mieszkania Kuby. Kto?', [['A', 'Pan z szatni — dorobił je\nz kurtki Kuby w szatni'], ['B', 'Ktoś z klasy, kto mu\npomagał od początku'], ['C', 'Sąsiad z klatki, który\nzawsze wszystko widzi']], 14.0, 'Odpowiedź… już wkrótce'); },
+    dilemma4(c, lt, 'CO DALEJ?', 'Ktoś ma zapasowe klucze\ndo mieszkania Kuby. Kto?', [['A', 'Pan z szatni — dorobił je\nz kurtki Kuby w szatni'], ['B', 'Maja — wyszła z grupy\nzaraz po wszystkim'], ['C', 'Sąsiad z klatki, który\nzawsze wszystko widzi']], 14.0, 'Odpowiedź… już wkrótce'); },
 });
