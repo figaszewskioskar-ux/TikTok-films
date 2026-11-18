@@ -15,8 +15,8 @@ VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f
            'obcy': 'lowpass=f=6000,aecho=0.5:0.3:40:0.2', 'kuba': 'highpass=f=100', 'pani': 'highpass=f=100,aecho=0.4:0.3:30:0.12'}
 VGAIN = {'obcy': 1.2}
 MAXK = 1.6
-SCENES = [('hook', 0, 5), ('klasa', 5, 14), ('lena', 14, 22), ('zuzia', 22, 29), ('box', 29, 38), ('msg', 38, 45), ('pan', 45, 57), ('keys', 57, 64), ('face', 64, 73),
-          ('run', 73, 87), ('police', 87, 99), ('wall', 99, 108), ('chat', 108, 116), ('end', 116, 145)]
+SCENES = [('answer', 0, 7), ('hook', 7, 12), ('klasa', 12, 21), ('lena', 21, 29), ('zuzia', 29, 36), ('box', 36, 45), ('msg', 45, 52), ('pan', 52, 64), ('keys', 64, 71), ('face', 71, 80),
+          ('run', 80, 94), ('police', 94, 106), ('wall', 106, 115), ('chat', 115, 123), ('end', 123, 152)]
 SEG = [
     ['hook', 0.1, '[low, ominous voice, slowly] Jeśli dorosły w szkole chce, żebyś został z nim sam…'],
     ['hook', 3.0, '[whispering] nie zostawaj.'],
@@ -62,17 +62,20 @@ SEG = [
     ['end', 12.2, '[whispers, deep] Dobranoc, Kuba.', 'obcy'],
     ['end', 15.4, '[low, ominous voice, slowly] Ktoś ma zapasowe klucze do mieszkania Kuby. Pan z szatni? Maja, która wyszła z grupy? A może sąsiad, który zawsze wszystko widzi?'],
     ['end', 23.6, '[whispering] Typuj w komentarzu. Odpowiedź… już wkrótce.'],
+    ['answer', 0.2, '[low, ominous voice, slowly] Odpowiedź z poprzedniego odcinka.'],
+    ['answer', 2.4, '[whispering] B. Obcy z klatki.'],
+    ['answer', 4.2, '[low, ominous voice, slowly] Kamera nagrała tylko kaptur… i klucze.'],
 ]
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 144.99], [-34, -34]),
-    loops={'groza': ([0, .3, 4.5, 5.5, 14, 22, 29, 38, 45, 57, 64, 69.6, 73, 87, 95, 99, 108, 116, 120, 124.6, 129.9, 130.05, 131.6, 144.99],
-                     [-60, -12, -12, -20, -18, -14, -14, -12, -12, -10, -8, -4, -10, -18, -10, -12, -22, -26, -18, -8, -4, -70, -26, -34]),
-           'tension': ([0, 14, 29, 45, 57, 69.6, 73, 87, 99, 108, 116, 124.6, 129.9, 130.05, 144.99], [-32, -26, -22, -16, -12, -8, -16, -24, -14, -28, -26, -9, -6, -60, -60]),
-           'drone': ([0, 22, 64, 73, 99, 116, 129.9, 130.05, 144.99], [-32, -24, -16, -26, -16, -28, -10, -60, -60]),
-           'roomtone': ([0, 144.99], [-38, -38])},
-    heartbeat=([0, 29, 38, 57, 69.6, 73, 87, 120, 124.6, 129.9, 130.0, 144.99], [-90, -90, -14, -8, -5, -10, -90, -90, -8, -5, -90, -90]),
+    bed=([0, 7, 151.99], [-34, -34, -34]),
+    loops={'groza': ([0, 7, 7.3, 11.5, 12.5, 21, 29, 36, 45, 52, 64, 71, 76.6, 80, 94, 102, 106, 115, 123, 127, 131.6, 136.9, 137.05, 138.6, 151.99],
+                     [-18, -14, -12, -12, -20, -18, -14, -14, -12, -12, -10, -8, -4, -10, -18, -10, -12, -22, -26, -18, -8, -4, -70, -26, -34]),
+           'tension': ([0, 7, 21, 36, 52, 64, 76.6, 80, 94, 106, 115, 123, 131.6, 136.9, 137.05, 151.99], [-22, -22, -26, -22, -16, -12, -8, -16, -24, -14, -28, -26, -9, -6, -60, -60]),
+           'drone': ([0, 7, 29, 71, 80, 106, 123, 136.9, 137.05, 151.99], [-32, -32, -24, -16, -26, -16, -28, -10, -60, -60]),
+           'roomtone': ([0, 7, 151.99], [-38, -38, -38])},
+    heartbeat=([0, 7, 36, 45, 64, 76.6, 80, 94, 127, 131.6, 136.9, 137, 151.99], [-12, -12, -90, -14, -8, -5, -10, -90, -90, -8, -5, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -18)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'creak': [('creak', -8)], 'buzz': [('vibrate', -6)],
            'notif': [('notif', -10)], 'keys': [('keys', -6)], 'switch': [('poweroff', -4)], 'steps': [('run', -6)], 'lock': [('keyturn', -2)], 'bell': [('timer', -14)], 'siren': [('siren', -14)], 'chain': [('chain', -4)]}
-EXTRA = [(130.0, 'hit_low', 0), (130.0, 'sting', -3), (126.0, 'riser', -6), (127.6, 'hit_low', -2), (71.6, 'sting', -3), (103.6, 'sting', -4), (69.6, 'sting', -5), (59.2, 'sting', -6), (122.6, 'hit_low', -3), (95.4, 'sting', -5), (106.0, 'hit_low', -3), (25.6, 'sting', -7)] + [(t, 'hit_low', -6) for t in (0.2, 5, 14, 22, 29, 38, 45, 57, 64, 73, 87, 99, 108, 116)]
+EXTRA = [(137, 'hit_low', 0), (137, 'sting', -3), (133, 'riser', -6), (134.6, 'hit_low', -2), (78.6, 'sting', -3), (110.6, 'sting', -4), (76.6, 'sting', -5), (66.2, 'sting', -6), (129.6, 'hit_low', -3), (102.4, 'sting', -5), (113, 'hit_low', -3), (32.6, 'sting', -7), (2.4, 'sting', -5)] + [(t, 'hit_low', -6) for t in (0.2, 7.2, 12, 21, 29, 36, 45, 52, 64, 71, 80, 94, 106, 115, 123)]
