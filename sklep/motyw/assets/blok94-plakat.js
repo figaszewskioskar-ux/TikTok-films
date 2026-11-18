@@ -35,7 +35,10 @@
   }
   requestAnimationFrame(frame);
   // paralaksa: baner przesuwa się wolniej niż strona
-  // paralaksa wyłączona: na iPhonie przewijanie zacinało się na banerze
+  // paralaksa (przywrócona, płynna): baner jedzie wolniej niż strona, tytuł „Kto tam?” nasuwa się na niego
+  if (!RM) { var ticking = false, wide = matchMedia('(min-width: 1000px)');
+    var par = function () { ticking = false; var y = wide.matches ? 0 : Math.min(window.scrollY || 0, 900); fig.style.transform = 'translate3d(0,' + (y * .3).toFixed(1) + 'px,0)'; };
+    addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(par); } }, { passive: true }); par(); }
 })();
 // Bohaterowie: animowane wersje (arkusze klatek z silnika filmów), pętla tam i z powrotem, zamiast statycznych obrazków
 (function () {

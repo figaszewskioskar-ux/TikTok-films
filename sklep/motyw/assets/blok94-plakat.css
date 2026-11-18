@@ -113,12 +113,6 @@ html body .po-head { background: rgba(0, 0, 0, .9) !important; border-bottom: 1p
 html body .po-nav a { text-transform: uppercase; letter-spacing: .06em; font-size: 12px !important; font-weight: 700; }
 html body .po-foot, html body .po-foot > * { background: #000 !important; }
 html body .po-foot { border-top: 1px solid var(--pl-line) !important; }
-/* „Kto tam?” — żywy neon: stała czerwona poświata, oddychanie, podwójne mrugnięcie świetlówki i krótki glitch */
-#b94 .hero .wrap > div:first-child > h1 { animation: b94up .9s cubic-bezier(.2,.8,.2,1) both, plLive 5s 1s infinite, plGlitch 7.3s 2.2s infinite !important; text-shadow: 0 0 18px rgba(215,38,61,.65), 0 0 46px rgba(215,38,61,.35), 0 0 2px #fff; }
-@keyframes plLive { 0%, 100% { text-shadow: 0 0 16px rgba(215,38,61,.55), 0 0 40px rgba(215,38,61,.3), 0 0 2px #fff; opacity: 1; }
-  30% { text-shadow: 0 0 26px rgba(215,38,61,.85), 0 0 70px rgba(215,38,61,.45), 0 0 3px #fff; }
-  61% { opacity: 1; } 62% { opacity: .25; text-shadow: none; } 63.5% { opacity: 1; } 65% { opacity: .4; text-shadow: none; } 66.5% { opacity: 1; text-shadow: 0 0 30px rgba(215,38,61,.95), 0 0 80px rgba(215,38,61,.5), 0 0 3px #fff; } }
-@keyframes plGlitch { 0%, 90%, 100% { transform: none; } 91% { transform: translate(-4px, 0) skewX(-6deg); } 92% { transform: translate(5px, 1px) skewX(4deg); } 93% { transform: translate(-2px, 0); } 94% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { #b94 .hero h1, #b94 .hero .wrap > div:first-child > h1 { animation: none !important; } }
 
 /* ---------- NAPIWKI: kasa biletowa kina ---------- */
@@ -275,3 +269,16 @@ html body .b94s-a::before, html body .b94s-a::after { display: none !important; 
 #b94 .chars .bubble { white-space: normal !important; width: min(250px, 66%) !important; max-width: none !important; padding: 12px 16px !important; font: 800 15px/1.35 var(--pl-body) !important; top: 30px !important; }
 #b94 .chars { padding-top: 92px !important; height: 268px !important; }
 #b94 .chars::after { letter-spacing: .18em !important; font-size: 9px !important; white-space: nowrap; }
+
+/* ---------- KOMPUTER (szeroki ekran): baner obok tytułu, karty w 4 kolumnach ---------- */
+@media (min-width: 1000px) {
+  #b94 .hero .wrap { display: grid !important; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 56px !important; }
+  #b94 .hero figure { order: 0 !important; margin: 0 !important; border-radius: 22px !important; overflow: hidden; max-height: 82vh; }
+  #b94 .hero figure img { aspect-ratio: auto; height: 82vh; max-height: 900px; }
+  #b94 .hero .wrap > div:first-child { order: 1; margin-top: 0 !important; text-align: left; }
+  #b94 .hero .eyebrow { justify-content: flex-start; }
+  #b94 .hero h1 { margin: 10px 0 14px !important; max-width: 5ch; font-size: clamp(120px, 10vw, 190px) !important; }
+  #b94 .hero .tagline { text-align: left; }
+  #b94 .fresh .fr { grid-template-columns: repeat(4, 1fr) !important; }
+  #b94 .fresh .fi img { aspect-ratio: 4 / 5; }
+}
