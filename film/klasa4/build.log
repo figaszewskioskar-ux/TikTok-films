@@ -9,10 +9,10 @@ keys       7.0s ->   5.7s
 face       9.0s ->   8.0s
 run       14.0s ->  12.0s
 police    12.0s ->  14.2s
-wall       9.0s ->  10.8s
+wall       9.0s ->  13.6s
 chat       8.0s ->   7.9s
-end       28.0s ->  28.6s
-RAZEM 145.8 s
+end       29.0s ->  29.7s
+RAZEM 149.7 s
 ok bed
 ok wind
 ok boom
@@ -32,3 +32,4 @@ ok door_bang
 ok run
 ok tv
 ok sting
+300/4490 klatek, 15 s
