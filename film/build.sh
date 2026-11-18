@@ -11,6 +11,6 @@ EP=$EP node render.js cues
 EP=$EP node render.js video 4
 python3 audio.py $EP
 ffmpeg -y -v error -i $EP/out/video_noaudio.mp4 -i $EP/out/audio.wav -map 0:v -map 1:a \
-  -c:v libx264 -preset slow -crf 16 -tune animation -maxrate 10M -bufsize 20M -pix_fmt yuv420p \
+  -c:v libx264 -preset slow -crf 17 -tune animation -maxrate 5M -bufsize 10M -pix_fmt yuv420p \
   -af "loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 256k -ar 48000 -shortest -movflags +faststart $EP/out/final.mp4
 echo "Gotowe: $(pwd)/$EP/out/final.mp4"

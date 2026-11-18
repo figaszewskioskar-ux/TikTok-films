@@ -50,7 +50,7 @@ const grab = (page, t, type = 'jpeg') => page.evaluate(([t, type]) => {
       const page = await openPage(browser);
       const a = w * per, b = Math.min(total, a + per);
       const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-        '-c:v', 'libx264', '-preset', 'medium', '-crf', '13', '-pix_fmt', 'yuv420p', path.join(OUT, `seg${w}.mp4`)], { stdio: ['pipe', 'inherit', 'inherit'] });
+        '-c:v', 'libx264', '-preset', 'medium', '-crf', '15', '-pix_fmt', 'yuv420p', path.join(OUT, `seg${w}.mp4`)], { stdio: ['pipe', 'inherit', 'inherit'] });
       for (let f = a; f < b; f++) {
         const buf = Buffer.from(await grab(page, f / FPS), 'base64');
         if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
