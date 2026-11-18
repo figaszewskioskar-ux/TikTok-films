@@ -4,8 +4,8 @@ window.EP = {
   loop: false,
   vignette: .8,
   cues(add) {
-    add(0.1, 'stab'); add(0.4, 'hit'); add(2.4, 'jolt'); add(2.4, 'hit');
-    add(7.1, 'stab'); add(7.6, 'hit'); add(12, 'whoosh'); add(12.4, 'bell'); add(18.6, 'hit'); add(21, 'whoosh'); add(27.4, 'hit'); add(29, 'whoosh'); add(32.6, 'hit');
+    add(0.1, 'stab'); add(0.6, 'hit');
+    add(5.1, 'whoosh'); add(5.4, 'hit'); add(7.4, 'jolt'); add(7.4, 'hit'); add(12, 'whoosh'); add(12.4, 'bell'); add(18.6, 'hit'); add(21, 'whoosh'); add(27.4, 'hit'); add(29, 'whoosh'); add(32.6, 'hit');
     add(36, 'whoosh'); add(39.2, 'hit'); add(45.2, 'buzz'); add(48.2, 'buzz'); add(49, 'notif');
     add(52, 'creak'); add(53, 'keys'); add(62.6, 'hit'); add(64, 'whoosh'); add(65, 'keys'); add(66.2, 'hit');
     add(71.4, 'hit'); add(76.6, 'switch'); add(76.7, 'jolt'); add(78.6, 'jolt'); add(78.6, 'hit'); add(80, 'whoosh'); add(80.4, 'steps');
@@ -1175,7 +1175,7 @@ const tapedPeep = (cc, cx, cy, r, lt, o = {}) => { cc.fillStyle = '#030305'; cc.
 const hallKnock = (c, lt, ks, o = {}) => { const sh = ks.some(k => lt > k && lt < k + .12) ? 9 : 0; c.save(); c.translate(sh, 0); kubaHall(c, lt, Object.assign({ underLight: 1 }, o)); c.restore(); };
 // 0. ODPOWIEDŹ Z ODC. 3: nagranie z monitoringu klatki Kuby, 01:10 — kaptur, klucze. B: obcy z klatki.
 scene({
-  name: 'answer', start: 0, end: 7, cam: jolt([.4, 2.4]),
+  name: 'answer', start: 5, end: 12, cam: jolt([.4, 2.4]),
   draw(c, lt) { stairElev(c, lt, 1, { flick: true }); const k = clamp(lt / 6); hooded(c, lerp(380, 560, k), 1640 - k * 120, 2.3 - k * .3, { t: lt, walk: lt * 8, back: lt > 4.2 }); keyRing(c, lerp(380, 560, k) + 70, 1640 - k * 120 - 330 * (2.3 - k * .3) / 2.3, .55, lt, 2); cctvAt(c, lt, 'KAM 2 · KLATKA KUBY', '01:10'); },
   post(c, lt) { joltFlash(c, lt, [.4, 2.4]);
     if (lt > 2.2) { const p = eout(clamp((lt - 2.2) / .4)); c.save(); c.globalAlpha = p; c.translate(540, 1300); c.scale(.7 + .3 * p, .7 + .3 * p); c.rotate(-.03); c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 40; fillRR(c, -440, -170, 880, 340, 30, '#14161D'); c.shadowColor = 'transparent'; c.strokeStyle = '#F5C542'; c.lineWidth = 6; rr(c, -440, -170, 880, 340, 30); c.stroke();
@@ -1298,7 +1298,7 @@ const S4 = 'GRUPA KLASOWA · ODC. 4';
 function cctvAt(c, lt, label, hm) { cctv(c, lt, label); c.fillStyle = 'rgba(40,44,42,.92)'; c.fillRect(50, 274, 300, 38); const sec = 4 + Math.floor(lt); txt(c, hm + ':' + String(sec).padStart(2, '0'), 60, 292, 28, '#E8F0E8', 700, 'left'); }
 // 0. HAK: pudło „ZGUBIONE RZECZY” — telefon Leny i czerwona czapka Bartka.
 scene({
-  name: 'hook', start: 7, end: 12, cam: jolt([.6, 2.0]),
+  name: 'hook', start: 0, end: 5, cam: jolt([.6, 2.0]),
   draw(c, lt) { shot(c, 540, 1100, 1.15, (cc) => lostBox(cc, lt, {})); night(c, .35, [{ x: 540, y: 1100, r: 600, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [.6, 2.0]); if (lt > .5 && lt < 3.4) label(c, 'TELEFON LENY?!', 540, 300, 'red', 48, lt - .5, 3.4 - lt); bigSign(c, lt, 'NIE ZOSTAWAJ', 'SAM W SZATNI!', 1640); },
 });

@@ -15,7 +15,7 @@ VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f
            'obcy': 'lowpass=f=6000,aecho=0.5:0.3:40:0.2', 'kuba': 'highpass=f=100', 'pani': 'highpass=f=100,aecho=0.4:0.3:30:0.12'}
 VGAIN = {'obcy': 1.2}
 MAXK = 1.6
-SCENES = [('answer', 0, 7), ('hook', 7, 12), ('klasa', 12, 21), ('lena', 21, 29), ('zuzia', 29, 36), ('box', 36, 45), ('msg', 45, 52), ('pan', 52, 64), ('keys', 64, 71), ('face', 71, 80),
+SCENES = [('hook', 0, 5), ('answer', 5, 12), ('klasa', 12, 21), ('lena', 21, 29), ('zuzia', 29, 36), ('box', 36, 45), ('msg', 45, 52), ('pan', 52, 64), ('keys', 64, 71), ('face', 71, 80),
           ('run', 80, 94), ('police', 94, 106), ('wall', 106, 115), ('chat', 115, 123), ('end', 123, 152)]
 SEG = [
     ['hook', 0.1, '[low, ominous voice, slowly] Jeśli dorosły w szkole chce, żebyś został z nim sam…'],
@@ -78,4 +78,4 @@ AUDIO = dict(
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -18)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'creak': [('creak', -8)], 'buzz': [('vibrate', -6)],
            'notif': [('notif', -10)], 'keys': [('keys', -6)], 'switch': [('poweroff', -4)], 'steps': [('run', -6)], 'lock': [('keyturn', -2)], 'bell': [('timer', -14)], 'siren': [('siren', -14)], 'chain': [('chain', -4)]}
-EXTRA = [(137, 'hit_low', 0), (137, 'sting', -3), (133, 'riser', -6), (134.6, 'hit_low', -2), (78.6, 'sting', -3), (110.6, 'sting', -4), (76.6, 'sting', -5), (66.2, 'sting', -6), (129.6, 'hit_low', -3), (102.4, 'sting', -5), (113, 'hit_low', -3), (32.6, 'sting', -7), (2.4, 'sting', -5)] + [(t, 'hit_low', -6) for t in (0.2, 7.2, 12, 21, 29, 36, 45, 52, 64, 71, 80, 94, 106, 115, 123)]
+EXTRA = [(137, 'hit_low', 0), (137, 'sting', -3), (133, 'riser', -6), (134.6, 'hit_low', -2), (78.6, 'sting', -3), (110.6, 'sting', -4), (76.6, 'sting', -5), (66.2, 'sting', -6), (129.6, 'hit_low', -3), (102.4, 'sting', -5), (113, 'hit_low', -3), (32.6, 'sting', -7), (7.4, 'sting', -5), (5, 'hit_low', -5)] + [(t, 'hit_low', -6) for t in (0.2, 7.2, 12, 21, 29, 36, 45, 52, 64, 71, 80, 94, 106, 115, 123)]
