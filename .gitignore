@@ -1,2 +1,8 @@
 __pycache__/
 wideo/YOUTUBE/*.mp4
+
+# robocze pliki składanki YouTube
+wideo/YOUTUBE/tmp*/
+film/ytpromo/*.wav
+film/ytpromo/ins_*.jpg
+film/ytpromo/comp.log
