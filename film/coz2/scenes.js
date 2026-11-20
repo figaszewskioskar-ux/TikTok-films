@@ -1,7 +1,7 @@
-// CO ZROBISZ? · ODC. 2 — „Obcy ma klucze do twojego domu”. Tylko postacie HD, szybkie cięcia.
+// CO SIĘ STANIE, GDY…? · ODC. 1 — „Obcy ma klucze do twojego domu” (nowa seria). Tylko postacie HD, szybkie cięcia.
 // CO ZROBISZ? · ODC. 1 — „Obcy w aucie zna twoje imię”. Styl: narracja w 2. osobie, szybkie cięcia, napisy słowo po słowie, zegar i licznik.
 window.EP = {
-  badge: 'CO ZROBISZ? · ODC. 2',
+  badge: 'CO SIĘ STANIE, GDY…? · ODC. 1',
   loop: false,
   vignette: .75,
   hud: 'coz', captions: true, cut: 'flash', capY: 1600,
@@ -1371,7 +1371,7 @@ const P = (z1 = 1.08, d = 3) => push(1, z1, d);
 function faceHD(c, x, y, s, o = {}) { const t = o.t || 0, kd = o.kind || 'kuba', ex = o.expr || 'neutral'; c.save(); c.translate(x, y); c.scale(s, s);
   const SK = { kuba: '#F3C3A0', kierowca: '#E2AE88', kasjerka: '#F0C4A0', mama: '#EFC09C', zosia: '#F6CDB0', policjant: '#E6B08A' }[kd], SKD = shade(SK, -.14);
   // tułów i ubranie
-  const cloth = o.home && kd === 'kuba' ? '#2F4A7A' : { kuba: '#5E7A3A', kierowca: '#5A3A28', kasjerka: '#1E8449', mama: '#D98CA8', zosia: '#B79CE0', policjant: '#1F2C4C' }[kd];
+  const cloth = o.cloth || (o.home && kd === 'kuba' ? '#2F4A7A' : { kuba: '#5E7A3A', kierowca: '#5A3A28', kasjerka: '#1E8449', mama: '#D98CA8', zosia: '#B79CE0', policjant: '#1F2C4C' }[kd]);
   if (!o.noBody) {
   c.fillStyle = cloth; c.beginPath(); c.moveTo(-430, 900); c.quadraticCurveTo(-420, 380, -150, 330); c.lineTo(150, 330); c.quadraticCurveTo(420, 380, 430, 900); c.fill();
   c.fillStyle = shade(cloth, -.18); c.beginPath(); c.moveTo(-430, 900); c.quadraticCurveTo(-410, 520, -260, 420); c.lineTo(-230, 900); c.fill();
@@ -1435,7 +1435,8 @@ function faceHD(c, x, y, s, o = {}) { const t = o.t || 0, kd = o.kind || 'kuba',
   if (kd === 'policjant') { fillRR(c, -230, -150, 460, 60, 16, '#16203A'); c.fillStyle = '#1F2C4C'; c.beginPath(); c.moveTo(-270, -150); c.quadraticCurveTo(-240, -330, 0, -340); c.quadraticCurveTo(240, -330, 270, -150); c.fill(); fillRR(c, -280, -165, 560, 30, 12, '#2A3A5E'); circ(c, 0, -240, 34, '#F5C542'); txt(c, '★', 0, -237, 40, '#7A5A20', 900); }
   if (kd === 'kuba' && !o.home) { c.fillStyle = '#6A4A2A'; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-200 + k * 70, -170); c.lineTo(-170 + k * 70, -110); c.lineTo(-140 + k * 70, -170); c.fill(); }
     c.fillStyle = '#F2A51E'; c.beginPath(); c.ellipse(0, -190, 270, 190, 0, Math.PI, 0); c.fill(); fillRR(c, -280, -230, 560, 90, 40, '#D98E12'); c.strokeStyle = 'rgba(160,100,10,.5)'; c.lineWidth = 6; for (let k = -6; k <= 6; k++) { c.beginPath(); c.moveTo(k * 40, -226); c.lineTo(k * 40, -146); c.stroke(); } circ(c, 0, -390, 64, '#F5C542'); for (let k = 0; k < 10; k++) circ(c, Math.cos(k) * 40, -390 + Math.sin(k * 1.7) * 40, 14, '#E8B13A'); }
-  if (kd === 'kierowca') { c.fillStyle = '#2A1E18'; c.beginPath(); c.moveTo(-250, -60); c.quadraticCurveTo(-270, -300, 0, -300); c.quadraticCurveTo(250, -300, 255, -80); c.quadraticCurveTo(200, -210, 40, -200); c.quadraticCurveTo(-120, -230, -250, -60); c.fill(); c.fillStyle = 'rgba(255,255,255,.08)'; c.beginPath(); c.ellipse(-60, -250, 120, 22, -.2, 0, 7); c.fill(); }
+  if (kd === 'kierowca' && o.bald) { c.fillStyle = 'rgba(255,255,255,.12)'; c.beginPath(); c.ellipse(-60, -200, 110, 40, -.3, 0, 7); c.fill(); c.strokeStyle = 'rgba(120,70,50,.35)'; c.lineWidth = 5; c.beginPath(); c.moveTo(80, -150); c.lineTo(150, -60); c.stroke(); }
+  if (kd === 'kierowca' && !o.bald) { c.fillStyle = '#2A1E18'; c.beginPath(); c.moveTo(-250, -60); c.quadraticCurveTo(-270, -300, 0, -300); c.quadraticCurveTo(250, -300, 255, -80); c.quadraticCurveTo(200, -210, 40, -200); c.quadraticCurveTo(-120, -230, -250, -60); c.fill(); c.fillStyle = 'rgba(255,255,255,.08)'; c.beginPath(); c.ellipse(-60, -250, 120, 22, -.2, 0, 7); c.fill(); }
   if (kd === 'kasjerka') { c.fillStyle = '#5A3A26'; c.beginPath(); c.moveTo(-255, -40); c.quadraticCurveTo(-250, -290, 0, -295); c.quadraticCurveTo(250, -290, 255, -40); c.quadraticCurveTo(160, -200, 0, -190); c.quadraticCurveTo(-160, -200, -255, -40); c.fill(); }
   if (kd === 'mama') { c.fillStyle = '#3B2A22'; c.beginPath(); c.moveTo(-260, 0); c.quadraticCurveTo(-250, -300, 0, -300); c.quadraticCurveTo(250, -300, 260, 0); c.quadraticCurveTo(170, -190, 0, -200); c.quadraticCurveTo(-170, -190, -260, 0); c.fill(); }
   if (o.dark) { c.fillStyle = `rgba(4,5,10,${o.dark})`; c.fillRect(-600, -700, 1200, 1700); }
@@ -1452,7 +1453,7 @@ const FACE = (kd, ex, o = {}) => (c, lt) => { const bg = o.bg || '#0E1220'; c.fi
 // ---------- POSTAĆ HD w całości (duża głowa, ubranie ze wzorem) ----------
 // y = stopy; s = skala (s=1 → ok. 1000 px wysokości). o: kind, expr, home, look, talk, walk, arms ('down'|'up'|'phone'|'reach'|'hold'), item ('teddy'|'phone'|'flash')
 function personHD(c, x, y, s, o = {}) { const kd = o.kind || 'kuba', t = o.t || 0; c.save(); c.translate(x, y); c.scale(s, s); if (o.flip) c.scale(-1, 1);
-  const cloth = o.home && kd === 'kuba' ? '#2F4A7A' : { kuba: '#5E7A3A', kierowca: '#5A3A28', mama: '#D98CA8', zosia: '#B79CE0', policjant: '#1F2C4C', kasjerka: '#1E8449' }[kd];
+  const cloth = o.cloth || (o.home && kd === 'kuba' ? '#2F4A7A' : { kuba: '#5E7A3A', kierowca: '#5A3A28', mama: '#D98CA8', zosia: '#B79CE0', policjant: '#1F2C4C', kasjerka: '#1E8449' }[kd]);
   const pants = o.home && kd === 'kuba' ? '#2F4A7A' : { kuba: '#2F3A52', kierowca: '#22252B', mama: '#D98CA8', zosia: '#B79CE0', policjant: '#16203A', kasjerka: '#2A2D36' }[kd];
   const SK = { kuba: '#F3C3A0', kierowca: '#E2AE88', kasjerka: '#F0C4A0', mama: '#EFC09C', zosia: '#F6CDB0', policjant: '#E6B08A' }[kd];
   const wk = o.walk != null ? Math.sin(o.walk) : 0, bob = o.walk != null ? Math.abs(Math.cos(o.walk)) * 10 : Math.sin(t * 2) * 3; const small = kd === 'zosia' ? .8 : 1;
@@ -1506,7 +1507,7 @@ const D = (fn) => fn;
 // ---------- SCENY ODC. 2 (szybkie ujęcia 1,6–2,5 s) ----------
 const HALL = (o = {}) => (c, lt) => kubaHall(c, lt, Object.assign({ underLight: 0 }, o));
 const NIGHT = (c, a = .5, x = 540, y = 1100, r = 640) => night(c, a, [{ x, y, r, a: .9 }]);
-const CHAINFACE = (c, lt, g, dark = .75) => { doorOnChain(c, lt, { gap: g, lit: true, inGap: (cc, gx, gw) => { cc.save(); cc.translate(gx + gw * .55, 900); cc.scale(.42, .42); faceHD(cc, 0, 0, 1, { kind: 'kierowca', expr: 'grin', t: lt, blood: true, look: -1, noBody: true }); cc.restore(); } }); night(c, dark, [{ x: 700, y: 900, r: 380, a: .9 }]); };
+const CHAINFACE = (c, lt, g, dark = .75) => { doorOnChain(c, lt, { gap: g, lit: true, inGap: (cc, gx, gw) => { cc.save(); cc.translate(gx + gw * .55, 900); cc.scale(.42, .42); faceHD(cc, 0, 0, 1, { kind: 'kierowca', bald: true, expr: 'grin', t: lt, blood: true, look: -1, noBody: true }); cc.restore(); } }); night(c, dark, [{ x: 700, y: 900, r: 380, a: .9 }]); };
 scene({ name: 'hook', start: 0, end: 3, cam: jolt([.4, 1.4]),
   draw(c, lt) { shot(c, 703, 1000, 2.6, (cc) => kubaHall(cc, lt, { underLight: 1, feet: true, lockTurn: clamp(lt / 2) })); NIGHT(c, .5, 540, 1000, 560); },
   post(c, lt) { joltFlash(c, lt, [.4, 1.4]); bigSign(c, lt, 'NIE ZDEJMUJ', 'ŁAŃCUCHA!', 420); } });
@@ -1538,7 +1539,7 @@ scene({ name: 'gasnie', start: 48.5, end: 50.3, cam: jolt([.3]), draw(c, lt) { b
 scene({ name: 'szept', start: 50.3, end: 52.8, cam: P(1.15, 2.5), draw(c, lt) { homeBath(c, lt, { dark: .9 }); c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 1200, 10, 540, 1000, 500); g.addColorStop(0, 'rgba(140,190,255,.35)'); g.addColorStop(1, 'rgba(140,190,255,0)'); c.fillStyle = g; c.fillRect(0, 500, W, 1200); c.restore(); faceHD(c, 540, 1000, .9, { kind: 'kuba', home: true, expr: 'fear', t: lt, look: 1, dark: .35 }); } });
 scene({ name: 'lzy', start: 52.8, end: 54.6, cam: P(1.12, 1.8), draw: FACE('zosia', 'fear', { tears: true, look: 1, bg: '#05060A', dark: .3, n: .6 }) });
 scene({ name: 'syreny', start: 54.6, end: 56.6, cam: P(1.08, 2), draw(c, lt) { bathDoor(c, lt, { locked: true, gap: 0, dark: .92 }); const on = Math.floor(lt * 5) % 2; c.fillStyle = on ? 'rgba(255,40,40,.7)' : 'rgba(40,90,255,.7)'; c.fillRect(180, 1620, 720, 20); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = on ? 'rgba(255,40,40,.12)' : 'rgba(40,90,255,.12)'; c.fillRect(0, 0, W, H); c.restore(); } });
-scene({ name: 'kroki', start: 56.6, end: 58.4, cam: (lt) => ({ z: 1.08, y: lt * 30 }), draw(c, lt) { stairElev(c, lt, 1, { flick: true }); personHD(c, lerp(560, 300, clamp(lt / 1.6)), lerp(1500, 1900, clamp(lt / 1.6)), .9, { kind: 'kierowca', expr: 'cold', t: lt, walk: lt * 14, look: -1 }); cctv(c, lt, 'KAM 2 · KLATKA'); } });
+scene({ name: 'kroki', start: 56.6, end: 58.4, cam: (lt) => ({ z: 1.08, y: lt * 30 }), draw(c, lt) { stairElev(c, lt, 1, { flick: true }); personHD(c, lerp(560, 300, clamp(lt / 1.6)), lerp(1500, 1900, clamp(lt / 1.6)), .9, { kind: 'kierowca', bald: true, cloth: '#2F3A2A', expr: 'cold', t: lt, walk: lt * 14, look: -1 }); cctv(c, lt, 'KAM 2 · KLATKA'); } });
 scene({ name: 'pukanie', start: 58.4, end: 60.6, cam: jolt([.3, .8]), draw(c, lt) { kubaHall(c, lt, { underLight: 1 }); c.save(); c.globalCompositeOperation = 'lighter'; const on = Math.floor(lt * 5) % 2; c.fillStyle = on ? 'rgba(255,40,40,.5)' : 'rgba(40,90,255,.5)'; c.fillRect(300, 1400, 480, 30); c.restore(); NIGHT(c, .55, 540, 1100, 600); }, post(c, lt) { joltFlash(c, lt, [.3, .8]); } });
 scene({ name: 'wizjer', start: 60.6, end: 63, draw(c, lt) { peepPOV(c, lt, (cc, cx, cy, r) => { cc.fillStyle = '#3A4058'; cc.fillRect(cx - r, cy - r, r * 2, r * 2); personHD(cc, cx, cy + r * 1.4, r / 520, { kind: 'policjant', expr: 'neutral', t: lt, look: 0 }); }); }, post(c, lt) { ruleTag(c, lt, 4, .8, 540, 360); if (lt > 1.1) label(c, 'SPRAWDŹ U DYSPOZYTORA 112', 540, 480, 'dark', 34, lt - 1.1, 9); } });
 scene({ name: 'policjant', start: 63, end: 65.5, cam: P(1.06, 2.5), draw(c, lt) { kubaHall(c, lt, {}); personHD(c, 760, 1890, .95, { kind: 'policjant', expr: 'neutral', talk: true, t: lt, look: -1, item: 'flash' }); personHD(c, 300, 1890, .95, { kind: 'mama', expr: 'fear', t: lt, look: 1 }); NIGHT(c, .4, 540, 1200, 700); } });
@@ -1546,7 +1547,7 @@ scene({ name: 'klucze', start: 65.5, end: 67.5, cam: P(1.15, 2), draw(c, lt) { c
 scene({ name: 'zasada', start: 67.5, end: 71.5, draw(c, lt) { kubaHall(c, lt, {}); NIGHT(c, .7); }, post(c, lt) { card(c, 40, 340, 1000, 'ZASADA', 'Ktoś otwiera drzwi kluczem? Łańcuch zostaje.\nDzwoń na 112 i nie rozłączaj się.\nZamknijcie się w pokoju z zamkiem.\nPolicja za drzwiami? Sprawdź u dyspozytora.', lt, '#F39C12', 31); } });
 scene({ name: 'czwarta', start: 71.5, end: 74, cam: P(1.06, 2.5), draw(c, lt) { kubaRoom2(c, lt, { lamp: true }); personHD(c, 540, 1900, .95, { kind: 'kuba', home: true, expr: 'neutral', t: lt, look: 0 }); NIGHT(c, .5, 540, 1200, 600); } });
 scene({ name: 'end', start: 74, end: 96, cam: jolt([2.6, 4.6, 7.6, 10]),
-  labels: [[17.4, 22, 'ODC. 3 ↓', 540, 1700, 'red', 64]],
+  labels: [[17.4, 22, 'ODC. 2 ↓', 540, 1700, 'red', 64]],
   draw(c, lt) {
     if (lt < 2.6) { kubaRoom2(c, lt, {}); personHD(c, 820, 1900, .8, { kind: 'zosia', expr: 'neutral', t: lt, item: 'teddy', look: -1, talk: true }); NIGHT(c, .7, 820, 1300, 460); return; }
     if (lt < 4.6) { FACE('kuba', 'shock', { home: true, talk: true, look: 1, bg: '#1B2236', scene: (cc, l) => kubaRoom2(cc, l, {}), n: .55 })(c, lt); return; }

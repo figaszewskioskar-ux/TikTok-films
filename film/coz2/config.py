@@ -1,4 +1,4 @@
-"""CO ZROBISZ? · ODC. 2 — „Obcy ma klucze do twojego domu”. Tylko postacie HD, szybkie cięcia (1,6–2,5 s), napisy słowo po słowie."""
+"""CO SIĘ STANIE, GDY…? · ODC. 1 — „Obcy ma klucze do twojego domu” (nowa seria). Tylko postacie HD, szybkie cięcia (1,6–2,5 s), napisy słowo po słowie."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.5, 'similarity_boost': 0.85}
