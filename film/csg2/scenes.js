@@ -4,7 +4,7 @@ window.EP = {
   badge: '',
   loop: false,
   vignette: .75,
-  hud: 'coz', captions: true, cut: 'flash', capY: 1600,
+  hud: 'coz', captions: false, cut: 'flash', capY: 1600,
   hl: ['imię', 'imie', 'auto', 'auta', 'obcy', 'uciekasz', 'hasło', 'hasło?', 'zdjęcia', 'torba', 'drzwi', 'policja', 'sklep', 'cisza', 'nagle', 'nie', 'syreny', 'kuba', 'kuba?', 'kuby'],
   clock(t) { if (t < 8) return null; const m = Math.floor((t - 8) / 14); return `3:${String(m).padStart(2, '0')}`; },
   timer(t) { if (t >= 8 && t < 72) return ['ZOSTAŁO', Math.max(0, 60 - (t - 8) * 60 / 64), t > 58]; return null; },
