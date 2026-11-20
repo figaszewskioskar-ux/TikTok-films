@@ -4,10 +4,10 @@ window.EP = {
   badge: 'CO ZROBISZ? · ODC. 1',
   loop: false,
   vignette: .75,
-  hud: 'coz', captions: true, cut: 'flash', capY: 1560,
+  hud: 'coz', captions: true, cut: 'flash', capY: 1600,
   hl: ['imię', 'imie', 'auto', 'auta', 'obcy', 'uciekasz', 'hasło', 'hasło?', 'zdjęcia', 'torba', 'drzwi', 'policja', 'sklep', 'cisza', 'nagle', 'nie', 'syreny', 'kuba', 'kuba?', 'kuby'],
-  clock(t) { if (t < 3.5) return null; if (t >= 92) return t < 104 ? '23:28' : '23:31'; const m = 47 + Math.floor((t - 3.5) / 9); const hh = 21 + Math.floor(m / 60); return `${hh}:${String(m % 60).padStart(2, '0')}`; },
-  timer(t) { if (t >= 11 && t < 67) { const s = Math.max(0, 360 - (t - 11) * 3.2); return ['DO DOMU', s, t > 59]; } if (t >= 72.5 && t < 89) return ['POLICJA ZA', Math.max(0, 180 - (t - 72.5) * 11), true]; return null; },
+  clock(t) { if (t < 3.5) return null; if (t >= 109) return '23:31'; if (t >= 101.5) return '22:04'; const m = 47 + Math.floor((t - 3.5) / 9); const hh = 21 + Math.floor(m / 60); return `${hh}:${String(m % 60).padStart(2, '0')}`; },
+  timer(t) { if (t >= 11 && t < 67) { const s = Math.max(0, 360 - (t - 11) * 3.2); return ['DO DOMU', s, t > 59]; } if (t >= 72.5 && t < 101.5) return ['POLICJA ZA', Math.max(0, 300 - (t - 72.5) * 10), t > 84]; return null; },
   cues(add) { },
 };
 const S = [];
@@ -1366,123 +1366,176 @@ function faceClose(c, lt, kind, x, y, s, o = {}) { person(c, kind, x, y + 238 * 
 
 KINDS.kasjerka = Object.assign({}, KINDS.kobieta, { jacket: '#1E8449', dark: '#176A3A', pants: '#1E8449', skin: '#F0C4A0' });
 const P = (z1 = 1.08, d = 3) => push(1, z1, d);
+// ---------- POSTACIE Z BLISKA (HD): szczegółowe twarze do zbliżeń ----------
+// o.kind: kuba | kierowca | kasjerka | mama ; o.expr: neutral | fear | shock | smile | grin | cold | angry | talk ; o.look (-1..1), o.lookY, o.t, o.sweat, o.tears, o.dark
+function faceHD(c, x, y, s, o = {}) { const t = o.t || 0, kd = o.kind || 'kuba', ex = o.expr || 'neutral'; c.save(); c.translate(x, y); c.scale(s, s);
+  const SK = { kuba: '#F3C3A0', kierowca: '#E2AE88', kasjerka: '#F0C4A0', mama: '#EFC09C' }[kd], SKD = shade(SK, -.14);
+  // tułów i ubranie
+  const cloth = { kuba: '#5E7A3A', kierowca: '#5A3A28', kasjerka: '#1E8449', mama: '#C9B79C' }[kd];
+  c.fillStyle = cloth; c.beginPath(); c.moveTo(-430, 900); c.quadraticCurveTo(-420, 380, -150, 330); c.lineTo(150, 330); c.quadraticCurveTo(420, 380, 430, 900); c.fill();
+  c.fillStyle = shade(cloth, -.18); c.beginPath(); c.moveTo(-430, 900); c.quadraticCurveTo(-410, 520, -260, 420); c.lineTo(-230, 900); c.fill();
+  if (kd === 'kuba') { c.strokeStyle = '#3E5426'; c.lineWidth = 6; c.beginPath(); c.moveTo(0, 360); c.lineTo(0, 900); c.stroke(); fillRR(c, -240, 440, 120, 100, 14, '#4E6830'); fillRR(c, 170, 420, 110, 64, 10, '#F5C542'); txt(c, '94', 225, 453, 40, '#14161B', 900);
+    // szalik w paski
+    for (let k = 0; k < 7; k++) { fillRR(c, -190 + k * 54, 300, 54, 110, 20, k % 2 ? '#F2EEE4' : '#1E9E8E'); } fillRR(c, 60, 360, 90, 260, 30, '#1E9E8E'); for (let k = 0; k < 4; k++) fillRR(c, 60, 400 + k * 56, 90, 22, 6, '#F2EEE4'); }
+  if (kd === 'kierowca') { c.fillStyle = '#47301F'; c.beginPath(); c.moveTo(-170, 320); c.lineTo(-40, 520); c.lineTo(-120, 560); c.lineTo(-260, 380); c.fill(); c.beginPath(); c.moveTo(170, 320); c.lineTo(40, 520); c.lineTo(120, 560); c.lineTo(260, 380); c.fill(); fillRR(c, -60, 320, 120, 200, 10, '#2A2D36'); c.strokeStyle = 'rgba(255,255,255,.12)'; c.lineWidth = 4; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-380 + k * 30, 600 + k * 50); c.lineTo(-300 + k * 30, 640 + k * 50); c.stroke(); } }
+  if (kd === 'kasjerka') { fillRR(c, -120, 330, 240, 80, 20, '#F2EEE4'); fillRR(c, 150, 420, 160, 60, 8, '#F2EEE4'); txt(c, 'KASA 1', 230, 452, 28, '#1E8449', 900); }
+  // szyja
+  fillRR(c, -70, 200, 140, 160, 40, SKD);
+  // włosy z tyłu (mama, kasjerka)
+  if (kd === 'mama') { c.fillStyle = '#3B2A22'; c.beginPath(); c.ellipse(0, -20, 300, 340, 0, 0, 7); c.fill(); fillRR(c, -300, -20, 600, 420, 120, '#3B2A22'); }
+  if (kd === 'kasjerka') { c.fillStyle = '#5A3A26'; circ(c, 0, -300, 90, '#5A3A26'); c.beginPath(); c.ellipse(0, -40, 280, 300, 0, 0, 7); c.fill(); }
+  // uszy
+  for (const sx of [-1, 1]) { ell(c, sx * 255, 20, 40, 62, SK); ell(c, sx * 258, 22, 20, 34, SKD); }
+  // głowa z cieniowaniem
+  const g = c.createRadialGradient(-80, -100, 40, 0, 0, 320); g.addColorStop(0, shade(SK, .06)); g.addColorStop(1, SKD); c.fillStyle = g; c.beginPath(); c.ellipse(0, 0, 250, 285, 0, 0, 7); c.fill();
+  // zarost i zmarszczki (kierowca)
+  if (kd === 'kierowca') { for (let k = 0; k < 160; k++) { const a = Math.PI * (.12 + .76 * hash(k)), r = 150 + hash(k + 9) * 110; circ(c, Math.cos(a) * r * .95, 40 + Math.sin(a) * r * .9, 3.2, 'rgba(70,50,40,.45)'); }
+    c.strokeStyle = 'rgba(120,70,50,.35)'; c.lineWidth = 5; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(-110, -170 - k * 26); c.quadraticCurveTo(0, -182 - k * 26, 110, -170 - k * 26); c.stroke(); } }
+  // policzki, piegi
+  c.fillStyle = 'rgba(235,110,110,.28)'; ell(c, -150, 90, 52, 34, 'rgba(235,110,110,.28)'); ell(c, 150, 90, 52, 34, 'rgba(235,110,110,.28)');
+  if (kd === 'kuba') for (let k = 0; k < 14; k++) circ(c, (k % 2 ? 1 : -1) * (120 + hash(k) * 70), 50 + hash(k + 3) * 70, 5, 'rgba(160,90,60,.55)');
+  // oczy
+  const lx = (o.look || 0) * 14, ly = (o.lookY || 0) * 10 + (ex === 'fear' ? -2 : 0); const wide = ex === 'shock' || ex === 'fear'; const blink = !o.noBlink && (t % 4) > 3.85;
+  for (const sx of [-1, 1]) { const ex0 = sx * 100, ey0 = -20; c.save();
+    if (kd === 'kierowca') { c.fillStyle = 'rgba(80,50,60,.35)'; c.beginPath(); c.ellipse(ex0, ey0 + 34, 62, 30, 0, 0, Math.PI); c.fill(); }
+    const rw = wide ? 60 : 52, rh = blink ? 4 : wide ? 56 : (ex === 'cold' ? 28 : ex === 'grin' ? 34 : 44);
+    c.beginPath(); c.ellipse(ex0, ey0, rw, rh, 0, 0, 7); c.fillStyle = '#FBFAF6'; c.fill(); c.clip();
+    if (o.blood) { c.strokeStyle = 'rgba(200,40,40,.55)'; c.lineWidth = 3; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(ex0 + sx * 60, ey0 + (k - 3) * 12); c.quadraticCurveTo(ex0 + sx * 30, ey0 + (k - 3) * 6, ex0 + sx * 18, ey0 + (k - 3) * 3); c.stroke(); } }
+    const ir = wide ? 20 : 24, ic = { kuba: '#5A3A22', kierowca: '#6A7A8A', kasjerka: '#4A6A3A', mama: '#5A3A22' }[kd];
+    circ(c, ex0 + lx, ey0 + ly, ir, ic); circ(c, ex0 + lx, ey0 + ly, wide ? 9 : 12, '#0B0C10'); circ(c, ex0 + lx - 7, ey0 + ly - 8, 6, '#FFFFFF');
+    c.restore(); c.strokeStyle = 'rgba(40,25,20,.6)'; c.lineWidth = 5; c.beginPath(); c.ellipse(ex0, ey0, rw, rh, 0, Math.PI * 1.05, Math.PI * 1.95); c.stroke();
+    if (ex === 'cold' || ex === 'grin') { c.fillStyle = SK; c.beginPath(); c.ellipse(ex0, ey0 - rh * .6, rw + 4, rh * .7, 0, Math.PI, 0); c.fill(); c.strokeStyle = 'rgba(40,25,20,.7)'; c.beginPath(); c.moveTo(ex0 - rw, ey0 - rh * .55); c.lineTo(ex0 + rw, ey0 - rh * .55); c.stroke(); } }
+  // brwi
+  const brow = { neutral: [0, 0], fear: [.32, -10], shock: [.1, -26], smile: [-.1, -6], grin: [-.25, 4], cold: [-.3, 10], angry: [-.42, 8], talk: [0, 0] }[ex] || [0, 0];
+  const bc = { kuba: '#6A4A2A', kierowca: '#2A1E18', kasjerka: '#5A3A26', mama: '#3B2A22' }[kd];
+  for (const sx of [-1, 1]) { c.save(); c.translate(sx * 100, -100 + brow[1]); c.rotate(sx * brow[0]); fillRR(c, -56, -11, 112, 22, 11, bc); c.restore(); }
+  // nos
+  c.fillStyle = shade(SK, -.2); c.beginPath(); c.ellipse(0, 60, 30, 22, 0, 0, Math.PI); c.fill(); circ(c, -12, 66, 5, 'rgba(60,30,20,.4)'); circ(c, 12, 66, 5, 'rgba(60,30,20,.4)');
+  // usta
+  const talkO = (o.talk ? Math.abs(Math.sin(t * 14)) : 0);
+  c.save(); c.translate(0, 150);
+  if (ex === 'shock' || ex === 'fear' && !o.talk) { const h = ex === 'shock' ? 56 : 34; c.fillStyle = '#5A1E1E'; c.beginPath(); c.ellipse(0, 0, ex === 'shock' ? 40 : 46, h, 0, 0, 7); c.fill(); c.fillStyle = '#C0505A'; c.beginPath(); c.ellipse(0, h * .5, 26, h * .35, 0, 0, 7); c.fill(); }
+  else if (ex === 'grin') { c.fillStyle = '#3A1414'; c.beginPath(); c.moveTo(-130, -20); c.quadraticCurveTo(0, 90, 130, -20); c.quadraticCurveTo(0, 30, -130, -20); c.fill(); c.fillStyle = '#F6F2E6'; c.beginPath(); c.moveTo(-118, -14); c.quadraticCurveTo(0, 70, 118, -14); c.quadraticCurveTo(0, 18, -118, -14); c.fill(); c.strokeStyle = 'rgba(80,60,50,.5)'; c.lineWidth = 3; for (let k = -5; k <= 5; k++) { c.beginPath(); c.moveTo(k * 20, 8 - Math.abs(k) * 2); c.lineTo(k * 20, 40 - Math.abs(k) * 5); c.stroke(); } c.strokeStyle = 'rgba(60,30,25,.8)'; c.lineWidth = 6; c.beginPath(); c.moveTo(-140, -26); c.quadraticCurveTo(-135, -10, -122, -12); c.moveTo(140, -26); c.quadraticCurveTo(135, -10, 122, -12); c.stroke(); }
+  else if (ex === 'smile') { c.strokeStyle = '#7A2A2A'; c.lineWidth = 9; c.lineCap = 'round'; c.beginPath(); c.moveTo(-70, -10); c.quadraticCurveTo(0, 40 + talkO * 10, 70, -10); c.stroke(); }
+  else if (ex === 'angry') { c.fillStyle = '#5A1E1E'; fillRR(c, -60, -14, 120, 30 + talkO * 26, 14, '#5A1E1E'); fillRR(c, -54, -12, 108, 12, 4, '#F6F2E6'); }
+  else { if (o.talk) { c.fillStyle = '#5A1E1E'; c.beginPath(); c.ellipse(0, 0, 44, 8 + talkO * 30, 0, 0, 7); c.fill(); } else { c.strokeStyle = '#7A2A2A'; c.lineWidth = 8; c.lineCap = 'round'; c.beginPath(); c.moveTo(-50, 0); c.quadraticCurveTo(0, ex === 'cold' ? 2 : 8, 50, 0); c.stroke(); } }
+  c.restore();
+  // pot, łzy
+  if (o.sweat) { c.fillStyle = 'rgba(180,220,255,.8)'; c.beginPath(); const sy = -120 + ((t * 60) % 140); c.moveTo(200, sy); c.quadraticCurveTo(220, sy + 30, 200, sy + 40); c.quadraticCurveTo(180, sy + 30, 200, sy); c.fill(); }
+  if (o.tears) { c.fillStyle = 'rgba(160,210,255,.75)'; for (const sx of [-1, 1]) fillRR(c, sx * 100 - 8, 30, 16, 60 + (t * 40 % 60), 8, 'rgba(160,210,255,.7)'); }
+  // włosy / czapka
+  if (kd === 'kuba') { c.fillStyle = '#6A4A2A'; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-200 + k * 70, -170); c.lineTo(-170 + k * 70, -110); c.lineTo(-140 + k * 70, -170); c.fill(); }
+    c.fillStyle = '#F2A51E'; c.beginPath(); c.ellipse(0, -190, 270, 190, 0, Math.PI, 0); c.fill(); fillRR(c, -280, -230, 560, 90, 40, '#D98E12'); c.strokeStyle = 'rgba(160,100,10,.5)'; c.lineWidth = 6; for (let k = -6; k <= 6; k++) { c.beginPath(); c.moveTo(k * 40, -226); c.lineTo(k * 40, -146); c.stroke(); } circ(c, 0, -390, 64, '#F5C542'); for (let k = 0; k < 10; k++) circ(c, Math.cos(k) * 40, -390 + Math.sin(k * 1.7) * 40, 14, '#E8B13A'); }
+  if (kd === 'kierowca') { c.fillStyle = '#2A1E18'; c.beginPath(); c.moveTo(-250, -60); c.quadraticCurveTo(-270, -300, 0, -300); c.quadraticCurveTo(250, -300, 255, -80); c.quadraticCurveTo(200, -210, 40, -200); c.quadraticCurveTo(-120, -230, -250, -60); c.fill(); c.fillStyle = 'rgba(255,255,255,.08)'; c.beginPath(); c.ellipse(-60, -250, 120, 22, -.2, 0, 7); c.fill(); }
+  if (kd === 'kasjerka') { c.fillStyle = '#5A3A26'; c.beginPath(); c.moveTo(-255, -40); c.quadraticCurveTo(-250, -290, 0, -295); c.quadraticCurveTo(250, -290, 255, -40); c.quadraticCurveTo(160, -200, 0, -190); c.quadraticCurveTo(-160, -200, -255, -40); c.fill(); }
+  if (kd === 'mama') { c.fillStyle = '#3B2A22'; c.beginPath(); c.moveTo(-260, 0); c.quadraticCurveTo(-250, -300, 0, -300); c.quadraticCurveTo(250, -300, 260, 0); c.quadraticCurveTo(170, -190, 0, -200); c.quadraticCurveTo(-170, -190, -260, 0); c.fill(); }
+  if (o.dark) { c.fillStyle = `rgba(4,5,10,${o.dark})`; c.fillRect(-600, -700, 1200, 1700); }
+  c.restore(); }
+// czerwony celownik z podpisem (jak oznaczenie dowodu)
+function target(c, lt, x, y, w, h, lab, t0 = 0) { if (lt < t0) return; const p = eout(clamp((lt - t0) / .25)); const k = 1.4 - .4 * p; c.save(); c.translate(x, y); c.scale(k, k); c.globalAlpha = p; c.strokeStyle = '#FF2A35'; c.lineWidth = 7; const L = Math.min(w, h) * .28;
+  for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { c.beginPath(); c.moveTo(sx * w / 2, sy * h / 2 - sy * L); c.lineTo(sx * w / 2, sy * h / 2); c.lineTo(sx * w / 2 - sx * L, sy * h / 2); c.stroke(); }
+  c.lineWidth = 3; c.beginPath(); c.moveTo(-16, 0); c.lineTo(16, 0); c.moveTo(0, -16); c.lineTo(0, 16); c.stroke();
+  if (lab) { c.font = '900 40px ' + FONT; const tw = c.measureText(lab).width + 30; fillRR(c, -tw / 2, h / 2 + 16, tw, 56, 6, 'rgba(120,0,10,.85)'); c.strokeStyle = '#FF2A35'; c.lineWidth = 3; rr(c, -tw / 2, h / 2 + 16, tw, 56, 6); c.stroke(); txt(c, lab, 0, h / 2 + 45, 34, '#FF5A62', 900); } c.restore(); }
+// czerwona przekrzywiona etykieta „ZASADA #n”
+function ruleTag(c, lt, n, t0 = 0, x = 540, y = 470) { if (lt < t0) return; const p = back(clamp((lt - t0) / .3)); c.save(); c.translate(x, y); c.rotate(-.06); c.scale(p, p); fillRR(c, -170, -42, 340, 84, 10, '#D7263D'); c.strokeStyle = '#FFFFFF'; c.lineWidth = 4; rr(c, -160, -32, 320, 64, 6); c.stroke(); txt(c, 'ZASADA #' + n, 0, 3, 46, '#FFFFFF', 900); c.restore(); }
+const FACE = (kd, ex, o = {}) => (c, lt) => { const bg = o.bg || '#0E1220'; c.fillStyle = bg; c.fillRect(0, 0, W, H); if (o.scene) o.scene(c, lt); faceHD(c, 540, o.y || 900, o.s || 1.25, Object.assign({ kind: kd, expr: ex, t: lt }, o)); if (o.night !== false) night(c, o.n ?? .3, [{ x: 540, y: o.y || 900, r: 640, a: .9 }]); };
 // ---------- SCENY (czasy w starej osi; lektor je dopasuje) ----------
-// 0. HAK: szyba zjeżdża w ciemności, uśmiech w aucie
+const BGN = (c, lt) => nightStreet(c, lt);
+// 0. HAK
 scene({ name: 'hook', start: 0, end: 3.5, cam: jolt([.5, 1.6]),
   draw(c, lt) { nightStreet(c, lt); shot(c, 330, 1180, 2.6, (cc) => carSide(cc, lt, 540, 1560, 1.05, { win: clamp(lt / 1.6), lights: true })); night(c, .45, [{ x: 540, y: 1000, r: 520, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [.5, 1.6]); bigSign(c, lt, 'NIE PODCHODŹ', 'DO AUTA!', 420); } });
-// 1. trening się kończy: Kuba wychodzi ze szkoły z torbą
 scene({ name: 'trening', start: 3.5, end: 6, cam: P(1.08, 2.5),
-  draw(c, lt) { schoolOutside(c, lt); person(c, 'kuba', lerp(540, 600, lt / 2.5), 1700, 1.8, { t: lt, look: 1, duffel: true, walk: lt * 8 }); night(c, .35, [{ x: 540, y: 1100, r: 600, a: .8 }]); } });
-// 2. przywieszka na torbie: KUBA · 8B (trop!)
+  draw(c, lt) { schoolOutside(c, lt); person(c, 'kuba', lerp(540, 600, lt / 2.5), 1700, 1.8, { t: lt, look: 1, duffel: true, walk: lt * 8 }); breathPuff(c, 560, 1080, lt); night(c, .35, [{ x: 540, y: 1100, r: 600, a: .8 }]); } });
 scene({ name: 'torba', start: 6, end: 8.5, cam: P(1.12, 2.5),
-  draw(c, lt) { c.fillStyle = '#1B2236'; c.fillRect(0, 0, W, H); fillRR(c, 80, 700, 920, 620, 90, '#1E5AA8'); fillRR(c, 380, 640, 320, 90, 30, '#123C70'); c.strokeStyle = '#123C70'; c.lineWidth = 10; c.beginPath(); c.moveTo(120, 1000); c.lineTo(960, 1000); c.stroke();
-    c.save(); c.translate(560, 1100); c.rotate(.08 + Math.sin(lt * 3) * .04); c.strokeStyle = '#9AA2AB'; c.lineWidth = 6; c.beginPath(); c.moveTo(0, -150); c.lineTo(0, -70); c.stroke(); fillRR(c, -170, -70, 340, 170, 18, '#F2EEE4'); txt(c, 'KUBA', 0, -10, 80, '#14161B', 900); txt(c, 'kl. 8B', 0, 60, 36, '#C23A3A', 900); c.restore(); night(c, .25, [{ x: 540, y: 1000, r: 600, a: .8 }]); } });
-// 3. telefon: 2%, SMS od mamy
+  draw(c, lt) { c.fillStyle = '#1B2236'; c.fillRect(0, 0, W, H); fillRR(c, 80, 700, 920, 620, 90, '#1E5AA8'); fillRR(c, 380, 640, 320, 90, 30, '#123C70'); c.strokeStyle = '#123C70'; c.lineWidth = 10; c.beginPath(); c.moveTo(120, 1000); c.lineTo(960, 1000); c.stroke(); for (let k = 0; k < 18; k++) { c.fillStyle = '#C9CDD2'; c.fillRect(130 + k * 46, 994, 22, 12); }
+    c.save(); c.translate(560, 1100); c.rotate(.08 + Math.sin(lt * 3) * .04); c.strokeStyle = '#9AA2AB'; c.lineWidth = 6; c.beginPath(); c.moveTo(0, -150); c.lineTo(0, -70); c.stroke(); fillRR(c, -170, -70, 340, 170, 18, '#F2EEE4'); txt(c, 'KUBA', 0, -10, 80, '#14161B', 900); txt(c, 'kl. 8B', 0, 60, 36, '#C23A3A', 900); c.restore(); night(c, .25, [{ x: 540, y: 1000, r: 600, a: .8 }]); },
+  post(c, lt) { target(c, lt, 560, 1110, 420, 260, 'IMIĘ NA WIERZCHU', .8); } });
 scene({ name: 'tel', start: 8.5, end: 11, cam: P(1.06, 2.5),
   draw(c, lt) { phoneBig(c, lt, [['Mama ❤️', 'Jestem w pracy do 23.\nWracaj prosto do domu.', null, .2]], { time: '21:48', caseCol: '#2A2D36', scr1: '#1B2340' }); fillRR(c, 700, 470, 150, 50, 12, '#FF3B30'); txt(c, '🔋 2%', 775, 496, 28, '#FFFFFF', 900); } });
-// 4. ulica, Kuba idzie sam
 scene({ name: 'ulica', start: 11, end: 14, cam: P(1.06, 3),
   draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', 560, 1530, 1.5, { t: lt, look: -1, duffel: true, walk: lt * 8 }); breathPuff(c, 520, 1060, lt); night(c, .35, [{ x: 560, y: 1200, r: 560, a: .8 }]); } });
-// 5. światła zza pleców
 scene({ name: 'swiatla', start: 14, end: 16.5, cam: P(1.1, 2.5),
   draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', 540, 1530, 1.7, { t: lt, back: true, duffel: true }); c.save(); c.globalCompositeOperation = 'lighter'; const a = clamp(lt / 1.2); const g = c.createRadialGradient(540, 1900, 20, 540, 1300, 900); g.addColorStop(0, `rgba(255,245,210,${.7 * a})`); g.addColorStop(1, 'rgba(255,245,210,0)'); c.fillStyle = g; c.fillRect(0, 600, W, 1320); c.restore(); night(c, .3, [{ x: 540, y: 1300, r: 700, a: .9 }]); } });
-// 6. auto jedzie obok, krok w krok
 scene({ name: 'obok', start: 16.5, end: 19, cam: P(1.05, 2.5),
   draw(c, lt) { nightStreet(c, lt, { road: lt * 60 }); person(c, 'kuba', 300, 1520, 1.3, { t: lt, look: 1, duffel: true, walk: lt * 8 }); carSide(c, lt, 760, 1720, .95, { win: 0, lights: true }); night(c, .35, [{ x: 540, y: 1300, r: 640, a: .85 }]); } });
-// 7. szyba zjeżdża (zbliżenie)
 scene({ name: 'szyba', start: 19, end: 21.5, cam: P(1.1, 2.5),
   draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); shot(c, 540, 960, 1, (cc) => carSide(cc, lt, 640, 1520, 2.6, { win: clamp((lt - .3) / 1.6) })); night(c, .3, [{ x: 400, y: 800, r: 560, a: .9 }]); } });
-// 8. „Kuba? Zimno dziś, co? Podwiozę cię.”
-scene({ name: 'podwioze', start: 21.5, end: 24.5, cam: P(1.06, 3),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); shot(c, 480, 1000, 1, (cc) => carSide(cc, lt, 640, 1560, 2.4, { win: 1, mouth: 'grin' })); night(c, .25, [{ x: 400, y: 900, r: 600, a: .9 }]); } });
-// 9. Kuba — zna moje imię (twarz z bliska)
-scene({ name: 'imie', start: 24.5, end: 27, cam: jolt([.2]),
-  draw(c, lt) { nightStreet(c, lt); faceClose(c, lt, 'kuba', 540, 900, 5.2, { look: 1, wide: true, mouth: 'o' }); night(c, .25, [{ x: 540, y: 900, r: 600, a: .9 }]); },
-  post(c, lt) { joltFlash(c, lt, [.2]); } });
-// 10. „Znam twoją mamę. Pracujemy razem.”
-scene({ name: 'mama1', start: 27, end: 30, cam: P(1.06, 3),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); shot(c, 480, 1000, 1, (cc) => carSide(cc, lt, 640, 1560, 2.4, { win: 1, mouth: 'smile' })); night(c, .3, [{ x: 400, y: 900, r: 560, a: .9 }]); } });
-// 11. „Gdzie teraz mieszkacie?”
-scene({ name: 'gdzie', start: 30, end: 32.5, cam: P(1.1, 2.5),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); faceClose(c, lt, 'kierowca', 540, 820, 5.0, { look: 0, mouth: 'grin', talk: lt < 2 }); c.fillStyle = 'rgba(5,6,10,.12)'; c.fillRect(0, 0, W, H); c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(540, 1300, 20, 540, 1000, 700); g.addColorStop(0, 'rgba(120,160,255,.18)'); g.addColorStop(1, 'rgba(120,160,255,0)'); c.fillStyle = g; c.fillRect(0, 300, W, 1400); c.restore(); night(c, .2, [{ x: 540, y: 820, r: 600, a: .9 }]); } });
-// 12. Kuba: „Na Kwiatowej…” — BŁĄD 1
+scene({ name: 'podwioze', start: 21.5, end: 24.5, cam: P(1.06, 3), draw: FACE('kierowca', 'smile', { talk: true, look: 1, bg: '#0A0B10' }) });
+scene({ name: 'imie', start: 24.5, end: 27, cam: jolt([.2]), draw: FACE('kuba', 'shock', { look: -1, scene: BGN }), post(c, lt) { joltFlash(c, lt, [.2]); } });
+scene({ name: 'mama1', start: 27, end: 30, cam: P(1.08, 3), draw: FACE('kierowca', 'smile', { talk: true, look: 1, bg: '#0A0B10' }) });
+scene({ name: 'gdzie', start: 30, end: 32.5, cam: P(1.12, 2.5), draw: FACE('kierowca', 'grin', { look: 1, bg: '#0A0B10' }) });
 scene({ name: 'blad1', start: 32.5, end: 36,
   draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', 330, 1530, 1.7, { t: lt, look: 1, duffel: true, talk: lt < 1.6 }); carSide(c, lt, 900, 1720, 1.0, { win: 1, mouth: 'grin' }); night(c, .35, [{ x: 540, y: 1200, r: 640, a: .85 }]); },
   post(c, lt) { if (lt > 1.6) card(c, 70, 330, 860, 'BŁĄD 1', 'podałeś obcemu\nswoją ulicę', lt - 1.6, '#F39C12', 38); } });
-// 13. KLIK — drzwi odblokowane
 scene({ name: 'klik', start: 36, end: 38.5, cam: jolt([.6]),
   draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); shot(c, 520, 1120, 1, (cc) => carSide(cc, lt, 400, 1700, 3.4, { win: 1, driver: false })); if (lt > .6) { c.save(); c.globalCompositeOperation = 'lighter'; circ(c, 560, 1060, 40 * (1 + (lt - .6)), `rgba(255,240,200,${clamp(1 - (lt - .6))})`); c.restore(); } night(c, .25, [{ x: 520, y: 1100, r: 600, a: .9 }]); },
   post(c, lt) { joltFlash(c, lt, [.6]); if (lt > .6) label(c, 'KLIK', 540, 700, 'red', 90, lt - .6, 9); } });
-// 14. krok w stronę auta — BŁĄD 2
 scene({ name: 'krok', start: 38.5, end: 41.5,
   draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', lerp(330, 470, clamp(lt / 1.2)), 1530, 1.7, { t: lt, look: 1, duffel: true, walk: lt < 1.2 ? lt * 8 : null }); carSide(c, lt, 900, 1720, 1.0, { win: 1, mouth: 'grin', photosVisible: true }); night(c, .35, [{ x: 600, y: 1200, r: 640, a: .85 }]); },
   post(c, lt) { if (lt > 1.2) card(c, 70, 330, 860, 'BŁĄD 2', 'podszedłeś do auta\nobcego człowieka', lt - 1.2, '#F39C12', 38); } });
-// 15. tylne siedzenie: zdjęcia
 scene({ name: 'tyl', start: 41.5, end: 44, cam: P(1.1, 2.5),
   draw(c, lt) { backSeat(c, lt); c.fillStyle = 'rgba(20,30,50,.25)'; c.fillRect(0, 0, W, H); night(c, .35, [{ x: 540, y: 1100, r: 600, a: .9 }]); } });
-// 16. zdjęcie z bliska: PN 21:47
 scene({ name: 'zdjecie', start: 44, end: 46.5, cam: jolt([.3]),
   draw(c, lt) { c.fillStyle = '#0B0D14'; c.fillRect(0, 0, W, H); photoKuba(c, 540, 960, 760, 560, 'PN 21:47 · ŚR 21:46 · PT 21:48', -.04); night(c, .2, [{ x: 540, y: 960, r: 640, a: .9 }]); },
-  post(c, lt) { joltFlash(c, lt, [.3]); } });
-// 17. cofasz się
-scene({ name: 'cofasz', start: 46.5, end: 49, cam: P(1.06, 2.5),
-  draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', lerp(470, 330, clamp(lt / 1.2)), 1530, 1.7, { t: lt, look: 1, duffel: true, wide: true, mouth: 'o', walk: lt < 1.2 ? lt * 6 : null }); carSide(c, lt, 900, 1720, 1.0, { win: 1, mouth: 'grin' }); night(c, .4, [{ x: 500, y: 1200, r: 600, a: .85 }]); } });
-// 18. uśmiech znika (twarz kierowcy)
-scene({ name: 'usmiech', start: 49, end: 51.5, cam: P(1.12, 2.5),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); faceClose(c, lt, 'kierowca', 540, 820, 5.0, { look: 0, mouth: lt < 1.0 ? 'grin' : null }); c.fillStyle = 'rgba(5,6,10,.2)'; c.fillRect(0, 0, W, H); night(c, .3, [{ x: 540, y: 820, r: 520, a: .9 }]); } });
-// 19. „Wsiadaj, Kuba. Mama prosiła.”
-scene({ name: 'wsiadaj', start: 51.5, end: 54, cam: P(1.06, 2.5),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); shot(c, 480, 1000, 1, (cc) => carSide(cc, lt, 640, 1560, 2.4, { win: 1, mouth: null })); night(c, .35, [{ x: 400, y: 900, r: 500, a: .9 }]); } });
-// 20. Kuba: „Jakie jest nasze hasło?”
-scene({ name: 'haslo', start: 54, end: 57,
-  draw(c, lt) { nightStreet(c, lt); faceClose(c, lt, 'kuba', 540, 860, 4.6, { look: 1, mouth: 'angry', talk: lt < 1.8 }); night(c, .25, [{ x: 540, y: 860, r: 600, a: .9 }]); },
-  post(c, lt) { if (lt > 1.8) label(c, 'HASŁO RODZINNE', 540, 380, 'yellow', 52, lt - 1.8, 9); } });
-// 21. cisza — ręka na klamce
-scene({ name: 'cisza', start: 57, end: 59.5, cam: P(1.15, 2.5),
-  draw(c, lt) { c.fillStyle = '#0A0B10'; c.fillRect(0, 0, W, H); faceClose(c, lt, 'kierowca', 540, 820, 5.0, { look: 0, mouth: null }); c.fillStyle = 'rgba(5,6,10,.5)'; c.fillRect(0, 0, W, H); circ(c, 470, 800, 10, 'rgba(255,255,255,.9)'); circ(c, 610, 800, 10, 'rgba(255,255,255,.9)'); night(c, .45, [{ x: 540, y: 820, r: 380, a: .9 }]); } });
-// 22. drzwi auta się otwierają
+  post(c, lt) { joltFlash(c, lt, [.3]); target(c, lt, 590, 1010, 240, 360, 'TY', .5); } });
+scene({ name: 'cofasz', start: 46.5, end: 49, cam: P(1.1, 2.5), draw: FACE('kuba', 'fear', { look: 1, sweat: true, scene: BGN }) });
+scene({ name: 'usmiech', start: 49, end: 51.5, cam: P(1.14, 2.5), draw(c, lt) { FACE('kierowca', lt < 1 ? 'smile' : 'cold', { look: 0, bg: '#0A0B10' })(c, lt); } });
+scene({ name: 'wsiadaj', start: 51.5, end: 54, cam: P(1.08, 2.5), draw: FACE('kierowca', 'cold', { talk: true, look: 1, bg: '#07080C', n: .4 }) });
+scene({ name: 'haslo', start: 54, end: 57, draw: FACE('kuba', 'angry', { talk: true, look: 1, scene: BGN }), post(c, lt) { ruleTag(c, lt, 1, 1.6, 540, 400); if (lt > 1.9) label(c, 'RODZINNE HASŁO', 540, 520, 'dark', 40, lt - 1.9, 9); } });
+scene({ name: 'cisza', start: 57, end: 59.5, cam: P(1.18, 2.5), draw: FACE('kierowca', 'cold', { look: 0, bg: '#05060A', dark: .35, n: .5, noBlink: true }) });
 scene({ name: 'drzwi', start: 59.5, end: 61.5, cam: jolt([.3]),
   draw(c, lt) { nightStreet(c, lt); person(c, 'kuba', 300, 1530, 1.7, { t: lt, look: 1, duffel: true, wide: true, mouth: 'o' }); carSide(c, lt, 860, 1720, 1.0, { win: 1, mouth: null, door: clamp((lt - .2) / .5) }); night(c, .4, [{ x: 540, y: 1200, r: 640, a: .85 }]); },
   post(c, lt) { joltFlash(c, lt, [.3]); } });
-// 23. uciekasz — torba zostaje
 scene({ name: 'ucieczka', start: 61.5, end: 64, cam: (lt) => ({ z: 1.08, x: Math.sin(lt * 30) * 8, y: Math.cos(lt * 26) * 6 }),
   draw(c, lt) { nightStreet(c, lt, { road: lt * 900 }); speedLines(c, lt, .35); person(c, 'kuba', 420, 1530, 1.8, { t: lt, look: -1, wide: true, mouth: 'o', walk: lt * 22 }); fillRR(c, 820 + lt * 120, 1460, 180, 90, 20, '#1E5AA8'); c.save(); c.translate(900 + lt * 120, 1450); fillRR(c, -40, -20, 80, 36, 6, '#F2EEE4'); txt(c, 'KUBA', 0, -2, 18, '#14161B', 900); c.restore(); night(c, .35, [{ x: 500, y: 1200, r: 640, a: .85 }]); } });
-// 24. auto rusza za tobą
 scene({ name: 'poscig', start: 64, end: 67, cam: (lt) => ({ z: 1.05 + lt * .02, x: Math.sin(lt * 34) * 6 }),
   draw(c, lt) { nightStreet(c, lt, { road: lt * 700 }); person(c, 'kuba', 300, 1520, 1.3, { t: lt, look: -1, walk: lt * 22 }); carSide(c, lt, lerp(1500, 900, clamp(lt / 2.6)), 1720, 1.0, { win: 0, lights: true }); speedLines(c, lt, .25); night(c, .35, [{ x: 540, y: 1300, r: 700, a: .85 }]); } });
-// 25. sklep całodobowy
 scene({ name: 'sklep', start: 67, end: 69.5, cam: P(1.12, 2.5),
-  draw(c, lt) { shopFront(c, lt); person(c, 'kuba', lerp(100, 400, clamp(lt / 2)), 1540, 1.4, { t: lt, look: 1, walk: lt * 20 }); night(c, .2, [{ x: 450, y: 1100, r: 700, a: .7 }]); } });
-// 26. „Proszę pani! Jakiś pan mnie goni!”
+  draw(c, lt) { shopFront(c, lt); person(c, 'kuba', lerp(100, 400, clamp(lt / 2)), 1540, 1.4, { t: lt, look: 1, walk: lt * 20 }); night(c, .2, [{ x: 450, y: 1100, r: 700, a: .7 }]); },
+  post(c, lt) { ruleTag(c, lt, 2, .8, 540, 420); if (lt > 1.1) label(c, 'TAM, GDZIE SĄ LUDZIE', 540, 540, 'dark', 38, lt - 1.1, 9); } });
 scene({ name: 'pani', start: 69.5, end: 72.5,
   draw(c, lt) { shopBg(c, lt, {}); person(c, 'kasjerka', 760, 1660, 2.0, { t: lt, look: -1, wide: lt > 1.6 }); fillRR(c, 560, 1380, 520, 300, 10, '#7A5634'); person(c, 'kuba', 320, 1880, 2.1, { t: lt, look: 1, wide: true, talk: lt < 2.4 }); } });
-// 27. „Chodź za ladę. Dzwonię na sto dwanaście.” + ZASADA
-scene({ name: 'zasada', start: 72.5, end: 77.5,
-  draw(c, lt) { shopBg(c, lt, {}); person(c, 'kasjerka', 760, 1660, 2.0, { t: lt, look: -1, phone: true, talk: lt < 2.4 }); fillRR(c, 560, 1380, 520, 300, 10, '#7A5634'); person(c, 'kuba', lerp(320, 900, clamp((lt - 1) / 1)), 1880, 2.1, { t: lt, look: 1, walk: lt > 1 && lt < 2 ? lt * 10 : null }); },
-  post(c, lt) { if (lt > 2.4) card(c, 40, 300, 1000, 'ZASADA', 'Obcy w aucie zna twoje imię? Nie podchodź.\nZapytaj o rodzinne hasło.\nUciekaj tam, gdzie są ludzie,\ni dzwoń 112 — działa nawet bez środków.', lt - 2.4, '#F39C12', 31); } });
-// 28. auto staje przed sklepem, światła gasną
-scene({ name: 'okno', start: 77.5, end: 80.5, cam: P(1.1, 3),
+scene({ name: 'kasa', start: 72.5, end: 75.5, cam: P(1.08, 3), draw: FACE('kasjerka', 'neutral', { talk: true, look: -1, bg: '#DDE2DA', n: .05 }) });
+scene({ name: 'okno', start: 75.5, end: 78.5, cam: P(1.1, 3),
   draw(c, lt) { nightStreet(c, lt); carSide(c, lt, 540, 1720, 1.1, { win: 0, lights: lt < 1.4, brake: lt < 1.4 }); c.fillStyle = 'rgba(200,230,255,.08)'; c.fillRect(0, 0, W, H); c.strokeStyle = '#7A8088'; c.lineWidth = 30; c.strokeRect(-10, -10, W + 20, H + 20); c.fillStyle = '#7A8088'; c.fillRect(530, 0, 20, H); night(c, .3, [{ x: 540, y: 1400, r: 640, a: .8 }]); } });
-// 29. telefon do mamy (1%)
-scene({ name: 'mama2', start: 80.5, end: 84,
+scene({ name: 'mama2', start: 78.5, end: 82,
   draw(c, lt) { phoneBig(c, lt, [], { time: '21:56', caseCol: '#2A2D36', scr1: '#1B2340' }); callOverlay(c, lt, 'Mama ❤️', 'połączenie · 00:' + String(Math.floor(lt)).padStart(2, '0'), 1000); fillRR(c, 700, 470, 150, 50, 12, '#FF3B30'); txt(c, '🔋 1%', 775, 496, 28, '#FFFFFF', 900); } });
-// 30. syreny — auto odjeżdża
-scene({ name: 'syreny', start: 84, end: 87, cam: P(1.06, 3),
-  draw(c, lt) { nightStreet(c, lt); carSide(c, lt, lerp(540, -700, clamp((lt - .6) / 1.6)), 1720, 1.1, { win: 0, lights: true }); policeLights(c, lt, 0, 1080); night(c, .3, [{ x: 540, y: 1300, r: 700, a: .8 }]); } });
-// 31. policja odwozi do domu
-scene({ name: 'dom', start: 87, end: 92, cam: P(1.05, 5),
-  draw(c, lt) { streetBlock(c, lt, {}); policeCar(c, lt, 540, 1640, 1.3); policeLights(c, lt, 120, 840); person(c, 'policjant', 880, 1720, 1.5, { t: lt, look: -1, still: true }); person(c, 'kuba', 240, 1740, 1.5, { t: lt, look: 1 }); night(c, .3, [{ x: 540, y: 1300, r: 700, a: .75 }]); },
-  post(c, lt) { if (lt > 2.4) label(c, 'ALE TORBA ZOSTAŁA NA ULICY…', 540, 400, 'red', 38, lt - 2.4, 9); } });
-// 32. ZAKOŃCZENIE: 23:31, mama w domu. Dzwoni domofon. Na ekranie: on — z torbą Kuby. „Dzień dobry. Znalazłem torbę Kuby.” Mama sięga do przycisku. „Mamo, nie!”
-scene({ name: 'end', start: 92, end: 122, cam: jolt([3.6, 9.6, 12.0]),
-  labels: [[26.0, 30, 'ODC. 2 ↓', 540, 1650, 'red', 64]],
+scene({ name: 'padl', start: 82, end: 84, cam: jolt([.4]),
+  draw(c, lt) { phoneBig(c, lt, [], { time: '', caseCol: '#2A2D36', scr1: '#000000' }); c.fillStyle = 'rgba(0,0,0,.92)'; c.fillRect(230, 400, 620, 1150); if (lt < .4) { fillRR(c, 380, 900, 320, 140, 20, '#14161B'); txt(c, '🔋 0%', 540, 970, 60, '#FF3B30', 900); } },
+  post(c, lt) { joltFlash(c, lt, [.4]); } });
+// 3. akt: fałszywy „policjant”
+scene({ name: 'dzwonek', start: 84, end: 86.5, cam: P(1.08, 2.5),
+  draw(c, lt) { shopBg(c, lt, {}); const dx = lerp(-200, 220, clamp(lt / 1.6)); person(c, 'kierowca', dx, 1700, 2.0, { t: lt, look: 1, mouth: 'smile', walk: lt < 1.6 ? lt * 8 : null }); fillRR(c, dx + 60, 1420, 150, 90, 20, '#1E5AA8'); fillRR(c, 560, 1380, 520, 300, 10, '#7A5634'); person(c, 'kasjerka', 760, 1660, 2.0, { t: lt, look: -1 }); },
+  post(c, lt) { label(c, '🔔 DZWONEK NAD DRZWIAMI', 540, 420, 'dark', 36, lt, 9); } });
+scene({ name: 'policja', start: 86.5, end: 90, cam: P(1.06, 3.5),
+  draw(c, lt) { FACE('kierowca', 'smile', { talk: true, look: 0, bg: '#DDE2DA', n: .05 })(c, lt); const p = clamp((lt - .6) / .5); c.save(); c.translate(780, 1460 - p * 200); c.rotate(-.12); fillRR(c, -150, -100, 300, 200, 16, '#2A1E18'); fillRR(c, -130, -84, 260, 168, 10, '#3A2A20'); circ(c, -50, 0, 50, '#C9A15A'); txt(c, '★', -50, 4, 50, '#7A5A20', 900); fillRR(c, 20, -40, 90, 20, 4, '#C9CDD2'); fillRR(c, 20, 0, 70, 16, 4, '#C9CDD2'); c.restore(); },
+  post(c, lt) { if (lt > 1) target(c, lt, 760, 1280, 360, 260, 'ODZNAKA?', 1); } });
+scene({ name: 'radiowoz', start: 90, end: 92.5, cam: P(1.12, 2.5),
+  draw(c, lt) { nightStreet(c, lt); carSide(c, lt, 540, 1720, 1.1, { win: 0 }); c.fillStyle = 'rgba(200,230,255,.08)'; c.fillRect(0, 0, W, H); c.strokeStyle = '#7A8088'; c.lineWidth = 30; c.strokeRect(-10, -10, W + 20, H + 20); night(c, .3, [{ x: 540, y: 1400, r: 640, a: .8 }]); },
+  post(c, lt) { target(c, lt, 540, 1500, 860, 420, 'ŻADNEGO RADIOWOZU', .4); } });
+scene({ name: 'legit', start: 92.5, end: 96, cam: P(1.06, 3.5), draw: FACE('kasjerka', 'angry', { talk: true, look: 1, bg: '#DDE2DA', n: .05 }),
+  post(c, lt) { ruleTag(c, lt, 3, 1.6, 540, 400); if (lt > 1.9) label(c, 'LEGITYMACJA I 112', 540, 520, 'dark', 40, lt - 1.9, 9); } });
+scene({ name: 'wychodzi', start: 96, end: 99, cam: P(1.15, 3), draw: FACE('kierowca', 'grin', { look: -1, bg: '#DDE2DA', n: .05, blood: true }) });
+scene({ name: 'torba2', start: 99, end: 101.5, cam: P(1.1, 2.5),
+  draw(c, lt) { shopBg(c, lt, {}); fillRR(c, 0, 1300, W, 620, 10, '#7A5634'); fillRR(c, 220, 1060, 640, 300, 60, '#1E5AA8'); fillRR(c, 420, 1020, 240, 70, 26, '#123C70'); c.save(); c.translate(560, 1220); fillRR(c, -110, -50, 220, 100, 12, '#F2EEE4'); txt(c, 'KUBA', 0, 0, 52, '#14161B', 900); c.restore(); },
+  post(c, lt) { target(c, lt, 540, 1200, 700, 360, 'TORBA WRÓCIŁA…', .5); } });
+scene({ name: 'syreny', start: 101.5, end: 104.5, cam: P(1.06, 3),
+  draw(c, lt) { streetBlock(c, lt, {}); policeCar(c, lt, 540, 1640, 1.3); policeLights(c, lt, 0, 1080); person(c, 'policjant', 880, 1720, 1.5, { t: lt, look: -1, still: true }); person(c, 'kuba', 240, 1740, 1.5, { t: lt, look: 1 }); night(c, .3, [{ x: 540, y: 1300, r: 700, a: .75 }]); } });
+scene({ name: 'zasada', start: 104.5, end: 109,
+  draw(c, lt) { shopFront(c, lt); policeLights(c, lt, 0, 1080); night(c, .5, []); },
+  post(c, lt) { card(c, 40, 340, 1000, 'ZASADA', 'Obcy w aucie zna twoje imię? Nie podchodź.\nZapytaj o rodzinne hasło. Uciekaj do ludzi.\nPolicjant bez munduru? Poproś o legitymację\ni sprawdź na 112 — działa nawet bez środków.', lt, '#F39C12', 31); } });
+// ZAKOŃCZENIE: 23:31. Mama śpi. Torba: kluczy nie ma, jest zdjęcie twoich drzwi. Zamek się przekręca. W szparze uśmiech: „Dobranoc, Kuba.” Ciemność. CO ZROBISZ?
+scene({ name: 'end', start: 109, end: 133, cam: jolt([3.6, 7.0, 10.4, 13.2]),
+  labels: [[20.0, 24, 'ODC. 2 ↓', 540, 1700, 'red', 64]],
   draw(c, lt) {
-    if (lt < 3.6) { kubaHall(c, lt, { underLight: 0 }); wallClock(c, 705, 130, 52, 11, 31); person(c, 'kobieta', 760, 1900, 2.0, { t: lt, look: -1, home: true }); person(c, 'kuba', 330, 1900, 2.0, { t: lt, home: true, look: 1 }); night(c, .45, [{ x: 540, y: 1300, r: 640, a: .8 }]); return; }
-    if (lt < 9.6) { intercom(c, lt, {}); return; }
-    if (lt < 12.0) { shot(c, 690, 1300, 1.8, (cc) => intercom(cc, lt, { pressGlow: true })); hand(c, lerp(1150, 760, clamp((lt - 9.6) / .8)), 1340, 3.0, KINDS.kobieta); return; }
-    c.fillStyle = '#000'; c.fillRect(0, 0, W, H); },
-  post(c, lt) { joltFlash(c, lt, [3.6, 9.6, 12.0]); if (lt < 3.6) label(c, 'MAMA JUŻ W DOMU', 540, 400, 'yellow', 40, lt, 3.6 - lt);
-    dilemma4(c, lt, 'KTO TO JEST?', 'Skąd obcy znał\nimię Kuby?', [['A', 'Z torby — imię\nna przywieszce'], ['B', 'Z treningów — stał\npod szkołą co tydzień'], ['C', 'Z pracy mamy —\ntak, jak mówił']], 13.4, 'Odpowiedź w odcinku 2…'); } });
+    if (lt < 3.6) { kubaRoom2(c, lt, { lamp: true }); wallClock(c, 900, 160, 50, 11, 31); person(c, 'kuba', 420, 1900, 2.1, { t: lt, home: true, sit: true, look: 1, lookY: 1 }); fillRR(c, 520, 1500, 300, 160, 40, '#1E5AA8'); night(c, .5, [{ x: 520, y: 1400, r: 520, a: .8 }]); return; }
+    if (lt < 7.0) { c.fillStyle = '#0B0D14'; c.fillRect(0, 0, W, H); fillRR(c, 80, 500, 920, 1000, 90, '#1E5AA8'); fillRR(c, 160, 600, 760, 760, 60, '#0E1830'); fillRR(c, 240, 680, 260, 200, 20, '#16264A'); fillRR(c, 560, 700, 280, 300, 20, '#F2EEE4'); txt(c, 'BUTY', 700, 850, 40, '#9AA2AB', 900); fillRR(c, 260, 980, 200, 120, 20, '#2E86C1'); night(c, .3, [{ x: 540, y: 1000, r: 600, a: .9 }]); return; }
+    if (lt < 10.4) { c.fillStyle = '#0B0D14'; c.fillRect(0, 0, W, H); c.save(); c.translate(540, 960); c.rotate(-.05); fillRR(c, -330, -300, 660, 620, 6, '#F2EEE4'); photoDoor3(c, -300, -270, 600, 480); txt(c, 'do zobaczenia 🙂', 0, 270, 44, '#C23A3A', 900); c.restore(); night(c, .25, [{ x: 540, y: 960, r: 640, a: .9 }]); return; }
+    if (lt < 13.2) { const turn = clamp((lt - 10.6) / 2.4); shot(c, 700, 1060, 2.2, (cc) => kubaHall(cc, lt, { underLight: 1, feet: true, lockTurn: turn })); night(c, .55, [{ x: 700, y: 1060, r: 500, a: .9 }]); return; }
+    if (lt < 15.6) { const g = 30 + clamp((lt - 13.2) / .5) * 110; doorOnChain(c, lt, { gap: g, lit: true, inGap: (cc, gx, gw) => { cc.save(); cc.translate(gx + gw * .55, 900); cc.scale(.42, .42); faceHD(cc, 0, 0, 1, { kind: 'kierowca', expr: 'grin', t: lt, blood: true, look: -1 }); cc.restore(); } }); night(c, .75, [{ x: 700, y: 900, r: 360, a: .9 }]); return; }
+    c.fillStyle = '#000'; c.fillRect(0, 0, W, H);
+    if (lt > 16.6) { const p = eout(clamp((lt - 16.6) / .5)); c.save(); c.globalAlpha = p; txt(c, 'A TY…', 540, 760, 70, '#C9CDD2', 900); c.save(); c.translate(540, 900); c.scale(.8 + .2 * p, .8 + .2 * p); txt(c, 'CO ZROBISZ?', 0, 0, 130, '#FF3B47', 900); c.restore(); txt(c, '👇 Napisz w komentarzu', 540, 1060, 50, '#F5C542', 900); c.restore(); } },
+  post(c, lt) { joltFlash(c, lt, [3.6, 7.0, 10.4, 13.2]); if (lt < 3.6) label(c, 'MAMA ŚPI', 540, 400, 'yellow', 40, lt, 3.6 - lt); if (lt >= 3.6 && lt < 7.0) target(c, lt, 370, 780, 320, 260, 'KLUCZE?', 4.6); } });
 
-EP.cues = (add) => { const sc = [[0.1, 'stab'], [.5, 'hit'], [1.6, 'jolt'], [14.2, 'engine'], [19.2, 'window'], [24.7, 'hit'], [36.6, 'click'], [36.6, 'hit'], [44.3, 'jolt'], [59.8, 'door'], [59.8, 'jolt'], [61.6, 'steps'], [64, 'engine'], [69.5, 'bell'], [74.5, 'dial'], [77.8, 'brake'], [80.6, 'dial'], [84, 'siren'], [95.6, 'buzz'], [95.6, 'jolt'], [101.6, 'hit'], [104, 'jolt'], [104, 'hit']]; sc.forEach(([t, n]) => add(t, n)); };
+EP.cues = (add) => { const sc = [[0.1, 'stab'], [.5, 'hit'], [1.6, 'jolt'], [14.2, 'engine'], [19.2, 'window'], [24.7, 'hit'], [36.6, 'click'], [36.6, 'hit'], [44.3, 'jolt'], [59.8, 'door'], [59.8, 'jolt'], [61.6, 'steps'], [64, 'engine'], [69.5, 'bell'], [74.5, 'dial'], [75.8, 'brake'], [78.6, 'dial'], [82.4, 'hit'], [84.1, 'bell'], [90.4, 'hit'], [96.2, 'hit'], [99.5, 'hit'], [101.6, 'siren'], [109, 'whoosh'], [113.2, 'zip'], [115.6, 'hit'], [116.2, 'jolt'], [119.6, 'lock'], [121.4, 'lock'], [122.2, 'chain'], [122.2, 'jolt']]; sc.forEach(([t, n]) => add(t, n)); };

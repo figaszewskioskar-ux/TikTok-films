@@ -75,9 +75,10 @@ function captions(c, t) { const C = CAPS.filter(x => t >= x.a && t < x.b).pop();
   c.restore(); }
 function hudCoz(c, t) { const sc = S.find(s => t >= s.start && t < s.end) || S[S.length - 1]; const told = sc.oStart + pw(sc.knots, t - sc.start, 1, 0);
   const clk = EPC.clock ? EPC.clock(told) : null, tm = EPC.timer ? EPC.timer(told) : null;
-  if (clk) { fillRR(c, 40, 150, 210, 60, 30, 'rgba(10,11,16,.88)'); txt(c, '🕘 ' + clk, 145, 181, 32, '#FFFFFF', 900); }
-  const bdg = EPC.badge || ''; if (bdg) { c.save(); font(c, 24, 800); const bw = c.measureText(bdg).width + 40; c.restore(); fillRR(c, 540 - bw / 2, 230, bw, 46, 23, 'rgba(10,11,16,.75)'); txt(c, bdg, 540, 254, 24, '#F5C542', 800); }
-  if (tm) { const [lab, sec, urgent] = tm; const m = Math.floor(sec / 60), ss = Math.floor(sec % 60); const bl = urgent && Math.floor(t * 4) % 2; fillRR(c, 770, 140, 270, 80, 14, bl ? '#FF3B47' : '#B5121B'); txt(c, lab, 905, 162, 20, 'rgba(255,255,255,.85)', 900); txt(c, `${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, 905, 196, 38, '#FFFFFF', 900); } }
+  const lcd = (str, x, y, sz) => { c.save(); c.font = `900 ${sz}px ${FONT}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = 'rgba(255,40,40,.12)'; c.fillText(str.replace(/[0-9]/g, '8'), x, y); c.shadowColor = '#FF2A2A'; c.shadowBlur = 18; c.fillStyle = '#FF3B30'; c.fillText(str, x, y); c.restore(); };
+  if (clk) { fillRR(c, 40, 142, 230, 76, 12, 'rgba(8,8,12,.9)'); c.strokeStyle = 'rgba(255,60,60,.35)'; c.lineWidth = 3; rr(c, 40, 142, 230, 76, 12); c.stroke(); lcd(clk, 155, 182, 50); }
+  const bdg = EPC.badge || ''; if (bdg) { c.save(); font(c, 24, 800); const bw = c.measureText(bdg).width + 40; c.restore(); fillRR(c, 540 - bw / 2, 236, bw, 46, 23, 'rgba(10,11,16,.75)'); txt(c, bdg, 540, 260, 24, '#F5C542', 800); }
+  if (tm) { const [lab, sec, urgent] = tm; const m = Math.floor(sec / 60), ss = Math.floor(sec % 60); const bl = urgent && Math.floor(t * 4) % 2; fillRR(c, 790, 130, 250, 100, 12, 'rgba(8,8,12,.92)'); c.strokeStyle = bl ? '#FF3B30' : 'rgba(255,60,60,.6)'; c.lineWidth = bl ? 6 : 3; rr(c, 790, 130, 250, 100, 12); c.stroke(); txt(c, lab, 915, 152, 20, '#FF8A8A', 900); lcd(`${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, 915, 198, 50); } }
 
 // ---------- render ----------
 const cv = document.getElementById('cv');
