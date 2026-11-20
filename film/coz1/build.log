@@ -1,3 +1,44 @@
+hook       3.5s ->   4.3s
+trening    2.5s ->   4.9s
+torba      2.5s ->   4.0s
+tel        2.5s ->   4.4s
+ulica      3.0s ->   4.0s
+swiatla    2.5s ->   2.7s
+obok       2.5s ->   3.5s
+szyba      2.5s ->   2.6s
+podwioze   3.0s ->   4.0s
+imie       2.5s ->   1.9s
+mama1      3.0s ->   3.2s
+gdzie      2.5s ->   2.7s
+blad1      3.5s ->   2.7s
+klik       2.5s ->   3.7s
+krok       3.0s ->   2.3s
+tyl        2.5s ->   2.9s
+zdjecie    2.5s ->   3.4s
+cofasz     2.5s ->   1.9s
+usmiech    2.5s ->   1.9s
+wsiadaj    2.5s ->   2.8s
+haslo      3.0s ->   2.4s
+cisza      2.5s ->   1.9s
+drzwi      2.0s ->   2.9s
+ucieczka   2.5s ->   3.4s
+poscig     3.0s ->   2.3s
+sklep      2.5s ->   2.5s
+pani       3.0s ->   3.2s
+kasa       3.0s ->   3.3s
+okno       3.0s ->   3.9s
+mama2      3.5s ->   4.9s
+padl       2.0s ->   2.2s
+dzwonek    2.5s ->   4.0s
+policja    3.5s ->   5.2s
+radiowoz   2.5s ->   5.1s
+legit      3.5s ->   5.3s
+wychodzi   3.0s ->   3.1s
+torba2     2.5s ->   2.8s
+syreny     3.0s ->   3.7s
+zasada     4.5s ->   3.4s
+end       24.0s ->  21.3s
+RAZEM 150.3 s
 ok bed
 ok wind
 ok boom
@@ -17,19 +58,3 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/3660 klatek, 19 s
-600/3660 klatek, 47 s
-900/3660 klatek, 74 s
-1200/3660 klatek, 102 s
-1500/3660 klatek, 131 s
-1800/3660 klatek, 164 s
-2100/3660 klatek, 195 s
-2400/3660 klatek, 225 s
-2700/3660 klatek, 255 s
-3000/3660 klatek, 283 s
-3300/3660 klatek, 313 s
-3600/3660 klatek, 345 s
-Gotowe w 366 s
-audio.wav OK 122 s
-Gotowe: /home/user/TikTok-films/film/coz1/out/final.mp4
-EXIT 0

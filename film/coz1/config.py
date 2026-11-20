@@ -13,7 +13,7 @@ VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f
            'obcy': 'lowpass=f=6000,aecho=0.5:0.3:40:0.2', 'kuba': 'highpass=f=100', 'pani': 'highpass=f=100', 'mama': 'highpass=f=350,lowpass=f=3200,acompressor'}
 VGAIN = {'obcy': 1.2}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SCENES = [('hook', 0, 3.5), ('trening', 3.5, 6), ('torba', 6, 8.5), ('tel', 8.5, 11), ('ulica', 11, 14), ('swiatla', 14, 16.5), ('obok', 16.5, 19), ('szyba', 19, 21.5),
           ('podwioze', 21.5, 24.5), ('imie', 24.5, 27), ('mama1', 27, 30), ('gdzie', 30, 32.5), ('blad1', 32.5, 36), ('klik', 36, 38.5), ('krok', 38.5, 41.5), ('tyl', 41.5, 44),
