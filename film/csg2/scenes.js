@@ -1553,7 +1553,7 @@ function lcdCard(c, lt, str, sub) { c.fillStyle = '#050507'; c.fillRect(0, 0, W,
 function blockNight(c, lt, o = {}) { const sky = c.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#05070F'); sky.addColorStop(1, '#161C2E'); c.fillStyle = sky; c.fillRect(0, 0, W, H); snowfall(c, lt, 80, .6); fillRR(c, 60, 120, 960, 1800, 0, '#232A3A'); for (let r = 0; r < 11; r++) for (let q = 0; q < 5; q++) { const x = 120 + q * 176, y = 180 + r * 160, lit = r === 6 && q === 2; fillRR(c, x - 8, y - 8, 136, 116, 4, '#3A4256'); fillRR(c, x, y, 120, 100, 3, lit ? '#F5C878' : '#0A0E1A'); fillRR(c, x - 12, y + 104, 144, 12, 3, '#4A5266'); if (lit) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(x + 60, y + 50, 5, x + 60, y + 50, 260); g.addColorStop(0, 'rgba(255,210,140,.45)'); g.addColorStop(1, 'rgba(255,210,140,0)'); c.fillStyle = g; c.fillRect(x - 260, y - 260, 640, 620); c.restore(); c.fillStyle = 'rgba(40,30,30,.85)'; circ(c, x + 40, y + 50, 16, 'rgba(40,30,30,.85)'); fillRR(c, x + 26, y + 64, 28, 36, 8, 'rgba(40,30,30,.85)'); circ(c, x + 82, y + 58, 12, 'rgba(40,30,30,.85)'); fillRR(c, x + 72, y + 70, 22, 30, 6, 'rgba(40,30,30,.85)'); } } }
 // okno kuchni od zewnątrz: rama, firanka, w środku mama, Kuba i Zosia ze światłem telefonu
 function familyWindow(c, lt, o = {}) { c.fillStyle = '#1B2236'; c.fillRect(0, 0, W, H); snowfall(c, lt, 60, .7); fillRR(c, 90, 330, 900, 1280, 10, '#E8E4DA'); c.save(); c.beginPath(); c.rect(130, 370, 820, 1200); c.clip(); c.fillStyle = '#2A2028'; c.fillRect(130, 370, 820, 1200); c.fillStyle = '#7A3A3A'; c.fillRect(130, 370, 110, 1200); c.fillRect(840, 370, 110, 1200); wallClock(c, 760, 480, 46, 3, 0);
-  personHD(c, 380, 1880, .95, { kind: 'mama', expr: o.expr || 'fear', t: lt, look: 1, cloth: '#E8B83A', arms: 'phone' }); personHD(c, 640, 1900, .8, { kind: 'kuba', home: true, expr: o.expr || 'fear', t: lt, look: -1 }); personHD(c, 820, 1940, .65, { kind: 'zosia', expr: 'neutral', t: lt, item: 'teddy', look: -1 });
+  personHD(c, 380, 1880, .95, { kind: 'mama', expr: o.expr || 'fear', t: lt, look: 1, arms: 'phone' }); personHD(c, 640, 1900, .8, { kind: 'kuba', home: true, expr: o.expr || 'fear', t: lt, look: -1 }); personHD(c, 820, 1940, .65, { kind: 'zosia', expr: 'neutral', t: lt, item: 'teddy', look: -1 });
   c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(560, 1000, 10, 560, 1000, 520); g.addColorStop(0, 'rgba(200,220,255,.35)'); g.addColorStop(1, 'rgba(200,220,255,0)'); c.fillStyle = g; c.fillRect(0, 300, W, 1400); c.restore(); c.fillStyle = 'rgba(160,190,230,.08)'; c.fillRect(130, 370, 820, 1200); c.restore(); fillRR(c, 525, 330, 30, 1280, 4, '#E8E4DA'); fillRR(c, 90, 960, 900, 26, 4, '#E8E4DA'); fillRR(c, 60, 1600, 960, 40, 6, '#C9C2A8'); for (let k = 0; k < 10; k++) circ(c, 120 + k * 90, 1596, 10, 'rgba(255,255,255,.9)'); }
 
 // ===================== SCENY =====================
@@ -1568,7 +1568,7 @@ scene({ name: 'nikt', start: 12.6, end: 14.4, cam: P(1.15, 1.8), draw(c, lt) { f
 scene({ name: 'zamek', start: 14.4, end: 16.2, cam: P(1.12, 1.8), draw(c, lt) { shot(c, 690, 980, 2.6, (cc) => kubaHall(cc, lt, { underLight: 1 })); NIGHT(c, .5, 540, 1000, 560); }, post(c, lt) { target(c, lt, 540, 940, 560, 420, 'ŁAŃCUCH', .5); } });
 scene({ name: 'puk', start: 16.2, end: 18, cam: jolt([.2, .6, 1.0]), draw(c, lt) { HD(c, lt, { fx: 300 }); }, post(c, lt) { joltFlash(c, lt, [.2, .6, 1.0]); } });
 scene({ name: 'glos', start: 18, end: 20.6, cam: P(1.1, 2.6), draw(c, lt) { HD(c, lt, { fx: 300, dark: .78 }); for (let k = 0; k < 3; k++) { c.strokeStyle = `rgba(255,255,255,${.4 - k * .1})`; c.lineWidth = 5; c.beginPath(); c.arc(540, 900, 60 + k * 30 + (lt * 50 % 30), -2.4, -.7); c.stroke(); } } });
-scene({ name: 'mama', start: 20.6, end: 22.6, cam: P(1.1, 2), draw: FACE('mama', 'fear', { talk: true, look: 1, cloth: '#E8B83A', bg: '#1A1418', n: .5 }) });
+scene({ name: 'mama', start: 20.6, end: 22.6, cam: P(1.1, 2), draw: TFACE('mama', 'fear', { talk: true, look: 1, bg: '#1A1418', n: .5 }) });
 scene({ name: 'z1', start: 22.6, end: 24.8, cam: P(1.06, 2.2), draw(c, lt) { HD(c, lt, { fx: 700 }); }, post(c, lt) { ruleTag(c, lt, 1, .2, 540, 420); if (lt > .5) label(c, 'W NOCY NIE OTWIERASZ', 540, 540, 'dark', 40, lt - .5, 9); } });
 scene({ name: 'admin', start: 24.8, end: 27.2, cam: P(1.06, 2.4), draw(c, lt) { dialPad(c, lt, 'Administracja 24h', { sub: lt < .8 ? 'łączenie…' : 'połączono', time: '3:01', endCall: lt > .8 }); } });
 scene({ name: 'nikogo', start: 27.2, end: 29.6, cam: jolt([.3]), draw(c, lt) { dialPad(c, lt, 'Administracja 24h', { sub: 'połączono · 00:09', time: '3:01', endCall: true }); }, post(c, lt) { joltFlash(c, lt, [.3]); target(c, lt, 540, 640, 760, 300, 'NIKOGO NIE WYSYŁALI', .4); } });
@@ -1581,21 +1581,21 @@ scene({ name: 'policja10', start: 40.6, end: 42.6, draw(c, lt) { dialPad(c, lt, 
 scene({ name: 'wytrych', start: 42.6, end: 44.6, cam: (lt) => ({ z: 1.1, x: Math.sin(lt * 40) * 4 }), draw(c, lt) { keyholePick(c, lt); NIGHT(c, .3, 540, 900, 560); } });
 scene({ name: 'krzeslo', start: 44.6, end: 46.8, cam: jolt([.3]), draw(c, lt) { HD(c, lt, { fx: 800, fa: -1.9 }); chairAtDoor(c, lerp(260, 640, clamp(lt / .5)), 1600, 1.6, -.25); personHD(c, 880, 1900, .95, { kind: 'kuba', home: true, expr: 'angry', t: lt, arms: 'reach', look: -1 }); }, post(c, lt) { joltFlash(c, lt, [.3]); ruleTag(c, lt, 3, .6, 540, 400); if (lt > .9) label(c, 'DWA ZAMKI + ŁAŃCUCH', 540, 520, 'dark', 40, lt - .9, 9); } });
 scene({ name: 'kartka', start: 46.8, end: 49, cam: P(1.12, 2.2), draw(c, lt) { noteClose(c, lt, clamp(lt / 1)); NIGHT(c, .35, 540, 1000, 600); } });
-scene({ name: 'gaz', start: 49, end: 51.2, cam: P(1.1, 2.2), draw: FACE('mama', 'cold', { look: 0, cloth: '#E8B83A', bg: '#1A1418', n: .5 }), post(c, lt) { ruleTag(c, lt, 4, .6, 540, 400); if (lt > .9) label(c, 'GAZ? DZWOŃ 992', 540, 520, 'dark', 40, lt - .9, 9); } });
+scene({ name: 'gaz', start: 49, end: 51.2, cam: P(1.1, 2.2), draw: TFACE('mama', 'cold', { look: 0, bg: '#1A1418', n: .5 }), post(c, lt) { ruleTag(c, lt, 4, .6, 540, 400); if (lt > .9) label(c, 'GAZ? DZWOŃ 992', 540, 520, 'dark', 40, lt - .9, 9); } });
 scene({ name: 'dym', start: 51.2, end: 53.4, cam: P(1.15, 2.2), draw(c, lt) { shot(c, 540, 1420, 1.8, (cc) => kubaHall(cc, lt, { underLight: 1 })); c.fillStyle = 'rgba(2,3,8,.6)'; c.fillRect(0, 0, W, H); smoke(c, lt, .5 + lt * .1, 1100); } });
-scene({ name: 'dymkuba', start: 53.4, end: 55, cam: jolt([.1]), draw: FACE('kuba', 'shock', { home: true, talk: true, look: -1, bg: '#1A1418', n: .45, scene: (c, lt) => smoke(c, lt, .4, 0) }), post(c, lt) { joltFlash(c, lt, [.1]); } });
+scene({ name: 'dymkuba', start: 53.4, end: 55, cam: jolt([.1]), draw: TFACE('kuba', 'shock', { home: true, talk: true, look: -1, bg: '#1A1418', n: .45, scene: (c, lt) => smoke(c, lt, .4, 0) }), post(c, lt) { joltFlash(c, lt, [.1]); } });
 scene({ name: 'z5', start: 55, end: 57.4, cam: P(1.06, 2.4), draw(c, lt) { towelGap(c, lt, clamp(lt / 1.2)); smoke(c, lt, .25, 1300); }, post(c, lt) { ruleTag(c, lt, 5, .3, 540, 400); if (lt > .6) label(c, 'DYM? NIE WYCHODZISZ', 540, 520, 'dark', 40, lt - .6, 9); } });
 scene({ name: 'swiecicie', start: 57.4, end: 59.6, cam: P(1.08, 2.2), draw(c, lt) { familyWindow(c, lt); flashCone(c, 640, 1300, -Math.PI / 2 + Math.sin(lt * 6) * .5, .6); } });
 scene({ name: 'na_dole', start: 59.6, end: 62, cam: P(1.15, 2.4), draw(c, lt) { entranceFull(c, lt, {}); snowfall(c, lt, 90, .7); c.fillStyle = 'rgba(2,3,8,.5)'; c.fillRect(0, 0, W, H); personHD(c, 790, 1500, .5, VILL({ expr: 'grin', t: lt, arms: lt % 1 > .5 ? 'up' : 'down', look: 0 })); NIGHT(c, .35, 790, 1250, 420);
   c.fillStyle = '#E8E4DA'; c.fillRect(0, 0, W, 60); c.fillRect(0, 0, 60, H); c.fillRect(W - 60, 0, 60, H); c.fillRect(0, H - 60, W, 60); c.fillRect(510, 0, 60, H); c.fillRect(0, 900, W, 50); c.fillStyle = 'rgba(160,190,230,.08)'; c.fillRect(0, 0, W, H); }, post(c, lt) { target(c, lt, 790, 1250, 280, 560, 'ON', .5); } });
-scene({ name: 'zosia', start: 62, end: 63.8, cam: P(1.1, 1.8), draw: FACE('zosia', 'fear', { tears: true, look: 1, bg: '#1A1418', n: .5 }) });
+scene({ name: 'zosia', start: 62, end: 63.8, cam: P(1.1, 1.8), draw: TFACE('zosia', 'fear', { tears: true, look: 1, bg: '#1A1418', n: .5 }) });
 scene({ name: 'straz', start: 63.8, end: 66, cam: P(1.06, 2.2), draw(c, lt) { yardFromWindow(c, lt, {}); fireTruck(c, lt, 540, 1700, .55); NIGHT(c, .3, 540, 1500, 700); } });
 scene({ name: 'strazak', start: 66, end: 68.2, cam: jolt([.2]), draw(c, lt) { HD(c, lt, { fx: 400 }); smoke(c, lt, .3, 0); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = Math.floor(lt * 5) % 2 ? 'rgba(255,40,40,.4)' : 'rgba(40,90,255,.4)'; c.fillRect(300, 1400, 480, 26); c.restore(); }, post(c, lt) { joltFlash(c, lt, [.2]); } });
 scene({ name: 'z6', start: 68.2, end: 70.4, cam: P(1.1, 2.2), draw(c, lt) { yardFromWindow(c, lt, {}); fireTruck(c, lt, 540, 1700, .55); NIGHT(c, .3, 540, 1500, 700); }, post(c, lt) { target(c, lt, 540, 1560, 620, 300, 'PRAWDZIWA STRAŻ', .2); ruleTag(c, lt, 6, .5, 540, 400); if (lt > .8) label(c, 'SPRAWDŹ PRZEZ OKNO', 540, 520, 'dark', 40, lt - .8, 9); } });
 scene({ name: 'schody', start: 70.4, end: 72.6, cam: (lt) => ({ z: 1.08, y: lt * 20 }), draw(c, lt) { stairElev(c, lt, 3, { flick: true }); smoke(c, lt, .35, 0); personHD(c, 300, 1800, .8, { kind: 'strazak', mask: true, expr: 'neutral', t: lt, item: 'flash', walk: lt * 8 }); personHD(c, 620, 1700, .7, { kind: 'kuba', home: true, expr: 'fear', t: lt, walk: lt * 8 }); personHD(c, 820, 1640, .6, { kind: 'zosia', expr: 'fear', t: lt, walk: lt * 8 }); NIGHT(c, .4, 500, 1300, 700); } });
 scene({ name: 'mis', start: 72.6, end: 74.4, cam: P(1.15, 1.8), draw(c, lt) { stairElev(c, lt, 3, {}); smoke(c, lt, .4, 0); c.save(); c.translate(540, 1500 + clamp(lt / .6) * 200); c.rotate(clamp(lt / .6) * 1.5); circ(c, 0, 0, 60, '#B0773A'); circ(c, 0, -76, 46, '#B0773A'); circ(c, -36, -112, 18, '#B0773A'); circ(c, 36, -112, 18, '#B0773A'); c.restore(); NIGHT(c, .4, 540, 1600, 500); }, post(c, lt) { target(c, lt, 540, 1640, 300, 300, 'MIŚ', .7); } });
 scene({ name: 'pod_blokiem', start: 74.4, end: 76.8, cam: P(1.06, 2.4), draw(c, lt) { entranceFull(c, lt, {}); snowfall(c, lt, 80, .7); fireTruck(c, lt, 900, 1500, .5); crowd(c, lt, 1900, .62, [0, 2, 3, 1, 4]); NIGHT(c, .25, 540, 1400, 760); } });
-scene({ name: 'widzisz', start: 76.8, end: 78.6, cam: jolt([.1]), draw: FACE('kuba', 'shock', { home: true, look: 1, bg: '#101420', scene: (c, lt) => snowfall(c, lt, 60, .6), n: .35 }), post(c, lt) { joltFlash(c, lt, [.1]); } });
+scene({ name: 'widzisz', start: 76.8, end: 78.6, cam: jolt([.1]), draw: TFACE('kuba', 'shock', { home: true, look: 1, bg: '#101420', scene: (c, lt) => snowfall(c, lt, 60, .6), n: .35 }), post(c, lt) { joltFlash(c, lt, [.1]); } });
 scene({ name: 'w_tlumie', start: 78.6, end: 81, cam: P(1.18, 2.4), draw(c, lt) { entranceFull(c, lt, {}); snowfall(c, lt, 80, .7); crowd(c, lt, 1900, .62, [0, 2, 3, 4]); personHD(c, 560, 1820, .66, VILL({ expr: 'grin', t: lt, item: 'teddy', look: 1, cloth: '#1E2228' })); NIGHT(c, .35, 560, 1400, 520); }, post(c, lt) { target(c, lt, 560, 1450, 340, 760, 'ON', .4); } });
 scene({ name: 'z7', start: 81, end: 83.2, cam: P(1.06, 2.2), draw(c, lt) { entranceFull(c, lt, {}); snowfall(c, lt, 80, .7); personHD(c, 330, 1900, .85, { kind: 'kuba', home: true, expr: 'angry', talk: true, t: lt, arms: 'reach', look: 1 }); personHD(c, 760, 1900, .9, { kind: 'policjant', expr: 'neutral', t: lt, look: -1 }); NIGHT(c, .3, 540, 1400, 700); }, post(c, lt) { ruleTag(c, lt, 7, .3, 540, 400); if (lt > .6) label(c, 'POKAŻ POLICJI Z DALEKA', 540, 520, 'dark', 38, lt - .6, 9); } });
 scene({ name: 'ucieka', start: 83.2, end: 85.4, cam: (lt) => ({ z: 1.08, x: -lt * 30 }), draw(c, lt) { garagesBg(c, lt, {}); speedLines(c, lt, .2); personHD(c, lerp(500, 1100, clamp(lt / 1.8)), 1800, .7, VILL({ expr: 'grin', t: lt, walk: lt * 16, cloth: '#1E2228', back: true })); NIGHT(c, .45, 600, 1400, 600); } });
@@ -1608,3 +1608,114 @@ scene({ name: 'szept', start: 95.8, end: 98.4, cam: P(1.25, 2.6), draw(c, lt) { 
 scene({ name: 'end', start: 98.4, end: 104, labels: [[1.0, 6, 'CZĘŚĆ 2 ↓', 540, 1200, 'red', 80]], draw(c, lt) { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); if (lt > .3) { const p = eout(clamp((lt - .3) / .5)); c.save(); c.globalAlpha = p; txt(c, 'OBSERWUJ,', 540, 820, 80, '#FFD23F', 900); txt(c, 'ŻEBY ZOBACZYĆ CZĘŚĆ 2', 540, 920, 64, '#FFFFFF', 900); c.restore(); } } });
 
 EP.cues = (add) => { [[0.1, 'stab'], [2.6, 'hit'], [4.2, 'hit'], [5.8, 'jolt'], [5.8, 'hit'], [8, 'whoosh'], [16.4, 'knock'], [16.8, 'knock'], [17.2, 'knock'], [27.5, 'hit'], [29.6, 'hit'], [32, 'hit'], [42.6, 'pick'], [44.9, 'jolt'], [46.8, 'paper'], [51.2, 'hit'], [53.4, 'jolt'], [55, 'water'], [59.6, 'hit'], [63.8, 'siren'], [66.2, 'knock'], [66.6, 'knock'], [72.6, 'hit'], [76.8, 'jolt'], [78.6, 'hit'], [83.2, 'steps'], [92.1, 'jolt'], [92.1, 'hit'], [95.8, 'hit']].forEach(([t, n]) => add(t, n)); };
+
+// ===================== POSTACIE W STYLU „TOON” (czysty wektor, jak we wzorze; własne projekty) =====================
+// Głowa = zaokrąglony kwadrat bez szyi, oczy = białe kółka z czarną źrenicą, cienkie brwi, mała kropka nosa, rumieńce.
+const TOON = {
+  kuba:    { skin: '#F1C9A5', hair: '#7A4A2A', top: '#3E6FB0', top2: '#2E5A94', pants: '#3E6FB0', shoe: '#E8DCC8', print: 'stripes' },
+  kubaOut: { skin: '#F1C9A5', hair: '#7A4A2A', top: '#5E7A3A', top2: '#4E6830', pants: '#2F3A52', shoe: '#14161B', print: 'zip' },
+  mama:    { skin: '#F2C7A8', hair: '#8A3A22', top: '#D98CA8', top2: '#C47292', pants: '#D98CA8', shoe: '#E8DCC8', print: 'robe' },
+  zosia:   { skin: '#F6D0B4', hair: '#8A5A30', top: '#B79CE0', top2: '#A288D0', pants: '#B79CE0', shoe: '#E8DCC8', print: 'stars' },
+  zly:     { skin: '#D9C2A8', hair: null, top: '#3A4234', top2: '#2E3529', pants: '#22252B', shoe: '#14161B', print: 'zip' },
+  policjant: { skin: '#E6B890', hair: '#3A2A1E', top: '#22325A', top2: '#1A2848', pants: '#1A2848', shoe: '#0E0F12', print: 'police' },
+  strazak: { skin: '#E6B890', hair: '#3A2A1E', top: '#1E2A40', top2: '#16203A', pants: '#1E2A40', shoe: '#0E0F12', print: 'fire' },
+  babcia:  { skin: '#F2CDB6', hair: '#D4D4D4', top: '#8A3A4A', top2: '#74303E', pants: '#5A4A5A', shoe: '#3A2A2A', print: 'cardigan' },
+  sasiad:  { skin: '#E0AE88', hair: '#2A1E18', top: '#4A6A8A', top2: '#3A5A7A', pants: '#2A2D36', shoe: '#14161B', print: 'zip' },
+};
+function toonPal(o) { const k = o.kind === 'kuba' ? (o.home === false ? 'kubaOut' : 'kuba') : o.kind === 'kierowca' ? 'zly' : o.kind; const P0 = TOON[k] || TOON.sasiad; return Object.assign({}, P0, o.skin ? { skin: o.skin } : {}, o.cloth ? { top: o.cloth, top2: shade(o.cloth, -.12) } : {}, o.hair ? { hair: o.hair } : {}); }
+// głowa w układzie: środek (0,0), szer. 300, wys. 290; dla „zly” dłuższa i z detalami
+function toonHead(c, o, P) { const kd = o.kind === 'kierowca' ? 'zly' : o.kind, ex = o.expr || 'neutral', t = o.t || 0, villain = kd === 'zly';
+  const hw = villain ? 150 : 150, hh = villain ? 175 : 145, r = villain ? 120 : 110;
+  // włosy z tyłu
+  if (kd === 'mama') { c.fillStyle = P.hair; fillRR(c, -hw - 14, -hh - 10, hw * 2 + 28, hh * 1.6, 90, P.hair); c.save(); c.translate(hw - 10, 40); c.rotate(.25 + Math.sin(t * 1.5) * .03); fillRR(c, -26, 0, 62, 260, 30, shade(P.hair, -.08)); c.restore(); }
+  if (kd === 'zosia') { for (const sx of [-1, 1]) { c.save(); c.translate(sx * (hw + 10), 10); c.rotate(sx * .25); fillRR(c, -34, -20, 68, 150, 34, P.hair); c.restore(); } }
+  if (kd === 'babcia') { circ(c, 0, -hh - 30, 58, P.hair); }
+  // uszy
+  for (const sx of [-1, 1]) { ell(c, sx * (hw - 4), 6, 22, 30, shade(P.skin, -.06)); }
+  // twarz (squircle) + cień z prawej
+  fillRR(c, -hw, -hh, hw * 2, hh * 2, r, P.skin); c.save(); rr(c, -hw, -hh, hw * 2, hh * 2, r); c.clip(); c.fillStyle = 'rgba(120,60,40,.10)'; c.beginPath(); c.ellipse(hw + 20, 20, 80, hh * 1.3, 0, 0, 7); c.fill(); c.restore();
+  // detale złoczyńcy: oczodoły, zmarszczki, zarost, policzki zapadnięte
+  if (villain) { for (const sx of [-1, 1]) { const g = c.createRadialGradient(sx * 62, -6, 10, sx * 62, -6, 70); g.addColorStop(0, 'rgba(70,25,35,.55)'); g.addColorStop(1, 'rgba(70,25,35,0)'); c.fillStyle = g; c.fillRect(sx * 62 - 80, -86, 160, 160); }
+    c.strokeStyle = 'rgba(110,70,55,.45)'; c.lineWidth = 3; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-90, -110 - k * 13); c.quadraticCurveTo(0, -120 - k * 13, 90, -110 - k * 13); c.stroke(); } for (const sx of [-1, 1]) { c.beginPath(); c.moveTo(sx * 30, 50); c.quadraticCurveTo(sx * 70, 110, sx * 60, 150); c.stroke(); for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(sx * 112, -20 + k * 12); c.lineTo(sx * 132, -26 + k * 12); c.stroke(); } }
+    for (let k = 0; k < 140; k++) { const a = Math.PI * (.1 + .8 * hash(k)), rr2 = 90 + hash(k + 9) * 70; circ(c, Math.cos(a) * rr2, 40 + Math.sin(a) * rr2 * .9, 2.2, 'rgba(70,55,45,.5)'); }
+    c.fillStyle = 'rgba(255,255,255,.12)'; c.beginPath(); c.ellipse(-50, -130, 60, 22, -.3, 0, 7); c.fill(); }
+  // rumieńce
+  if (!villain) { circ(c, -92, 52, 26, 'rgba(240,120,120,.32)'); circ(c, 92, 52, 26, 'rgba(240,120,120,.32)'); }
+  // oczy
+  const lx = (o.look || 0) * 8, ly = (o.lookY || 0) * 6; const blink = !o.noBlink && (t % 4.2) > 4.05;
+  const ew = ex === 'shock' || ex === 'fear' ? 30 : 25, eh = blink ? 3 : (ex === 'shock' ? 32 : ex === 'fear' ? 29 : 25);
+  for (const sx of [-1, 1]) { const ex0 = sx * 60, ey0 = villain ? -4 : 2; c.save(); c.beginPath(); c.ellipse(ex0, ey0, ew, eh, 0, 0, 7); c.fillStyle = '#FFFFFF'; c.fill(); c.clip();
+    if (villain || o.blood) { c.strokeStyle = 'rgba(200,40,50,.6)'; c.lineWidth = 2.5; for (let k = 0; k < 7; k++) { c.beginPath(); c.moveTo(ex0 + sx * 30, ey0 + (k - 3) * 8); c.quadraticCurveTo(ex0 + sx * 16, ey0 + (k - 3) * 4, ex0 + sx * 6, ey0 + (k - 3) * 2); c.stroke(); } if (villain) circ(c, ex0 + lx, ey0 + ly, 11, '#8AA0B0'); }
+    circ(c, ex0 + lx, ey0 + ly, villain ? 5 : (ex === 'shock' ? 8 : 10), '#14161B'); circ(c, ex0 + lx - 3, ey0 + ly - 4, 3, '#FFFFFF');
+    if (ex === 'tired' || ex === 'cold' || (villain && ex !== 'shock')) { c.fillStyle = P.skin; c.fillRect(ex0 - 40, ey0 - 40, 80, 40 - eh * (ex === 'cold' ? .2 : .35)); }
+    c.restore(); if (villain) { c.strokeStyle = 'rgba(190,50,60,.85)'; c.lineWidth = 5; c.beginPath(); c.ellipse(ex0, ey0, ew + 1, eh + 1, 0, 0, 7); c.stroke(); }
+    if (ex === 'tired' || ex === 'cold' || villain) { c.strokeStyle = 'rgba(60,35,30,.7)'; c.lineWidth = 3; c.beginPath(); c.moveTo(ex0 - ew, ey0 - eh * (ex === 'cold' || villain ? .8 : .65) + 22 * (villain ? .5 : .6)); c.lineTo(ex0 + ew, ey0 - eh * (ex === 'cold' || villain ? .8 : .65) + 22 * (villain ? .5 : .6)); c.stroke(); } }
+  // brwi
+  const B = { neutral: [0, 0], tired: [.08, 4], fear: [.28, -6], shock: [.05, -16], smile: [-.06, -4], grin: [-.22, 4], cold: [-.25, 6], angry: [-.38, 6] }[ex] || [0, 0];
+  for (const sx of [-1, 1]) { c.save(); c.translate(sx * 60, (villain ? -58 : -48) + B[1]); c.rotate(sx * B[0]); fillRR(c, -26, -4, 52, 8, 4, villain ? '#4A3A30' : shade(P.hair || '#5A4030', -.15)); c.restore(); }
+  // nos
+  ell(c, 0, villain ? 46 : 40, villain ? 12 : 8, villain ? 9 : 6, shade(P.skin, -.18));
+  // usta
+  const tk = o.talk ? Math.abs(Math.sin(t * 13)) : 0; c.save(); c.translate(0, villain ? 98 : 82);
+  if (ex === 'grin') { c.fillStyle = '#3A1414'; c.beginPath(); c.moveTo(-80, -8); c.quadraticCurveTo(0, 56, 80, -8); c.quadraticCurveTo(0, 16, -80, -8); c.fill(); c.fillStyle = '#F2EEE0'; c.beginPath(); c.moveTo(-72, -4); c.quadraticCurveTo(0, 44, 72, -4); c.quadraticCurveTo(0, 12, -72, -4); c.fill(); c.strokeStyle = 'rgba(90,70,60,.55)'; c.lineWidth = 2; for (let k = -4; k <= 4; k++) { c.beginPath(); c.moveTo(k * 15, 6 - Math.abs(k)); c.lineTo(k * 15, 26 - Math.abs(k) * 3); c.stroke(); } }
+  else if (ex === 'shock' || (ex === 'fear' && !o.talk)) { const h = ex === 'shock' ? 22 : 14; ell(c, 0, 0, ex === 'shock' ? 16 : 12, h, '#6A1E24'); }
+  else if (ex === 'smile') { c.strokeStyle = '#6A2A2A'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(-26, -4); c.quadraticCurveTo(0, 16 + tk * 6, 26, -4); c.stroke(); }
+  else if (o.talk) { ell(c, 0, 0, 16, 4 + tk * 14, '#6A1E24'); }
+  else if (ex === 'angry') { fillRR(c, -26, -6, 52, 14, 6, '#6A1E24'); fillRR(c, -22, -6, 44, 5, 2, '#F2EEE0'); }
+  else { c.strokeStyle = '#6A2A2A'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(-18, 0); c.lineTo(18, ex === 'cold' ? 0 : 2); c.stroke(); }
+  c.restore();
+  if (o.tears) { for (const sx of [-1, 1]) fillRR(c, sx * 60 - 6, 28, 12, 30 + (t * 40 % 40), 6, 'rgba(150,200,255,.75)'); }
+  if (o.sweat) { const sy = -60 + ((t * 50) % 90); c.fillStyle = 'rgba(170,215,255,.85)'; c.beginPath(); c.moveTo(130, sy); c.quadraticCurveTo(144, sy + 22, 130, sy + 28); c.quadraticCurveTo(116, sy + 22, 130, sy); c.fill(); }
+  // włosy / nakrycia głowy (z przodu)
+  if (kd === 'kuba') { c.fillStyle = P.hair; c.beginPath(); c.moveTo(-hw - 6, -20); c.quadraticCurveTo(-hw - 6, -hh - 10, 0, -hh - 16); c.quadraticCurveTo(hw + 6, -hh - 10, hw + 6, -20); c.quadraticCurveTo(hw - 10, -80, 60, -88); c.lineTo(20, -60); c.lineTo(-10, -92); c.quadraticCurveTo(-90, -80, -hw - 6, -20); c.fill(); for (const [px, h] of [[-50, 60], [0, 78], [50, 58]]) { c.beginPath(); c.moveTo(px - 30, -hh); c.lineTo(px + 6, -hh - h); c.lineTo(px + 30, -hh); c.fill(); } }
+  if (kd === 'mama') { c.fillStyle = P.hair; c.beginPath(); c.moveTo(-hw - 8, 10); c.quadraticCurveTo(-hw - 10, -hh - 14, 10, -hh - 16); c.quadraticCurveTo(hw + 10, -hh - 12, hw + 8, 10); c.quadraticCurveTo(hw - 10, -70, 40, -96); c.quadraticCurveTo(-60, -60, -hw + 10, -40); c.lineTo(-hw - 8, 10); c.fill(); }
+  if (kd === 'zosia') { c.fillStyle = P.hair; c.beginPath(); c.moveTo(-hw - 6, -10); c.quadraticCurveTo(-hw - 6, -hh - 12, 0, -hh - 14); c.quadraticCurveTo(hw + 6, -hh - 12, hw + 6, -10); c.quadraticCurveTo(hw - 20, -88, 0, -84); c.quadraticCurveTo(-hw + 20, -88, -hw - 6, -10); c.fill(); for (const sx of [-1, 1]) { c.save(); c.translate(sx * (hw + 6), -40); fillRR(c, -26, -14, 52, 28, 14, '#FF6B9A'); circ(c, 0, 0, 11, '#E0507A'); c.restore(); } }
+  if (kd === 'babcia') { c.fillStyle = P.hair; c.beginPath(); c.moveTo(-hw - 6, 0); c.quadraticCurveTo(-hw - 6, -hh - 10, 0, -hh - 12); c.quadraticCurveTo(hw + 6, -hh - 10, hw + 6, 0); c.quadraticCurveTo(hw - 20, -80, 0, -80); c.quadraticCurveTo(-hw + 20, -80, -hw - 6, 0); c.fill(); c.strokeStyle = '#8A6A4A'; c.lineWidth = 5; for (const sx of [-1, 1]) { c.beginPath(); c.arc(sx * 60, 2, 38, 0, 7); c.stroke(); } c.beginPath(); c.moveTo(-22, -2); c.lineTo(22, -2); c.stroke(); }
+  if (kd === 'sasiad') { c.fillStyle = P.hair; c.beginPath(); c.moveTo(-hw - 4, -30); c.quadraticCurveTo(-hw - 4, -hh - 10, 0, -hh - 12); c.quadraticCurveTo(hw + 4, -hh - 10, hw + 4, -30); c.quadraticCurveTo(hw - 20, -90, 0, -92); c.quadraticCurveTo(-hw + 20, -90, -hw - 4, -30); c.fill(); if (o.cap) { fillRR(c, -hw - 10, -hh - 30, hw * 2 + 20, 90, 40, o.cap); } }
+  if (kd === 'policjant') { fillRR(c, -hw - 14, -hh - 40, hw * 2 + 28, 70, 20, '#1A2848'); fillRR(c, -hw - 30, -hh + 20, hw * 2 + 60, 26, 13, '#0E1630'); circ(c, 0, -hh - 6, 20, '#F5C542'); }
+  if (kd === 'strazak') { c.fillStyle = '#F5C542'; c.beginPath(); c.ellipse(0, -hh + 20, hw + 30, 120, 0, Math.PI, 0); c.fill(); fillRR(c, -hw - 40, -hh + 10, hw * 2 + 80, 30, 15, '#D9A82A'); fillRR(c, -60, -hh - 60, 120, 36, 8, '#C21B2A'); txt(c, 'PSP', 0, -hh - 42, 26, '#FFFFFF', 900); if (o.mask) { fillRR(c, -90, 30, 180, 120, 50, '#2A2D36'); circ(c, 0, 96, 30, '#4A4F58'); } }
+}
+// cała postać: y = stopy, s = skala (s=1 ≈ 1000 px)
+function toon(c, x, y, s, o = {}) { const P = toonPal(o), kd = o.kind === 'kierowca' ? 'zly' : o.kind, t = o.t || 0; c.save(); c.translate(x, y); c.scale(s, s); const small = kd === 'zosia' ? .78 : 1; c.scale(small, small);
+  const wk = o.walk != null ? Math.sin(o.walk) : 0, bob = o.walk != null ? Math.abs(Math.cos(o.walk)) * 10 : Math.sin(t * 2.2) * 3;
+  ell(c, 0, 0, 160, 20, 'rgba(0,0,0,.3)');
+  // nogi (krótkie) i buty
+  for (const [sx, ph] of [[-1, wk], [1, -wk]]) { c.save(); c.translate(sx * 52, -250); c.rotate(ph * .3); fillRR(c, -42, 0, 84, 230, 36, P.pants); if (P.print === 'stripes') { c.fillStyle = 'rgba(255,255,255,.22)'; for (let k = 0; k < 4; k++) c.fillRect(-42, 30 + k * 52, 84, 16); } fillRR(c, -50, 210, 112, 52, 26, P.shoe); c.restore(); }
+  c.translate(0, -bob);
+  // tułów: miękka bryła, szersza u dołu
+  const ty = -640, bw = kd === 'mama' || kd === 'zosia' || kd === 'babcia' ? 210 : 175; const g = c.createLinearGradient(-200, 0, 200, 0); g.addColorStop(0, shade(P.top, .06)); g.addColorStop(.6, P.top); g.addColorStop(1, P.top2); c.fillStyle = g;
+  c.beginPath(); c.moveTo(-130, ty); c.quadraticCurveTo(-178, ty + 8, -178, ty + 90); c.lineTo(-bw, -230); c.quadraticCurveTo(0, -205, bw, -230); c.lineTo(178, ty + 90); c.quadraticCurveTo(178, ty + 8, 130, ty); c.closePath(); c.fill();
+  c.save(); c.clip();
+  if (P.print === 'stripes') { c.fillStyle = 'rgba(255,255,255,.2)'; for (let k = 0; k < 7; k++) c.fillRect(-220, ty + 50 + k * 58, 440, 18); }
+  if (P.print === 'stars') for (let k = 0; k < 12; k++) txt(c, '★', -150 + (k % 4) * 100, ty + 80 + Math.floor(k / 4) * 120, 38, 'rgba(255,245,200,.8)', 900);
+  if (P.print === 'robe') { c.fillStyle = P.top2; c.beginPath(); c.moveTo(-70, ty); c.lineTo(30, ty + 300); c.lineTo(70, ty + 300); c.lineTo(-20, ty); c.fill(); fillRR(c, -200, ty + 250, 400, 36, 10, P.top2); }
+  if (P.print === 'zip') { c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 5; c.beginPath(); c.moveTo(0, ty + 30); c.lineTo(0, -210); c.stroke(); fillRR(c, -150, ty + 230, 100, 70, 10, P.top2); fillRR(c, 50, ty + 230, 100, 70, 10, P.top2); }
+  if (P.print === 'police') { fillRR(c, -200, ty + 210, 400, 64, 0, '#D8E84A'); fillRR(c, -200, ty + 230, 400, 8, 0, '#C9CDD2'); fillRR(c, 30, ty + 90, 110, 46, 6, '#F2EEE4'); txt(c, 'POLICJA', 85, ty + 113, 18, '#1A2848', 900); }
+  if (P.print === 'fire') { for (const yy of [ty + 200, ty + 300]) { fillRR(c, -200, yy, 400, 26, 0, '#D8E84A'); fillRR(c, -200, yy + 10, 400, 6, 0, '#C9CDD2'); } }
+  if (P.print === 'cardigan') { for (let k = 0; k < 5; k++) circ(c, -16, ty + 70 + k * 70, 9, '#E8D8B0'); c.strokeStyle = 'rgba(255,255,255,.14)'; c.lineWidth = 5; for (let k = 0; k < 9; k++) { c.beginPath(); c.moveTo(-200 + k * 48, ty); c.lineTo(-200 + k * 48, -200); c.stroke(); } }
+  if (o.vest) { fillRR(c, -180, ty + 20, 360, 380, 16, '#F2C200'); fillRR(c, -180, ty + 220, 360, 26, 0, '#C9CDD2'); fillRR(c, -120, ty + 80, 240, 64, 8, '#F2EEE4'); txt(c, o.vest, 0, ty + 112, 24, '#14161B', 900); }
+  c.restore();
+  // kołnierz
+  if (kd === 'kuba' || kd === 'zosia') { c.fillStyle = 'rgba(255,255,255,.85)'; c.beginPath(); c.moveTo(-70, ty + 2); c.lineTo(0, ty + 70); c.lineTo(70, ty + 2); c.lineTo(40, ty + 2); c.lineTo(0, ty + 44); c.lineTo(-40, ty + 2); c.fill(); }
+  if (kd === 'zly' || kd === 'sasiad') { c.fillStyle = P.top2; c.beginPath(); c.moveTo(-110, ty - 6); c.lineTo(-20, ty + 80); c.lineTo(-60, ty + 100); c.lineTo(-140, ty + 20); c.fill(); c.beginPath(); c.moveTo(110, ty - 6); c.lineTo(20, ty + 80); c.lineTo(60, ty + 100); c.lineTo(140, ty + 20); c.fill(); }
+  // ręce: rękaw + mitenkowa dłoń z kciukiem
+  const hand = (hx, hy) => { circ(c, hx, hy, 34, P.skin); ell(c, hx + 22, hy - 14, 12, 16, P.skin); };
+  const sleeve = (x0, y0, x1, y1) => { c.strokeStyle = shade(P.top, -.04); c.lineWidth = 74; c.lineCap = 'round'; c.beginPath(); c.moveTo(x0, y0); c.quadraticCurveTo((x0 + x1) / 2 + (x0 < 0 ? -30 : 30), (y0 + y1) / 2, x1, y1); c.stroke(); if (P.print === 'stripes') { c.strokeStyle = 'rgba(255,255,255,.18)'; c.lineWidth = 74; c.setLineDash([16, 40]); c.beginPath(); c.moveTo(x0, y0); c.quadraticCurveTo((x0 + x1) / 2 + (x0 < 0 ? -30 : 30), (y0 + y1) / 2, x1, y1); c.stroke(); c.setLineDash([]); } };
+  const A = o.arms || (o.item ? 'hold' : 'down'), sw = o.walk != null ? Math.sin(o.walk) * 60 : 0;
+  const L = A === 'up' ? [-230, ty - 160] : A === 'hold' || A === 'phone' ? [-60, ty + 230] : [-200 - sw * .3, -300 + sw], R = A === 'up' ? [230, ty - 160] : A === 'reach' || A === 'point' ? [330, ty + 120] : A === 'hold' ? [60, ty + 230] : A === 'phone' ? [120, ty + 40] : [200 + sw * .3, -300 - sw];
+  sleeve(-150, ty + 70, L[0], L[1] - 30); sleeve(150, ty + 70, R[0], R[1] - 30);
+  if (o.item === 'teddy') { c.save(); c.translate(0, ty + 230); circ(c, 0, 0, 74, '#B0773A'); circ(c, 0, -92, 58, '#B0773A'); circ(c, -44, -136, 22, '#B0773A'); circ(c, 44, -136, 22, '#B0773A'); circ(c, -20, -98, 7, '#14161B'); circ(c, 20, -98, 7, '#14161B'); ell(c, 0, -78, 18, 12, '#E8C79A'); c.restore(); }
+  if (o.item === 'mug') { fillRR(c, -50, ty + 160, 100, 110, 16, '#F2EEE4'); }
+  if (A === 'phone' || o.item === 'phone') { c.save(); c.translate(R[0] - 10, R[1] - 80); fillRR(c, -30, -56, 60, 112, 10, '#14161B'); fillRR(c, -24, -50, 48, 100, 6, '#5FD0FF'); c.restore(); }
+  if (o.item === 'flash') { c.save(); c.translate(R[0], R[1] - 40); fillRR(c, -18, -50, 36, 100, 10, '#14161B'); c.globalCompositeOperation = 'lighter'; const lg = c.createRadialGradient(0, -50, 5, 0, -500, 500); lg.addColorStop(0, 'rgba(255,250,220,.55)'); lg.addColorStop(1, 'rgba(255,250,220,0)'); c.fillStyle = lg; c.beginPath(); c.moveTo(-12, -50); c.lineTo(-280, -900); c.lineTo(280, -900); c.lineTo(12, -50); c.fill(); c.restore(); }
+  hand(L[0], L[1]); hand(R[0], R[1]);
+  // głowa osadzona na ramionach (bez szyi)
+  c.save(); c.translate(0, ty - 140); toonHead(c, Object.assign({ kind: kd }, o), P); c.restore();
+  c.restore(); }
+// zbliżenie (głowa + ramiona), jak we wzorze
+function toonClose(c, lt, kind, expr, o = {}) { const bg = o.bg || '#1A1E2A'; c.fillStyle = bg; c.fillRect(0, 0, W, H); if (o.scene) o.scene(c, lt); toon(c, 540, (o.y || 880) + 780 * (o.s || 2.0), o.s || 2.0, Object.assign({ kind, expr, t: lt }, o)); if (o.night !== false) night(c, o.n ?? .3, [{ x: 540, y: o.y || 880, r: 700, a: .9 }]); }
+// podmiana: wszystkie postacie w odcinku rysuje „toon”
+function personHD(c, x, y, s, o = {}) { toon(c, x, y, s, o); }
+function villainFace(c, lt, s = 1.5, ex = 'cold') { c.fillStyle = '#0E120E'; c.fillRect(0, 0, W, H); for (let x = 0; x < W; x += 70) { c.fillStyle = 'rgba(60,80,60,.18)'; c.fillRect(x, 0, 30, H); } toon(c, 540, 860 + 780 * s * 1.45, s * 1.45, { kind: 'kierowca', expr: ex, t: lt, look: 0, noBlink: true }); NIGHT(c, .3, 540, 860, 760); }
+
+function TFACE(kd, ex, o = {}) { return (c, lt) => toonClose(c, lt, kd === 'kierowca' ? 'kierowca' : kd, ex, o); }
