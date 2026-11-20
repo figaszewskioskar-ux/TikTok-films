@@ -9,7 +9,7 @@ VFILTER = {'lektor': 'asetrate=48000*0.93,aresample=48000,atempo=1.075,lowpass=f
            'obcy': 'lowpass=f=5000,aecho=0.6:0.4:40:0.25', 'admin': 'highpass=f=350,lowpass=f=3200,acompressor', 'zosia': 'highpass=f=150,asetrate=48000*1.08,aresample=48000,atempo=0.93'}
 VGAIN = {'obcy': 1.2}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SQUEEZE = 0.7
 SCENES = [('twarz', 0, 4.2), ('proste', 4.2, 5.8), ('minuta', 5.8, 8), ('blok', 8, 10.4), ('okno', 10.4, 12.6), ('nikt', 12.6, 14.4), ('zamek', 14.4, 16.2), ('puk', 16.2, 18), ('glos', 18, 20.6),
