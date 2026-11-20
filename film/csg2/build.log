@@ -1,0 +1,72 @@
+twarz      4.2s ->   6.2s
+proste     1.6s ->   2.2s
+minuta     2.2s ->   2.5s
+blok       2.4s ->   2.8s
+okno       2.2s ->   2.6s
+nikt       1.8s ->   1.7s
+zamek      1.8s ->   3.4s
+puk        1.8s ->   2.6s
+glos       2.6s ->   3.6s
+mama       2.0s ->   1.7s
+z1         2.2s ->   6.1s
+admin      2.4s ->   2.8s
+nikogo     2.4s ->   3.2s
+wizjer     2.4s ->   4.1s
+imiona     2.6s ->   5.8s
+tabliczka   2.0s ->   2.5s
+z2         2.0s ->   4.2s
+tel112     2.0s ->   1.7s
+policja10   2.0s ->   2.4s
+wytrych    2.0s ->   1.9s
+krzeslo    2.2s ->   3.2s
+kartka     2.2s ->   4.7s
+gaz        2.2s ->   7.4s
+dym        2.2s ->   3.0s
+dymkuba    1.6s ->   1.8s
+z5         2.4s ->   7.6s
+swiecicie   2.2s ->   2.2s
+na_dole    2.4s ->   3.4s
+zosia      1.8s ->   1.8s
+straz      2.2s ->   2.9s
+strazak    2.2s ->   3.7s
+z6         2.2s ->   5.5s
+schody     2.2s ->   1.9s
+mis        1.8s ->   2.3s
+pod_blokiem   2.4s ->   2.3s
+widzisz    1.8s ->   2.0s
+w_tlumie   2.4s ->   2.8s
+z7         2.2s ->   5.1s
+ucieka     2.2s ->   2.0s
+snieg      2.0s ->   3.4s
+rano       2.4s ->   2.4s
+szew       2.0s ->   2.2s
+miga       2.0s ->   2.1s
+mikrofon   2.0s ->   1.6s
+szept      2.6s ->   2.3s
+end        5.6s ->   4.4s
+RAZEM 147.6 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/4427 klatek, 16 s
+600/4427 klatek, 43 s
+900/4427 klatek, 71 s
+1200/4427 klatek, 107 s
+1500/4427 klatek, 141 s
+1800/4427 klatek, 173 s
