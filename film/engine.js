@@ -32,7 +32,9 @@ function overlays(c, t, frame) {
   g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${EPC.vignette ?? .6})`);
   c.fillStyle = g; c.fillRect(0, 0, W, H);
   c.drawImage(grain[frame % 4], 0, 0, W, H);
+  if (EPC.captions && window.LINES) captions(c, t);
   if (EPC.hideHud && EPC.hideHud(t)) return;
+  if (EPC.hud === 'coz') { hudCoz(c, t); return; }
   fillRR(c, 40, 150, 170, 52, 26, 'rgba(14,16,21,.85)');
   if (Math.floor(t * 1.5) % 2 === 0) circ(c, 70, 176, 9, '#FF3B30');
   const mm = Math.floor(t / 60), ss = Math.floor(t % 60);
@@ -53,6 +55,30 @@ function overlays(c, t, frame) {
   }
 }
 
+
+// ---------- styl „CO ZROBISZ?”: napisy słowo po słowie + zegar i licznik ----------
+// LINES (z narr.py): [{t, dur, text, who}]. Tekst bez [tagów]; dzielony na kawałki po 1–3 słowa, czas proporcjonalny do liter.
+const CAPS = (() => { const out = []; for (const L of (window.LINES || [])) { const clean = L.text.replace(/\[[^\]]*\]/g, '').replace(/\s+/g, ' ').trim(); if (!clean) continue;
+  const q = L.who && L.who !== 'lektor'; const words = clean.split(' '); const chunks = []; let cur = [];
+  for (const w of words) { cur.push(w); const len = cur.join(' ').length; if (cur.length >= 3 || len >= 14 || /[.,!?…:]$/.test(w)) { chunks.push(cur); cur = []; } } if (cur.length) chunks.push(cur);
+  const tot = chunks.reduce((a, ch) => a + ch.join(' ').length + 2, 0); let tt = L.t;
+  chunks.forEach((ch, i) => { const d = L.dur * (ch.join(' ').length + 2) / tot; out.push({ a: tt, b: tt + d + (i === chunks.length - 1 ? .25 : 0), words: ch, q, first: i === 0, last: i === chunks.length - 1 }); tt += d; }); }
+  return out; })();
+function captions(c, t) { const C = CAPS.filter(x => t >= x.a && t < x.b).pop(); if (!C) return;
+  const hl = (EPC.hl || []).map(w => w.toLowerCase()); const norm = w => w.toLowerCase().replace(/[^a-ząćęłńóśźż0-9]/g, '');
+  let hi = C.words.findIndex(w => hl.includes(norm(w))); const red = hi >= 0; if (!red) { let best = -1; C.words.forEach((w, i) => { if (norm(w).length >= 5 && (best < 0 || norm(w).length > norm(C.words[best]).length)) best = i; }); hi = best; }
+  const words = C.words.map(w => w.toUpperCase()); if (C.q) { if (C.first) words[0] = '„' + words[0]; if (C.last) words[words.length - 1] += '”'; }
+  const sz = 82, y = EPC.capY || 1560; c.save(); font(c, sz, 900); const sp = c.measureText(' ').width; const ws = words.map(w => c.measureText(w).width); let tw = ws.reduce((a, b) => a + b, 0) + sp * (ws.length - 1);
+  const k = Math.min(1, 960 / tw); const p = clamp((t - C.a) / .12), s = (0.85 + 0.15 * back(p)) * k; c.translate(540, y); c.scale(s, s); let x = -tw / 2;
+  c.lineJoin = 'round'; c.textBaseline = 'middle'; c.textAlign = 'left';
+  words.forEach((w, i) => { c.lineWidth = 14; c.strokeStyle = 'rgba(0,0,0,.9)'; c.strokeText(w, x, 0); c.fillStyle = i === hi ? (red ? '#FF3B47' : '#FFD23F') : '#FFFFFF'; c.fillText(w, x, 0); x += ws[i] + sp; });
+  c.restore(); }
+function hudCoz(c, t) { const sc = S.find(s => t >= s.start && t < s.end) || S[S.length - 1]; const told = sc.oStart + pw(sc.knots, t - sc.start, 1, 0);
+  const clk = EPC.clock ? EPC.clock(told) : null, tm = EPC.timer ? EPC.timer(told) : null;
+  if (clk) { fillRR(c, 40, 150, 210, 60, 30, 'rgba(10,11,16,.88)'); txt(c, '🕘 ' + clk, 145, 181, 32, '#FFFFFF', 900); }
+  const bdg = EPC.badge || ''; if (bdg) { c.save(); font(c, 24, 800); const bw = c.measureText(bdg).width + 40; c.restore(); fillRR(c, 540 - bw / 2, 230, bw, 46, 23, 'rgba(10,11,16,.75)'); txt(c, bdg, 540, 254, 24, '#F5C542', 800); }
+  if (tm) { const [lab, sec, urgent] = tm; const m = Math.floor(sec / 60), ss = Math.floor(sec % 60); const bl = urgent && Math.floor(t * 4) % 2; fillRR(c, 770, 140, 270, 80, 14, bl ? '#FF3B47' : '#B5121B'); txt(c, lab, 905, 162, 20, 'rgba(255,255,255,.85)', 900); txt(c, `${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, 905, 196, 38, '#FFFFFF', 900); } }
+
 // ---------- render ----------
 const cv = document.getElementById('cv');
 const ctx = cv.getContext('2d');
@@ -70,7 +96,8 @@ function drawAt(c, t, frame) {
   for (const B of sc.bubbles || []) { const [a, b, s, x, y, tx, ty] = B; if (lt >= a && lt < b) bubble(c, s, x, y, tx, ty, lt - a, b - lt); }
   c.restore();
   if (sc.post) sc.post(c, lt, t);
-  if (lt < 0.12 && sc.start > 0 && !sc.noDip) { c.fillStyle = `rgba(0,0,0,${0.75 * (1 - lt / .12)})`; c.fillRect(0, 0, W, H); }
+  if (EPC.cut === 'flash') { if (lt < 0.1 && sc.start > 0 && !sc.noDip) { c.fillStyle = `rgba(255,255,255,${0.35 * (1 - lt / .1)})`; c.fillRect(0, 0, W, H); } }
+  else if (lt < 0.12 && sc.start > 0 && !sc.noDip) { c.fillStyle = `rgba(0,0,0,${0.75 * (1 - lt / .12)})`; c.fillRect(0, 0, W, H); }
   overlays(c, t, frame);
 }
 function renderFrame(t) {

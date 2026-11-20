@@ -96,4 +96,5 @@ for x in timeline:
     print(f"{x['name']:8s} {x['oEnd'] - x['oStart']:5.1f}s -> {x['end'] - x['start']:5.1f}s")
 print(f'RAZEM {t:.1f} s')
 json.dump(segs, open(os.path.join(OUT, 'lines.json'), 'w'), indent=1, ensure_ascii=False)
-open(os.path.join(EPD, 'timeline.js'), 'w').write('window.TIMELINE = ' + json.dumps(timeline) + ';\n')
+LINES = [{'t': x['t'], 'dur': round(x['dur'], 3), 'text': x['text'], 'who': x.get('who', 'lektor')} for x in segs]
+open(os.path.join(EPD, 'timeline.js'), 'w').write('window.TIMELINE = ' + json.dumps(timeline) + ';\nwindow.LINES = ' + json.dumps(LINES, ensure_ascii=False) + ';\n')

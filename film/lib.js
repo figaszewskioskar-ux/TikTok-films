@@ -132,7 +132,7 @@ function person(c, kind, x, y, s, o = {}) {
   const gR = idle && o.talk && o.aR == null ? 0.22 + 0.22 * Math.sin(t * 3.1 + seed) : 0, gL = idle && o.talk && o.aL == null ? 0.1 + 0.1 * Math.sin(t * 2.3 + seed + 1) : 0;
   const aL = (o.aL ?? 0.14) + sw * 0.35 + gL, aR = (o.aR ?? 0.14) - sw * 0.35 + gR;
   // nogi
-  const LONG = kind === 'halina' || kind === 'kobieta' || kind === 'pasazer';
+  const LONG = kind === 'halina' || (kind === 'kobieta' || kind === 'kasjerka') || kind === 'pasazer';
   if (o.sit) { // siedzi: uda poziomo (kolana w prawo), łydki w dół
     for (const side of [1, -1]) {
       const dk = side < 0 ? -.18 : 0;
@@ -150,7 +150,7 @@ function person(c, kind, x, y, s, o = {}) {
     }
   } else {
     fillRR(c, -26, -12, 22, 12, 6, k.shoes); fillRR(c, 4, -12, 22, 12, 6, k.shoes);
-    fillRR(c, -20, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin); fillRR(c, 6, -34, 14, 24, 6, kind === 'kobieta' || kind === 'pasazer' ? '#2A2420' : k.skin);
+    fillRR(c, -20, -34, 14, 24, 6, (kind === 'kobieta' || kind === 'kasjerka') || kind === 'pasazer' ? '#2A2420' : k.skin); fillRR(c, 6, -34, 14, 24, 6, (kind === 'kobieta' || kind === 'kasjerka') || kind === 'pasazer' ? '#2A2420' : k.skin);
   }
   c.translate(0, bob + (o.sit ? 40 : 0));
   const back_ = !!o.back;
@@ -271,7 +271,7 @@ function person(c, kind, x, y, s, o = {}) {
     c.lineWidth = 5; c.strokeStyle = '#2B2E35'; c.beginPath(); c.arc(0, hy + 2, 64, Math.PI * 1.08, Math.PI * 1.92); c.stroke();
   } else {
     if (kind === 'halina') { circ(c, 0, hy - 6, 56, '#8C7B6B'); }
-    if (kind === 'sasiad') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
+    if (kind === 'sasiad' || kind === 'kierowca') { fillRR(c, -50, hy + 26, 100, 40, 18, '#262A33'); }
     if (kind === 'ola') { circ(c, 0, hy - 4, 58, '#7B4FC9'); fillRR(c, -58, hy - 10, 116, 70, 24, '#7B4FC9'); }
     if (kind === 'zuzia') { circ(c, 0, hy - 4, 57, '#C2562B'); circ(c, 56, hy - 30, 22, '#C2562B'); circ(c, -56, hy - 30, 22, '#C2562B'); }
     if (kind === 'nina') { circ(c, 0, hy - 2, 58, '#1E1A1F'); fillRR(c, -60, hy - 8, 120, 72, 18, '#1E1A1F'); }
@@ -279,7 +279,7 @@ function person(c, kind, x, y, s, o = {}) {
       const sw = Math.sin(t * 3) * .1; c.save(); c.translate(back_ ? 0 : 30, hy - 52); c.rotate((back_ ? 0 : -.55) + sw);
       c.fillStyle = '#D9AE45'; c.beginPath(); c.moveTo(-16, 0); c.bezierCurveTo(-30, 50, -18, 104, 0, 128); c.bezierCurveTo(18, 104, 30, 50, 16, 0); c.closePath(); c.fill();
       c.strokeStyle = 'rgba(150,110,30,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(-4, 14); c.quadraticCurveTo(-10, 70, 0, 118); c.moveTo(6, 14); c.quadraticCurveTo(10, 70, 2, 112); c.stroke(); c.restore(); }
-    if (kind === 'kobieta') { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
+    if ((kind === 'kobieta' || kind === 'kasjerka')) { circ(c, 0, hy - 4, 58, '#3B2A22'); fillRR(c, -60, hy - 10, 120, 120, 26, '#3B2A22'); }
     if (kind !== 'ola' && kind !== 'kobieta' && kind !== 'halina' && kind !== 'zuzia' && kind !== 'maja' && kind !== 'nina') { circ(c, -49, hy + 4, 11, shade(k.skin, -.12)); circ(c, 49, hy + 4, 11, shade(k.skin, -.12)); }
     circ(c, 0, hy, 50, k.skin);
     c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(0,0,0,.08)'; c.beginPath(); c.arc(20, hy + 8, 50, 0, 7); c.fill(); c.restore();
@@ -287,7 +287,7 @@ function person(c, kind, x, y, s, o = {}) {
     else {
       const lk = (o.look || 0) * 7 + (idle ? 2.5 * Math.sin(t * 0.45 + seed * 2) : 0), ly = (o.lookY || 0) * 5 + (idle ? 1.2 * Math.sin(t * 0.33 + seed) : 0);
       const blink = o.blink || ((t * 1000 + x * 37) % 3900) < 110;
-      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || kind === 'kobieta' || kind === 'zuzia' || kind === 'maja' || kind === 'nina') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
+      if (kind === 'kuba' || kind === 'halina' || kind === 'ola' || (kind === 'kobieta' || kind === 'kasjerka') || kind === 'zuzia' || kind === 'maja' || kind === 'nina') { ell(c, -27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); ell(c, 27, hy + 16, 9, 6, 'rgba(240,110,110,.35)'); }
       if (kind === 'pasazer') { // zapadnięte, czarne oczy z małymi białymi punktami, cienie pod oczami, cień na połowie twarzy
         c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = 'rgba(20,18,24,.28)'; c.fillRect(4, hy - 60, 60, 120); c.restore();
         { const sg = c.createLinearGradient(0, hy - 50, 0, hy + 10); sg.addColorStop(0, 'rgba(8,8,12,.75)'); sg.addColorStop(1, 'rgba(8,8,12,0)'); c.save(); c.beginPath(); c.arc(0, hy, 50, 0, 7); c.clip(); c.fillStyle = sg; c.fillRect(-60, hy - 60, 120, 70); c.restore(); }
@@ -343,7 +343,7 @@ function person(c, kind, x, y, s, o = {}) {
       ell(c, 0, hy - 30, 54, 24, '#3B3B3B'); fillRR(c, -50, hy - 22, 116, 12, 6, '#2E2E2E');
     } else if (kind === 'pasazer') { // kapelusz z rondem
       fillRR(c, -78, hy - 34, 156, 14, 7, '#26282D'); fillRR(c, -48, hy - 86, 96, 58, 14, '#2E3036'); fillRR(c, -48, hy - 46, 96, 10, 3, '#1A1B1F');
-    } else if (kind === 'sasiad') {
+    } else if (kind === 'sasiad' || kind === 'kierowca') {
       c.beginPath(); c.arc(0, hy - 24, 51, Math.PI, 0); c.fillStyle = '#231B17'; c.fill(); fillRR(c, -52, hy - 30, 40, 22, 8, '#231B17');
     } else if (kind === 'policjant') {
       fillRR(c, -54, hy - 70, 108, 46, 10, '#1F2C4C'); fillRR(c, -56, hy - 30, 120, 12, 6, '#0E1530'); circ(c, 0, hy - 50, 10, '#D9B84A');
@@ -370,7 +370,7 @@ function person(c, kind, x, y, s, o = {}) {
     } else if (kind === 'ola') {
       c.beginPath(); c.arc(0, hy - 26, 50, Math.PI, 0); c.fillStyle = '#7B4FC9'; c.fill();
       fillRR(c, -50, hy - 34, 64, 18, 9, '#7B4FC9');
-    } else if (kind === 'kobieta') {
+    } else if ((kind === 'kobieta' || kind === 'kasjerka')) {
       c.beginPath(); c.arc(0, hy - 28, 50, Math.PI, 0); c.fillStyle = '#3B2A22'; c.fill();
     } else if (kind === 'halina') {
       c.beginPath(); c.arc(0, hy - 10, 52, Math.PI, 0); c.fillStyle = '#8C7B6B'; c.fill();
@@ -831,3 +831,5 @@ function joltFlash(c, lt, times) {
     c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = `rgba(255,40,50,${.18 * k})`; c.fillRect(-20, 0, W + 40, H); c.restore();
     c.fillStyle = `rgba(0,0,0,${.35 * k})`; for (let i = 0; i < 7; i++) { const yy = hash(Math.floor(d * 40) * 7 + i) * H; c.fillRect(0, yy, W, 6 + hash(i + 3) * 26); } } }
 }
+// szybkie przejścia: najazd kamery w scenie (push) i błysk/szarpnięcie na cięciu
+function push(z0 = 1, z1 = 1.08, dur = 3, x = 0, y = 0) { return (lt) => { const k = clamp(lt / dur); const e = k * k * (3 - 2 * k); const kick = lt < .18 ? (1 - lt / .18) : 0; return { z: z0 + (z1 - z0) * e + kick * .06, x: x * e + Math.sin(lt * 90) * kick * 14, y: y * e }; }; }
