@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · UTOPIEC — własna historia na podstawie ludowych wierzeń. Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · UTOPIEC — własna historia na podstawie ludowych wierzeń. Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor bez filtrów — naturalny opowiadacz
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -7,7 +7,7 @@ VOICES = {'dziadek': ('JxVKcxm9wtnCYEs8V00p', 'eleven_v3', V3), 'utopiec': ('mr1
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'dziadek': 'highpass=f=80',
            'utopiec': 'asetrate=48000*0.9,aresample=48000,atempo=1.08,lowpass=f=2400,aecho=0.8:0.7:40|90:0.5|0.3,tremolo=f=6:d=0.2'}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.2), ('dno', 4.2, 7.2), ('garnki', 7.2, 10.4), ('glos', 10.4, 13.4), ('czeka', 13.4, 16.4), ('ja', 16.4, 19.4), ('namiot', 19.4, 22.4), ('dziadek', 22.4, 25.0), ('dziadek1', 25.0, 28.2), ('noc', 28.2, 31.0), ('wola', 31.0, 34.2), ('brat_spi', 34.2, 37.6), ('cien', 37.6, 40.6), ('kap', 40.6, 43.2), ('wychodze', 43.2, 46.2), ('pomost', 46.2, 49.4), ('tafla', 49.4, 52.2), ('twarz', 52.2, 55.4), ('usmiech', 55.4, 58.2), ('kostka', 58.2, 61.0), ('wciaga', 61.0, 63.6), ('cisza', 63.6, 66.6), ('dziesiatki', 66.6, 69.6), ('szept', 69.6, 72.6), ('nowy', 72.6, 75.8), ('swiatlo', 75.8, 78.6), ('wyciaga', 78.6, 81.6), ('nie_patrz', 81.6, 84.4), ('rano', 84.4, 87.6), ('do_namiotu', 87.6, 90.6), ('spiwor', 90.6, 94.0), ('szukaja', 94.0, 97.0), ('zamek', 97.0, 100.0), ('tomek', 100.0, 103.0), ('tomek_glos', 103.0, 106.0), ('twist', 106.0, 109.2), ('wyskok', 109.2, 111.6), ('epilog', 111.6, 115.4), ('end', 115.4, 120.0)]

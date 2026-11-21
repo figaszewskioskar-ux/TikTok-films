@@ -1811,7 +1811,13 @@ function ankleGrab(c, lt, o = {}) { // widok z boku: noga w wodzie, łapa chwyta
   const pull = o.pull ? eio(clamp((lt - o.pull) / .5)) * 260 : 0; c.save(); c.translate(0, pull);
   const lg = c.createLinearGradient(440, 0, 640, 0); lg.addColorStop(0, '#6E7A70'); lg.addColorStop(.5, '#A6AE9E'); lg.addColorStop(1, '#5A6658'); c.fillStyle = lg; c.beginPath(); c.moveTo(450, -40); c.lineTo(630, -40); c.lineTo(610, 900); c.lineTo(480, 900); c.fill(); fillRR(c, 430, -60, 220, 330, 30, '#24303A'); for (let k = 0; k < 6; k++) fillRR(c, 430, -40 + k * 50, 220, 8, 3, '#1A2430');
   c.fillStyle = '#9AA292'; c.beginPath(); c.moveTo(480, 880); c.quadraticCurveTo(450, 990, 520, 1010); c.lineTo(720, 1030); c.quadraticCurveTo(760, 990, 700, 960); c.lineTo(610, 890); c.fill(); for (let k = 0; k < 5; k++) ell(c, 690 + k * 8 - 40, 1012 - k * 6, 18, 12, '#8A9284');
-  if (o.grab !== false) { const gp = eout(clamp(((o.g0 ?? 0) - lt) * -2.2)); utoHand(c, lerp(300, 470, gp), lerp(1350, 840, gp), 1.1, -.9 - (1 - gp) * .3, gp); } c.restore(); }
+  if (o.grab !== false) { const gp = eout(clamp(((o.g0 ?? 0) - lt) * -2.2)); const hx = lerp(300, 470, gp), hy = lerp(1350, 840, gp), an = -.9 - (1 - gp) * .3;
+    // cały stwór wyłania się z mętnej wody pod nogą: głowa, ramiona, ręka połączona z dłonią
+    const bx = 790, by = lerp(1620, 1440, gp); c.save(); c.globalAlpha = .55 + .45 * gp; const ex = hx - Math.sin(an) * 1.1 * 420, ey = hy + Math.cos(an) * 1.1 * 420;
+utopiecRising(c, lt, bx, by, .78, { open: .35 + .3 * gp, look: -.8, water: 1400 });
+    const sx0 = bx + 170, sy0 = by + 300, mx = (sx0 + ex) / 2 + 90, my = (sy0 + ey) / 2 + 40; c.lineCap = 'round'; c.strokeStyle = '#3E5248'; c.lineWidth = 96; c.beginPath(); c.moveTo(sx0, sy0); c.quadraticCurveTo(mx, my, ex, ey); c.stroke(); c.strokeStyle = '#6E8676'; c.lineWidth = 70; c.beginPath(); c.moveTo(sx0, sy0); c.quadraticCurveTo(mx, my, ex, ey); c.stroke(); c.strokeStyle = 'rgba(190,215,200,.25)'; c.lineWidth = 14; c.beginPath(); c.moveTo(sx0 - 20, sy0 - 20); c.quadraticCurveTo(mx - 25, my - 20, ex - 22, ey - 6); c.stroke(); circ(c, ex, ey, 40, '#5E7666'); c.restore();
+    c.save(); c.fillStyle = 'rgba(6,22,22,.35)'; c.fillRect(0, 1100, W, 820); c.restore();
+    utoHand(c, hx, hy, 1.1, an, gp); } c.restore(); }
 function utoHand(c, x, y, s, ang, grip = 1) { c.save(); c.translate(x, y); c.rotate(ang); c.scale(s, s); const sk = (x0, x1) => { const g = c.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, '#3E5248'); g.addColorStop(.5, '#8CA092'); g.addColorStop(1, '#34463C'); return g; };
   c.fillStyle = sk(-60, 60); c.beginPath(); c.moveTo(-45, 400); c.lineTo(-55, 80); c.quadraticCurveTo(0, 30, 55, 80); c.lineTo(45, 400); c.fill(); c.strokeStyle = 'rgba(20,30,25,.5)'; c.lineWidth = 3; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(-20 + k * 18, 380); c.lineTo(-24 + k * 18, 120); c.stroke(); }
   c.fillStyle = sk(-80, 80); c.beginPath(); c.ellipse(0, 40, 80, 70, 0, 0, 7); c.fill();
