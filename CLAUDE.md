@@ -79,3 +79,6 @@
   każde wiarygodne i wskazujące na kogoś z obsady (np. kolega z klasy, sąsiad, obcy z poprzednich części). Pod spodem „👇 Typuj w komentarzu: A, B czy C”
   i „Odpowiedź w odcinku N…”. Lektor szeptem czyta pytanie i podejrzenia, a na koniec „Typuj w komentarzu. Odpowiedź… w odcinku N.”
 - Cel: zaniepokoić i zaciekawić tak, żeby widz czekał na kolejną część i kłócił się w komentarzach. Funkcja `dilemma(...)` w `film/klasa3/scenes.js`.
+
+## Schemat haka (od 22.11.2026, wzorowany formą na @creepydillemas)
+- Każdy nowy film budujemy według `film/WZOR_HOOK.md`: klatka 0 = zagrożenie w trakcie i twarz złoczyńcy, zdanie do „ty”, licznik pomocy („policja jest 25 minut stąd”), ograniczenie („drzwi wytrzymają ostatnie pięć”), godzina 3:01, rytm jednosłowowy, karty ZASADA N (prawdziwe porady), HUD z zegarem i licznikiem w dół, zwrot logiczny z czerwonym kółkiem, a na koniec złoczyńca uśmiecha się w kamerę.
