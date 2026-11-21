@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "blok94": {
+      "type": "blok94-home",
+      "settings": {
+        "premiere": "2026-11-15T16:00:00Z",
+        "premiere_label": "codziennie o 17:00 · TikTok",
+        "tiktok": "https:\/\/www.tiktok.com\/@protokolocaleni",
+        "tip_product": "napiwek",
+        "youtube": "https:\/\/youtube.com\/@protokolocaleni",
+        "followers": "3342",
+        "likes": "44,7 tys.",
+        "views": "753 tys.",
+        "videos": "14",
+        "stats_date": "16.11.2026",
+        "parts": 6
+      }
+    }
+  },
+  "order": [
+    "blok94"
+  ]
+}
