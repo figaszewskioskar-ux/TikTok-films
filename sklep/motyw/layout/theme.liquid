@@ -87,6 +87,7 @@
   {{ 'po-design.css' | asset_url | stylesheet_tag }}
   {{ 'blok94-plakat.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'blok94-plakat.js' | asset_url }}" defer></script>
+  <style>html body .po-head .po-sup{width:46px!important;height:46px!important;padding:0!important;border-radius:50%!important;justify-content:center!important;gap:0!important}html body .po-head .po-sup span{display:none!important}html body .po-head .po-sup svg{width:22px;height:22px}@media(max-width:599px){html body .po-head .po-sup{width:40px!important;height:40px!important}}</style>
   {%- render 'b94-cookies' -%}
 </body>
 </html>
