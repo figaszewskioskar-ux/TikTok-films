@@ -6,7 +6,7 @@ mowiono    3.2s ->   5.1s
 szur       2.8s ->   4.5s
 ja         2.8s ->   6.2s
 famil      2.6s ->   4.8s
-kuchnia    2.8s ->   3.9s
+kuchnia    2.8s ->   3.7s
 wujek1     2.8s ->   2.7s
 kuba1      2.2s ->   2.8s
 klodka     2.8s ->   5.4s
@@ -15,7 +15,7 @@ szur2      2.4s ->   5.4s
 pusto      2.4s ->   2.5s
 klapa      2.6s ->   5.0s
 drabina    2.4s ->   1.9s
-strych     2.8s ->   4.6s
+strych     2.8s ->   4.7s
 kapec      2.4s ->   2.6s
 worki      2.4s ->   2.2s
 rusza      2.4s ->   2.0s
@@ -35,7 +35,7 @@ lampka     2.8s ->   3.2s
 pod_lozkiem   2.8s ->   6.0s
 epilog     3.4s ->   4.7s
 end        4.6s ->   3.5s
-RAZEM 141.3 s
+RAZEM 141.1 s
 ok bed
 ok wind
 ok boom
@@ -55,21 +55,3 @@ ok door_bang
 ok run
 ok tv
 ok sting
-300/4239 klatek, 16 s
-600/4239 klatek, 45 s
-900/4239 klatek, 77 s
-1200/4239 klatek, 109 s
-1500/4239 klatek, 139 s
-1800/4239 klatek, 165 s
-2100/4239 klatek, 194 s
-2400/4239 klatek, 223 s
-2700/4239 klatek, 255 s
-3000/4239 klatek, 287 s
-3300/4239 klatek, 318 s
-3600/4239 klatek, 346 s
-3900/4239 klatek, 373 s
-4200/4239 klatek, 404 s
-Gotowe w 419 s
-audio.wav OK 141.293 s
-Gotowe: /home/user/TikTok-films/film/leg2/out/final.mp4
-EXIT 0
