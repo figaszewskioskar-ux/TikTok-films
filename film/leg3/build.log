@@ -34,10 +34,14 @@ wychodze   3.02700/3600 klatek, 592 s
 2400/4202 klatek, 543 s
 2700/4202 klatek, 581 s
 3000/4202 klatek, 622 s
-id NAL unit size (-290436254 > 208544).
-[h264 @ 0x563078083f00] Error splitting the input into NAL units.
-[h264 @ 0x563078083f00] Invalid NAL unit size (1164418634 > 208434).
-[h264 @ 0x563078083f00] missing picture in access unit with size 208438
+3300/4202 klatek, 668 s
+3600/4202 klatek, 712 s
+3900/4202 klatek, 779 s
+4200/4202 klatek, 812 s
+Gotowe w 818 s
+audio.wav OK 140.059 s
+Gotowe: /home/user/TikTok-films/film/leg3/out/final.mp4
+8083f00] missing picture in access unit with size 208438
 [h264 @ 0x563078083f00] Invalid NAL unit size (1164418634 > 208434).
 [h264 @ 0x563078083f00] Error splitting the input into NAL units.
 [h264 @ 0x563078083f00] Invalid NAL unit size (1535962292 > 56674).
@@ -173,3 +177,4 @@ id NAL unit size (-290436254 > 208544).
 [in#0/concat @ 0x563078079e00] Error during demuxing: Invalid data found when processing input
 [in#0/concat @ 0x563078079e00] Error retrieving a packet from demuxer: Invalid data found when processing input
 Gotowe w 935 s
+EXIT 0
