@@ -20,7 +20,7 @@ SEG = [
     ['szur', 0.15, '[whispering] Najpierw go słychać. Szuranie worka po deskach.'],
     ['ja', 0.15, '[storytelling] Myślałem, że to bajka na dobranoc. Do jesieni u wujka na Śląsku.'],
     ['famil', 0.15, '[storytelling] Stary familok z czerwonej cegły. Za oknem szyb kopalni.'],
-    ['kuchnia', 0.15, '[storytelling] Wujek Ecik robił najlepszy kakao na świecie.'],
+    ['kuchnia', 0.15, '[storytelling] Wujek Ecik robił najlepsze kakao na świecie.'],
     ['wujek1', 0.15, '[friendly, teasing, Silesian accent] Na strych niy łaźcie. Tam bebok siedzi.', 'wujek'],
     ['kuba1', 0.15, '[laughing a little] Wujku, nie mamy pięciu lat.', 'kuba'],
     ['klodka', 0.15, '[storytelling, tense] Wujek się zaśmiał. Ale klapę na strych zamknął na kłódkę.'],
@@ -56,9 +56,10 @@ AUDIO = dict(
     loops={'groza': ([0, .2, 18.8, 34.8, 47.0, 64.6, 74.2, 86.6, 89.4, 92.2, 100.19], [-60, -10, -26, -14, -10, -4, -10, -20, -4, -12, -40]),
            'tension': ([0, 18.8, 34.8, 64.6, 78.8, 89.4, 100.19], [-20, -30, -16, -6, -14, -6, -30]),
            'wind': ([0, 34.8, 92.2, 100.19], [-30, -20, -26, -30]),
+           'drone': ([0, 34.8, 64.6, 92.2, 95.6], [-40, -18, -8, -26, -30]),
            'roomtone': ([0, 100.19], [-38, -38])},
     heartbeat=([0, 37.2, 64.6, 76.4, 89.4, 92.2, 100.19], [-90, -12, -6, -14, -6, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -22)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'scrape': [('scrape', -4)], 'creak': [('creak', -4)], 'steps': [('run', -5)],
            'slam': [('slam', -2)], 'switch': [('poweroff', -4)]}
-EXTRA = [(64.89999999999999, 'hit_low', 0), (64.89999999999999, 'sting', -3), (84.0, 'sting', -3), (90.80000000000001, 'hit_low', 0), (90.80000000000001, 'sting', -3), (86.80000000000001, 'riser', -6), (0.1, 'hit_low', -4), (55.2, 'sting', -6), (39.9, 'sting', -6)] + [(t, 'hit_low', -9) for t in (18.8, 34.8, 47.0, 74.2, 81.2)]
+EXTRA = [(64.89999999999999, 'hit_low', 0), (64.89999999999999, 'sting', -3), (84.0, 'sting', -3), (90.80000000000001, 'hit_low', 0), (90.80000000000001, 'sting', -3), (86.80000000000001, 'riser', -6), (0.1, 'hit_low', -4), (55.2, 'sting', -6), (39.9, 'sting', -6), (38.800000000000004, 'hit_low', 0), (38.800000000000004, 'sting', -2), (51.699999999999996, 'sting', -3), (72.25, 'hit_low', 0), (62.7, 'riser', -6), (63.900000000000006, 'sting', -2), (42.8, 'sting', -4), (91.60000000000001, 'hit_low', 0), (91.60000000000001, 'sting', 0)] + [(t, 'hit_low', -9) for t in (18.8, 34.8, 47.0, 74.2, 81.2)]
