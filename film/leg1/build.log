@@ -1,0 +1,76 @@
+karta      4.2s ->   3.2s
+dwie_dusze   3.0s ->   4.2s
+zeby       2.6s ->   2.7s
+sowa       2.6s ->   2.7s
+grob       3.0s ->   4.8s
+noc        2.6s ->   2.4s
+mak        2.8s ->   5.4s
+ja         2.8s ->   5.3s
+wies       2.4s ->   2.2s
+chata      2.8s ->   2.7s
+dzwon      2.6s ->   4.7s
+pogrzeb    2.8s ->   3.2s
+babcia1    2.8s ->   4.4s
+kuba1      2.2s ->   3.3s
+babcia2    2.8s ->   4.7s
+zamiec     2.4s ->   2.2s
+lozko      2.4s ->   3.9s
+puk        2.2s ->   2.2s
+sowa2      2.0s ->   2.6s
+glos       2.8s ->   4.8s
+kuba2      2.4s ->   4.2s
+twarz      2.6s ->   2.6s
+zeby2      2.0s ->   3.6s
+jadwiga    2.4s ->   1.8s
+zasuwka    2.2s ->   4.0s
+budzi      2.2s ->   2.8s
+woreczek   2.4s ->   2.9s
+sypie      2.6s ->   3.5s
+babcia3    2.8s ->   5.2s
+liczy      3.0s ->   7.2s
+czeka      2.4s ->   2.5s
+zegar      2.2s ->   3.1s
+kogut      2.4s ->   1.9s
+znika      2.4s ->   2.7s
+slady      2.6s ->   3.5s
+cmentarz_rano   2.6s ->   4.4s
+przelicza   2.6s ->   4.5s
+twist      2.6s ->   4.0s
+epilog     3.4s ->   3.3s
+end        4.6s ->   3.5s
+RAZEM 142.9 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/4287 klatek, 15 s
+600/4287 klatek, 40 s
+900/4287 klatek, 67 s
+1200/4287 klatek, 96 s
+1500/4287 klatek, 123 s
+1800/4287 klatek, 152 s
+2100/4287 klatek, 183 s
+2400/4287 klatek, 211 s
+2700/4287 klatek, 240 s
+3000/4287 klatek, 267 s
+3300/4287 klatek, 295 s
+3600/4287 klatek, 324 s
+3900/4287 klatek, 349 s
+4200/4287 klatek, 382 s
+Gotowe w 406 s
+audio.wav OK 142.885 s
