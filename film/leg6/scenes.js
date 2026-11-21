@@ -1,9 +1,8 @@
-// POLSKIE LEGENDY GROZY · POŁUDNICA — ilustracje z generatora AI (Pollinations), animacja w silniku — mroczna wersja: stwór w pełni cieniowany, ludzie tylko jako sylwetki/POV.
+// POLSKIE LEGENDY GROZY · POŁUDNICA — płaska ilustracja 2D z miękkim cieniowaniem — mroczna wersja: stwór w pełni cieniowany, ludzie tylko jako sylwetki/POV.
 window.EP = {
   badge: '', loop: false, vignette: 1.0,
   hud: 'none', captions: true, cut: 'flash', capY: 1600,
   hl: ['południca', 'południcy', 'południe', 'sierp', 'sierpem', 'zboże', 'żyto', 'życie', 'pierwszą', 'dwunasta', 'pytania', 'babcia', 'chusta', 'udar', 'wodę', 'okno'],
-  images: {"intro": "leg6/img/intro.jpg", "upal": "leg6/img/upal.jpg", "sierp": "leg6/img/sierp.jpg", "twarz": "leg6/img/twarz.jpg", "kark": "leg6/img/kark.jpg", "cien": "leg6/img/cien.jpg", "wies": "leg6/img/wies.jpg", "babcia": "leg6/img/babcia.jpg", "pilka": "leg6/img/pilka.jpg", "zegar": "leg6/img/zegar.jpg", "zboze": "leg6/img/zboze.jpg", "cisza": "leg6/img/cisza.jpg", "dzwon": "leg6/img/dzwon.jpg", "idzie": "leg6/img/idzie.jpg", "stoi": "leg6/img/stoi.jpg", "pyta": "leg6/img/pyta.jpg", "gadam": "leg6/img/gadam.jpg", "blizej": "leg6/img/blizej.jpg", "chusta": "leg6/img/chusta.jpg", "sierp2": "leg6/img/sierp2.jpg", "kolo": "leg6/img/kolo.jpg", "dom": "leg6/img/dom.jpg", "noc": "leg6/img/noc.jpg", "okno": "leg6/img/okno.jpg", "udar": "leg6/img/udar.jpg"},
   hideHud: () => true,
   cues(add) { },
 };
@@ -1843,55 +1842,3 @@ function utopiecRising(c, lt, x, y, s, o = {}) { const cv = layer('ur', 1200, 14
   const wl = o.water ?? 900; c.save(); c.translate(x, y); c.scale(s, s); c.drawImage(cv, 0, 0, 1200, wl, -600, -560, 1200, wl); c.globalAlpha = .45; for (let k = wl; k < 1400; k += 8) c.drawImage(cv, 0, k, 1200, 8, -600 + Math.sin(k * .05 + lt * 3) * 10, -560 + k, 1200, 8); c.restore(); c.save(); c.translate(x, y); c.scale(s, s); ripple(c, 0, wl - 560, lt, 2.4, .6); c.restore(); }
 
 
-// ===================== POŁUDNICA: ilustracje + ruch kamery i efekty =====================
-const _tmp = {}; function tmpCanvas(k) { if (!_tmp[k]) { const cv = document.createElement('canvas'); cv.width = W; cv.height = H; _tmp[k] = cv; } return _tmp[k]; }
-function cover(c, im, z = 1, px = 0, py = 0) { if (!im || !im.width) { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); return; } const k = Math.max(W / im.width, H / im.height) * z, w = im.width * k, h = im.height * k; c.drawImage(im, (W - w) / 2 + px, (H - h) / 2 + py, w, h); }
-// obraz z najazdem kamery; o: z0,z1,px,py,haze,dust,shake,flash,tint,dark,breath
-function pic(c, lt, key, o = {}) { const d = o.d || 3, p = clamp(lt / d), e = o.ease === false ? p : eio(p); const z = lerp(o.z0 ?? 1.04, o.z1 ?? 1.14, e) * (1 + (o.breath ? Math.sin(lt * 2.4) * .008 : 0)); let px = lerp(0, o.px || 0, e), py = lerp(0, o.py || 0, e); if (o.shake) { px += Math.sin(lt * 53) * o.shake * 10; py += Math.cos(lt * 47) * o.shake * 10; } const im = (window.IMGS || {})[key];
-  if (o.haze) { const t = tmpCanvas('h').getContext('2d'); t.clearRect(0, 0, W, H); cover(t, im, z, px, py); for (let y = 0; y < H; y += 6) { const a = o.haze * (y / H) * (Math.sin(y * .045 + lt * 5) * 4 + Math.sin(y * .11 - lt * 7) * 2); c.drawImage(tmpCanvas('h'), 0, y, W, 6, a, y, W, 6); } } else cover(c, im, z, px, py);
-  if (o.tint) { c.fillStyle = o.tint; c.fillRect(0, 0, W, H); }
-  if (o.dust) { c.save(); c.globalCompositeOperation = 'lighter'; for (let k = 0; k < 50; k++) { const x = (hash(k + 4000) * W + lt * 14 * (1 + hash(k))) % W, y = (hash(k + 4001) * H - lt * 10 * hash(k + 2) + H) % H; c.fillStyle = `rgba(255,240,200,${.15 + hash(k + 3) * .3})`; c.beginPath(); c.arc(x, y, 1.5 + hash(k + 4) * 2.5, 0, 7); c.fill(); } c.restore(); }
-  if (o.sun) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(o.sun[0], o.sun[1], 10, o.sun[0], o.sun[1], 700); g.addColorStop(0, `rgba(255,250,230,${.35 + .05 * Math.sin(lt * 3)})`); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore(); }
-  if (o.dark) { c.fillStyle = `rgba(0,0,0,${o.dark})`; c.fillRect(0, 0, W, H); }
-  if (o.flash) for (const ft of o.flash) { const f = clamp(1 - Math.abs(lt - ft) / .12); if (f > 0) { c.fillStyle = `rgba(255,255,255,${f * .85})`; c.fillRect(0, 0, W, H); } }
-  if (o.vig !== false) { const g = c.createRadialGradient(540, 900, 400, 540, 960, 1250); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${o.vig ?? .55})`); c.fillStyle = g; c.fillRect(0, 0, W, H); } }
-// twarz wyskakuje: szybki najazd + wstrząs
-function scare(c, lt, key, t0 = .15) { const k = eout(clamp((lt - t0) / .18)); pic(c, lt, key, { z0: 1.0 + k * .6, z1: 1.0 + k * .6, shake: lt > t0 && lt < t0 + .6 ? 1.4 : .2, flash: [t0], vig: .7 }); }
-function bellWaves(c, lt, x, y) { for (let k = 0; k < 4; k++) { const r = ((lt * 260 + k * 120) % 480); c.strokeStyle = `rgba(255,240,210,${.4 * (1 - r / 480)})`; c.lineWidth = 6; c.beginPath(); c.arc(x, y, r, 0, 7); c.stroke(); } }
-function card(c, lt, lines, title) { c.fillStyle = '#0A0806'; c.fillRect(0, 0, W, H); const p = eout(clamp(lt / .5)); c.save(); c.globalAlpha = p; fillRR(c, 110, 560, 860, 760, 20, '#16110A'); c.strokeStyle = '#E8B13A'; c.lineWidth = 5; rr(c, 110, 560, 860, 760, 20); c.stroke(); txt(c, title, 540, 660, 54, '#E8C060', 900); lines.forEach((l, i) => txt(c, l, 540, 770 + i * 80, 44, i > 1 ? '#FFD580' : '#FFFFFF', 800)); c.restore(); }
-function titleCard(c, lt) { pic(c, lt, 'intro', { z0: 1.25, z1: 1.05, d: 4.4, haze: 1, dust: true, sun: [540, 200], vig: .65 }); const q = eout(clamp((lt - .3) / .6)); c.save(); c.globalAlpha = q; c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 120, W, 300); txt(c, 'POLSKIE LEGENDY GROZY', 540, 210, 40, '#F0D8A0', 800); c.shadowColor = '#000'; c.shadowBlur = 30; txt(c, 'POŁUDNICA', 540, 340, 140, '#FFFFFF', 900); c.restore(); }
-
-// ===================== SCENY: POŁUDNICA =====================
-scene({ name: 'karta', start: 0, end: 4.4, draw(c, lt) { titleCard(c, lt); } });
-scene({ name: 'upal', start: 4.4, end: 7.4, draw(c, lt) { pic(c, lt, 'upal', { d: 3.0,  z0: 1.02, z1: 1.15, haze: 1.4, dust: true, sun: [540, 150] }); } });
-scene({ name: 'sierp', start: 7.4, end: 10.4, draw(c, lt) { pic(c, lt, 'sierp', { d: 3.0,  z0: 1.0, z1: 1.18, px: -40, haze: .6, dust: true }); } });
-scene({ name: 'twarz', start: 10.4, end: 13.6, draw(c, lt) { pic(c, lt, 'twarz', { d: 3.2,  z0: 1.0, z1: 1.25, breath: true, haze: .4 }); } });
-scene({ name: 'kark', start: 13.6, end: 16.8, cam: jolt([.2]), draw(c, lt) { pic(c, lt, 'kark', { d: 3.2,  z0: 1.12, z1: 1.02, haze: 1, dust: true, flash: [.2] }); }, post(c, lt) { joltFlash(c, lt, [.2]); } });
-scene({ name: 'cien', start: 16.8, end: 20.0, draw(c, lt) { pic(c, lt, 'cien', { d: 3.2,  z0: 1.02, z1: 1.12, px: 40, dust: true }); } });
-scene({ name: 'wies', start: 20.0, end: 23.2, draw(c, lt) { pic(c, lt, 'wies', { d: 3.2,  z0: 1.0, z1: 1.1, py: -30 }); } });
-scene({ name: 'babcia', start: 23.2, end: 26.0, draw(c, lt) { pic(c, lt, 'babcia', { d: 2.8,  z0: 1.02, z1: 1.12, breath: true }); } });
-scene({ name: 'babcia1', start: 26.0, end: 29.4, draw(c, lt) { pic(c, lt, 'babcia', { d: 3.4,  z0: 1.2, z1: 1.32, py: 60, breath: true }); } });
-scene({ name: 'smiech', start: 29.4, end: 32.2, draw(c, lt) { pic(c, lt, 'wies', { d: 2.8,  z0: 1.15, z1: 1.25, px: -40 }); } });
-scene({ name: 'pilka', start: 32.2, end: 35.0, cam: jolt([.3]), draw(c, lt) { pic(c, lt, 'pilka', { d: 2.8,  z0: 1.0, z1: 1.2, px: 60, py: -40, dust: true }); }, post(c, lt) { joltFlash(c, lt, [.3]); } });
-scene({ name: 'zegar', start: 35.0, end: 37.6, draw(c, lt) { pic(c, lt, 'zegar', { d: 2.6,  z0: 1.05, z1: 1.3 }); } });
-scene({ name: 'zboze', start: 37.6, end: 40.6, draw(c, lt) { pic(c, lt, 'zboze', { d: 3.0,  z0: 1.0, z1: 1.25, haze: 1, dust: true, shake: .15 }); } });
-scene({ name: 'cisza', start: 40.6, end: 43.6, draw(c, lt) { pic(c, lt, 'cisza', { d: 3.0,  z0: 1.0, z1: 1.08, haze: 1.2 }); } });
-scene({ name: 'dzwon', start: 43.6, end: 46.4, draw(c, lt) { pic(c, lt, 'dzwon', { d: 2.8,  z0: 1.0, z1: 1.12, haze: .8 }); bellWaves(c, lt, 540, 700); } });
-scene({ name: 'idzie', start: 46.4, end: 49.6, draw(c, lt) { pic(c, lt, 'idzie', { d: 3.2,  z0: 1.0, z1: 1.3, haze: 1, dust: true }); } });
-scene({ name: 'stoi', start: 49.6, end: 52.8, cam: jolt([.1]), draw(c, lt) { pic(c, lt, 'stoi', { d: 3.2,  z0: 1.05, z1: 1.2, haze: 1.2, dust: true, breath: true }); }, post(c, lt) { joltFlash(c, lt, [.1]); } });
-scene({ name: 'pyta', start: 52.8, end: 56.2, draw(c, lt) { pic(c, lt, 'pyta', { d: 3.4,  z0: 1.05, z1: 1.3, haze: .6, breath: true }); } });
-scene({ name: 'zasada', start: 56.2, end: 59.8, draw(c, lt) { pic(c, lt, 'gadam', { d: 3.6,  z0: 1.05, z1: 1.18, haze: .8, dust: true }); } });
-scene({ name: 'gadam', start: 59.8, end: 63.0, draw(c, lt) { pic(c, lt, 'gadam', { d: 3.2,  z0: 1.18, z1: 1.3, px: 30, haze: .8, shake: .1 }); } });
-scene({ name: 'blizej', start: 63.0, end: 66.0, draw(c, lt) { pic(c, lt, 'blizej', { d: 3.0,  z0: 1.0, z1: 1.3, haze: .6, breath: true }); } });
-scene({ name: 'chusta', start: 66.0, end: 68.8, cam: jolt([.25]), draw(c, lt) { scare(c, lt, 'chusta', .25); }, post(c, lt) { joltFlash(c, lt, [.25]); } });
-scene({ name: 'sierp2', start: 68.8, end: 71.8, draw(c, lt) { pic(c, lt, 'sierp2', { d: 3.0,  z0: 1.1, z1: 1.35, shake: .3, sun: [540, 200] }); } });
-scene({ name: 'pierwsza', start: 71.8, end: 74.8, cam: jolt([.2]), draw(c, lt) { pic(c, lt, 'dzwon', { d: 3.0,  z0: 1.12, z1: 1.2, flash: [.2], shake: .4 }); bellWaves(c, lt, 540, 700); }, post(c, lt) { joltFlash(c, lt, [.2]); } });
-scene({ name: 'kolo', start: 74.8, end: 78.2, draw(c, lt) { pic(c, lt, 'kolo', { d: 3.4,  z0: 1.25, z1: 1.0, haze: .6 }); } });
-scene({ name: 'lustro', start: 78.2, end: 81.6, draw(c, lt) { pic(c, lt, 'dom', { d: 3.4,  z0: 1.02, z1: 1.15, dark: .1 }); } });
-scene({ name: 'noc', start: 81.6, end: 84.8, draw(c, lt) { pic(c, lt, 'noc', { d: 3.2,  z0: 1.0, z1: 1.18, dark: .1 }); } });
-scene({ name: 'stoi_noc', start: 84.8, end: 88.0, draw(c, lt) { pic(c, lt, 'noc', { d: 3.2,  z0: 1.25, z1: 1.55, py: 80, dark: .15, breath: true }); } });
-scene({ name: 'szyba', start: 88.0, end: 90.8, cam: jolt([.1]), draw(c, lt) { scare(c, lt, 'okno', .1); }, post(c, lt) { joltFlash(c, lt, [.1]); } });
-scene({ name: 'twist', start: 90.8, end: 94.0, draw(c, lt) { pic(c, lt, 'okno', { d: 3.2,  z0: 1.6, z1: 1.9, py: 60, dark: .2, breath: true }); } });
-scene({ name: 'epilog', start: 94.0, end: 98.6, draw(c, lt) { card(c, lt, ['tak tłumaczono', 'udar słoneczny.', 'W upał unikaj słońca', 'w południe, noś czapkę', 'i pij dużo wody.'], 'Na wsi wierzono'); } });
-scene({ name: 'end', start: 98.6, end: 103.2, draw(c, lt) { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); if (lt < 1.8) { c.save(); c.globalAlpha = clamp(1 - Math.abs(lt - .9) / .9); pic(c, lt, 'twarz', { z0: 1.3, z1: 1.45, d: 1.8, vig: .8 }); c.restore(); } if (lt > 1.8) { const p = eout(clamp((lt - 1.8) / .5)); c.save(); c.globalAlpha = p; txt(c, 'OBSERWUJ,', 540, 820, 80, '#F0D8A0', 900); txt(c, 'ŻEBY POZNAĆ', 540, 920, 64, '#FFFFFF', 900); txt(c, 'NASTĘPNĄ LEGENDĘ', 540, 1010, 64, '#FFFFFF', 900); c.restore(); } } });
-EP.cues = (add) => { [[0.1, 'stab'], [4.4, 'hit'], [7.4, 'hit'], [13.8, 'jolt'], [13.8, 'hit'], [32.5, 'whoosh'], [35.0, 'tick'], [37.6, 'rustle'], [43.6, 'bell'], [46.4, 'rustle'], [49.7, 'hit'], [63.0, 'hit'], [66.25, 'jolt'], [66.25, 'hit'], [68.8, 'whoosh'], [72.0, 'bell'], [72.0, 'hit'], [81.6, 'rustle'], [88.1, 'jolt'], [88.1, 'hit'], [98.6, 'hit']].forEach(([t, n]) => add(t, n)); };

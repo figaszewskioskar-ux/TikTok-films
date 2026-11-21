@@ -62,16 +62,17 @@ const CAPS = (() => { const out = []; for (const L of (window.LINES || [])) { co
   const q = L.who && L.who !== 'lektor'; const words = clean.split(' '); const chunks = []; let cur = [];
   for (const w of words) { cur.push(w); const len = cur.join(' ').length; if (cur.length >= 3 || len >= 14 || /[.,!?…:]$/.test(w)) { chunks.push(cur); cur = []; } } if (cur.length) chunks.push(cur);
   const tot = chunks.reduce((a, ch) => a + ch.join(' ').length + 2, 0); let tt = L.t;
-  chunks.forEach((ch, i) => { const d = L.dur * (ch.join(' ').length + 2) / tot; out.push({ a: tt, b: tt + d + (i === chunks.length - 1 ? .25 : 0), words: ch, q, first: i === 0, last: i === chunks.length - 1 }); tt += d; }); }
+  chunks.forEach((ch, i) => { const d = L.dur * (ch.join(' ').length + 2) / tot; out.push({ a: tt, b: tt + d + (i === chunks.length - 1 ? .25 : 0), words: ch, q, who: L.who, first: i === 0, last: i === chunks.length - 1 }); tt += d; }); }
   return out; })();
 function captions(c, t) { const C = CAPS.filter(x => t >= x.a && t < x.b).pop(); if (!C) return;
   const hl = (EPC.hl || []).map(w => w.toLowerCase()); const norm = w => w.toLowerCase().replace(/[^a-ząćęłńóśźż0-9]/g, '');
   let hi = C.words.findIndex(w => hl.includes(norm(w))); const red = hi >= 0; if (!red) { let best = -1; C.words.forEach((w, i) => { if (norm(w).length >= 5 && (best < 0 || norm(w).length > norm(C.words[best]).length)) best = i; }); hi = best; }
   const words = C.words.map(w => w.toUpperCase()); if (C.q) { if (C.first) words[0] = '„' + words[0]; if (C.last) words[words.length - 1] += '”'; }
-  const sz = 82, y = EPC.capY || 1560; c.save(); font(c, sz, 900); const sp = c.measureText(' ').width; const ws = words.map(w => c.measureText(w).width); let tw = ws.reduce((a, b) => a + b, 0) + sp * (ws.length - 1);
+  const sz = EPC.capSize || 82, y = EPC.capY || 1560; c.save(); font(c, sz, 900); const sp = c.measureText(' ').width; const ws = words.map(w => c.measureText(w).width); let tw = ws.reduce((a, b) => a + b, 0) + sp * (ws.length - 1);
   const k = Math.min(1, 960 / tw); const p = clamp((t - C.a) / .12), s = (0.85 + 0.15 * back(p)) * k; c.translate(540, y); c.scale(s, s); let x = -tw / 2;
   c.lineJoin = 'round'; c.textBaseline = 'middle'; c.textAlign = 'left';
-  words.forEach((w, i) => { c.lineWidth = 14; c.strokeStyle = 'rgba(0,0,0,.9)'; c.strokeText(w, x, 0); c.fillStyle = i === hi ? (red ? '#FF3B47' : '#FFD23F') : '#FFFFFF'; c.fillText(w, x, 0); x += ws[i] + sp; });
+  if (C.q && EPC.labels && EPC.labels[C.who]) { c.save(); font(c, 30, 800); c.textAlign = 'center'; c.fillStyle = '#FF4A4A'; c.fillText('— ' + EPC.labels[C.who] + ' —', tw / 2 - tw / 2, -78); c.restore(); }
+  words.forEach((w, i) => { c.lineWidth = 14; c.strokeStyle = 'rgba(0,0,0,.9)'; c.strokeText(w, x, 0); c.fillStyle = i === hi ? (red ? (EPC.capRed || '#FF3B47') : (EPC.capHi || '#FFD23F')) : '#FFFFFF'; c.fillText(w, x, 0); x += ws[i] + sp; });
   c.restore(); }
 function hudCoz(c, t) { const sc = S.find(s => t >= s.start && t < s.end) || S[S.length - 1]; const told = sc.oStart + pw(sc.knots, t - sc.start, 1, 0);
   const clk = EPC.clock ? EPC.clock(told) : null, tm = EPC.timer ? EPC.timer(told) : null;
