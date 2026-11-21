@@ -7,7 +7,7 @@ VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'zosia': ('d4Z5Fvjo
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'zosia': 'highpass=f=150,asetrate=48000*1.1,aresample=48000,atempo=0.92,lowpass=f=3000',
            'bebok': 'asetrate=48000*0.78,aresample=48000,atempo=1.2,aecho=0.7:0.6:60|140:0.4|0.25'}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.2), ('katy', 4.2, 7.2), ('swiatlo', 7.2, 10.0), ('worek', 10.0, 12.8), ('mowiono', 12.8, 16.0), ('szur', 16.0, 18.8), ('ja', 18.8, 21.6), ('famil', 21.6, 24.2), ('kuchnia', 24.2, 27.0), ('wujek1', 27.0, 29.8), ('kuba1', 29.8, 32.0), ('klodka', 32.0, 34.8), ('noc', 34.8, 37.2), ('szur2', 37.2, 39.6), ('pusto', 39.6, 42.0), ('klapa', 42.0, 44.6), ('drabina', 44.6, 47.0), ('strych', 47.0, 49.8), ('kapec', 49.8, 52.2), ('worki', 52.2, 54.6), ('rusza', 54.6, 57.0), ('zosia_glos', 57.0, 59.4), ('rozwiaz', 59.4, 62.2), ('oddech', 62.2, 64.6), ('oczy', 64.6, 67.2), ('wlecze', 67.2, 69.6), ('ucieczka', 69.6, 72.0), ('trzask', 72.0, 74.2), ('wujku', 74.2, 76.4), ('latarka', 76.4, 78.8), ('pustystrych', 78.8, 81.2), ('kartka', 81.2, 84.0), ('twist', 84.0, 86.6), ('lampka', 86.6, 89.4), ('pod_lozkiem', 89.4, 92.2), ('epilog', 92.2, 95.6), ('end', 95.6, 100.2)]
