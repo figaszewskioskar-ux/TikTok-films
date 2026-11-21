@@ -1,0 +1,111 @@
+{%- comment -%} Gra „NOC LEGEND”: 8 losowych sytuacji z polskich legend, 3 świece (życia), czerwony licznik czasu, wyjaśnienia (wierzenie + prawdziwa zasada bezpieczeństwa), medale, rekord, udostępnianie. Styl jak „Telefon o 2:00”. {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Public+Sans:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+#nlg{--night:#0a0c14;--wall:#1b2034;--ink:#f3efe6;--muted:#aeb0c2;--sign:#d7263d;--hat:#f39c12;--ok:#30a46c;--led:#ff3b30;--wood:#3a2618;
+ --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;--body:"Public Sans",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+ background:radial-gradient(900px 520px at 50% -10%,#2a1a14 0%,var(--night) 62%);color:var(--ink);font-family:var(--body);line-height:1.5;padding:28px max(16px,env(safe-area-inset-left,0px)) 64px;position:relative;overflow:hidden;min-height:100vh}
+#nlg *{box-sizing:border-box}#nlg img{display:block;max-width:100%}
+#nlg .gw{max-width:560px;margin:0 auto;position:relative;z-index:2}
+#nlg h2,#nlg h3{font-family:var(--display);font-weight:900;line-height:1;margin:0;text-wrap:balance;letter-spacing:.01em}
+#nlg h2{font-size:clamp(48px,12vw,76px)}
+#nlg .eyebrow{display:inline-block;font:800 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#14161b;background:var(--hat);padding:7px 12px;border-radius:999px}
+#nlg .sign{display:inline-block;background:var(--sign);color:#fff;padding:.02em .22em .08em;border-radius:.14em;transform:rotate(-1.5deg)}
+#nlg button{font:inherit;cursor:pointer;border:0}#nlg button:focus-visible,#nlg a:focus-visible{outline:3px solid var(--hat);outline-offset:3px}
+#nlg .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:54px;padding:14px 18px;border-radius:14px;font-weight:800;font-size:16px;text-decoration:none;transition:transform .15s}
+#nlg .btn:active{transform:scale(.98)}#nlg .btn.red{background:var(--sign);color:#fff;box-shadow:0 10px 24px rgba(215,38,61,.35)}#nlg .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px rgba(243,239,230,.3)}#nlg .btn.gold{background:var(--hat);color:#14161b}
+#nlg .lead{color:var(--muted);font-size:17px;margin:14px 0 0}
+#nlg .lineup{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:22px 0}#nlg .lineup img{aspect-ratio:3/4;object-fit:cover;object-position:center 30%;border-radius:10px;filter:saturate(.85);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+#nlg .rules{display:grid;gap:10px;margin:18px 0 22px;padding:0;list-style:none}#nlg .rules li{display:flex;gap:12px;align-items:center;background:var(--wall);border-radius:14px;padding:12px 14px;font-weight:600;font-size:15px}#nlg .rules b{font-family:var(--display);font-size:26px;color:var(--hat);min-width:28px;text-align:center}
+#nlg .best{text-align:center;color:var(--muted);font-size:14px;margin-top:12px}
+/* plansza */
+#nlg .hud{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+#nlg .candles{display:flex;gap:10px}#nlg .cdl{width:16px;height:44px;border-radius:4px 4px 3px 3px;background:linear-gradient(90deg,#c9b98f,#f2e8cc,#bfae84);position:relative}
+#nlg .cdl:before{content:"";position:absolute;left:50%;top:-20px;width:12px;height:18px;margin-left:-6px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 70%,#fff3b0,#ffb028 55%,rgba(255,80,0,0) 72%);filter:drop-shadow(0 0 10px rgba(255,170,40,.9));animation:nlFl .18s infinite alternate}
+#nlg .cdl.out:before{background:none;filter:none;animation:none}#nlg .cdl.out:after{content:"";position:absolute;left:50%;top:-26px;width:2px;height:20px;background:linear-gradient(rgba(200,200,210,0),rgba(200,200,210,.6));animation:nlSm 1.4s ease-out forwards}
+@keyframes nlFl{from{transform:scale(1,1) rotate(-2deg)}to{transform:scale(.92,1.08) rotate(2deg)}}@keyframes nlSm{to{transform:translateY(-14px);opacity:0}}
+#nlg .led{font-family:var(--mono);font-weight:700;font-size:34px;color:var(--led);background:#0d0f13;border-radius:10px;padding:6px 12px;text-shadow:0 0 14px rgba(255,59,48,.7);font-variant-numeric:tabular-nums;box-shadow:inset 0 0 0 2px #1c1f26}
+#nlg .score{font:800 14px/1.2 var(--body);text-align:right;color:var(--muted)}#nlg .score b{display:block;font-family:var(--display);font-size:30px;color:var(--ink)}
+#nlg .card{background:linear-gradient(180deg,#24180f,#160f0a);border-radius:22px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.6),inset 0 0 0 3px #4a3020}
+#nlg .card .pic{position:relative;aspect-ratio:16/10;overflow:hidden}#nlg .card .pic img{width:100%;height:100%;object-fit:cover;object-position:center 28%;transform:scale(1.15);transition:transform 6s linear}#nlg .card.go .pic img{transform:scale(1.32)}
+#nlg .card .pic:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#160f0a 4%,rgba(0,0,0,0) 60%)}
+#nlg .card .who{position:absolute;left:14px;bottom:10px;z-index:2;font:800 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#14161b;background:var(--hat);padding:7px 10px;border-radius:999px}
+#nlg .card .no{position:absolute;right:14px;top:12px;z-index:2;font:800 12px/1 var(--body);background:rgba(10,12,20,.8);padding:7px 10px;border-radius:999px}
+#nlg .card .in{padding:16px 18px 20px}#nlg .card h3{font-size:clamp(26px,6.4vw,34px)}
+#nlg .opts{display:grid;gap:10px;margin-top:16px}
+#nlg .opt{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;background:#2c1e14;border-radius:14px;padding:14px 16px;font-weight:600;font-size:16px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06);transition:transform .15s,box-shadow .15s,background .2s}
+#nlg .opt:hover{box-shadow:inset 0 0 0 2px var(--hat)}#nlg .opt:focus-visible{outline:3px solid var(--hat);outline-offset:2px}
+#nlg .opt i{font-style:normal;font-family:var(--display);font-size:24px;width:30px;height:30px;border-radius:8px;background:#14161b;display:inline-flex;align-items:center;justify-content:center;flex:none}
+#nlg .opt.ok{background:var(--ok);color:#fff}#nlg .opt.bad{background:var(--sign);color:#fff}#nlg .opt[disabled]{cursor:default}
+#nlg .why{margin-top:14px;background:#0e0b08;border-left:4px solid var(--hat);border-radius:8px;padding:12px 14px;font-size:15px}#nlg .why b{color:var(--hat)}
+#nlg .bar{height:6px;background:#0d0f13;border-radius:3px;overflow:hidden;margin-top:14px}#nlg .bar span{display:block;height:100%;background:var(--led);width:100%;transition:width .1s linear}
+/* efekty */
+#nlg .flash{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:0}#nlg .flash.r{background:rgba(215,38,61,.45);animation:nlF .5s ease}#nlg .flash.g{background:rgba(48,164,108,.25);animation:nlF .5s ease}
+@keyframes nlF{0%{opacity:1}100%{opacity:0}}
+#nlg .shake{animation:nlS .45s}@keyframes nlS{20%{transform:translate(-8px,2px)}40%{transform:translate(7px,-3px)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-1px)}}
+#nlg .fog{position:absolute;inset:auto -20% -10% -20%;height:50%;background:radial-gradient(closest-side,rgba(150,160,180,.14),rgba(0,0,0,0));filter:blur(20px);animation:nlFog 18s ease-in-out infinite alternate;z-index:1;pointer-events:none}@keyframes nlFog{to{transform:translateX(12%)}}
+#nlg .fadein{animation:nlIn .45s ease both}@keyframes nlIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#nlg .medal{text-align:center;margin:10px 0 18px}#nlg .medal .m{font-family:var(--display);font-size:clamp(44px,11vw,64px)}#nlg .medal .pts{font-family:var(--mono);font-size:22px;color:var(--led)}
+#nlg .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+#nlg .sound{position:absolute;right:0;top:0;width:44px;height:44px;border-radius:50%;background:var(--wall);color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+@media(prefers-reduced-motion:reduce){#nlg *{animation:none!important;transition:none!important}}
+</style>
+<div id="nlg"><div class="fog"></div><div class="flash" id="nlFlash"></div><div class="gw" id="nlApp" aria-live="polite"></div></div>
+<script>
+(function(){
+var A={strzyga:"{{ 'po-strzyga.webp' | asset_url }}",bebok:"{{ 'po-bebok.webp' | asset_url }}",utopiec:"{{ 'po-utopiec.webp' | asset_url }}",zmora:"{{ 'po-zmora.webp' | asset_url }}",wilkolak:"{{ 'po-wilkolak.webp' | asset_url }}",babajaga:"{{ 'po-baba_jaga.webp' | asset_url }}"};
+var TT={{ section.settings.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' | json }};
+// [stwór, etykieta, sytuacja, [odpowiedzi], indeks poprawnej, wyjaśnienie]
+var Q=[
+ ['strzyga','Strzyga','Zamieć. Za oknem woła głos babci: „Otwórz, zimno mi…”. A babcia śpi obok ciebie.',['Otwieram okno, przecież to babcia','Sypię mak na parapet i próg','Wychodzę sprawdzić z latarką'],1,'<b>Wierzenie:</b> strzyga musiała policzyć każde ziarenko maku do świtu. <b>Naprawdę:</b> nie otwieraj nikomu w nocy tylko dlatego, że zna twoje imię.'],
+ ['strzyga','Strzyga','Na pogrzebie sąsiadki z dwoma rzędami zębów mężczyźni kładą jej coś do trumny. Co?',['Sierp pod brodę','Bukiet róż','Złotą monetę'],0,'<b>Wierzenie:</b> sierp pod brodą i mak w trumnie miały zatrzymać strzygę w grobie.'],
+ ['utopiec','Utopiec','Noc nad stawem. Z wody woła głos brata: „Chodź… woda jest ciepła”. Brat śpi w namiocie.',['Wchodzę po kolana','Odpowiadam mu','Nie podchodzę do wody po zmroku'],2,'<b>Wierzenie:</b> utopiec wabi głosem bliskich. <b>Naprawdę:</b> nigdy nie kąp się po zmroku ani sam.'],
+ ['utopiec','Utopiec','Upał nad jeziorem. Kolega krzyczy: „Skacz na główkę, tu jest głęboko!”. Nie znasz tego miejsca.',['Skaczę, skoro mówi','Nie skaczę do nieznanej wody','Skaczę tyłem'],1,'<b>Naprawdę:</b> skoki do nieznanej wody to jedna z najczęstszych przyczyn poważnych urazów kręgosłupa.'],
+ ['zmora','Zmora','Trzecia w nocy. Budzisz się, nie możesz się ruszyć, a na piersi czujesz ciężar.',['Wstrzymuję oddech','Ruszam małym palcem i oddycham spokojnie','Zamykam oczy i czekam'],1,'<b>Wierzenie:</b> zmora siada na piersi. <b>Naprawdę:</b> to paraliż senny, częsty i niegroźny. Pomaga spokojny oddech i ruch palcem.'],
+ ['zmora','Zmora','Rano miła sąsiadka puka i prosi: „Pożyczy pan szczyptę soli?”. Babcia mówiła, kto tak przychodzi.',['Daję jej soli','Zapraszam ją na herbatę','Grzecznie odmawiam'],2,'<b>Wierzenie:</b> zmora przychodzi rano pożyczyć soli. Jeśli jej dasz, wróci w nocy.'],
+ ['wilkolak','Wilkołak','Nocą w lesie gaśnie silnik. Nie ma zasięgu. Tata idzie po pomoc. Co robisz?',['Zostaję w aucie, zamykam drzwi, włączam awaryjne','Idę sam za tatą','Siadam na masce i czekam'],0,'<b>Naprawdę:</b> po awarii w nocy zostań w środku, zamknij drzwi, włącz światła awaryjne i próbuj dzwonić pod 112.'],
+ ['wilkolak','Wilkołak','W światłach auta stoi coś ogromnego na dwóch nogach. Po czym według wierzeń poznasz wilkołaka?',['Po ogonie','Po ludzkich oczach','Po głosie'],1,'<b>Wierzenie:</b> wilkołak to człowiek pod klątwą i zdradzają go ludzkie oczy.'],
+ ['babajaga','Baba Jaga','Staruszka w chatce na kurzej nóżce: „Zmarzłaś? Wejdź, mam ciepłe pierogi”.',['Jem, bo jestem głodna','Nie jem niczego w jej chatce','Proszę o dokładkę'],1,'<b>Wierzenie:</b> kto zje w chatce Baby Jagi, ten z niej nie wyjdzie.'],
+ ['babajaga','Baba Jaga','Zgubiłeś się w lesie na grzybach. Zapada zmrok. Co robisz?',['Biegnę na oślep','Idę za światłem między drzewami','Zostaję w miejscu i dzwonię pod 112'],2,'<b>Naprawdę:</b> zgubiony w lesie zostań w miejscu, żeby łatwiej cię znaleźć, i dzwoń pod 112.'],
+ ['bebok','Bebok','W nocy nad sufitem słychać szuranie worka. Klapa na strych jest otwarta.',['Wchodzę po ciemku','Wołam „Kto tam?”','Budzę dorosłych i zapalam światło'],2,'<b>Wierzenie:</b> bebok mieszka tam, gdzie nie sięga światło. <b>Naprawdę:</b> w nocy nie sprawdzaj hałasów sam.'],
+ ['bebok','Bebok','Ściemnia się, a ty bawisz się jeszcze na podwórku familoka. Co mówiono dzieciom na Śląsku?',['Wracaj przed zmrokiem, bo bebok cię weźmie','Zostań do północy','Schowaj się na strychu'],0,'<b>Wierzenie:</b> śląskie babcie straszyły bebokiem, żeby dzieci wracały do domu przed nocą.']
+];
+var app=document.getElementById('nlApp'),fl=document.getElementById('nlFlash'),root=document.getElementById('nlg');
+var S={snd:true,best:0};try{S.best=+localStorage.getItem('nl-best')||0;S.snd=localStorage.getItem('nl-snd')!=='0'}catch(e){}
+var AC=null;function ac(){if(!AC)try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}return AC}
+function tone(f,d,type,v,slide){if(!S.snd)return;var c=ac();if(!c)return;var o=c.createOscillator(),g=c.createGain();o.type=type||'sine';o.frequency.value=f;if(slide)o.frequency.exponentialRampToValueAtTime(slide,c.currentTime+d);g.gain.value=v||.15;g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}
+function sGood(){tone(660,.12,'triangle',.12);setTimeout(function(){tone(990,.18,'triangle',.1)},110)}
+function sBad(){tone(160,.6,'sawtooth',.18,50);tone(740,.5,'square',.04,700)}
+function sTick(){tone(1200,.04,'square',.03)}
+function fx(c){fl.className='flash';void fl.offsetWidth;fl.className='flash '+c;if(c==='r'){app.classList.remove('shake');void app.offsetWidth;app.classList.add('shake');if(navigator.vibrate)try{navigator.vibrate(120)}catch(e){}}}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function sndBtn(){return '<button class="sound" id="nlSnd" aria-label="Dźwięk">'+(S.snd?'🔊':'🔇')+'</button>'}
+function bindSnd(){var b=document.getElementById('nlSnd');if(b)b.onclick=function(){S.snd=!S.snd;try{localStorage.setItem('nl-snd',S.snd?'1':'0')}catch(e){}b.textContent=S.snd?'🔊':'🔇'}}
+function menu(){app.innerHTML='<div class="fadein">'+sndBtn()+'<span class="eyebrow">Nowa gra · Polskie legendy grozy</span><h2 style="margin-top:14px">NOC <span class="sign">LEGEND</span></h2><p class="lead">Sześć stworów z polskich wierzeń. Jedna noc. Znasz zasady, które naprawdę ratowały życie?</p><div class="lineup">'+['strzyga','bebok','utopiec','zmora','wilkolak','babajaga'].map(function(k){return '<img src="'+A[k]+'" alt="" loading="lazy">'}).join('')+'</div><ul class="rules"><li><b>8</b>sytuacji, na każdą masz 10 sekund</li><li><b>3</b>świece. Zła odpowiedź gasi jedną</li><li><b>★</b>szybciej = więcej punktów</li></ul><button class="btn red" id="nlGo">Zaczynam noc</button>'+(S.best?'<div class="best">Twój rekord: '+S.best+' pkt</div>':'')+'</div>';bindSnd();document.getElementById('nlGo').onclick=start}
+var G;function start(){ac();G={q:shuffle(Q).slice(0,8),i:0,lives:3,pts:0,good:0};round()}
+function hud(){var c='';for(var k=0;k<3;k++)c+='<span class="cdl'+(k>=G.lives?' out':'')+'"></span>';return '<div class="hud"><div class="candles" aria-label="Świece: '+G.lives+'">'+c+'</div><div class="led" id="nlLed">10</div><div class="score">PUNKTY<b>'+G.pts+'</b></div></div>'}
+var tm=null;function round(){var q=G.q[G.i],order=shuffle([0,1,2]);
+ app.innerHTML='<div class="fadein">'+hud()+'<div class="card" id="nlCard"><div class="pic"><img src="'+A[q[0]]+'" alt=""><span class="who">'+q[1]+'</span><span class="no">'+(G.i+1)+' / 8</span></div><div class="in"><h3>'+esc(q[2])+'</h3><div class="opts">'+order.map(function(o,n){return '<button class="opt" data-o="'+o+'"><i>'+'ABC'[n]+'</i>'+esc(q[3][o])+'</button>'}).join('')+'</div><div class="bar"><span id="nlBar"></span></div><div id="nlWhy"></div></div></div></div>';
+ setTimeout(function(){var c=document.getElementById('nlCard');if(c)c.classList.add('go')},50);
+ var t0=Date.now(),D=10000,done=false;tone(90,1.2,'sine',.12,60);
+ function end(o){if(done)return;done=true;clearInterval(tm);var left=Math.max(0,D-(Date.now()-t0)),ok=o===q[4];
+  app.querySelectorAll('.opt').forEach(function(b){b.disabled=true;var v=+b.dataset.o;if(v===q[4])b.classList.add('ok');else if(v===o)b.classList.add('bad')});
+  if(ok){G.pts+=100+Math.round(left/100)*5;G.good++;sGood();fx('g')}else{G.lives--;sBad();fx('r')}
+  var w=document.getElementById('nlWhy');w.innerHTML='<div class="why fadein">'+(o===-1?'<b>Za późno!</b> ':'')+q[5]+'</div><button class="btn gold fadein" id="nlNext" style="margin-top:12px">'+(G.lives<=0?'Koniec nocy':(G.i<7?'Dalej':'Świt…'))+'</button>';
+  var hd=app.querySelector('.hud');hd.outerHTML=hud();document.getElementById('nlLed').textContent=String(Math.ceil(left/1000));
+  document.getElementById('nlNext').onclick=function(){G.i++;if(G.lives<=0||G.i>=8)final();else round()};document.getElementById('nlNext').focus()}
+ app.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){end(+b.dataset.o)}});
+ var last=10;tm=setInterval(function(){var left=D-(Date.now()-t0),s=Math.ceil(left/1000);var led=document.getElementById('nlLed'),bar=document.getElementById('nlBar');if(!led)return clearInterval(tm);if(s!==last&&s>=0){last=s;led.textContent=s;if(s<=3)sTick()}bar.style.width=Math.max(0,left/D*100)+'%';if(left<=0)end(-1)},100)}
+function final(){var survived=G.lives>0,m=G.good>=8?['ZNACHOR','Znasz każdą zasadę. Babcie byłyby dumne.']:G.good>=6?['SOŁTYS','Przetrwasz niejedną noc na wsi.']:G.good>=4?['WĘDROWIEC','Masz szczęście… tym razem.']:['MIESZCZUCH','Legendy zjadłyby cię na kolację.'];
+ var rec=G.pts>S.best;if(rec){S.best=G.pts;try{localStorage.setItem('nl-best',G.pts)}catch(e){}}
+ app.innerHTML='<div class="fadein">'+sndBtn()+'<span class="eyebrow">'+(survived?'Przetrwałeś do świtu':'Świece zgasły')+'</span><div class="medal"><div class="m">'+m[0]+'</div><p class="lead" style="margin-top:6px">'+m[1]+'</p><div class="pts">'+G.pts+' PKT · '+G.good+'/8 dobrze'+(rec?' · REKORD!':'')+'</div></div><a class="btn red" href="'+TT+'" target="_blank" rel="noopener">Obejrzyj legendy na TikToku</a><div class="grid2"><button class="btn line" id="nlAgain">Jeszcze raz</button><button class="btn line" id="nlShare">Udostępnij wynik</button></div></div>';bindSnd();
+ if(survived)confetti();else{fx('r')}
+ document.getElementById('nlAgain').onclick=start;document.getElementById('nlShare').onclick=function(){var txt='Przetrwałem „Noc legend”: '+G.pts+' pkt, ranga '+m[0]+'. Sprawdź, czy dasz radę!',u=location.href;if(navigator.share)navigator.share({title:'Noc legend',text:txt,url:u}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(txt+' '+u).then(function(){document.getElementById('nlShare').textContent='Skopiowano!'})}}
+function confetti(){for(var k=0;k<40;k++){var d=document.createElement('i');d.style.cssText='position:fixed;z-index:98;top:-10px;left:'+Math.random()*100+'vw;width:8px;height:14px;border-radius:2px;pointer-events:none;background:'+['#f39c12','#d7263d','#30a46c','#f3efe6'][k%4]+';transition:transform 2.4s cubic-bezier(.2,.6,.4,1),opacity 2.4s;transform:rotate('+Math.random()*360+'deg)';document.body.appendChild(d);(function(d){requestAnimationFrame(function(){d.style.transform='translate('+(Math.random()*120-60)+'px,'+(innerHeight+40)+'px) rotate('+Math.random()*720+'deg)';d.style.opacity='.6'});setTimeout(function(){d.remove()},2600)})(d)}tone(523,.15,'triangle',.1);setTimeout(function(){tone(784,.3,'triangle',.1)},150)}
+menu();
+})();
+</script>
+{% schema %}
+{"name":"Gra: Noc legend","settings":[{"type":"url","id":"tiktok","label":"TikTok"}],"presets":[{"name":"Gra: Noc legend"}]}
+{% endschema %}
