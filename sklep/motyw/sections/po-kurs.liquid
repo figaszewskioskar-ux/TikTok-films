@@ -47,6 +47,17 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 #wg .end{text-align:center}#wg .end h2{font-size:clamp(34px,6vw,58px)}
 #wg footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--mut);font-size:13px}#wg footer .links{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}#wg footer p{margin:0 0 10px;max-width:90ch}
 #wg a:focus-visible,#wg button:focus-visible,#wg summary:focus-visible,#wg input:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+#wg .flag{display:inline-block;width:20px;height:14px;border-radius:2px;background:linear-gradient(#fff 50%,#dc143c 50%);box-shadow:0 0 0 1px rgba(255,255,255,.2);vertical-align:-2px}
+#wg .statement{padding:40px 0 70px}#wg .statement h2{font-size:clamp(34px,6vw,64px);color:#3a3a42;max-width:20ch}#wg .statement p{color:var(--mut);font-size:18px;margin-top:18px}
+#wg .phones{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px}#wg .phones .phone{width:100%;border-radius:34px;padding:9px}#wg .phones .phone video{border-radius:26px}
+@media(max-width:720px){#wg .phones{grid-template-columns:repeat(2,78%);overflow-x:auto;scroll-snap-type:x mandatory}#wg .phones .phone{scroll-snap-align:start}}
+#wg .watch{display:grid;gap:12px;margin-top:22px;max-width:420px}#wg .wcard{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px}#wg .wcard img{width:46px;height:62px;border-radius:10px;object-fit:cover}#wg .wcard b{display:block;font-size:16px}#wg .wcard small{color:var(--mut)}#wg .wcard .pl{margin-left:auto;width:38px;height:38px;border-radius:50%;background:var(--acc);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;box-shadow:0 0 18px rgba(229,72,77,.5)}
+#wg .get.wide .pv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-6px -6px 16px;padding:10px;background:#0c0c0f;border-radius:16px}#wg .get.wide .pv video,#wg .get.wide .pv img{aspect-ratio:9/16;object-fit:cover;border-radius:12px;width:100%}
+@media(min-width:720px){#wg .get.wide{grid-row:span 2}}
+#wg .revs{display:grid;gap:14px;margin-top:28px}@media(min-width:720px){#wg .revs{grid-template-columns:repeat(3,1fr)}}
+#wg .rev{border:1px dashed rgba(243,156,18,.45);border-radius:20px;padding:22px;background:rgba(243,156,18,.03)}#wg .rev span{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;color:#f2b134;border:1px solid rgba(243,156,18,.5);border-radius:6px;padding:4px 8px}#wg .rev p{color:var(--mut);font-style:italic;margin:14px 0}#wg .rev small{color:#6b6d76}
+#wg .amt sup{font-size:.36em;vertical-align:.95em;letter-spacing:-.02em;margin-left:2px}
 @media(prefers-reduced-motion:reduce){#wg *{transition:none!important}}
 </style>
 <div id="wg">
@@ -55,7 +66,7 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 <div class="w">
 <section class="hero">
   <div>
-    <span class="lcd"><b>03:00</b> PORADNIK PROTOKÓŁ OCALENI</span>
+    <span class="lcd"><span class="flag"></span><b>3:00</b> KURS PROTOKÓŁ OCALENI</span>
     <h1>Zrób animowany horror, którego <em>nie da się</em> przewinąć.</h1>
     <p class="lead">Pokazujemy cały nasz sposób na filmy z kanału Protokół Ocaleni: od haka w pierwszej sekundzie do gotowego filmu 1080×1920 z lektorem i dźwiękiem grozy. Bez gotowych klipów i nagrywania ekranu. Każdą klatkę tworzysz sam.</p>
     <div class="row"><a class="btn p" href="#cena">Kup poradnik · {{ price }}</a><a class="btn s" href="#filmy">▶ Zobacz nasze filmy</a></div>
@@ -69,16 +80,20 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
   </div>
 </section>
 
+<section class="statement"><h2>Co, jeśli o trzeciej w nocy ktoś zapuka do okna głosem twojej babci… a ty masz tylko jedną szansę?</h2><p>Tak zaczyna się film. Ten poradnik uczy wszystkiego, co dzieje się dalej.</p></section>
+
 <section id="filmy">
   <span class="k">Dowód</span>
   <h2>Prawdziwe filmy z naszego kanału.<br><span>Zrobione dokładnie tą metodą.</span></h2>
   <p class="lead">Fragmenty bez dźwięku. Całe filmy obejrzysz na TikToku @protokolocaleni.</p>
-  <div class="clips">
-    <div class="clip"><video src="{{ 'po-kurs-klip1.mp4' | asset_url }}" autoplay muted loop playsinline></video><div>Baba Jaga<small>Polskie legendy grozy · 2:28</small></div></div>
-    <div class="clip"><video src="{{ 'po-kurs-klip2.mp4' | asset_url }}" autoplay muted loop playsinline></video><div>Wilkołak<small>Polskie legendy grozy · 2:18</small></div></div>
-    <div class="clip"><video src="{{ 'po-kurs-klip3.mp4' | asset_url }}" autoplay muted loop playsinline></video><div>Izba Baby Jagi<small>dekoracje i światło</small></div></div>
+  <div class="phones">
+    <div class="phone"><video src="{{ 'po-kurs-klip1.mp4' | asset_url }}" autoplay muted loop playsinline></video><div class="chip c1"><b>Baba Jaga</b><small>płot z czaszek</small></div></div>
+    <div class="phone"><video src="{{ 'po-kurs-klip2.mp4' | asset_url }}" autoplay muted loop playsinline></video><div class="chip c2"><b>Wilkołak</b><small>w świetle reflektorów</small></div></div>
   </div>
-  <div class="row"><a class="btn s" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener">Oglądaj z dźwiękiem na TikToku</a></div>
+  <div class="watch">
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-baba_jaga.webp' | asset_url }}" alt=""><div><b>Obejrzyj „Babę Jagę”</b><small>2:28 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-wilkolak.webp' | asset_url }}" alt=""><div><b>Obejrzyj „Wilkołaka”</b><small>2:18 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+  </div>
 </section>
 
 <section>
@@ -106,6 +121,7 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
   <span class="k">Co dostajesz</span>
   <h2>Wszystko, czego używamy przy każdym filmie.</h2>
   <div class="gets">
+    <div class="get wide"><div class="pv"><video src="{{ 'po-kurs-klip3.mp4' | asset_url }}" autoplay muted loop playsinline></video><img src="{{ 'po-zmora.webp' | asset_url }}" alt=""></div><h3>Odcinek rozebrany ujęcie po ujęciu</h3><p>Zobacz, jak każde z 36 ujęć „Baby Jagi” zostało zaplanowane, narysowane, zgrane z lektorem i zmiksowane.</p></div>
     <div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><h3>Poradnik PDF, 17 stron</h3><p>12 rozdziałów plus rozbiórka odcinka „Baba Jaga” ujęcie po ujęciu: czas, kto mówi, tekst.</p></div>
     <div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg><h3>Szablony scenariusza</h3><p>Legenda (36 scen) i dylemat „Co zrobisz, gdy…?” do wypełnienia.</p></div>
     <div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2M6 8v8M10 4v16M14 7v10M18 10v4M22 12h0"/></svg><h3>5 dźwięków grozy</h3><p>Tension, hit_low, riser, sting i jolt, wygenerowane od zera. Możesz ich używać w swoich filmach.</p></div>
@@ -113,14 +129,16 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
     <div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg><h3>Ustawienia eksportu</h3><p>Rozdzielczość, kodowanie i głośność, żeby film dobrze wyglądał i brzmiał na telefonie.</p></div>
     <div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><h3>Prompty do Claude Code</h3><p>Gotowe polecenia na każdy etap: scenariusz, postać, podgląd, lektor, miniaturka.</p></div>
   </div>
-  <p class="small" style="margin-top:20px">Opinie kupujących pokażemy, gdy się pojawią. Nie wymyślamy recenzji.</p>
+  
 </section>
+
+<section><span class="k">Opinie kupujących</span><h2>Pojawią się po premierze.</h2><p class="lead">Żadnych wymyślonych cytatów. W tych miejscach pokażemy prawdziwe opinie osób, które kupiły poradnik.</p><div class="revs"><div class="rev"><span>MIEJSCE NA OPINIĘ</span><p>Tu pojawi się opinia prawdziwego kupującego.</p><small>Imię · @profil</small></div><div class="rev"><span>MIEJSCE NA OPINIĘ</span><p>Tu pojawi się opinia prawdziwego kupującego.</p><small>Imię · @profil</small></div><div class="rev"><span>MIEJSCE NA OPINIĘ</span><p>Tu pojawi się opinia prawdziwego kupującego.</p><small>Imię · @profil</small></div></div></section>
 
 <section id="cena">
   <div style="text-align:center"><span class="k">Warsztat Grozy</span><h2>Jedna cena. Wszystko w środku.</h2></div>
   <div class="price">
     <span class="k">Płatność jednorazowa</span>
-    <div class="amt">{{ price }}</div>
+    {%- assign pz = price | remove: ' zł' | remove: 'zł' | split: ',' -%}<div class="amt">{{ pz[0] }}<sup>,{% if pz[1] %}{{ pz[1] }}{% else %}00{% endif %} zł</sup></div>
     <p class="sub">Poradnik PDF + paczka do pobrania</p>
     <ul><li>12 rozdziałów, natychmiastowe pobranie</li><li>Rozbiórka odcinka „Baba Jaga” ujęcie po ujęciu</li><li>Szablony scenariusza: legenda i dylemat</li><li>5 dźwięków grozy do Twoich filmów</li><li>Zestaw startowy: silnik animacji i przykład</li><li>Prompty do Claude Code</li></ul>
     <label class="consent"><input type="checkbox" id="wgOk"><span>Akceptuję <a href="/policies/terms-of-service"><b>regulamin</b></a> i <a href="/policies/refund-policy"><b>zasady zwrotów</b></a>. Proszę o <b>natychmiastowe udostępnienie</b> treści cyfrowej i przyjmuję do wiadomości, że po jej udostępnieniu <b>tracę prawo odstąpienia od umowy</b>.</span></label>
