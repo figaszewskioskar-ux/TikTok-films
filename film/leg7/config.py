@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · BABA JAGA — własna historia (styl: czysta animacja 2D). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · BABA JAGA — własna historia (styl: czysta animacja 2D). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor bez filtrów — naturalny opowiadacz
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -7,7 +7,7 @@ VOICES = {'jaga': ('6qkrzTbAj75WW5U8X5mB', 'eleven_v3', V3), 'ola': ('d4Z5Fvjohw
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'dziadek': 'highpass=f=80', 'ola': 'highpass=f=150,asetrate=48000*1.08,aresample=48000,atempo=0.93',
            'jaga': 'asetrate=48000*0.9,aresample=48000,atempo=1.08,highpass=f=120,aecho=0.6:0.5:40|90:0.3|0.2'}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.6), ('chatka', 4.6, 7.8), ('plot', 7.8, 11.0), ('zeby', 11.0, 14.0), ('glodna', 14.0, 17.0), ('dzieci', 17.0, 20.6), ('ola', 20.6, 23.8), ('dziadek1', 23.8, 27.2), ('grzyby', 27.2, 30.2), ('zniknal', 30.2, 33.4), ('woła', 33.4, 36.2), ('zmrok', 36.2, 39.2), ('swiatlo', 39.2, 42.0), ('nozka', 42.0, 45.2), ('czaszki', 45.2, 48.4), ('drzwi', 48.4, 51.2), ('zaprasza', 51.2, 54.8), ('glodna_ola', 54.8, 57.6), ('weszla', 57.6, 60.2), ('sloje', 60.2, 63.4), ('piec', 63.4, 66.2), ('lopata', 66.2, 69.8), ('zelazne', 69.8, 72.6), ('sprytna', 72.6, 75.8), ('pochyla', 75.8, 78.6), ('pcha', 78.6, 81.4), ('ucieka', 81.4, 84.6), ('latarka', 84.6, 87.6), ('dziadek2', 87.6, 90.4), ('noc', 90.4, 93.4), ('skrob', 93.4, 96.4), ('slady', 96.4, 99.8), ('pierogi', 99.8, 102.8), ('wyskok', 102.8, 105.0), ('epilog', 105.0, 109.6), ('end', 109.6, 114.2)]
