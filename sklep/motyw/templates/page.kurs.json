@@ -1,0 +1,4 @@
+{
+  "sections": { "kurs": { "type": "po-kurs", "settings": { "price_text": "99 zł", "tiktok": "https://www.tiktok.com/@protokolocaleni" } } },
+  "order": ["kurs"]
+}
