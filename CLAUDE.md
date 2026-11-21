@@ -17,7 +17,6 @@
 ## Produkcja
 - Nowa część: katalog `film/odcN/` z `scenes.js` i `config.py`, potem `./build.sh odcN`. Gotowy plik kopiujemy do `wideo/`.
 - Głosy i efekty: ElevenLabs (klucz w środowisku „Default”). Sklep Shopify: środowisko „TikTok-films sklep”.
-- Na stronie i w grze nie pokazujemy spoilerów części, które jeszcze nie wyszły (suwaki „Ile części”).
 
 ## Reżyseria i jakość (uwagi użytkownika)
 - **Miejsce akcji pokazujemy wprost.** Jeśli coś dzieje się na klatce schodowej, pokazujemy widok z klatki (korytarz, schody, drzwi z zewnątrz).
