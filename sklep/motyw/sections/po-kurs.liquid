@@ -58,10 +58,11 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 #wg .revs{display:grid;gap:14px;margin-top:28px}@media(min-width:720px){#wg .revs{grid-template-columns:repeat(3,1fr)}}
 #wg .rev{border:1px dashed rgba(243,156,18,.45);border-radius:20px;padding:22px;background:rgba(243,156,18,.03)}#wg .rev span{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;color:#f2b134;border:1px solid rgba(243,156,18,.5);border-radius:6px;padding:4px 8px}#wg .rev p{color:var(--mut);font-style:italic;margin:14px 0}#wg .rev small{color:#6b6d76}
 #wg .amt sup{font-size:.36em;vertical-align:.95em;letter-spacing:-.02em;margin-left:2px}
+#wg .bar b,#wg .bar .btn,#wg .sup{white-space:nowrap}@media(max-width:420px){#wg .bar .in{padding-left:14px;gap:8px}#wg .bar b{font-size:14px}#wg .bar .btn.sm .pr{display:none}}#wg .sup{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:12px;background:#d7263d;color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 18px rgba(215,38,61,.4);margin-left:auto}#wg .sup+.btn.sm{margin-left:0}@media(min-width:721px){#wg .sup{margin-left:0}}@media(max-width:400px){#wg .sup{padding:0 10px}}
 @media(prefers-reduced-motion:reduce){#wg *{transition:none!important}}
 </style>
 <div id="wg">
-<div class="bar"><div class="in"><b>Warsztat Grozy</b><nav><a href="#filmy">Filmy</a><a href="#program">Program</a><a href="#pytania">Pytania</a></nav><a class="btn p sm" href="#cena">Kup · {{ price }}</a></div></div>
+<div class="bar"><div class="in"><b>Warsztat Grozy</b><nav><a href="#filmy">Filmy</a><a href="#program">Program</a><a href="#pytania">Pytania</a></nav><a class="sup" href="/#wesprzyj" aria-label="Wesprzyj kanał napiwkiem"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 4.4 2.6.8-1.5 2.3-2.6 4.4-2.6 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg>Wesprzyj</a><a class="btn p sm" href="#cena">Kup<span class="pr">&nbsp;· {{ price }}</span></a></div></div>
 
 <div class="w">
 <section class="hero">
