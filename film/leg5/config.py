@@ -7,7 +7,7 @@ VOICES = {'tata': ('JWUOwsYG4XgR9Od3eeon', 'eleven_v3', V3), 'wilk': ('JWUOwsYG4
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'tata': 'highpass=f=80',
            'wilk': 'asetrate=48000*0.8,aresample=48000,atempo=1.2,highpass=f=90,aecho=0.7:0.6:45|100:0.4|0.25'}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = None
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('klatwa', 4.4, 7.4), ('oczy', 7.4, 10.6), ('pelnia', 10.6, 13.6), ('ja', 13.6, 16.8), ('tata', 16.8, 19.8), ('silnik', 19.8, 22.6), ('zasieg', 22.6, 25.2), ('tata1', 25.2, 28.6), ('idzie', 28.6, 31.8), ('czekam', 31.8, 34.8), ('wycie', 34.8, 37.6), ('oczy_las', 37.6, 40.6), ('krazy', 40.6, 43.6), ('lusterko', 43.6, 46.4), ('drapanie', 46.4, 49.2), ('pysk', 49.2, 52.2), ('ludzkie', 52.2, 55.0), ('klakson', 55.0, 58.0), ('zniknal', 58.0, 60.4), ('szyba', 60.4, 63.0), ('biegne', 63.0, 65.6), ('snieg', 65.6, 68.2), ('goni', 68.2, 71.2), ('kapliczka', 71.2, 74.4), ('babcia', 74.4, 77.8), ('wpadam', 77.8, 80.2), ('prog', 80.2, 83.2), ('nie_wszedl', 83.2, 86.0), ('glos', 86.0, 89.2), ('to_tata', 89.2, 92.0), ('swit', 92.0, 95.0), ('policja', 95.0, 98.4), ('nie_pamietam', 98.4, 101.4), ('rece', 101.4, 104.4), ('dom', 104.4, 107.2), ('lusterko2', 107.2, 110.4), ('zolte', 110.4, 113.4), ('dobranoc', 113.4, 116.2), ('wyskok', 116.2, 118.4), ('epilog', 118.4, 122.8), ('end', 122.8, 127.4)]
