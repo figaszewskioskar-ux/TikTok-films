@@ -1,0 +1,61 @@
+karta      4.2s ->   3.2s
+dno        3.0s ->   3.3s
+garnki     3.2s ->   5.5s
+glos       3.0s ->   3.8s
+czeka      3.0s ->   3.4s
+ja         3.0s ->   4.9s
+namiot     3.0s ->   3.9s
+dziadek    2.6s ->   2.4s
+dziadek1   3.2s ->   5.5s
+noc        2.8s ->   2.5s
+wola       3.2s ->   3.8s
+brat_spi   3.4s ->   4.8s
+cien       3.0s ->   3.0s
+kap        2.6s ->   3.9s
+wychodze   3.02700/3600 klatek, 592 s
+3000/3600 klatek, 703 s
+ 2.8s ->   2.7s
+twarz      3.2s ->   2.4s
+usmiech    2.8s ->   2.1s
+kostka     2.8s ->   2.6s
+wciaga     2.6s ->   2.4s
+cisza      3.0s ->   2.3s
+dziesiatki   3.0s ->   4.3s
+szept      3.0s ->   3.8s
+nowy       3.2s ->   4.0s
+swiatlo    2.8s ->   2.9s
+wyciaga    3.0s ->   2.6s
+nie_patrz   2.8s ->   2.4s
+rano       3.2s ->   4.6s
+do_namiotu   3.0s ->   3.5s
+spiwor     3.4s ->   5.9s
+szukaja    3.0s ->   2.3s
+zamek      3.0s ->   2.9s
+tomek      3.0s ->   2.4s
+tomek_glos   3.0s ->   3.8s
+twist      3.2s ->   7.1s
+wyskok     2.4s ->   1.8s
+epilog     3.8s ->   6.0s
+end        4.6s ->   3.5s
+RAZEM 140.1 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/4202 klatek, 54 s
+600/4202 klatek, 142 s
