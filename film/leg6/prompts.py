@@ -1,0 +1,30 @@
+# Opisy ilustracji do POŁUDNICY (generator Pollinations, darmowa wersja)
+STYLE = ", dark cinematic 3D animated horror film still, stylized high-end animated short film, dramatic volumetric lighting, highly detailed textures, vertical 9:16 composition, single image, no text"
+HER = "a very tall gaunt ghostly woman in a long flowing white linen dress and white headscarf, pale grey cracked skin, hollow black eyes, holding a rusty curved sickle"
+P = {
+ 'intro': f"{HER}, standing in a golden rye field at noon, harsh white sun behind her, heat haze, face shadowed",
+ 'upal': "golden rye field at noon under a blinding white sun, heat haze shimmering, empty dirt path, cracked earth, cicadas, oppressive heat, eerie stillness",
+ 'sierp': f"close-up of a pale bony hand with long cracked fingernails holding a rusty curved sickle, white linen sleeve, rye ears around, harsh sunlight",
+ 'twarz': f"extreme close-up of the face of {HER}, white headscarf, pale cracked skin like dry earth, hollow pitch black eyes, thin cracked lips in a faint smile, harsh noon light",
+ 'kark': "silhouette of a farmer collapsed in a rye field at noon, a tall white female figure standing over him, sickle raised, ominous, dust in the air",
+ 'cien': "old polish village peasants resting in the shade of a big linden tree at noon, sleeping, scythes leaning on the tree, golden fields behind, hot summer, nostalgic but uneasy",
+ 'wies': "polish countryside village in july, old wooden house with blue window frames, sunflowers, fence, chickens, golden rye field behind the house, bright summer day",
+ 'babcia': "cozy old polish village kitchen, old grandmother with headscarf sitting at a wooden table, serious worried expression, warm sunlight through lace curtains, clock on the wall",
+ 'pilka': "a red football flying over a fence into a tall golden rye field, bright noon sun, motion blur",
+ 'zegar': "close-up of an old wall clock showing five minutes to twelve, wooden kitchen wall, sunlight stripes",
+ 'zboze': "first person view walking into a tall dense golden rye field, ears of grain at eye level, harsh sun overhead, claustrophobic",
+ 'cisza': "tall golden rye field completely still at noon, no wind, a black crow sitting frozen on a fence post, heat haze, eerie silence",
+ 'dzwon': "old wooden church bell tower of a polish village seen from the field, noon sun directly above, bell swinging",
+ 'idzie': "a path parting through tall golden rye as something tall walks through it toward the viewer, only the moving grain visible, harsh sun, ominous",
+ 'stoi': f"{HER}, standing among tall rye ears a few meters away, face hidden by the white headscarf, harsh noon sun, heat haze, terrifying",
+ 'pyta': f"medium shot of {HER}, leaning down toward the viewer, head tilted, face half hidden by headscarf, rye field, harsh sunlight",
+ 'gadam': "a scared 12 year old boy seen from behind standing in a tall rye field, talking nervously, sweating, a tall white figure blurred in front of him, harsh sun",
+ 'blizej': f"{HER}, very close to the viewer, bony hand reaching forward, sickle in the other hand, rye field, harsh sun, heat haze, dread",
+ 'chusta': f"terrifying close-up of {HER} with the headscarf slipping off revealing a skull-like cracked face, hollow black eyes, wide jaw, scream, horror",
+ 'sierp2': f"{HER}, raising the rusty sickle high above her head against the blinding sun, low angle, silhouette, horror",
+ 'kolo': "a perfect circle of burnt black flattened rye in the middle of a golden field, smoke rising, seen from above, eerie",
+ 'dom': "grandmother in a dark village room covering a mirror with a white cloth, worried, late afternoon light, ominous",
+ 'noc': "night, view from a bedroom window of an old village house onto a moonlit rye field, a tall woman in a white dress standing in the field looking at the window, fog, terrifying",
+ 'okno': f"{HER} pressed against a night window glass from outside, moonlight, hollow black eyes, cracked lips smiling, horror close-up",
+ 'udar': "boy lying in the shade drinking water from a bottle, wearing a cap, summer field, calm, gentle evening light",
+}
