@@ -7,3 +7,4 @@ film/ytpromo/*.wav
 film/ytpromo/ins_*.jpg
 film/ytpromo/comp.log
 film/*/build.log
+*.tmp.mp4
