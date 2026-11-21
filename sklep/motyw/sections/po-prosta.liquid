@@ -1,0 +1,93 @@
+{%- comment -%} Prosta strona główna: najważniejsze informacje + gry. Bez motywu grozy. {%- endcomment -%}
+{%- assign s = section.settings -%}
+{%- assign tt = s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' -%}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{background:#FFFFFF!important}#MainContent{padding:0!important;margin:0!important;max-width:none!important}
+#pp{--ink:#111318;--mut:#5B6270;--line:#E6E8EC;--soft:#F5F6F8;--acc:#111318;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
+#pp *{box-sizing:border-box}#pp a{color:inherit}#pp img{display:block;max-width:100%}
+#pp .w{max-width:880px;margin:0 auto;padding:0 20px}
+#pp header{border-bottom:1px solid var(--line)}#pp header .w{display:flex;align-items:center;gap:12px;height:64px}
+#pp .brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}#pp .brand img{width:32px;height:32px;border-radius:8px;object-fit:cover}
+#pp header nav{margin-left:auto;display:flex;gap:20px;font-size:14px;font-weight:500}#pp header nav a{text-decoration:none;color:var(--mut)}#pp header nav a:hover{color:var(--ink)}
+@media(max-width:560px){#pp header nav{gap:14px;font-size:13px}}
+#pp section{padding:44px 0;border-bottom:1px solid var(--line)}
+#pp h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.02em;margin:0 0 12px;font-weight:700}
+#pp h2{font-size:22px;letter-spacing:-.01em;margin:0 0 16px;font-weight:700}
+#pp p{margin:0;color:var(--mut);max-width:62ch}
+#pp .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+#pp .btn{color:var(--ink);display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 20px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--line);background:#fff;cursor:pointer}
+#pp .btn.p{background:var(--acc);color:#fff;border-color:var(--acc)}#pp .btn:hover{border-color:var(--ink)}
+#pp .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}@media(max-width:640px){#pp .facts{grid-template-columns:repeat(2,1fr)}}
+#pp .fact{background:var(--soft);border-radius:12px;padding:14px 16px}#pp .fact b{display:block;font-size:22px;font-variant-numeric:tabular-nums}#pp .fact span{font-size:13px;color:var(--mut)}
+#pp .list{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+#pp .item{display:flex;align-items:center;gap:14px;padding:16px 18px;text-decoration:none}#pp .item+.item{border-top:1px solid var(--line)}#pp a.item:hover{background:var(--soft)}
+#pp .item .t{flex:1}#pp .item b{display:block;font-weight:600}#pp .item small{color:var(--mut);font-size:14px}#pp .item .go{color:var(--mut);font-size:20px}
+#pp .tips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}#pp .tips button{height:42px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);min-width:64px;font:600 15px Inter,sans-serif;cursor:pointer;font-variant-numeric:tabular-nums}#pp .tips button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+#pp footer{padding:28px 0 40px;color:var(--mut);font-size:14px}#pp footer .w{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+#pp a:focus-visible,#pp button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+</style>
+<div id="pp">
+  <header><div class="w">
+    <a class="brand" href="/"><img src="{{ 'blok94-awatar.jpg' | asset_url }}" alt="" width="32" height="32">Protokół Ocaleni</a>
+    <nav><a href="#gry">Gry</a><a href="#serie">Serie</a><a href="#wesprzyj">Wesprzyj</a></nav>
+  </div></header>
+
+  <section><div class="w">
+    <h1>Animowane historie grozy na TikToku</h1>
+    <p>Robimy krótkie animowane filmy: polskie legendy, historie z bloku i sytuacje, które mogą przydarzyć się każdemu. W każdym jest prawdziwa porada bezpieczeństwa. Nowy film codziennie o 17:00.</p>
+    <div class="btns"><a class="btn p" href="{{ tt }}" target="_blank" rel="noopener">Obserwuj na TikToku</a><a class="btn" href="{{ s.youtube }}" target="_blank" rel="noopener">YouTube</a><a class="btn" href="{{ s.instagram }}" target="_blank" rel="noopener">Instagram</a></div>
+    <div class="facts">
+      <div class="fact"><b>{{ s.followers }}</b><span>obserwujących</span></div>
+      <div class="fact"><b>{{ s.likes }}</b><span>polubień</span></div>
+      <div class="fact"><b>{{ s.videos }}</b><span>filmów</span></div>
+      <div class="fact"><b>17:00</b><span>nowy film codziennie</span></div>
+    </div>
+  </div></section>
+
+  <section id="gry"><div class="w">
+    <h2>Gry</h2>
+    <div class="list">
+      <a class="item" href="/pages/noc-legend"><div class="t"><b>Noc legend</b><small>Quiz z polskich legend: znasz zasady, które ratowały życie?</small></div><span class="go">→</span></a>
+      <a class="item" href="/pages/gra"><div class="t"><b>Telefon o 2:00</b><small>Odbierasz, klikasz czy się rozłączasz? Sytuacje z prawdziwego życia.</small></div><span class="go">→</span></a>
+      <a class="item" href="/pages/wizjer"><div class="t"><b>Wizjer: 3 sekundy</b><small>Kto stoi za drzwiami? Masz trzy sekundy na decyzję.</small></div><span class="go">→</span></a>
+    </div>
+  </div></section>
+
+  <section id="serie"><div class="w">
+    <h2>Serie</h2>
+    <div class="list">
+      <div class="item"><div class="t"><b>Polskie legendy grozy</b><small>Strzyga, Bebok, Utopiec, Zmora, Wilkołak, Baba Jaga</small></div></div>
+      <div class="item"><div class="t"><b>BLOK 94 · „Kto tam?”</b><small>Ola zostaje sama na noc i ktoś puka do drzwi</small></div></div>
+      <div class="item"><div class="t"><b>Grupa klasowa</b><small>Obcy w szkolnej grupie na komunikatorze</small></div></div>
+      <div class="item"><div class="t"><b>Co się stanie, gdy…?</b><small>Masz jedną minutę na decyzję</small></div></div>
+    </div>
+  </div></section>
+
+  <section id="wesprzyj"><div class="w">
+    <h2>Wesprzyj kanał</h2>
+    <p>Filmy robimy sami. Jeśli chcesz, możesz zostawić dobrowolny napiwek. Nie kupujesz produktu, to po prostu wsparcie dla kanału.</p>
+    {%- assign tipp = s.tip_product -%}
+    <div class="tips" id="ppTips" data-tips='[{%- for tv in tipp.variants -%}{%- if tv.price >= 200 -%}{"id":{{ tv.id }},"p":{{ tv.price }}},{%- endif -%}{%- endfor -%}{}]'></div>
+    <div class="btns"><a class="btn p" id="ppTipBtn" href="/cart">Daję napiwek</a></div>
+  </div></section>
+
+  <footer><div class="w"><span>© {{ 'now' | date: '%Y' }} Protokół Ocaleni</span><span><a href="/pages/reklama">Współpraca</a> · <a href="/policies/privacy-policy">Polityka prywatności</a></span></div></footer>
+</div>
+<script>
+(function(){var w=document.getElementById('b94-witaj');if(w&&w.open)w.close();setTimeout(function(){var x=document.getElementById('b94-witaj');if(x&&x.open)x.close()},600);
+ var box=document.getElementById('ppTips'),btn=document.getElementById('ppTipBtn'),vs=[];try{vs=JSON.parse(box.dataset.tips).filter(function(v){return v.id})}catch(e){}
+ var fmt=function(p){return (p/100).toLocaleString('pl-PL',{maximumFractionDigits:2})+' zł'};
+ function pick(k){[].forEach.call(box.children,function(b,j){b.setAttribute('aria-pressed',j===k?'true':'false')});btn.textContent='Daję napiwek · '+fmt(vs[k].p);btn.href='/cart/'+vs[k].id+':1'}
+ vs.forEach(function(v,k){var b=document.createElement('button');b.type='button';b.textContent=fmt(v.p);b.onclick=function(){pick(k)};box.appendChild(b)});
+ if(vs.length){var d=0;vs.forEach(function(v,k){if(v.p===1000)d=k});pick(d)}
+})();
+</script>
+{% schema %}
+{"name":"Prosta strona główna","settings":[
+ {"type":"url","id":"tiktok","label":"TikTok"},{"type":"url","id":"youtube","label":"YouTube"},{"type":"url","id":"instagram","label":"Instagram"},
+ {"type":"product","id":"tip_product","label":"Produkt napiwku"},
+ {"type":"text","id":"followers","label":"Obserwujący","default":"4 203"},{"type":"text","id":"likes","label":"Polubienia","default":"56,8 tys."},{"type":"text","id":"videos","label":"Liczba filmów","default":"24"}
+],"presets":[{"name":"Prosta strona główna"}]}
+{% endschema %}
