@@ -1,0 +1,70 @@
+karta      4.4s ->   3.3s
+nocą       3.0s ->   3.5s
+dziurka    3.4s ->   4.1s
+piers      3.2s ->   4.3s
+ruch       3.0s ->   3.6s
+dzis       3.4s ->   6.6s
+kamienica   3.4s ->   3.2s
+klatka     3.0s ->   3.1s
+gospodyni   3.2s ->   4.5s
+zatykaj    3.4s ->   4.6s
+pokoj      3.2s ->   4.2s
+smiech     3.0s ->   3.2s
+trzecia    2.8s ->   2.1s
+cisza      3.2s ->   3.4s
+mgla       3.2s ->   3.1s
+ksztalt    3.2s ->   3.5s
+idzie      3.2s ->   2.6s
+siada      2.8s ->   2.2s
+ciezar     3.0s ->   3.6s
+oddech     3.4s ->   4.3s
+ciii       2.8s ->   3.2s
+babcia     3.2s ->   5.9s
+palec      3.0s ->   6.3s
+znika      3.0s ->   6.0s
+rano       3.0s ->   2.8s
+sasiadka   3.2s ->   4.9s
+sol        3.0s ->   2.8s
+legenda    3.6s ->   5.7s
+zamknal    2.8s ->   2.8s
+wosk       3.2s ->   3.3s
+trzecia2   2.6s ->   2.0s
+drapanie   3.2s ->   4.7s
+oko        3.0s ->   5.1s
+sol2       2.6s ->   3.5s
+wyskok     2.2s ->   1.6s
+epilog     4.4s ->   9.3s
+end        4.6s ->   3.6s
+RAZEM 146.6 s
+ok bed
+ok wind
+ok boom
+ok whoosh
+ok elev_ding
+ok elev_doors
+ok buzz
+ok ring
+ok door_lock
+ok keys
+ok stairs
+ok box_kick
+ok lockpick
+ok vibrate
+ok heartbeat
+ok door_bang
+ok run
+ok tv
+ok sting
+300/4397 klatek, 39 s
+600/4397 klatek, 98 s
+900/4397 klatek, 156 s
+1200/4397 klatek, 195 s
+1500/4397 klatek, 238 s
+1800/4397 klatek, 283 s
+2100/4397 klatek, 335 s
+2400/4397 klatek, 394 s
+2700/4397 klatek, 442 s
+3000/4397 klatek, 485 s
+3300/4397 klatek, 539 s
+3600/4397 klatek, 577 s
+3900/4397 klatek, 618 s
