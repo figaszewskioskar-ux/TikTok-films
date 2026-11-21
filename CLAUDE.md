@@ -61,7 +61,20 @@
 - Każdy nowy film budujemy według `film/WZOR_WIRALA.md`: hak z jednym przedmiotem z bliska i zakazem sprzecznym z intuicją, bez „Poprzednio” na starcie,
   jedna bohaterka i jedno miejsce, ujęcia z oczu bohaterki, nowa informacja co 5–8 s, zakończenie patrzy prosto w widza.
 
-## Pytanie-zagadka na końcu (zawsze)
+## NOWY FORMAT „CO SIĘ STANIE, GDY…?” (od 21.11.2026 – obowiązuje w nowych filmach z Kubą)
+- Pełny opis, postacie i wszystkie serie: `film/PROJEKT_KUBA_I_FORMAT.md`. Wzór: `film/csg2` (plik `wideo/CO_SIE_STANIE_GDY/Prad_gasnie_o_3_v2.mp4`).
+- **W tym formacie nie stosujemy starego schematu:** bez tablicy „NIE …!”, bez kart BŁĄD/ZASADA, bez pytania A/B/C, bez napisów słowo po słowie.
+- Otwarcie:
+  1. twarz złoczyńcy z bliska + „Co zrobisz, gdy…?”,
+  2. „Proste.”,
+  3. czerwony licznik „1:00 – masz jedną minutę”,
+  4. „Jest trzecia w nocy” i ciemny blok z jednym oknem.
+- Środek: czysty thriller, ujęcia co ok. 2 s. U góry zegar i licznik „ZOSTAŁO” jak czerwony wyświetlacz, a na ważnych przedmiotach czerwone celowniki.
+- Koniec: zwrot, szept złoczyńcy, ciemność, „OBSERWUJ, ŻEBY ZOBACZYĆ CZĘŚĆ 2”.
+- Lektor: Ksawery (`bX8ZXtFbQtanSpI1KPZ1`), mroczny, krótkie zdania do widza. Postacie w stylu „toon” (`toon()` w `film/csg2/scenes.js`).
+- Wzorujemy się formą i poziomem filmów „What happens when…”. Historia, postacie i teksty są zawsze własne – nie kopiujemy ani nie tłumaczymy cudzych filmów 1:1.
+
+## Pytanie-zagadka na końcu (starsze serie; nie dotyczy formatu „CO SIĘ STANIE, GDY…?”)
 - **Każdy film kończy się niepokojącą zagadką do komentarzy, nie prostym quizem.** Po strasznym zwrocie karta „KTO TO JEST?” (albo „CO DALEJ?”):
   jedno pytanie o tajemnicę, która zostaje otwarta (kto stoi za drzwiami, kto ma telefon, kto był w mieszkaniu), i trzy podejrzenia A/B/C,
   każde wiarygodne i wskazujące na kogoś z obsady (np. kolega z klasy, sąsiad, obcy z poprzednich części). Pod spodem „👇 Typuj w komentarzu: A, B czy C”
