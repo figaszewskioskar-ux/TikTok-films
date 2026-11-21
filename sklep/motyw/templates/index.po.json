@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "po": {
+      "type": "po-home",
+      "settings": {
+        "tiktok": "https://www.tiktok.com/@protokolocaleni",
+        "youtube": "https://youtube.com/@protokolocaleni",
+        "instagram": "https://www.instagram.com/proktololocaleni/",
+        "tip_product": "napiwek",
+        "followers": "3342",
+        "likes": "44,7 tys.",
+        "views": "753 tys.",
+        "videos": "14",
+        "stats_date": "16.11.2026"
+      }
+    }
+  },
+  "order": [
+    "po"
+  ]
+}
