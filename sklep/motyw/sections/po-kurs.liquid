@@ -50,9 +50,12 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 
 #wg .flag{display:inline-block;width:20px;height:14px;border-radius:2px;background:linear-gradient(#fff 50%,#dc143c 50%);box-shadow:0 0 0 1px rgba(255,255,255,.2);vertical-align:-2px}
 #wg .statement{padding:40px 0 70px}#wg .statement h2{font-size:clamp(34px,6vw,64px);color:#3a3a42;max-width:20ch}#wg .statement p{color:var(--mut);font-size:18px;margin-top:18px}
-#wg .phones{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px}#wg .phones .phone{width:100%;border-radius:34px;padding:9px}#wg .phones .phone video{border-radius:26px}
-@media(max-width:720px){#wg .phones{grid-template-columns:repeat(2,78%);overflow-x:auto;scroll-snap-type:x mandatory}#wg .phones .phone{scroll-snap-align:start}}
-#wg .watch{display:grid;gap:12px;margin-top:22px;max-width:420px}#wg .wcard{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px}#wg .wcard img{width:46px;height:62px;border-radius:10px;object-fit:cover}#wg .wcard b{display:block;font-size:16px}#wg .wcard small{color:var(--mut)}#wg .wcard .pl{margin-left:auto;width:38px;height:38px;border-radius:50%;background:var(--acc);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;box-shadow:0 0 18px rgba(229,72,77,.5)}
+#wg .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}#wg .phones .phone{width:100%;border-radius:34px;padding:9px;position:relative}#wg .phones .phone video{border-radius:26px;aspect-ratio:9/16;object-fit:cover;width:100%;display:block}
+#wg .phones .chip{left:18px!important;right:auto!important;top:56px!important;bottom:auto!important;transform:none!important;max-width:calc(100% - 36px)}
+#wg .phones .chip b{color:#fff!important;font-family:Inter,sans-serif!important}
+#wg .phones .nowy{position:absolute;top:22px;left:22px;background:var(--acc);color:#fff;font:800 11px/1 Inter,sans-serif;letter-spacing:.12em;padding:6px 9px;border-radius:999px;box-shadow:0 0 16px rgba(229,72,77,.6)}
+@media(max-width:720px){#wg .phones{grid-template-columns:repeat(6,72%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}#wg .phones .phone{scroll-snap-align:start}}
+#wg .watch{display:grid;gap:12px;margin-top:22px}@media(min-width:720px){#wg .watch{grid-template-columns:repeat(3,1fr)}}#wg .wcard{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px}#wg .wcard img{width:46px;height:62px;border-radius:10px;object-fit:cover}#wg .wcard b{display:block;font-size:16px}#wg .wcard small{color:var(--mut)}#wg .wcard .pl{margin-left:auto;width:38px;height:38px;border-radius:50%;background:var(--acc);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;box-shadow:0 0 18px rgba(229,72,77,.5)}
 #wg .get.wide .pv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-6px -6px 16px;padding:10px;background:#0c0c0f;border-radius:16px}#wg .get.wide .pv video,#wg .get.wide .pv img{aspect-ratio:9/16;object-fit:cover;border-radius:12px;width:100%}
 @media(min-width:720px){#wg .get.wide{grid-row:span 2}}
 #wg .revs{display:grid;gap:14px;margin-top:28px}@media(min-width:720px){#wg .revs{grid-template-columns:repeat(3,1fr)}}
@@ -96,14 +99,22 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 <section id="filmy">
   <span class="k">Dowód</span>
   <h2>Prawdziwe filmy z naszego kanału.<br><span>Zrobione dokładnie tą metodą.</span></h2>
-  <p class="lead">Fragmenty bez dźwięku. Całe filmy obejrzysz na TikToku @protokolocaleni.</p>
+  <p class="lead">Sześć najnowszych legend, każda zrobiona tą samą metodą. Fragmenty bez dźwięku, całe filmy obejrzysz na TikToku @protokolocaleni.</p>
   <div class="phones">
-    <div class="phone"><video src="{{ 'po-kurs-bebok.mp4' | asset_url }}" autoplay muted loop playsinline></video><div class="chip c1"><b>Bebok</b><small>strych w familoku</small></div></div>
-    <div class="phone"><video src="{{ 'po-kurs-strzyga.mp4' | asset_url }}" autoplay muted loop playsinline></video><div class="chip c2"><b>Strzyga</b><small>twarz w oknie</small></div></div>
+    <div class="phone"><video src="{{ 'po-kurs-mary.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c1"><b>Krwawa Mary</b><small>szkolna łazienka</small></div><span class="nowy">NOWY</span></div>
+    <div class="phone"><video src="{{ 'po-kurs-kostucha.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c2"><b>Kostucha</b><small>wieś, 3:00 w nocy</small></div><span class="nowy">NOWY</span></div>
+    <div class="phone"><video src="{{ 'po-kurs-bazyliszek.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c3"><b>Bazyliszek</b><small>piwnica na Starówce</small></div><span class="nowy">NOWY</span></div>
+    <div class="phone"><video src="{{ 'po-kurs-wolga.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c1"><b>Czarna Wołga</b><small>przystanek w PRL</small></div><span class="nowy">NOWY</span></div>
+    <div class="phone"><video src="{{ 'po-kurs-licho.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c2"><b>Licho</b><small>chata u babci</small></div><span class="nowy">NOWY</span></div>
+    <div class="phone"><video src="{{ 'po-kurs-bebok.mp4' | asset_url }}" autoplay muted loop playsinline preload="metadata"></video><div class="chip c3"><b>Bebok</b><small>strych w familoku</small></div></div>
   </div>
   <div class="watch">
-    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-bebok.webp' | asset_url }}" alt=""><div><b>Obejrzyj „Beboka”</b><small>2:21 · z dźwiękiem</small></div><span class="pl">▶</span></a>
-    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-strzyga.webp' | asset_url }}" alt=""><div><b>Obejrzyj „Strzygę”</b><small>2:23 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-mary.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Krwawą Mary”</b><small>2:23 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-kostucha.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Kostuchę”</b><small>2:35 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-bazyliszek.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Bazyliszka”</b><small>2:24 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-wolga.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Czarną Wołgę”</b><small>2:20 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-licho.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Licho”</b><small>2:02 · z dźwiękiem</small></div><span class="pl">▶</span></a>
+    <a class="wcard" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener"><img src="{{ 'po-bebok.webp' | asset_url }}" alt="" loading="lazy"><div><b>Obejrzyj „Beboka”</b><small>2:21 · z dźwiękiem</small></div><span class="pl">▶</span></a>
   </div>
 </section>
 
