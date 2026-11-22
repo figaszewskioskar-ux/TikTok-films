@@ -4,8 +4,9 @@ MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
 V3 = {'stability': 0.5, 'similarity_boost': 0.8}
 VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'zosia': ('d4Z5Fvjohw3zxGpV8XUV', 'eleven_v3', V3), 'babcia': ('6qkrzTbAj75WW5U8X5mB', 'eleven_v3', V3), 'licho': ('bX8ZXtFbQtanSpI1KPZ1', 'eleven_v3', V3)}
-VFILTER = {'lektor': 'atempo=1.1,highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'zosia': 'highpass=f=150,asetrate=48000*1.1,aresample=48000,atempo=0.92,lowpass=f=3000',
+VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'zosia': 'highpass=f=150,asetrate=48000*1.1,aresample=48000,atempo=0.92,lowpass=f=3000',
            'licho': 'asetrate=48000*1.15,aresample=48000,atempo=0.85,aecho=0.7:0.6:50|120:0.4|0.25,highpass=f=200'}
+TEMPO = {'lektor': 1.1}
 MAXK = 1.6
 PREVIEW_NO_VOICE = False
 TARGET = 118

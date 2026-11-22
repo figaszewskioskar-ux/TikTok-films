@@ -51,7 +51,7 @@ for i, seg in enumerate(SEG):
         tts(text, nb(i - 1), nb(i + 1), mp3, v, m, st)
         open(meta, 'w').write(key)
     subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', mp3, '-af',
-                    'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse',
+                    'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse' + (f",atempo={getattr(cfg, 'TEMPO', {}).get(who, 1.0)}" if getattr(cfg, 'TEMPO', {}).get(who) else ''),
                     '-ar', '48000', '-ac', '1', wav], check=True)
     segs.append({'scene': sc, 'a': a, 'text': text, 'file': wav, 'dur': dur(wav), 'who': who})
 
