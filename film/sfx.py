@@ -26,6 +26,11 @@ SFX = {
     'run':        (3,  False, 'two people running away fast down stairwell, hurried footsteps fading'),
     'tv':         (8,  True,  'football match on TV in another room, muffled commentator and stadium crowd'),
     'sting':      (4,  False, 'dark cinematic ending sting, eerie low hit with reverse swell'),
+    'kogut':      (3,  False, 'distorted rooster crow echoing in a dark stone cellar, creepy, reverberant'),
+    'syk':        (2.5, False, 'loud long snake hiss close up, menacing reptile hiss'),
+    'kamien':     (2.5, False, 'stone cracking and turning to rock, crunching grinding petrification sound'),
+    'jajko':      (2,  False, 'egg shell slowly cracking, small crunches, something hatching inside'),
+    'kapanie':    (6,  True,  'water dripping slowly in damp brick cellar, echo'),
 }
 
 
