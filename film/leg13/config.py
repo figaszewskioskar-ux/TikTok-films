@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · KRWAWA MARY — własna historia na podstawie szkolnej legendy (wzór: BEBOK). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · KRWAWA MARY — własna historia na podstawie szkolnej legendy (wzór: BEBOK). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -8,7 +8,7 @@ VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=
            'mary': 'asetrate=48000*0.9,aresample=48000,atempo=1.08,highpass=f=200,aecho=0.7:0.6:60|140:0.5|0.35'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('lustro', 4.4, 7.6), ('trzyrazy', 7.6, 11.0), ('odbicie', 11.0, 14.0), ('mowiono', 14.0, 17.6), ('wozna1', 17.6, 21.6), ('ja', 21.6, 24.8), ('koledzy', 24.8, 28.2), ('kuba_nie', 28.2, 30.6), ('wepchneli', 30.6, 33.8), ('gasnie', 33.8, 36.4), ('wyjscie', 36.4, 39.4), ('raz', 39.4, 41.6), ('dwa', 41.6, 44.0), ('trzy', 44.0, 46.6), ('cisza', 46.6, 49.2), ('ramie', 49.2, 52.6), ('kran', 52.6, 55.4), ('nie_mruga', 55.4, 58.4), ('usmiech', 58.4, 61.4), ('reka', 61.4, 64.6), ('peka', 64.6, 67.0), ('mary', 67.0, 70.6), ('wychodzi', 70.6, 73.8), ('upada', 73.8, 76.0), ('drzwi', 76.0, 79.0), ('smiech', 79.0, 81.6), ('wozna2', 81.6, 84.6), ('swiatlo', 84.6, 88.0), ('dom', 88.0, 91.0), ('zeby', 91.0, 94.4), ('napis', 94.4, 98.0), ('odwraca', 98.0, 101.6), ('szept', 101.6, 104.6), ('epilog', 104.6, 109.2), ('end', 109.2, 114.2)]
