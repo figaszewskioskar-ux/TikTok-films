@@ -4,7 +4,7 @@ MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
 V3 = {'stability': 0.5, 'similarity_boost': 0.8}
 VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'przewodnik': ('JxVKcxm9wtnCYEs8V00p', 'eleven_v3', V3), 'skarbnik': ('bX8ZXtFbQtanSpI1KPZ1', 'eleven_v3', V3), 'dziadek': ('JWUOwsYG4XgR9Od3eeon', 'eleven_v3', V3)}
-VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'przewodnik': 'highpass=f=80,aecho=0.6:0.4:60:0.15',
+VFILTER = {'lektor': 'atempo=1.12,highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'przewodnik': 'atempo=1.06,highpass=f=80,aecho=0.6:0.4:60:0.15',
            'skarbnik': 'asetrate=48000*0.8,aresample=48000,atempo=1.18,aecho=0.7:0.6:80|180:0.45|0.3'}
 MAXK = 1.6
 PREVIEW_NO_VOICE = False
