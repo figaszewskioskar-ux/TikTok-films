@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · LICHO — własna historia na podstawie słowiańskich wierzeń (wzór: BEBOK). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · LICHO — własna historia na podstawie słowiańskich wierzeń (wzór: BEBOK). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -7,8 +7,8 @@ VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'zosia': ('d4Z5Fvjo
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'zosia': 'highpass=f=150,asetrate=48000*1.1,aresample=48000,atempo=0.92,lowpass=f=3000',
            'licho': 'asetrate=48000*1.15,aresample=48000,atempo=0.85,aecho=0.7:0.6:50|120:0.4|0.25,highpass=f=200'}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
-TARGET = None
+PREVIEW_NO_VOICE = False
+TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('katy', 4.4, 7.6), ('psuje', 7.6, 10.8), ('mowiono', 10.8, 14.4), ('niespi', 14.4, 17.2), ('ja', 17.2, 20.4), ('chata', 20.4, 23.4), ('babcia1', 23.4, 26.8), ('kuba1', 26.8, 29.2), ('zgasila', 29.2, 32.0), ('noc', 32.0, 34.8), ('zart', 34.8, 37.2), ('wolanie', 37.2, 40.4), ('cisza', 40.4, 42.6), ('kukulka', 42.6, 45.8), ('zarowka', 45.8, 48.4), ('stuk', 48.4, 51.4), ('zosia', 51.4, 53.8), ('latarka', 53.8, 56.6), ('slady', 56.6, 59.6), ('sciana', 59.6, 62.6), ('sufit', 62.6, 65.0), ('oko', 65.0, 67.8), ('zeby', 67.8, 70.4), ('skok', 70.4, 72.4), ('babcia2', 72.4, 75.2), ('nikogo', 75.2, 78.2), ('babcia3', 78.2, 81.6), ('rano', 81.6, 84.6), ('radio', 84.6, 87.6), ('lusterko', 87.6, 90.0), ('twist', 90.0, 93.6), ('szept', 93.6, 96.6), ('epilog', 96.6, 101.0), ('end', 101.0, 106.0)]
 SEG = [
