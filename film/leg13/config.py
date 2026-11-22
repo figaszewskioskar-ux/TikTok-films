@@ -11,7 +11,7 @@ MAXK = 1.6
 PREVIEW_NO_VOICE = True
 TARGET = 118
 SQUEEZE = 0.75
-SCENES = [('karta', 0, 4.4), ('lustro', 4.4, 7.6), ('trzyrazy', 7.6, 11.0), ('odbicie', 11.0, 14.0), ('mowiono', 14.0, 17.6), ('wozna1', 17.6, 21.6), ('ja', 21.6, 24.8), ('koledzy', 24.8, 28.2), ('kuba_nie', 28.2, 30.6), ('wepchneli', 30.6, 33.8), ('gasnie', 33.8, 36.4), ('wyjscie', 36.4, 39.4), ('raz', 39.4, 41.6), ('dwa', 41.6, 44.0), ('trzy', 44.0, 46.6), ('cisza', 46.6, 49.2), ('kran', 49.2, 52.0), ('nie_mruga', 52.0, 55.0), ('usmiech', 55.0, 58.0), ('reka', 58.0, 61.2), ('peka', 61.2, 63.6), ('mary', 63.6, 67.2), ('drzwi', 67.2, 70.2), ('smiech', 70.2, 72.8), ('wozna2', 72.8, 75.8), ('swiatlo', 75.8, 79.2), ('dom', 79.2, 82.2), ('zeby', 82.2, 85.6), ('napis', 85.6, 89.2), ('odwraca', 89.2, 92.8), ('szept', 92.8, 95.8), ('epilog', 95.8, 100.4), ('end', 100.4, 105.4)]
+SCENES = [('karta', 0, 4.4), ('lustro', 4.4, 7.6), ('trzyrazy', 7.6, 11.0), ('odbicie', 11.0, 14.0), ('mowiono', 14.0, 17.6), ('wozna1', 17.6, 21.6), ('ja', 21.6, 24.8), ('koledzy', 24.8, 28.2), ('kuba_nie', 28.2, 30.6), ('wepchneli', 30.6, 33.8), ('gasnie', 33.8, 36.4), ('wyjscie', 36.4, 39.4), ('raz', 39.4, 41.6), ('dwa', 41.6, 44.0), ('trzy', 44.0, 46.6), ('cisza', 46.6, 49.2), ('ramie', 49.2, 52.6), ('kran', 52.6, 55.4), ('nie_mruga', 55.4, 58.4), ('usmiech', 58.4, 61.4), ('reka', 61.4, 64.6), ('peka', 64.6, 67.0), ('mary', 67.0, 70.6), ('wychodzi', 70.6, 73.8), ('upada', 73.8, 76.0), ('drzwi', 76.0, 79.0), ('smiech', 79.0, 81.6), ('wozna2', 81.6, 84.6), ('swiatlo', 84.6, 88.0), ('dom', 88.0, 91.0), ('zeby', 91.0, 94.4), ('napis', 94.4, 98.0), ('odwraca', 98.0, 101.6), ('szept', 101.6, 104.6), ('epilog', 104.6, 109.2), ('end', 109.2, 114.2)]
 SEG = [
     ['karta', 0.15, '[storytelling, tense, slow] To jest Krwawa Mary.'],
     ['lustro', 0.15, '[storytelling, tense] Mieszka po drugiej stronie lustra.'],
@@ -46,16 +46,19 @@ SEG = [
     ['szept', 0.15, '[whispering, girl, eerie] Dziękuję… że mnie wypuściłeś.', 'mary'],
     ['epilog', 0.15, '[storytelling] W Krwawą Mary bawiły się dzieci w szkołach na całym świecie. Także w Polsce.'],
     ['end', 0.15, '[whispering, girl, eerie] Krwawa… Mary.', 'mary'],
+    ['ramie', 0.15, '[whispering] Coś zimnego dotknęło mojego ramienia. Odwróciłem się. Nikogo.'],
+    ['wychodzi', 0.15, '[storytelling, urgent] Jej ręka przeszła przez lustro. Prosto do mnie.'],
+    ['upada', 0.15, '[storytelling, urgent] Upadłem na mokrą podłogę.'],
 ]
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 105.39], [-34, -34]),
-    loops={'groza': ([0, .2, 21.6, 30.6, 39.4, 52.0, 61.2, 75.8, 82.2, 89.2, 95.8, 105.39], [-60, -10, -26, -14, -8, -5, -3, -20, -12, -4, -16, -40]),
-           'tension': ([0, 21.6, 30.6, 52.0, 61.2, 75.8, 82.2, 89.2, 95.8, 105.39], [-18, -30, -16, -7, -5, -22, -12, -6, -24, -40]),
-           'kapanie': ([0, 30.6, 75.8, 105.39], [-90, -20, -90, -90]),
-           'drone': ([0, 33.8, 61.2, 75.8, 89.2, 95.8, 100.4], [-40, -16, -8, -28, -8, -26, -30]),
-           'roomtone': ([0, 105.39], [-36, -36])},
-    heartbeat=([0, 33.8, 52.0, 75.8, 82.2, 95.8, 105.39], [-90, -12, -6, -90, -8, -90, -90]),
+    bed=([0, 114.19], [-34, -34]),
+    loops={'groza': ([0, .2, 21.6, 30.6, 39.4, 55.4, 64.6, 84.6, 91.0, 98.0, 104.6, 114.19], [-60, -10, -26, -14, -8, -5, -3, -20, -12, -4, -16, -40]),
+           'tension': ([0, 21.6, 30.6, 55.4, 64.6, 84.6, 91.0, 98.0, 104.6, 114.19], [-18, -30, -16, -7, -5, -22, -12, -6, -24, -40]),
+           'kapanie': ([0, 30.6, 84.6, 114.19], [-90, -20, -90, -90]),
+           'drone': ([0, 33.8, 64.6, 84.6, 98.0, 104.6, 109.2], [-40, -16, -8, -28, -8, -26, -30]),
+           'roomtone': ([0, 114.19], [-36, -36])},
+    heartbeat=([0, 33.8, 55.4, 84.6, 91.0, 104.6, 114.19], [-90, -12, -6, -90, -8, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -16)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'slam': [('slam', -2)], 'door_lock': [('doorlock', -4)], 'bang': [('bang', -3)], 'unlock': [('unlock', -4)], 'switch': [('poweroff', -3)]}
-EXTRA = [(0.1, 'hit_low', -4), (5.6, 'hit_low', -3), (31.5, 'hit_low', -4), (34.8, 'hit_low', 0), (39.6, 'hit_low', -6), (41.8, 'hit_low', -3), (44.2, 'hit_low', 0), (44.2, 'sting', -4), (50.4, 'sting', -6), (50.0, 'riser', -7), (55.8, 'hit_low', -2), (59.3, 'hit_low', -2), (58.6, 'riser', -5), (61.4, 'kamien', -2), (61.4, 'hit_low', 0), (61.4, 'sting', -1), (64.0, 'syk', -12), (77.2, 'sting', -5), (83.6, 'riser', -6), (88.0, 'hit_low', 0), (88.0, 'sting', -2), (91.6, 'hit_low', 0), (95.4, 'hit_low', 0), (95.4, 'sting', 0), (100.4, 'hit_low', -2), (21.6, 'hit_low', -9), (30.6, 'hit_low', -9), (46.6, 'hit_low', -9), (67.2, 'hit_low', -9), (79.2, 'hit_low', -9), (82.2, 'hit_low', -9)]
+EXTRA = [(0.1, 'hit_low', -4), (5.6, 'hit_low', -3), (31.5, 'hit_low', -4), (34.8, 'hit_low', 0), (39.6, 'hit_low', -6), (41.8, 'hit_low', -3), (44.2, 'hit_low', 0), (44.2, 'sting', -4), (50.6, 'hit_low', 0), (50.6, 'sting', -3), (53.8, 'sting', -6), (53.4, 'riser', -7), (59.2, 'hit_low', -2), (62.7, 'hit_low', -2), (62.0, 'riser', -5), (64.8, 'kamien', -2), (64.8, 'hit_low', 0), (64.8, 'sting', -1), (67.4, 'syk', -12), (71.4, 'hit_low', 0), (71.4, 'kamien', -4), (74.1, 'hit_low', -1), (86.0, 'sting', -5), (92.4, 'riser', -6), (96.8, 'hit_low', 0), (96.8, 'sting', -2), (100.4, 'hit_low', 0), (104.2, 'hit_low', 0), (104.2, 'sting', 0), (109.2, 'hit_low', -2), (21.6, 'hit_low', -9), (30.6, 'hit_low', -9), (46.6, 'hit_low', -9), (76.0, 'hit_low', -9), (88.0, 'hit_low', -9), (91.0, 'hit_low', -9)]
