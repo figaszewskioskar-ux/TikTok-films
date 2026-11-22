@@ -4,7 +4,8 @@
       "type": "po-kurs",
       "settings": {
         "price_text": "99 zł",
-        "tiktok": "https://www.tiktok.com/@protokolocaleni"
+        "tiktok": "https://www.tiktok.com/@protokolocaleni",
+        "product": "warsztat-grozy-poradnik-paczka"
       }
     }
   },

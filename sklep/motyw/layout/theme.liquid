@@ -76,7 +76,7 @@
     </div>
   </header>
   <main id="MainContent">{{ content_for_layout }}</main>
-  {%- render 'blok94-witaj' -%}
+  {%- unless template.name == 'index' -%}{%- render 'blok94-witaj' -%}{%- endunless -%}
   <footer class="po-foot">
     <div class="po-w" style="padding-bottom:18px">{% render 'blok94-social', title: 'Obserwuj BLOK 94' %}</div>
     <div class="po-w">
