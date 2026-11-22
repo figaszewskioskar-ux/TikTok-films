@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · KOSTUCHA — własna historia na podstawie ludowych wierzeń o śmierci (wzór: BEBOK). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · KOSTUCHA — własna historia na podstawie ludowych wierzeń o śmierci (wzór: BEBOK). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -7,7 +7,7 @@ VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'babcia': ('6qkrzTb
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'kostucha': 'asetrate=48000*0.86,aresample=48000,atempo=1.1,lowpass=f=2600,aecho=0.7:0.6:70|160:0.45|0.3'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('kosa', 4.4, 7.6), ('pies', 7.6, 11.0), ('znaki', 11.0, 14.4), ('mowiono', 14.4, 17.8), ('babcia1', 17.8, 21.8), ('ja', 21.8, 25.2), ('trzecia', 25.2, 28.0), ('wycie', 28.0, 31.2), ('spi', 31.2, 33.8), ('kroki', 33.8, 37.0), ('wizjer', 37.0, 40.0), ('postac', 40.0, 43.4), ('puk1', 43.4, 46.8), ('cichnie', 46.8, 49.4), ('krok', 49.4, 52.4), ('odsuwa', 52.4, 55.0), ('puk2', 55.0, 58.2), ('glos', 58.2, 61.8), ('obok', 61.8, 64.8), ('klamka', 64.8, 68.2), ('ciemno', 68.2, 71.2), ('rano', 71.2, 74.6), ('zenek', 74.6, 78.0), ('rysy', 78.0, 81.6), ('babcia2', 81.6, 85.2), ('noc2', 85.2, 88.2), ('okno', 88.2, 92.0), ('szept', 92.0, 95.0), ('epilog', 95.0, 99.8), ('end', 99.8, 104.8)]
