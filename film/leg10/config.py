@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · CZARNA WOŁGA — własna historia na podstawie miejskiej legendy z PRL (wzór: BEBOK). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · CZARNA WOŁGA — własna historia na podstawie miejskiej legendy z PRL (wzór: BEBOK). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -8,7 +8,7 @@ VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=
            'kierowca': 'asetrate=48000*0.94,aresample=48000,atempo=1.06,aecho=0.6:0.5:40|90:0.3|0.2'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('nocauto', 4.4, 7.8), ('kierowca', 7.8, 10.8), ('porywa', 10.8, 14.2), ('mowiono', 14.2, 18.0), ('imie0', 18.0, 21.0), ('ja', 21.0, 24.2), ('mama1', 24.2, 27.8), ('kuba1', 27.8, 30.2), ('przystanek', 30.2, 33.2), ('swiatla', 33.2, 36.2), ('jelen', 36.2, 39.2), ('staje', 39.2, 41.8), ('szyba', 41.8, 44.6), ('kierowca2', 44.6, 48.2), ('imie', 48.2, 51.0), ('cukierek', 51.0, 54.0), ('drzwi', 54.0, 56.8), ('rekawiczka', 56.8, 59.8), ('nie', 59.8, 62.6), ('usmiech', 62.6, 65.6), ('dzwoni', 65.6, 68.4), ('mama2', 68.4, 72.0), ('patrzy', 72.0, 74.4), ('pusto', 74.4, 77.4), ('slady', 77.4, 80.8), ('mamaprzy', 80.8, 84.0), ('noc', 84.0, 86.8), ('okno', 86.8, 89.6), ('pod', 89.6, 92.8), ('okulary', 92.8, 96.0), ('sms', 96.0, 99.6), ('szept', 99.6, 102.6), ('epilog', 102.6, 107.2), ('end', 107.2, 112.2)]
