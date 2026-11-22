@@ -1,4 +1,4 @@
-"""POLSKIE LEGENDY GROZY · BAZYLISZEK — własna historia na podstawie warszawskiej legendy (wzór: BEBOK). Podgląd bez lektora."""
+"""POLSKIE LEGENDY GROZY · BAZYLISZEK — własna historia na podstawie warszawskiej legendy (wzór: BEBOK). Wersja z lektorem."""
 VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
 MODEL = 'eleven_v3'
 SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
@@ -7,7 +7,7 @@ VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'mama': ('Xb7hH8MSU
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('jajo', 4.4, 7.8), ('spojrzenie', 7.8, 11.2), ('krzywe', 11.2, 14.8), ('lustro', 14.8, 18.4), ('babcia', 18.4, 22.0), ('ja', 22.0, 25.2), ('mama1', 25.2, 28.6), ('kuba1', 28.6, 30.8), ('drzwi', 30.8, 33.6), ('schody', 33.6, 36.6), ('korytarz', 36.6, 39.6), ('siedem', 39.6, 42.4), ('gasnie', 42.4, 45.0), ('szur', 45.0, 48.0), ('latarka', 48.0, 50.8), ('figurki', 50.8, 54.2), ('kot', 54.2, 57.2), ('pianie', 57.2, 60.4), ('cien', 60.4, 63.4), ('niepatrz', 63.4, 66.6), ('lusterko', 66.6, 70.0), ('wystawia', 70.0, 73.0), ('syk', 73.0, 75.8), ('trzask', 75.8, 78.6), ('wraca', 78.6, 81.2), ('kamienny', 81.2, 84.6), ('ucieka', 84.6, 87.4), ('mama2', 87.4, 90.4), ('noc', 90.4, 93.4), ('rower', 93.4, 96.4), ('koszyk', 96.4, 99.8), ('oko', 99.8, 102.8), ('reka', 102.8, 106.4), ('epilog', 106.4, 111.0), ('end', 111.0, 116.0)]
