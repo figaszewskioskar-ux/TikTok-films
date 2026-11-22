@@ -86,4 +86,5 @@
 ## Polskie legendy grozy (uwagi użytkownika, 22.11.2026)
 - Wzorem jest odcinek BEBOK: na start karta postaci („TO JEST… NAZWA”, portret w ramce, POZIOM ZAGROŻENIA, gdzie mieszka / czego nie znosi), potem historia.
 - **Bez kart ZASADA** w legendach (w Beboku ich nie było).
+- **Wybieramy straszydła, którymi rodzice i dziadkowie naprawdę straszyli dzieci** (żeby wracały przed zmrokiem, nie szły nad wodę, w zboże, nie gwizdały, spały w nocy): Bebok, Baba Jaga, Dziad z workiem, Czarna Wołga, Mamuna, Południca, Licho, Skarbnik.
 - **Historia jak przestroga od rodziców/dziadków:** „Nie rób X, bo przyjdzie Y” (np. „wracaj przed zmrokiem, bo bebok cię weźmie”, „nie gwiżdż pod ziemią, bo Skarbnik cię zabierze”). W filmie pokazujemy, jak dziadek/mama to mówi, a bohater łamie zakaz.
