@@ -8,7 +8,7 @@
   {%- if page_description != blank and request.page_type != 'index' -%}{%- assign b94_desc = page_description -%}{%- endif -%}
   <meta name="description" content="{{ b94_desc | escape }}">
   <link rel="canonical" href="{{ canonical_url }}">
-  <link rel="icon" type="image/png" href="{{ 'blok94-favicon.png' | asset_url }}"><link rel="apple-touch-icon" href="{{ 'blok94-apple-icon.png' | asset_url }}">
+  <link rel="icon" type="image/png" href="{{ 'po-favicon.png' | asset_url }}"><link rel="apple-touch-icon" href="{{ 'po-apple-icon.png' | asset_url }}">
   {%- assign b94_title = page_title -%}{%- if request.page_type == 'index' -%}{%- assign b94_title = 'BLOK 94 · Kto tam? Nie otwieraj!' -%}{%- endif -%}
   <meta property="og:site_name" content="{{ shop.name | escape }}">
   <meta property="og:type" content="website">
@@ -58,7 +58,7 @@
   <header class="po-head">
     <div class="po-w">
       <a class="po-logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-        <img class="po-av" src="{{ 'blok94-awatar.jpg' | asset_url }}" alt="" width="46" height="46"><span class="po-nm">Protokół<b>Ocaleni</b></span>
+        <img class="po-av" src="{{ 'po-awatar-oczy.png' | asset_url }}" alt="" width="46" height="46"><span class="po-nm">Protokół<b>Ocaleni</b></span>
       </a>
       <nav class="po-nav" aria-label="Menu">
         {%- assign menu = linklists['main-menu'] -%}

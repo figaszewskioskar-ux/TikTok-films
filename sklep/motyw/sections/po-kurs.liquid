@@ -3,7 +3,7 @@
 {%- assign price = s.price_text -%}{%- if pr and pr.price -%}{%- assign price = pr.price | money_without_trailing_zeros -%}{%- endif -%}
 {%- assign vid = '' -%}{%- if pr -%}{%- assign vid = pr.selected_or_first_available_variant.id -%}{%- endif -%}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&family=Big+Shoulders+Display:wght@900&display=swap" rel="stylesheet">
 <style>
 body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{background:#08080A!important}#MainContent{padding:0!important;margin:0!important;max-width:none!important}
 #wg{--bg:#08080A;--card:#121216;--card2:#1A1A20;--line:rgba(255,255,255,.08);--ink:#F4F4F6;--mut:#9A9CA6;--acc:#E5484D;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -59,12 +59,31 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 #wg .rev{border:1px dashed rgba(243,156,18,.45);border-radius:20px;padding:22px;background:rgba(243,156,18,.03)}#wg .rev span{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;color:#f2b134;border:1px solid rgba(243,156,18,.5);border-radius:6px;padding:4px 8px}#wg .rev p{color:var(--mut);font-style:italic;margin:14px 0}#wg .rev small{color:#6b6d76}
 #wg .amt sup{font-size:.36em;vertical-align:.95em;letter-spacing:-.02em;margin-left:2px}
 #wg .bar b,#wg .bar .btn,#wg .sup{white-space:nowrap}@media(max-width:420px){#wg .bar .in{padding-left:14px;gap:8px}#wg .bar b{font-size:14px}#wg .bar b{min-width:0;overflow:hidden;text-overflow:ellipsis}#wg .bar .btn.sm{padding:0 12px}}#wg .sup{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:50%;background:#d7263d;color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 18px rgba(215,38,61,.4);margin-left:auto}#wg .sup+.btn.sm{margin-left:0}@media(min-width:721px){#wg .sup{margin-left:0}}@media(max-width:400px){#wg .sup{padding:0 10px}}
+
+#wg .logo{display:flex;align-items:center;gap:10px;min-width:0}#wg .logo img{width:46px;height:auto;flex:none}#wg .logo b:before{display:none}
+#wg .brand{padding:40px 0 10px}#wg .bi{position:relative;display:flex;align-items:center;gap:36px;flex-wrap:wrap;justify-content:center;background:radial-gradient(500px 260px at 22% 55%,rgba(180,18,30,.35),transparent 70%),#050506;border:1px solid var(--line);border-radius:28px;padding:34px 30px;overflow:hidden}
+#wg .beyes{width:min(340px,70vw);height:auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.7))}
+#wg .btx{min-width:0}#wg .bser{color:#8f929c;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+#wg .bname{font-family:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;font-weight:900;font-size:clamp(56px,9vw,104px);line-height:.92;letter-spacing:.01em;margin:8px 0 14px;color:#f3efe6}#wg .bname span{color:#e0313f}
+#wg .brow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}#wg .bpill{background:#e0313f;color:#fff;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:10px 16px}
+#wg .bcd{font-family:"JetBrains Mono",monospace;font-weight:700;color:#FF3B30;text-shadow:0 0 12px rgba(255,59,48,.6);font-size:18px}
+#wg .btn.sm2{height:42px;padding:0 16px;font-size:14px}
+@media(max-width:720px){#wg .bi{padding:26px 18px;gap:18px;text-align:center}#wg .brow{justify-content:center}}@media(min-width:860px){#wg .bi{flex-wrap:nowrap;justify-content:flex-start;padding:40px 48px}#wg .beyes{width:300px}#wg .btx{flex:1}}@media(max-width:430px){#wg .logo b{display:none}}
 @media(prefers-reduced-motion:reduce){#wg *{transition:none!important}}
 </style>
 <div id="wg">
-<div class="bar"><div class="in"><b>Warsztat Grozy</b><nav><a href="#filmy">Filmy</a><a href="#program">Program</a><a href="#pytania">Pytania</a><a href="/pages/gra">Gry</a></nav><a class="sup" href="/pages/wesprzyj" aria-label="Wesprzyj kanał napiwkiem"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 4.4 2.6.8-1.5 2.3-2.6 4.4-2.6 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></a><a class="btn p sm" href="#cena">Kup<span class="pr">· {{ price }}</span></a></div></div>
+<div class="bar"><div class="in"><a class="logo" href="/"><img src="{{ 'po-oczy.webp' | asset_url }}" alt="" width="54" height="31"><b>Protokół Ocaleni</b></a><nav><a href="#filmy">Filmy</a><a href="#program">Program</a><a href="#pytania">Pytania</a><a href="/pages/gra">Gry</a></nav><a class="sup" href="/pages/wesprzyj" aria-label="Wesprzyj kanał napiwkiem"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 4.4 2.6.8-1.5 2.3-2.6 4.4-2.6 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></a><a class="btn p sm" href="#cena">Kup<span class="pr">· {{ price }}</span></a></div></div>
 
 <div class="w">
+<section class="brand"><div class="bi">
+  <img class="beyes" src="{{ 'po-oczy.webp' | asset_url }}" alt="Oczy – logo Protokół Ocaleni" width="480" height="272">
+  <div class="btx">
+    <div class="bser">Legendy grozy · BLOK 94 · Co się stanie, gdy…?</div>
+    <div class="bname">PROTOKÓŁ <span>OCALENI</span></div>
+    <div class="brow"><span class="bpill">Nowy film codziennie · 17:00</span><span class="bcd" id="wgCd">za --:--:--</span></div>
+    <div class="brow"><a class="btn s sm2" href="{{ s.tiktok | default: 'https://www.tiktok.com/@protokolocaleni' }}" target="_blank" rel="noopener">TikTok</a><a class="btn s sm2" href="https://www.youtube.com/@protokolocaleni" target="_blank" rel="noopener">YouTube</a><a class="btn s sm2" href="/pages/gra">Gry</a></div>
+  </div>
+</div></section>
 <section class="hero">
   <div>
     <span class="lcd"><span class="flag"></span><b>3:00</b> KURS PROTOKÓŁ OCALENI</span>
@@ -168,6 +187,7 @@ body>header.po-head,body>footer.po-foot,#b94-witaj{display:none!important}body{b
 </div>
 <script>
 (function(){var w=document.getElementById('b94-witaj');if(w&&w.open)w.close();setTimeout(function(){var x=document.getElementById('b94-witaj');if(x&&x.open)x.close()},600);
+ (function(){var el=document.getElementById('wgCd');if(!el)return;function nx(){var now=Date.now(),f=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}),hf=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Warsaw',hour:'2-digit',hourCycle:'h23'});for(var d=0;d<3;d++){var q=f.format(new Date(now+d*864e5)).split('-'),g=Date.UTC(+q[0],+q[1]-1,+q[2],17,0,0),h=parseInt(hf.format(new Date(g)),10)%24,t=g-(h-17)*36e5;if(t>now)return t}return now+864e5}var T=nx();function p(n){return String(n).padStart(2,'0')}function tk(){var ms=T-Date.now();if(ms<=0){T=nx();ms=T-Date.now()}var x=Math.floor(ms/1e3);el.textContent='za '+p(Math.floor(x/3600))+':'+p(Math.floor(x%3600/60))+':'+p(x%60)}tk();setInterval(tk,1000)})();
  var ok=document.getElementById('wgOk'),b=document.getElementById('wgBuy');if(!ok||!b)return;var live=b.getAttribute('href')!=='#';
  ok.addEventListener('change',function(){b.setAttribute('aria-disabled',(ok.checked&&live)?'false':'true')});
 })();
