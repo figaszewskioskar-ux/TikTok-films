@@ -10,7 +10,7 @@ MAXK = 1.6
 PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
-SCENES = [('karta', 0, 4.4), ('kosa', 4.4, 7.6), ('pies', 7.6, 11.0), ('znaki', 11.0, 14.4), ('mowiono', 14.4, 17.8), ('babcia1', 17.8, 21.8), ('ja', 21.8, 25.2), ('trzecia', 25.2, 28.0), ('wycie', 28.0, 31.2), ('spi', 31.2, 33.8), ('kroki', 33.8, 37.0), ('wizjer', 37.0, 40.0), ('postac', 40.0, 43.4), ('puk1', 43.4, 46.8), ('cichnie', 46.8, 49.4), ('krok', 49.4, 52.4), ('odsuwa', 52.4, 55.0), ('puk2', 55.0, 58.2), ('glos', 58.2, 61.8), ('obok', 61.8, 64.8), ('klamka', 64.8, 68.2), ('ciemno', 68.2, 71.2), ('rano', 71.2, 74.6), ('zenek', 74.6, 78.0), ('rysy', 78.0, 81.6), ('babcia2', 81.6, 85.2), ('noc2', 85.2, 88.2), ('okno', 88.2, 92.0), ('szept', 92.0, 95.0), ('epilog', 95.0, 99.8), ('end', 99.8, 104.8)]
+SCENES = [('karta', 0, 4.4), ('kosa', 4.4, 7.6), ('pies', 7.6, 11.0), ('znaki', 11.0, 14.4), ('mowiono', 14.4, 17.8), ('babcia1', 17.8, 21.8), ('ja', 21.8, 25.2), ('trzecia', 25.2, 28.0), ('wycie', 28.0, 31.2), ('spi', 31.2, 33.8), ('kroki', 33.8, 37.0), ('wizjer', 37.0, 40.0), ('postac', 40.0, 43.4), ('puk1', 43.4, 46.8), ('cichnie', 46.8, 49.4), ('krok', 49.4, 52.4), ('pies_zrywa', 52.4, 55.0), ('odsuwa', 55.0, 57.6), ('twarz_okno', 57.6, 59.8), ('puk2', 59.8, 63.0), ('ciemno', 63.0, 66.0), ('swiece', 66.0, 68.6), ('glos', 68.6, 72.2), ('obok', 72.2, 75.2), ('babcia_budzi', 75.2, 78.2), ('klamka', 78.2, 81.6), ('ostrze', 81.6, 84.8), ('kogut', 84.8, 87.6), ('rano', 87.6, 91.0), ('zenek', 91.0, 94.4), ('rysy', 94.4, 98.0), ('babcia2', 98.0, 101.6), ('noc2', 101.6, 104.6), ('okno', 104.6, 108.4), ('szyba', 108.4, 110.2), ('szept', 110.2, 113.2), ('epilog', 113.2, 118.0), ('end', 118.0, 123.0)]
 SEG = [
     ['karta', 0.15, '[storytelling, tense, slow] To jest Kostucha.'],
     ['kosa', 0.15, '[storytelling, tense] Biała płachta. Koścista twarz. W ręku kosa.'],
@@ -43,17 +43,23 @@ SEG = [
     ['szept', 0.15, '[whispering, eerie, slow] Ktoś… zawsze otwiera.', 'kostucha'],
     ['epilog', 0.15, '[storytelling] Na polskiej wsi wierzono, że wycie psa w nocy zapowiada, że Kostucha przyszła po kogoś.'],
     ['end', 0.15, '[whispering] Puk. Puk. Puk.'],
+    ['pies_zrywa', 0.15, '[storytelling, urgent] Burek zerwał się z łańcucha. I z piskiem uciekł w pole.'],
+    ['twarz_okno', 0.15, '[whispering] Za szybą mignęła biała twarz.'],
+    ['babcia_budzi', 0.15, '[storytelling, urgent] Pobiegłem do babci. Potrząsałem nią. Nie budziła się.'],
+    ['swiece', 0.15, '[whispering] Świeczki pod obrazkiem gasły. Jedna po drugiej.'],
+    ['ostrze', 0.15, '[storytelling, tense, slow] Przez szparę między deskami przeszło ostrze. I powoli zjechało w dół.'],
+    ['kogut', 0.15, '[storytelling, tense] Wtedy na podwórku zapiał kogut. Ostrze zniknęło.'],
 ]
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 104.78999999999999], [-34, -34]),
-    loops={'groza': ([0, .2, 21.8, 25.2, 40.0, 55.0, 71.2, 85.2, 88.2, 95.0, 104.78999999999999], [-60, -10, -26, -14, -8, -4, -24, -12, -4, -16, -40]),
-           'tension': ([0, 21.8, 25.2, 55.0, 71.2, 85.2, 88.2, 95.0, 104.78999999999999], [-18, -30, -16, -6, -24, -12, -6, -24, -40]),
-           'wind': ([0, 104.78999999999999], [-30, -30]),
-           'drone': ([0, 25.2, 55.0, 71.2, 88.2, 95.0, 99.8], [-40, -18, -8, -30, -8, -26, -30]),
-           'roomtone': ([0, 104.78999999999999], [-36, -36])},
-    heartbeat=([0, 33.8, 52.4, 71.2, 85.2, 95.0, 104.78999999999999], [-90, -14, -6, -90, -8, -90, -90]),
+    bed=([0, 122.99], [-34, -34]),
+    loops={'groza': ([0, .2, 21.8, 25.2, 40.0, 59.8, 81.6, 87.6, 101.6, 104.6, 113.2, 122.99], [-60, -10, -26, -14, -8, -5, -3, -24, -12, -4, -16, -40]),
+           'tension': ([0, 21.8, 25.2, 59.8, 81.6, 87.6, 101.6, 104.6, 113.2, 122.99], [-18, -30, -16, -7, -5, -24, -12, -6, -24, -40]),
+           'wind': ([0, 122.99], [-26, -26]),
+           'drone': ([0, 25.2, 59.8, 87.6, 104.6, 113.2, 118.0], [-40, -18, -8, -30, -8, -26, -30]),
+           'roomtone': ([0, 122.99], [-36, -36])},
+    heartbeat=([0, 33.8, 55.0, 84.8, 101.6, 113.2, 122.99], [-90, -14, -6, -90, -8, -90, -90]),
 )
 REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -16)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'scrape': [('scrape', -5)], 'creak': [('creak', -4)], 'knock': [('knock', -2)], 'handle': [('handle', -3)],
-           'slam': [('slam', -2)], 'switch': [('poweroff', -3)], 'siren': [('siren', -14)]}
-EXTRA = [(0.1, 'hit_low', -4), (6.0, 'hit_low', -2), (25.2, 'hit_low', -2), (40.4, 'sting', -6), (40.4, 'riser', -8), (52.4, 'riser', -6), (55.4, 'hit_low', -2), (58.2, 'sting', -5), (62.0, 'hit_low', 0), (62.0, 'sting', -3), (79.0, 'hit_low', 0), (79.0, 'sting', -3), (85.2, 'riser', -5), (89.8, 'hit_low', 0), (89.8, 'sting', -1), (94.6, 'hit_low', 0), (94.6, 'sting', 0), (99.8, 'hit_low', -2), (21.8, 'hit_low', -9), (28.0, 'hit_low', -9), (37.0, 'hit_low', -9), (46.8, 'hit_low', -9), (71.2, 'hit_low', -9), (81.6, 'hit_low', -9)]
+           'slam': [('slam', -2)], 'switch': [('poweroff', -3)], 'siren': [('siren', -14)], 'chain': [('chain', -3)], 'steps': [('run', -6)]}
+EXTRA = [(0.1, 'hit_low', -4), (6.0, 'hit_low', -2), (25.2, 'hit_low', -2), (40.4, 'sting', -6), (40.4, 'riser', -8), (52.7, 'hit_low', -2), (57.9, 'hit_low', 0), (57.9, 'sting', -2), (57.8, 'riser', -6), (60.2, 'hit_low', -2), (68.6, 'sting', -5), (72.4, 'hit_low', 0), (72.4, 'sting', -3), (79.0, 'riser', -5), (82.0, 'kamien', -8), (82.0, 'hit_low', -1), (85.1, 'kogut', -6), (95.4, 'hit_low', 0), (95.4, 'sting', -3), (101.6, 'riser', -5), (106.2, 'hit_low', 0), (106.2, 'sting', -1), (108.55, 'hit_low', 0), (108.55, 'sting', 0), (112.8, 'hit_low', 0), (112.8, 'sting', 0), (118.0, 'hit_low', -2), (21.8, 'hit_low', -9), (28.0, 'hit_low', -9), (37.0, 'hit_low', -9), (46.8, 'hit_low', -9), (87.6, 'hit_low', -9), (98.0, 'hit_low', -9), (66.0, 'hit_low', -9), (78.2, 'hit_low', -9)]
