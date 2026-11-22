@@ -82,3 +82,8 @@
 
 ## Schemat haka (od 22.11.2026, wzorowany formą na @creepydillemas)
 - Każdy nowy film budujemy według `film/WZOR_HOOK.md`: klatka 0 = zagrożenie w trakcie i twarz złoczyńcy, zdanie do „ty”, licznik pomocy („policja jest 25 minut stąd”), ograniczenie („drzwi wytrzymają ostatnie pięć”), godzina 3:01, rytm jednosłowowy, karty ZASADA N (prawdziwe porady), HUD z zegarem i licznikiem w dół, zwrot logiczny z czerwonym kółkiem, a na koniec złoczyńca uśmiecha się w kamerę.
+
+## Polskie legendy grozy (uwagi użytkownika, 22.11.2026)
+- Wzorem jest odcinek BEBOK: na start karta postaci („TO JEST… NAZWA”, portret w ramce, POZIOM ZAGROŻENIA, gdzie mieszka / czego nie znosi), potem historia.
+- **Bez kart ZASADA** w legendach (w Beboku ich nie było).
+- **Historia jak przestroga od rodziców/dziadków:** „Nie rób X, bo przyjdzie Y” (np. „wracaj przed zmrokiem, bo bebok cię weźmie”, „nie gwiżdż pod ziemią, bo Skarbnik cię zabierze”). W filmie pokazujemy, jak dziadek/mama to mówi, a bohater łamie zakaz.
