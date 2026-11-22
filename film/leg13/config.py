@@ -1,0 +1,61 @@
+"""POLSKIE LEGENDY GROZY · KRWAWA MARY — własna historia na podstawie szkolnej legendy (wzór: BEBOK). Podgląd bez lektora."""
+VOICE = 'eodmrbuYw8DsHyDR5b6f'  # Victor
+MODEL = 'eleven_v3'
+SETTINGS = {'stability': 0.4, 'similarity_boost': 0.85}
+V3 = {'stability': 0.5, 'similarity_boost': 0.8}
+VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'bartek': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'wozna': ('6qkrzTbAj75WW5U8X5mB', 'eleven_v3', V3), 'mary': ('d4Z5Fvjohw3zxGpV8XUV', 'eleven_v3', V3)}
+VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08', 'bartek': 'asetrate=48000*0.93,aresample=48000,atempo=1.07', 'kuba': 'aecho=0.6:0.4:40:0.2',
+           'mary': 'asetrate=48000*0.9,aresample=48000,atempo=1.08,highpass=f=200,aecho=0.7:0.6:60|140:0.5|0.35'}
+TEMPO = {'lektor': 1.1}
+MAXK = 1.6
+PREVIEW_NO_VOICE = True
+TARGET = 118
+SQUEEZE = 0.75
+SCENES = [('karta', 0, 4.4), ('lustro', 4.4, 7.6), ('trzyrazy', 7.6, 11.0), ('odbicie', 11.0, 14.0), ('mowiono', 14.0, 17.6), ('wozna1', 17.6, 21.6), ('ja', 21.6, 24.8), ('koledzy', 24.8, 28.2), ('kuba_nie', 28.2, 30.6), ('wepchneli', 30.6, 33.8), ('gasnie', 33.8, 36.4), ('wyjscie', 36.4, 39.4), ('raz', 39.4, 41.6), ('dwa', 41.6, 44.0), ('trzy', 44.0, 46.6), ('cisza', 46.6, 49.2), ('kran', 49.2, 52.0), ('nie_mruga', 52.0, 55.0), ('usmiech', 55.0, 58.0), ('reka', 58.0, 61.2), ('peka', 61.2, 63.6), ('mary', 63.6, 67.2), ('drzwi', 67.2, 70.2), ('smiech', 70.2, 72.8), ('wozna2', 72.8, 75.8), ('swiatlo', 75.8, 79.2), ('dom', 79.2, 82.2), ('zeby', 82.2, 85.6), ('napis', 85.6, 89.2), ('odwraca', 89.2, 92.8), ('szept', 92.8, 95.8), ('epilog', 95.8, 100.4), ('end', 100.4, 105.4)]
+SEG = [
+    ['karta', 0.15, '[storytelling, tense, slow] To jest Krwawa Mary.'],
+    ['lustro', 0.15, '[storytelling, tense] Mieszka po drugiej stronie lustra.'],
+    ['trzyrazy', 0.15, '[whispering] Wystarczy zgasić światło i powiedzieć jej imię trzy razy.'],
+    ['odbicie', 0.15, '[storytelling, tense] Wtedy twoje odbicie przestaje cię słuchać.'],
+    ['mowiono', 0.15, '[storytelling] W każdej szkole ktoś o niej słyszał. Starsi straszyli nią pierwszaków.'],
+    ['wozna1', 0.15, '[old woman, serious, warning] Do łazienki na drugim piętrze nie wchodźcie. Tamto lustro pamięta za dużo.', 'wozna'],
+    ['ja', 0.15, '[storytelling] Myślałem, że to bajka dla pierwszaków. Do ostatniej przerwy przed feriami.'],
+    ['koledzy', 0.15, '[boy, teasing, mocking] Zakład, że się boisz? Powiedz trzy razy, cykorze.', 'bartek'],
+    ['kuba_nie', 0.15, '[boy, defiant] Nie boję się.', 'kuba'],
+    ['wepchneli', 0.15, '[storytelling, urgent] Wepchnęli mnie do łazienki na drugim piętrze. I przytrzymali drzwi.'],
+    ['gasnie', 0.15, '[storytelling, tense] Ktoś zgasił światło z korytarza.'],
+    ['wyjscie', 0.15, '[whispering] Zostało tylko zielone światło nad drzwiami.'],
+    ['raz', 0.15, '[whispering, scared] Krwawa Mary.', 'kuba'],
+    ['dwa', 0.15, '[whispering, scared] Krwawa Mary.', 'kuba'],
+    ['trzy', 0.15, '[whispering, terrified] Krwawa… Mary.', 'kuba'],
+    ['cisza', 0.15, '[storytelling, tense] Nic. Cisza.'],
+    ['kran', 0.15, '[whispering] Tylko z kranu zaczęła kapać woda. Czerwona.'],
+    ['nie_mruga', 0.15, '[storytelling, tense, slow] Wtedy zobaczyłem, że moje odbicie… nie mruga.'],
+    ['usmiech', 0.15, '[whispering] I uśmiecha się. Choć ja się nie uśmiechałem.'],
+    ['reka', 0.15, '[storytelling, tense] Podniosło rękę. I przyłożyło ją do szkła. Od środka.'],
+    ['peka', 0.15, '[storytelling, urgent] Lustro pękło.'],
+    ['mary', 0.15, '[storytelling, tense, slow] Za moim odbiciem stała dziewczyna. Mokre czarne włosy. Krwawe łzy.'],
+    ['drzwi', 0.15, '[storytelling, urgent] Rzuciłem się do drzwi. Waliłem pięściami.'],
+    ['smiech', 0.15, '[storytelling, tense] Za drzwiami śmiechy nagle ucichły.'],
+    ['wozna2', 0.15, '[old woman, shocked, angry] Coście wy zrobili?!', 'wozna'],
+    ['swiatlo', 0.15, '[storytelling, tense] Światło wróciło. A lustro… było całe. Bez jednej rysy.'],
+    ['dom', 0.15, '[storytelling] Wieczorem w domu długo nie mogłem się uspokoić.'],
+    ['zeby', 0.15, '[storytelling, tense] Myłem zęby. Moje odbicie skończyło… sekundę po mnie.'],
+    ['napis', 0.15, '[whispering] Na zaparowanym lustrze pojawił się napis. Dziękuję, Kuba.'],
+    ['odwraca', 0.15, '[storytelling, tense, slow] Odwróciłem się do wyjścia. Ale w lustrze zostałem ja. I krzyczałem.'],
+    ['szept', 0.15, '[whispering, girl, eerie] Dziękuję… że mnie wypuściłeś.', 'mary'],
+    ['epilog', 0.15, '[storytelling] W Krwawą Mary bawiły się dzieci w szkołach na całym świecie. Także w Polsce.'],
+    ['end', 0.15, '[whispering, girl, eerie] Krwawa… Mary.', 'mary'],
+]
+SKIP = ['tik']
+AUDIO = dict(
+    bed=([0, 105.39], [-34, -34]),
+    loops={'groza': ([0, .2, 21.6, 30.6, 39.4, 52.0, 61.2, 75.8, 82.2, 89.2, 95.8, 105.39], [-60, -10, -26, -14, -8, -5, -3, -20, -12, -4, -16, -40]),
+           'tension': ([0, 21.6, 30.6, 52.0, 61.2, 75.8, 82.2, 89.2, 95.8, 105.39], [-18, -30, -16, -7, -5, -22, -12, -6, -24, -40]),
+           'kapanie': ([0, 30.6, 75.8, 105.39], [-90, -20, -90, -90]),
+           'drone': ([0, 33.8, 61.2, 75.8, 89.2, 95.8, 100.4], [-40, -16, -8, -28, -8, -26, -30]),
+           'roomtone': ([0, 105.39], [-36, -36])},
+    heartbeat=([0, 33.8, 52.0, 75.8, 82.2, 95.8, 105.39], [-90, -12, -6, -90, -8, -90, -90]),
+)
+REALMAP = {'stab': [('boom', -6)], 'whoosh': [('whoosh', -16)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'slam': [('slam', -2)], 'door_lock': [('doorlock', -4)], 'bang': [('bang', -3)], 'unlock': [('unlock', -4)], 'switch': [('poweroff', -3)]}
+EXTRA = [(0.1, 'hit_low', -4), (5.6, 'hit_low', -3), (31.5, 'hit_low', -4), (34.8, 'hit_low', 0), (39.6, 'hit_low', -6), (41.8, 'hit_low', -3), (44.2, 'hit_low', 0), (44.2, 'sting', -4), (50.4, 'sting', -6), (50.0, 'riser', -7), (55.8, 'hit_low', -2), (59.3, 'hit_low', -2), (58.6, 'riser', -5), (61.4, 'kamien', -2), (61.4, 'hit_low', 0), (61.4, 'sting', -1), (64.0, 'syk', -12), (77.2, 'sting', -5), (83.6, 'riser', -6), (88.0, 'hit_low', 0), (88.0, 'sting', -2), (91.6, 'hit_low', 0), (95.4, 'hit_low', 0), (95.4, 'sting', 0), (100.4, 'hit_low', -2), (21.6, 'hit_low', -9), (30.6, 'hit_low', -9), (46.6, 'hit_low', -9), (67.2, 'hit_low', -9), (79.2, 'hit_low', -9), (82.2, 'hit_low', -9)]
