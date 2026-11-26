@@ -8,7 +8,7 @@ VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=
            'duch': 'asetrate=48000*0.84,aresample=48000,atempo=1.12,highpass=f=150,aecho=0.7:0.6:70|160:0.5|0.35'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('tradycja', 4.4, 7.8), ('pasta', 7.8, 11.4), ('zasada', 11.4, 14.6), ('marek', 14.6, 19.0), ('kuba0', 19.0, 21.6), ('marek2', 21.6, 24.4), ('polnoc', 24.4, 27.8), ('czworka', 27.8, 31.2), ('smiech', 31.2, 33.8), ('swiatlo', 33.8, 37.2), ('deski', 37.2, 40.4), ('bartek2', 40.4, 43.0), ('srodek', 43.0, 46.6), ('lezy', 46.6, 50.0), ('reka', 50.0, 53.4), ('odwraca', 53.4, 56.4), ('kolej', 56.4, 59.2), ('uciekamy', 59.2, 62.4), ('zamek', 62.4, 65.6), ('rano', 65.6, 68.8), ('puste', 68.8, 72.6), ('kronika', 72.6, 76.0), ('zdjecie96', 76.0, 80.4), ('lustro', 80.4, 83.8), ('terazty', 83.8, 87.2), ('trwa', 87.2, 90.6), ('epilog', 90.6, 96.2), ('end', 96.2, 101.2)]
