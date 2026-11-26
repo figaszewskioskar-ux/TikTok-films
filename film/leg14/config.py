@@ -8,7 +8,7 @@ VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=
            'duch': 'asetrate=48000*0.82,aresample=48000,atempo=1.15,aecho=0.7:0.6:80|180:0.45|0.3'}
 TEMPO = {'lektor': 1.1}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('karta', 0, 4.4), ('wskaznik', 4.4, 7.6), ('rusza0', 7.6, 11.2), ('zasada', 11.2, 14.8), ('inaczej', 14.8, 17.8), ('mama', 17.8, 21.8), ('ja', 21.8, 25.2), ('strych', 25.2, 28.4), ('swieczki', 28.4, 31.4), ('pyta', 31.4, 34.0), ('cisza', 34.0, 36.6), ('tak', 36.6, 40.0), ('imie', 40.0, 42.4), ('kuba', 42.4, 46.6), ('gdzie', 46.6, 49.0), ('zatoba', 49.0, 53.4), ('gasna', 53.4, 55.8), ('krzyk', 55.8, 58.6), ('swiatlo', 58.6, 61.6), ('zapomnielismy', 61.6, 65.2), ('noc', 65.2, 68.6), ('sunie', 68.6, 71.6), ('szkielko', 71.6, 75.2), ('nikogo', 75.2, 77.8), ('rano', 77.8, 80.8), ('plecak', 80.8, 84.4), ('kartka', 84.4, 87.8), ('dowidzenia', 87.8, 90.2), ('nie', 90.2, 93.8), ('szept', 93.8, 96.8), ('epilog', 96.8, 101.6), ('end', 101.6, 106.6)]
