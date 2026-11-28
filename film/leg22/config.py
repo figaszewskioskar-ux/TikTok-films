@@ -10,7 +10,7 @@ MAXK = 1.6
 PREVIEW_NO_VOICE = True
 TARGET = 118
 SQUEEZE = 0.75
-SCENES = [('karta', 0, 4.4), ('las0', 4.4, 8.0), ('zdjecia', 8.0, 11.4), ('dziadek', 11.4, 15.8), ('kuba0', 15.8, 18.4), ('wycieczka', 18.4, 22.0), ('mgla', 22.0, 25.2), ('zdjecie1', 25.2, 28.8), ('galeria1', 28.8, 32.6), ('galeria2', 32.6, 36.0), ('galeria3', 36.0, 39.6), ('nikt', 39.6, 42.8), ('okno', 42.8, 46.4), ('latarnia', 46.4, 50.2), ('dzwonie', 50.2, 53.2), ('dziadek2', 53.2, 57.2), ('gasi', 57.2, 60.2), ('klik', 60.2, 63.4), ('selfie', 63.4, 67.4), ('patrzy', 67.4, 70.8), ('ciemnosc', 70.8, 73.2), ('epilog', 73.2, 78.4), ('end', 78.4, 83.4)]
+SCENES = [('karta', 0, 4.4), ('las0', 4.4, 8.0), ('zdjecia', 8.0, 11.4), ('dziadek', 11.4, 15.8), ('kuba0', 15.8, 18.4), ('wycieczka', 18.4, 22.0), ('mgla', 22.0, 25.2), ('zdjecie1', 25.2, 28.8), ('galeria1', 28.8, 32.6), ('galeria2', 32.6, 36.0), ('galeria3', 36.0, 39.6), ('zoom', 39.6, 43.2), ('nikt', 43.2, 46.4), ('okno', 46.4, 50.0), ('latarnia', 50.0, 53.8), ('mruga', 53.8, 57.2), ('szyba', 57.2, 61.0), ('dzwonie', 61.0, 64.0), ('dziadek2', 64.0, 68.0), ('gasi', 68.0, 71.0), ('klik', 71.0, 74.2), ('selfie', 74.2, 78.2), ('patrzy', 78.2, 81.6), ('ciemnosc', 81.6, 84.0), ('epilog', 84.0, 89.2), ('end', 89.2, 94.2)]
 SEG = [
     ['karta', 0.15, '[storytelling, tense, slow] To jest Pan Bez Twarzy.'],
     ['las0', 0.15, '[storytelling, tense] Mówi się, że w lasach stoi ktoś za wysoki. I nie ma twarzy.'],
@@ -34,16 +34,19 @@ SEG = [
     ['patrzy', 0.15, '[whispering, slow] Nie miał twarzy. Ale wiedziałem, że patrzy.'],
     ['epilog', 0.15, '[storytelling] Mówi się, że on nigdy nie chodzi. Po prostu za każdym razem, gdy mrugniesz, jest bliżej.'],
     ['end', 0.15, '[whispering, eerie] Nie mrugaj.'],
+    ['zoom', 0.15, '[whispering, slow] Przybliżyłem zdjęcie. Tam, gdzie powinna być twarz, nie było nic.'],
+    ['mruga', 0.15, '[storytelling, tense] Latarnia zamrugała. Kiedy znów się zapaliła, przy furtce nikogo nie było.'],
+    ['szyba', 0.15, '[whispering, slow] Na szybie, tuż przed moją twarzą, zostały odciski długich palców.'],
 ]
 SKIP = ['tik']
 AUDIO = dict(
-    bed=([0, 83.39], [-34, -34]),
-    loops={'groza': ([0, .2, 11.4, 18.4, 28.8, 46.4, 57.2, 63.4, 73.2, 83.39], [-60, -10, -28, -20, -8, -5, -12, -3, -16, -40]),
-           'tension': ([0, 11.4, 22.0, 28.8, 46.4, 63.4, 73.2, 83.39], [-18, -32, -20, -8, -5, -3, -24, -40]),
-           'drone': ([0, 22.0, 28.8, 46.4, 63.4, 73.2, 78.4], [-40, -22, -10, -6, -4, -26, -30]),
-           'wind': ([0, 11.4, 18.4, 28.8, 46.4, 50.2, 83.39], [-26, -60, -20, -60, -22, -60, -60]),
-           'roomtone': ([0, 83.39], [-36, -36])},
-    heartbeat=([0, 32.6, 46.4, 63.4, 73.2, 83.39], [-90, -12, -6, -4, -90, -90]),
+    bed=([0, 94.19], [-34, -34]),
+    loops={'groza': ([0, .2, 11.4, 18.4, 28.8, 50.0, 68.0, 74.2, 84.0, 94.19], [-60, -10, -28, -20, -8, -5, -12, -3, -16, -40]),
+           'tension': ([0, 11.4, 22.0, 28.8, 50.0, 74.2, 84.0, 94.19], [-18, -32, -20, -8, -5, -3, -24, -40]),
+           'drone': ([0, 22.0, 28.8, 50.0, 74.2, 84.0, 89.2], [-40, -22, -10, -6, -4, -26, -30]),
+           'wind': ([0, 11.4, 18.4, 28.8, 50.0, 61.0, 94.19], [-26, -60, -20, -60, -22, -60, -60]),
+           'roomtone': ([0, 94.19], [-36, -36])},
+    heartbeat=([0, 32.6, 50.0, 74.2, 84.0, 94.19], [-90, -12, -6, -4, -90, -90]),
 )
-REALMAP = {'stab': [('boom', -6)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'click': [('tap', -6)], 'ring': [('dial', -8)], 'switch': [('poweroff', -4)]}
-EXTRA = [(0.1, 'hit_low', -4), (8.5, 'hit_low', -3), (30.6, 'hit_low', -1), (32.9, 'hit_low', -2), (36.3, 'hit_low', 0), (36.3, 'sting', -4), (44.9, 'riser', -7), (47.8, 'hit_low', 0), (47.8, 'sting', -3), (58.2, 'hit_low', -3), (61.4, 'riser', -5), (64.6, 'hit_low', 0), (64.6, 'sting', 0), (70.85, 'hit_low', 0), (78.4, 'hit_low', -2), (11.4, 'hit_low', -9), (18.4, 'hit_low', -9), (42.8, 'hit_low', -9), (50.2, 'hit_low', -9)]
+REALMAP = {'stab': [('boom', -6)], 'hit': [('boom', -3)], 'jolt': [('jolt', -2)], 'click': [('tap', -6)], 'ring': [('dial', -8)], 'switch': [('poweroff', -4)], 'buzz': [('buzz', -8)], 'squeak': [('scrape', -10)]}
+EXTRA = [(0.1, 'hit_low', -4), (8.5, 'hit_low', -3), (30.6, 'hit_low', -1), (32.9, 'hit_low', -2), (36.3, 'hit_low', 0), (36.3, 'sting', -4), (41.8, 'hit_low', -1), (48.5, 'riser', -7), (51.4, 'hit_low', 0), (51.4, 'sting', -3), (56.0, 'hit_low', -1), (59.2, 'hit_low', 0), (59.2, 'sting', -2), (69.0, 'hit_low', -3), (72.2, 'riser', -5), (75.4, 'hit_low', 0), (75.4, 'sting', 0), (81.65, 'hit_low', 0), (89.2, 'hit_low', -2), (11.4, 'hit_low', -9), (18.4, 'hit_low', -9), (46.4, 'hit_low', -9), (61.0, 'hit_low', -9)]
