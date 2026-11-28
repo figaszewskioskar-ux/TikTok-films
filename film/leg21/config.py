@@ -7,7 +7,7 @@ VOICES = {'kuba': ('mr1ubFaLs5xVrh1EqWtc', 'eleven_v3', V3), 'mama': ('Xb7hH8MSU
 VFILTER = {'lektor': 'highpass=f=70,acompressor=threshold=-20dB:ratio=2.5,aecho=0.5:0.3:35:0.08'}
 TEMPO = {'lektor': 1.08}
 MAXK = 1.6
-PREVIEW_NO_VOICE = True
+PREVIEW_NO_VOICE = False
 TARGET = 118
 SQUEEZE = 0.75
 SCENES = [('hak', 0, 4.4), ('nowy', 4.4, 8.0), ('zaproszenie', 8.0, 11.8), ('zasady', 11.8, 16.4), ('z1', 16.4, 19.8), ('z2', 19.8, 23.4), ('z3', 23.4, 27.2), ('z4', 27.2, 30.6), ('zmeczony', 30.6, 34.2), ('mama', 34.2, 37.2), ('nic', 37.2, 39.6), ('dziala', 39.6, 43.8), ('dosc', 43.8, 46.8), ('grozba', 46.8, 50.8), ('strach', 50.8, 54.0), ('t420', 54.0, 57.6), ('budzi', 57.6, 60.8), ('pokaz', 60.8, 63.8), ('przytula', 63.8, 67.8), ('mama2', 67.8, 71.6), ('policja', 71.6, 75.0), ('prawda', 75.0, 79.6), ('ola', 79.6, 83.4), ('ola2', 83.4, 86.6), ('epilog', 86.6, 93.2), ('end', 93.2, 98.2)]
